@@ -26,7 +26,7 @@ public class GoodsDetail {
 
     private String goodsSize;
 
-    private Long goodsStock;
+    private Integer goodsStock;
 
     private String quantityUnit;
 
@@ -54,7 +54,7 @@ public class GoodsDetail {
 
     private Boolean isIntegral;
 
-    private Byte royaltyType;
+    private Boolean royaltyType;
 
     private Boolean isBooked;
 
@@ -162,11 +162,11 @@ public class GoodsDetail {
         this.goodsSize = goodsSize == null ? null : goodsSize.trim();
     }
 
-    public Long getGoodsStock() {
+    public Integer getGoodsStock() {
         return goodsStock;
     }
 
-    public void setGoodsStock(Long goodsStock) {
+    public void setGoodsStock(Integer goodsStock) {
         this.goodsStock = goodsStock;
     }
 
@@ -274,11 +274,11 @@ public class GoodsDetail {
         this.isIntegral = isIntegral;
     }
 
-    public Byte getRoyaltyType() {
+    public Boolean getRoyaltyType() {
         return royaltyType;
     }
 
-    public void setRoyaltyType(Byte royaltyType) {
+    public void setRoyaltyType(Boolean royaltyType) {
         this.royaltyType = royaltyType;
     }
 

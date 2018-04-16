@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	<substitutionProperty name="pro.name" value="joice-service" />
-	<substitutionProperty name="log.base" value="/home/logs/joice" />
+	<substitutionProperty name="pro.name" value="cash-register" />
+	<substitutionProperty name="log.base" value="/logs/cash-register" />
 	<substitutionProperty name="max.size" value="200MB" />
 	<jmxConfigurator />
 	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
@@ -59,7 +59,7 @@
 
 	<root level="INFO">
 		<appender-ref ref="stdout" />
-		<appender-ref ref="file.async" />
-		<appender-ref ref="file.error" />
+		<!-- <appender-ref ref="file.async" />
+		<appender-ref ref="file.error" /> -->
 	</root>
 </configuration>

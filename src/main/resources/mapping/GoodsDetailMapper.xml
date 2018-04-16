@@ -13,7 +13,7 @@
     <result column="goods_brand" jdbcType="VARCHAR" property="goodsBrand" />
     <result column="goods_color" jdbcType="VARCHAR" property="goodsColor" />
     <result column="goods_size" jdbcType="VARCHAR" property="goodsSize" />
-    <result column="goods_stock" jdbcType="BIGINT" property="goodsStock" />
+    <result column="goods_stock" jdbcType="INTEGER" property="goodsStock" />
     <result column="quantity_unit" jdbcType="VARCHAR" property="quantityUnit" />
     <result column="stock_upper_limit" jdbcType="INTEGER" property="stockUpperLimit" />
     <result column="stock_lower_limit" jdbcType="INTEGER" property="stockLowerLimit" />
@@ -27,7 +27,7 @@
     <result column="production_date" jdbcType="TIMESTAMP" property="productionDate" />
     <result column="quality_guarantee_period" jdbcType="INTEGER" property="qualityGuaranteePeriod" />
     <result column="is_integral" jdbcType="BIT" property="isIntegral" />
-    <result column="royalty_type" jdbcType="TINYINT" property="royaltyType" />
+    <result column="royalty_type" jdbcType="BIT" property="royaltyType" />
     <result column="is_booked" jdbcType="BIT" property="isBooked" />
     <result column="is_gift" jdbcType="BIT" property="isGift" />
     <result column="is_weigh" jdbcType="BIT" property="isWeigh" />
@@ -72,12 +72,12 @@
     values (#{id,jdbcType=BIGINT}, #{goodsImageId,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR}, 
       #{barCode,jdbcType=VARCHAR}, #{productNumber,jdbcType=VARCHAR}, #{pinyinCode,jdbcType=VARCHAR}, 
       #{categoryName,jdbcType=VARCHAR}, #{goodsStatus,jdbcType=BIT}, #{goodsBrand,jdbcType=VARCHAR}, 
-      #{goodsColor,jdbcType=VARCHAR}, #{goodsSize,jdbcType=VARCHAR}, #{goodsStock,jdbcType=BIGINT}, 
+      #{goodsColor,jdbcType=VARCHAR}, #{goodsSize,jdbcType=VARCHAR}, #{goodsStock,jdbcType=INTEGER}, 
       #{quantityUnit,jdbcType=VARCHAR}, #{stockUpperLimit,jdbcType=INTEGER}, #{stockLowerLimit,jdbcType=INTEGER}, 
       #{importPrice,jdbcType=INTEGER}, #{averageImportPrice,jdbcType=INTEGER}, #{salesPrice,jdbcType=INTEGER}, 
       #{tradePrice,jdbcType=INTEGER}, #{vipPrice,jdbcType=INTEGER}, #{isVipDiscount,jdbcType=BIT}, 
       #{supplierName,jdbcType=VARCHAR}, #{productionDate,jdbcType=TIMESTAMP}, #{qualityGuaranteePeriod,jdbcType=INTEGER}, 
-      #{isIntegral,jdbcType=BIT}, #{royaltyType,jdbcType=TINYINT}, #{isBooked,jdbcType=BIT}, 
+      #{isIntegral,jdbcType=BIT}, #{royaltyType,jdbcType=BIT}, #{isBooked,jdbcType=BIT}, 
       #{isGift,jdbcType=BIT}, #{isWeigh,jdbcType=BIT}, #{isFixedPrice,jdbcType=BIT}, 
       #{isTimeingPrice,jdbcType=BIT}, #{isHidden,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, 
       #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
@@ -226,7 +226,7 @@
         #{goodsSize,jdbcType=VARCHAR},
       </if>
       <if test="goodsStock != null">
-        #{goodsStock,jdbcType=BIGINT},
+        #{goodsStock,jdbcType=INTEGER},
       </if>
       <if test="quantityUnit != null">
         #{quantityUnit,jdbcType=VARCHAR},
@@ -268,7 +268,7 @@
         #{isIntegral,jdbcType=BIT},
       </if>
       <if test="royaltyType != null">
-        #{royaltyType,jdbcType=TINYINT},
+        #{royaltyType,jdbcType=BIT},
       </if>
       <if test="isBooked != null">
         #{isBooked,jdbcType=BIT},
@@ -333,7 +333,7 @@
         goods_size = #{goodsSize,jdbcType=VARCHAR},
       </if>
       <if test="goodsStock != null">
-        goods_stock = #{goodsStock,jdbcType=BIGINT},
+        goods_stock = #{goodsStock,jdbcType=INTEGER},
       </if>
       <if test="quantityUnit != null">
         quantity_unit = #{quantityUnit,jdbcType=VARCHAR},
@@ -375,7 +375,7 @@
         is_integral = #{isIntegral,jdbcType=BIT},
       </if>
       <if test="royaltyType != null">
-        royalty_type = #{royaltyType,jdbcType=TINYINT},
+        royalty_type = #{royaltyType,jdbcType=BIT},
       </if>
       <if test="isBooked != null">
         is_booked = #{isBooked,jdbcType=BIT},
@@ -419,7 +419,7 @@
       goods_brand = #{goodsBrand,jdbcType=VARCHAR},
       goods_color = #{goodsColor,jdbcType=VARCHAR},
       goods_size = #{goodsSize,jdbcType=VARCHAR},
-      goods_stock = #{goodsStock,jdbcType=BIGINT},
+      goods_stock = #{goodsStock,jdbcType=INTEGER},
       quantity_unit = #{quantityUnit,jdbcType=VARCHAR},
       stock_upper_limit = #{stockUpperLimit,jdbcType=INTEGER},
       stock_lower_limit = #{stockLowerLimit,jdbcType=INTEGER},
@@ -433,7 +433,7 @@
       production_date = #{productionDate,jdbcType=TIMESTAMP},
       quality_guarantee_period = #{qualityGuaranteePeriod,jdbcType=INTEGER},
       is_integral = #{isIntegral,jdbcType=BIT},
-      royalty_type = #{royaltyType,jdbcType=TINYINT},
+      royalty_type = #{royaltyType,jdbcType=BIT},
       is_booked = #{isBooked,jdbcType=BIT},
       is_gift = #{isGift,jdbcType=BIT},
       is_weigh = #{isWeigh,jdbcType=BIT},
