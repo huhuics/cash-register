@@ -1,2 +1,8 @@
 eclipse.preferences.version=1
+encoding//src/main/java/cn/cash/register/util/AssertUtil.java=UTF-8
+encoding//src/main/java/cn/cash/register/util/LogUtil.java=UTF-8
+encoding//src/main/java/cn/cash/register/util/Money.java=UTF-8
+encoding//src/main/java/cn/cash/register/util/MoneyTypeHandler.java=UTF-8
+encoding//src/main/resources/config/jdbc.properties=UTF-8
+encoding//src/main/resources/spring/Spring-dataSource.xml=UTF-8
 encoding/README.md=UTF-8

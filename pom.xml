@@ -11,6 +11,7 @@
 
 	<properties>
 		<spring.version>4.3.9.RELEASE</spring.version>
+		<mysql.version>5.1.39</mysql.version>
 	</properties>
 	<dependencies>
 		<!-- spring核心 -->

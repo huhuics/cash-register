@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cash.register.dao.GoodsDetailMapper">
+  <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.GoodsDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goods_image_id" jdbcType="BIGINT" property="goodsImageId" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="bar_code" jdbcType="VARCHAR" property="barCode" />
+    <result column="product_number" jdbcType="VARCHAR" property="productNumber" />
+    <result column="pinyin_code" jdbcType="VARCHAR" property="pinyinCode" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="goods_status" jdbcType="BIT" property="goodsStatus" />
+    <result column="goods_brand" jdbcType="VARCHAR" property="goodsBrand" />
+    <result column="goods_color" jdbcType="VARCHAR" property="goodsColor" />
+    <result column="goods_size" jdbcType="VARCHAR" property="goodsSize" />
+    <result column="goods_stock" jdbcType="BIGINT" property="goodsStock" />
+    <result column="quantity_unit" jdbcType="VARCHAR" property="quantityUnit" />
+    <result column="stock_upper_limit" jdbcType="INTEGER" property="stockUpperLimit" />
+    <result column="stock_lower_limit" jdbcType="INTEGER" property="stockLowerLimit" />
+    <result column="import_price" jdbcType="INTEGER" property="importPrice" />
+    <result column="average_import_price" jdbcType="INTEGER" property="averageImportPrice" />
+    <result column="sales_price" jdbcType="INTEGER" property="salesPrice" />
+    <result column="trade_price" jdbcType="INTEGER" property="tradePrice" />
+    <result column="vip_price" jdbcType="INTEGER" property="vipPrice" />
+    <result column="is_vip_discount" jdbcType="BIT" property="isVipDiscount" />
+    <result column="supplier_name" jdbcType="VARCHAR" property="supplierName" />
+    <result column="production_date" jdbcType="TIMESTAMP" property="productionDate" />
+    <result column="quality_guarantee_period" jdbcType="INTEGER" property="qualityGuaranteePeriod" />
+    <result column="is_integral" jdbcType="BIT" property="isIntegral" />
+    <result column="royalty_type" jdbcType="TINYINT" property="royaltyType" />
+    <result column="is_booked" jdbcType="BIT" property="isBooked" />
+    <result column="is_gift" jdbcType="BIT" property="isGift" />
+    <result column="is_weigh" jdbcType="BIT" property="isWeigh" />
+    <result column="is_fixed_price" jdbcType="BIT" property="isFixedPrice" />
+    <result column="is_timeing_price" jdbcType="BIT" property="isTimeingPrice" />
+    <result column="is_hidden" jdbcType="BIT" property="isHidden" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goods_image_id, goods_name, bar_code, product_number, pinyin_code, category_name, 
+    goods_status, goods_brand, goods_color, goods_size, goods_stock, quantity_unit, stock_upper_limit, 
+    stock_lower_limit, import_price, average_import_price, sales_price, trade_price, 
+    vip_price, is_vip_discount, supplier_name, production_date, quality_guarantee_period, 
+    is_integral, royalty_type, is_booked, is_gift, is_weigh, is_fixed_price, is_timeing_price, 
+    is_hidden, remark, gmt_update, gmt_create
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from goods_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.cash.register.dao.domain.GoodsDetail">
+    insert into goods_detail (id, goods_image_id, goods_name, 
+      bar_code, product_number, pinyin_code, 
+      category_name, goods_status, goods_brand, 
+      goods_color, goods_size, goods_stock, 
+      quantity_unit, stock_upper_limit, stock_lower_limit, 
+      import_price, average_import_price, sales_price, 
+      trade_price, vip_price, is_vip_discount, 
+      supplier_name, production_date, quality_guarantee_period, 
+      is_integral, royalty_type, is_booked, 
+      is_gift, is_weigh, is_fixed_price, 
+      is_timeing_price, is_hidden, remark, 
+      gmt_update, gmt_create)
+    values (#{id,jdbcType=BIGINT}, #{goodsImageId,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR}, 
+      #{barCode,jdbcType=VARCHAR}, #{productNumber,jdbcType=VARCHAR}, #{pinyinCode,jdbcType=VARCHAR}, 
+      #{categoryName,jdbcType=VARCHAR}, #{goodsStatus,jdbcType=BIT}, #{goodsBrand,jdbcType=VARCHAR}, 
+      #{goodsColor,jdbcType=VARCHAR}, #{goodsSize,jdbcType=VARCHAR}, #{goodsStock,jdbcType=BIGINT}, 
+      #{quantityUnit,jdbcType=VARCHAR}, #{stockUpperLimit,jdbcType=INTEGER}, #{stockLowerLimit,jdbcType=INTEGER}, 
+      #{importPrice,jdbcType=INTEGER}, #{averageImportPrice,jdbcType=INTEGER}, #{salesPrice,jdbcType=INTEGER}, 
+      #{tradePrice,jdbcType=INTEGER}, #{vipPrice,jdbcType=INTEGER}, #{isVipDiscount,jdbcType=BIT}, 
+      #{supplierName,jdbcType=VARCHAR}, #{productionDate,jdbcType=TIMESTAMP}, #{qualityGuaranteePeriod,jdbcType=INTEGER}, 
+      #{isIntegral,jdbcType=BIT}, #{royaltyType,jdbcType=TINYINT}, #{isBooked,jdbcType=BIT}, 
+      #{isGift,jdbcType=BIT}, #{isWeigh,jdbcType=BIT}, #{isFixedPrice,jdbcType=BIT}, 
+      #{isTimeingPrice,jdbcType=BIT}, #{isHidden,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, 
+      #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.GoodsDetail">
+    insert into goods_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsImageId != null">
+        goods_image_id,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="barCode != null">
+        bar_code,
+      </if>
+      <if test="productNumber != null">
+        product_number,
+      </if>
+      <if test="pinyinCode != null">
+        pinyin_code,
+      </if>
+      <if test="categoryName != null">
+        category_name,
+      </if>
+      <if test="goodsStatus != null">
+        goods_status,
+      </if>
+      <if test="goodsBrand != null">
+        goods_brand,
+      </if>
+      <if test="goodsColor != null">
+        goods_color,
+      </if>
+      <if test="goodsSize != null">
+        goods_size,
+      </if>
+      <if test="goodsStock != null">
+        goods_stock,
+      </if>
+      <if test="quantityUnit != null">
+        quantity_unit,
+      </if>
+      <if test="stockUpperLimit != null">
+        stock_upper_limit,
+      </if>
+      <if test="stockLowerLimit != null">
+        stock_lower_limit,
+      </if>
+      <if test="importPrice != null">
+        import_price,
+      </if>
+      <if test="averageImportPrice != null">
+        average_import_price,
+      </if>
+      <if test="salesPrice != null">
+        sales_price,
+      </if>
+      <if test="tradePrice != null">
+        trade_price,
+      </if>
+      <if test="vipPrice != null">
+        vip_price,
+      </if>
+      <if test="isVipDiscount != null">
+        is_vip_discount,
+      </if>
+      <if test="supplierName != null">
+        supplier_name,
+      </if>
+      <if test="productionDate != null">
+        production_date,
+      </if>
+      <if test="qualityGuaranteePeriod != null">
+        quality_guarantee_period,
+      </if>
+      <if test="isIntegral != null">
+        is_integral,
+      </if>
+      <if test="royaltyType != null">
+        royalty_type,
+      </if>
+      <if test="isBooked != null">
+        is_booked,
+      </if>
+      <if test="isGift != null">
+        is_gift,
+      </if>
+      <if test="isWeigh != null">
+        is_weigh,
+      </if>
+      <if test="isFixedPrice != null">
+        is_fixed_price,
+      </if>
+      <if test="isTimeingPrice != null">
+        is_timeing_price,
+      </if>
+      <if test="isHidden != null">
+        is_hidden,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsImageId != null">
+        #{goodsImageId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null">
+        #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productNumber != null">
+        #{productNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="pinyinCode != null">
+        #{pinyinCode,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null">
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStatus != null">
+        #{goodsStatus,jdbcType=BIT},
+      </if>
+      <if test="goodsBrand != null">
+        #{goodsBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsColor != null">
+        #{goodsColor,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSize != null">
+        #{goodsSize,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStock != null">
+        #{goodsStock,jdbcType=BIGINT},
+      </if>
+      <if test="quantityUnit != null">
+        #{quantityUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="stockUpperLimit != null">
+        #{stockUpperLimit,jdbcType=INTEGER},
+      </if>
+      <if test="stockLowerLimit != null">
+        #{stockLowerLimit,jdbcType=INTEGER},
+      </if>
+      <if test="importPrice != null">
+        #{importPrice,jdbcType=INTEGER},
+      </if>
+      <if test="averageImportPrice != null">
+        #{averageImportPrice,jdbcType=INTEGER},
+      </if>
+      <if test="salesPrice != null">
+        #{salesPrice,jdbcType=INTEGER},
+      </if>
+      <if test="tradePrice != null">
+        #{tradePrice,jdbcType=INTEGER},
+      </if>
+      <if test="vipPrice != null">
+        #{vipPrice,jdbcType=INTEGER},
+      </if>
+      <if test="isVipDiscount != null">
+        #{isVipDiscount,jdbcType=BIT},
+      </if>
+      <if test="supplierName != null">
+        #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="productionDate != null">
+        #{productionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qualityGuaranteePeriod != null">
+        #{qualityGuaranteePeriod,jdbcType=INTEGER},
+      </if>
+      <if test="isIntegral != null">
+        #{isIntegral,jdbcType=BIT},
+      </if>
+      <if test="royaltyType != null">
+        #{royaltyType,jdbcType=TINYINT},
+      </if>
+      <if test="isBooked != null">
+        #{isBooked,jdbcType=BIT},
+      </if>
+      <if test="isGift != null">
+        #{isGift,jdbcType=BIT},
+      </if>
+      <if test="isWeigh != null">
+        #{isWeigh,jdbcType=BIT},
+      </if>
+      <if test="isFixedPrice != null">
+        #{isFixedPrice,jdbcType=BIT},
+      </if>
+      <if test="isTimeingPrice != null">
+        #{isTimeingPrice,jdbcType=BIT},
+      </if>
+      <if test="isHidden != null">
+        #{isHidden,jdbcType=BIT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.GoodsDetail">
+    update goods_detail
+    <set>
+      <if test="goodsImageId != null">
+        goods_image_id = #{goodsImageId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null">
+        bar_code = #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productNumber != null">
+        product_number = #{productNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="pinyinCode != null">
+        pinyin_code = #{pinyinCode,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null">
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStatus != null">
+        goods_status = #{goodsStatus,jdbcType=BIT},
+      </if>
+      <if test="goodsBrand != null">
+        goods_brand = #{goodsBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsColor != null">
+        goods_color = #{goodsColor,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSize != null">
+        goods_size = #{goodsSize,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStock != null">
+        goods_stock = #{goodsStock,jdbcType=BIGINT},
+      </if>
+      <if test="quantityUnit != null">
+        quantity_unit = #{quantityUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="stockUpperLimit != null">
+        stock_upper_limit = #{stockUpperLimit,jdbcType=INTEGER},
+      </if>
+      <if test="stockLowerLimit != null">
+        stock_lower_limit = #{stockLowerLimit,jdbcType=INTEGER},
+      </if>
+      <if test="importPrice != null">
+        import_price = #{importPrice,jdbcType=INTEGER},
+      </if>
+      <if test="averageImportPrice != null">
+        average_import_price = #{averageImportPrice,jdbcType=INTEGER},
+      </if>
+      <if test="salesPrice != null">
+        sales_price = #{salesPrice,jdbcType=INTEGER},
+      </if>
+      <if test="tradePrice != null">
+        trade_price = #{tradePrice,jdbcType=INTEGER},
+      </if>
+      <if test="vipPrice != null">
+        vip_price = #{vipPrice,jdbcType=INTEGER},
+      </if>
+      <if test="isVipDiscount != null">
+        is_vip_discount = #{isVipDiscount,jdbcType=BIT},
+      </if>
+      <if test="supplierName != null">
+        supplier_name = #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="productionDate != null">
+        production_date = #{productionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qualityGuaranteePeriod != null">
+        quality_guarantee_period = #{qualityGuaranteePeriod,jdbcType=INTEGER},
+      </if>
+      <if test="isIntegral != null">
+        is_integral = #{isIntegral,jdbcType=BIT},
+      </if>
+      <if test="royaltyType != null">
+        royalty_type = #{royaltyType,jdbcType=TINYINT},
+      </if>
+      <if test="isBooked != null">
+        is_booked = #{isBooked,jdbcType=BIT},
+      </if>
+      <if test="isGift != null">
+        is_gift = #{isGift,jdbcType=BIT},
+      </if>
+      <if test="isWeigh != null">
+        is_weigh = #{isWeigh,jdbcType=BIT},
+      </if>
+      <if test="isFixedPrice != null">
+        is_fixed_price = #{isFixedPrice,jdbcType=BIT},
+      </if>
+      <if test="isTimeingPrice != null">
+        is_timeing_price = #{isTimeingPrice,jdbcType=BIT},
+      </if>
+      <if test="isHidden != null">
+        is_hidden = #{isHidden,jdbcType=BIT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.GoodsDetail">
+    update goods_detail
+    set goods_image_id = #{goodsImageId,jdbcType=BIGINT},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      bar_code = #{barCode,jdbcType=VARCHAR},
+      product_number = #{productNumber,jdbcType=VARCHAR},
+      pinyin_code = #{pinyinCode,jdbcType=VARCHAR},
+      category_name = #{categoryName,jdbcType=VARCHAR},
+      goods_status = #{goodsStatus,jdbcType=BIT},
+      goods_brand = #{goodsBrand,jdbcType=VARCHAR},
+      goods_color = #{goodsColor,jdbcType=VARCHAR},
+      goods_size = #{goodsSize,jdbcType=VARCHAR},
+      goods_stock = #{goodsStock,jdbcType=BIGINT},
+      quantity_unit = #{quantityUnit,jdbcType=VARCHAR},
+      stock_upper_limit = #{stockUpperLimit,jdbcType=INTEGER},
+      stock_lower_limit = #{stockLowerLimit,jdbcType=INTEGER},
+      import_price = #{importPrice,jdbcType=INTEGER},
+      average_import_price = #{averageImportPrice,jdbcType=INTEGER},
+      sales_price = #{salesPrice,jdbcType=INTEGER},
+      trade_price = #{tradePrice,jdbcType=INTEGER},
+      vip_price = #{vipPrice,jdbcType=INTEGER},
+      is_vip_discount = #{isVipDiscount,jdbcType=BIT},
+      supplier_name = #{supplierName,jdbcType=VARCHAR},
+      production_date = #{productionDate,jdbcType=TIMESTAMP},
+      quality_guarantee_period = #{qualityGuaranteePeriod,jdbcType=INTEGER},
+      is_integral = #{isIntegral,jdbcType=BIT},
+      royalty_type = #{royaltyType,jdbcType=TINYINT},
+      is_booked = #{isBooked,jdbcType=BIT},
+      is_gift = #{isGift,jdbcType=BIT},
+      is_weigh = #{isWeigh,jdbcType=BIT},
+      is_fixed_price = #{isFixedPrice,jdbcType=BIT},
+      is_timeing_price = #{isTimeingPrice,jdbcType=BIT},
+      is_hidden = #{isHidden,jdbcType=BIT},
+      remark = #{remark,jdbcType=VARCHAR},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
