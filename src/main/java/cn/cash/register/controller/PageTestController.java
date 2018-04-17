@@ -20,7 +20,7 @@ public class PageTestController {
      * @return
      */
     @RequestMapping(value = "/backstage/login")
-    public String login() {
+    public String blogin() {
         return "backstage/login";
     }
 
@@ -30,8 +30,38 @@ public class PageTestController {
      * @return
      */
     @RequestMapping(value = "/backstage")
-    public String index(Model model) {
+    public String bindex(Model model) {
         return "backstage/index";
+    }
+
+    /**
+     * 前端登录页
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/frontstage/login")
+    public String flogin(Model model) {
+        return "frontstage/login";
+    }
+
+    /**
+     * 前端首页
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/frontstage")
+    public String findex(Model model) {
+        return "frontstage/index";
+    }
+
+    /**
+     * 前端收银
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/frontstage/cashRegister")
+    public String fcashRegister(Model model) {
+        return "frontstage/cashRegister";
     }
 
 }
