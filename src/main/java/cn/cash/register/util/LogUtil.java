@@ -1,5 +1,5 @@
 /**
- * Beijing Jiaotong University
+ * Cash-Register
  * Copyright (c) 1896-2016 All Rights Reserved.
  */
 package cn.cash.register.util;

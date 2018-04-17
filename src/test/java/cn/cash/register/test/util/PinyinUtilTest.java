@@ -1,5 +1,5 @@
 /**
- * 深圳金融电子结算中心
+ * Cash-Register
  * Copyright (c) 1995-2018 All Rights Reserved.
  */
 package cn.cash.register.test.util;
