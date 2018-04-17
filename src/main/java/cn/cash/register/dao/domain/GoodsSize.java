@@ -2,14 +2,17 @@ package cn.cash.register.dao.domain;
 
 import java.util.Date;
 
-public class GoodsSize {
-    private Long id;
+public class GoodsSize extends BaseDomain {
+    /**  */
+    private static final long serialVersionUID = 3442795093387031265L;
 
-    private String sizeName;
+    private Long              id;
 
-    private Date gmtUpdate;
+    private String            sizeName;
 
-    private Date gmtCreate;
+    private Date              gmtUpdate;
+
+    private Date              gmtCreate;
 
     public Long getId() {
         return id;

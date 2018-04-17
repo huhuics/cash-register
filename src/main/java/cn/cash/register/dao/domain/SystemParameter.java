@@ -2,18 +2,21 @@ package cn.cash.register.dao.domain;
 
 import java.util.Date;
 
-public class SystemParameter {
-    private Long id;
+public class SystemParameter extends BaseDomain {
+    /**  */
+    private static final long serialVersionUID = -7459068000426791148L;
 
-    private String paramCode;
+    private Long              id;
 
-    private String paramValue;
+    private String            paramCode;
 
-    private String exampleValue;
+    private String            paramValue;
 
-    private Date gmtUpdate;
+    private String            exampleValue;
 
-    private Date gmtCreate;
+    private Date              gmtUpdate;
+
+    private Date              gmtCreate;
 
     public Long getId() {
         return id;

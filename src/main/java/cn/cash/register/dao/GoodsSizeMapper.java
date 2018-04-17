@@ -1,5 +1,7 @@
 package cn.cash.register.dao;
 
+import java.util.List;
+
 import cn.cash.register.dao.domain.GoodsSize;
 
 public interface GoodsSizeMapper {
@@ -14,4 +16,6 @@ public interface GoodsSizeMapper {
     int updateByPrimaryKeySelective(GoodsSize record);
 
     int updateByPrimaryKey(GoodsSize record);
+
+    List<GoodsSize> selectAll();
 }

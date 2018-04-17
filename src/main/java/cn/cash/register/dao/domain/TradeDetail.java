@@ -1,42 +1,46 @@
 package cn.cash.register.dao.domain;
 
-import cn.cash.register.util.Money;
 import java.util.Date;
 
-public class TradeDetail {
-    private Long id;
+import cn.cash.register.util.Money;
 
-    private String tradeNo;
+public class TradeDetail extends BaseDomain {
+    /**  */
+    private static final long serialVersionUID = 4762764775503457325L;
 
-    private Date tradeTime;
+    private Long              id;
 
-    private String tradeType;
+    private String            tradeNo;
 
-    private String memberName;
+    private Date              tradeTime;
 
-    private Integer goodsCount;
+    private String            tradeType;
 
-    private Money totalAmount;
+    private String            memberName;
 
-    private Integer goodsDiscount;
+    private Integer           goodsCount;
 
-    private Money totalActualAmount;
+    private Money             totalAmount;
 
-    private Money profitAmount;
+    private Integer           goodsDiscount;
 
-    private String sellerNo;
+    private Money             totalActualAmount;
 
-    private String shopperNo;
+    private Money             profitAmount;
 
-    private String goodsDetail;
+    private String            sellerNo;
 
-    private String payChenal;
+    private String            shopperNo;
 
-    private Boolean isExchangeJob;
+    private String            goodsDetail;
 
-    private Date gmtUpdate;
+    private String            payChenal;
 
-    private Date gmtCreate;
+    private Boolean           isExchangeJob;
+
+    private Date              gmtUpdate;
+
+    private Date              gmtCreate;
 
     public Long getId() {
         return id;

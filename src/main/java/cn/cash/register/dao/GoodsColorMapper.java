@@ -1,5 +1,7 @@
 package cn.cash.register.dao;
 
+import java.util.List;
+
 import cn.cash.register.dao.domain.GoodsColor;
 
 public interface GoodsColorMapper {
@@ -14,4 +16,6 @@ public interface GoodsColorMapper {
     int updateByPrimaryKeySelective(GoodsColor record);
 
     int updateByPrimaryKey(GoodsColor record);
+
+    List<GoodsColor> selectAll();
 }

@@ -2,30 +2,33 @@ package cn.cash.register.dao.domain;
 
 import java.util.Date;
 
-public class SellerInfo {
-    private Long id;
+public class SellerInfo extends BaseDomain {
+    /**  */
+    private static final long serialVersionUID = 2867150032263025348L;
 
-    private String partOfShop;
+    private Long              id;
 
-    private String sellerNo;
+    private String            partOfShop;
 
-    private String name;
+    private String            sellerNo;
 
-    private String role;
+    private String            name;
 
-    private String password;
+    private String            role;
 
-    private String phone;
+    private String            password;
 
-    private Boolean status;
+    private String            phone;
 
-    private String cashPermission;
+    private Boolean           status;
 
-    private String backgroundPermission;
+    private String            cashPermission;
 
-    private Date gmtUpdate;
+    private String            backgroundPermission;
 
-    private Date gmtCreate;
+    private Date              gmtUpdate;
+
+    private Date              gmtCreate;
 
     public Long getId() {
         return id;

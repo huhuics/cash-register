@@ -2,14 +2,17 @@ package cn.cash.register.dao.domain;
 
 import java.util.Date;
 
-public class GoodsColor {
-    private Long id;
+public class GoodsColor extends BaseDomain {
+    /**  */
+    private static final long serialVersionUID = 7974406449237933576L;
 
-    private String color;
+    private Long              id;
 
-    private Date gmtUpdate;
+    private String            color;
 
-    private Date gmtCreate;
+    private Date              gmtUpdate;
+
+    private Date              gmtCreate;
 
     public Long getId() {
         return id;
