@@ -5,7 +5,7 @@
 
 	<!-- 注册typeHandler, 处理表示Money的字段 -->
 	<typeHandlers>
-		<typeHandler handler="org.joice.service.util.MoneyTypeHandler" />
+		<typeHandler handler="cn.cash.register.util.MoneyTypeHandler" />
 	</typeHandlers>
 
 </configuration>
