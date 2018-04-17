@@ -1,5 +1,5 @@
 /**
- * ÉîÛÚ½ğÈÚµç×Ó½áËãÖĞĞÄ
+ * æ·±åœ³é‡‘èç”µå­ç»“ç®—ä¸­å¿ƒ
  * Copyright (c) 1995-2018 All Rights Reserved.
  */
 package cn.cash.register.util;
@@ -7,22 +7,22 @@ package cn.cash.register.util;
 import net.sourceforge.pinyin4j.PinyinHelper;
 
 /**
- * ºº×Ö¸¨ÖúÀà
+ * æ±‰å­—è¾…åŠ©ç±»
  * @author HuHui
- * @version $Id: PinyinUtil.java, v 0.1 2018Äê4ÔÂ16ÈÕ ÏÂÎç7:23:32 HuHui Exp $
+ * @version $Id: PinyinUtil.java, v 0.1 2018å¹´4æœˆ16æ—¥ ä¸‹åˆ7:23:32 HuHui Exp $
  */
 public class PinyinUtil {
 
     /**
-     * ÌáÈ¡Ã¿¸öºº×ÖµÄĞ¡Ğ´Ê××ÖÄ¸
-     * @param str ´ıÌáÈ¡×Ö·û´®
+     * æå–æ¯ä¸ªæ±‰å­—çš„å°å†™é¦–å­—æ¯
+     * @param str å¾…æå–å­—ç¬¦ä¸²
      * @return
      */
     public static final String getPinyinHeadLowerChar(String str) {
         String convert = "";
         for (int j = 0; j < str.length(); j++) {
             char word = str.charAt(j);
-            // ÌáÈ¡ºº×ÖµÄÊ××ÖÄ¸
+            // æå–æ±‰å­—çš„é¦–å­—æ¯
             String[] pinyinArray = PinyinHelper.toHanyuPinyinStringArray(word);
             if (pinyinArray != null) {
                 convert += pinyinArray[0].charAt(0);
