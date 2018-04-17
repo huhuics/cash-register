@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cash.register.dao.SellerInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.SellerInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="part_of_shop" jdbcType="VARCHAR" property="partOfShop" />
+    <result column="seller_no" jdbcType="VARCHAR" property="sellerNo" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="role" jdbcType="VARCHAR" property="role" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="cash_permission" jdbcType="VARCHAR" property="cashPermission" />
+    <result column="background_permission" jdbcType="VARCHAR" property="backgroundPermission" />
+    <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, part_of_shop, seller_no, name, role, password, phone, status, cash_permission, 
+    background_permission, gmt_update, gmt_create
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from seller_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from seller_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.cash.register.dao.domain.SellerInfo">
+    insert into seller_info (id, part_of_shop, seller_no, 
+      name, role, password, 
+      phone, status, cash_permission, 
+      background_permission, gmt_update, gmt_create
+      )
+    values (#{id,jdbcType=BIGINT}, #{partOfShop,jdbcType=VARCHAR}, #{sellerNo,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{cashPermission,jdbcType=VARCHAR}, 
+      #{backgroundPermission,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.SellerInfo">
+    insert into seller_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="partOfShop != null">
+        part_of_shop,
+      </if>
+      <if test="sellerNo != null">
+        seller_no,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="role != null">
+        role,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="cashPermission != null">
+        cash_permission,
+      </if>
+      <if test="backgroundPermission != null">
+        background_permission,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="partOfShop != null">
+        #{partOfShop,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerNo != null">
+        #{sellerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="cashPermission != null">
+        #{cashPermission,jdbcType=VARCHAR},
+      </if>
+      <if test="backgroundPermission != null">
+        #{backgroundPermission,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.SellerInfo">
+    update seller_info
+    <set>
+      <if test="partOfShop != null">
+        part_of_shop = #{partOfShop,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerNo != null">
+        seller_no = #{sellerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        role = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="cashPermission != null">
+        cash_permission = #{cashPermission,jdbcType=VARCHAR},
+      </if>
+      <if test="backgroundPermission != null">
+        background_permission = #{backgroundPermission,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.SellerInfo">
+    update seller_info
+    set part_of_shop = #{partOfShop,jdbcType=VARCHAR},
+      seller_no = #{sellerNo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      role = #{role,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
+      cash_permission = #{cashPermission,jdbcType=VARCHAR},
+      background_permission = #{backgroundPermission,jdbcType=VARCHAR},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

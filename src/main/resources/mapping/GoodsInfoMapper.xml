@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.cash.register.dao.GoodsDetailMapper">
-  <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.GoodsDetail">
+<mapper namespace="cn.cash.register.dao.GoodsInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.GoodsInfo">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="goods_image_id" jdbcType="BIGINT" property="goodsImageId" />
     <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
@@ -49,15 +49,15 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from goods_detail
+    from goods_info
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from goods_detail
+    delete from goods_info
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="cn.cash.register.dao.domain.GoodsDetail">
-    insert into goods_detail (id, goods_image_id, goods_name, 
+  <insert id="insert" parameterType="cn.cash.register.dao.domain.GoodsInfo">
+    insert into goods_info (id, goods_image_id, goods_name, 
       bar_code, product_number, pinyin_code, 
       category_name, goods_status, goods_brand, 
       goods_color, goods_size, goods_stock, 
@@ -82,8 +82,8 @@
       #{isTimeingPrice,jdbcType=BIT}, #{isHidden,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, 
       #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.GoodsDetail">
-    insert into goods_detail
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.GoodsInfo">
+    insert into goods_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -299,8 +299,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.GoodsDetail">
-    update goods_detail
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.GoodsInfo">
+    update goods_info
     <set>
       <if test="goodsImageId != null">
         goods_image_id = #{goodsImageId,jdbcType=BIGINT},
@@ -407,8 +407,8 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.GoodsDetail">
-    update goods_detail
+  <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.GoodsInfo">
+    update goods_info
     set goods_image_id = #{goodsImageId,jdbcType=BIGINT},
       goods_name = #{goodsName,jdbcType=VARCHAR},
       bar_code = #{barCode,jdbcType=VARCHAR},

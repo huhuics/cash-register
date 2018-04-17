@@ -3,7 +3,7 @@ package cn.cash.register.dao.domain;
 import cn.cash.register.util.Money;
 import java.util.Date;
 
-public class GoodsDetail {
+public class GoodsInfo {
     private Long id;
 
     private Long goodsImageId;
