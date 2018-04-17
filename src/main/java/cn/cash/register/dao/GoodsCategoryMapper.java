@@ -14,4 +14,12 @@ public interface GoodsCategoryMapper {
     int updateByPrimaryKeySelective(GoodsCategory record);
 
     int updateByPrimaryKey(GoodsCategory record);
+
+    /**
+     * 插入成功后返回该记录自增id
+     * @return
+     */
+    long insertWithKey(GoodsCategory record);
+
+    int deleteChildren(Long parentId);
 }
