@@ -1,145 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.cash.register.dao.GoodsCategoryMapper">
-	<resultMap id="BaseResultMap"
-		type="cn.cash.register.dao.domain.GoodsCategory">
-		<id column="id" jdbcType="BIGINT" property="id" />
-		<result column="category_name" jdbcType="VARCHAR"
-			property="categoryName" />
-		<result column="parent_id" jdbcType="BIGINT"
-			property="parentId" />
-		<result column="key" jdbcType="VARCHAR" property="key" />
-		<result column="level" jdbcType="INTEGER" property="level" />
-		<result column="gmt_update" jdbcType="TIMESTAMP"
-			property="gmtUpdate" />
-		<result column="gmt_create" jdbcType="TIMESTAMP"
-			property="gmtCreate" />
-	</resultMap>
-	<sql id="Base_Column_List">
-		id, category_name, parent_id, key, level, gmt_update, gmt_create
-	</sql>
-	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
-		resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from goods_category
-		where id = #{id,jdbcType=BIGINT}
-	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-		delete from goods_category
-		where id = #{id,jdbcType=BIGINT}
-	</delete>
-	<insert id="insert"
-		parameterType="cn.cash.register.dao.domain.GoodsCategory">
-		insert into goods_category (id, category_name, parent_id,
-		key, level, gmt_update,
-		gmt_create)
-		values (#{id,jdbcType=BIGINT}, #{categoryName,jdbcType=VARCHAR},
-		#{parentId,jdbcType=BIGINT},
-		#{key,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{gmtUpdate,jdbcType=TIMESTAMP},
-		#{gmtCreate,jdbcType=TIMESTAMP})
-	</insert>
-	<insert id="insertSelective"
-		parameterType="cn.cash.register.dao.domain.GoodsCategory">
-		insert into goods_category
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				id,
-			</if>
-			<if test="categoryName != null">
-				category_name,
-			</if>
-			<if test="parentId != null">
-				parent_id,
-			</if>
-			<if test="key != null">
-				key,
-			</if>
-			<if test="level != null">
-				level,
-			</if>
-			<if test="gmtUpdate != null">
-				gmt_update,
-			</if>
-			<if test="gmtCreate != null">
-				gmt_create,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=BIGINT},
-			</if>
-			<if test="categoryName != null">
-				#{categoryName,jdbcType=VARCHAR},
-			</if>
-			<if test="parentId != null">
-				#{parentId,jdbcType=BIGINT},
-			</if>
-			<if test="key != null">
-				#{key,jdbcType=VARCHAR},
-			</if>
-			<if test="level != null">
-				#{level,jdbcType=INTEGER},
-			</if>
-			<if test="gmtUpdate != null">
-				#{gmtUpdate,jdbcType=TIMESTAMP},
-			</if>
-			<if test="gmtCreate != null">
-				#{gmtCreate,jdbcType=TIMESTAMP},
-			</if>
-		</trim>
-	</insert>
-	<update id="updateByPrimaryKeySelective"
-		parameterType="cn.cash.register.dao.domain.GoodsCategory">
-		update goods_category
-		<set>
-			<if test="categoryName != null">
-				category_name = #{categoryName,jdbcType=VARCHAR},
-			</if>
-			<if test="parentId != null">
-				parent_id = #{parentId,jdbcType=BIGINT},
-			</if>
-			<if test="key != null">
-				key = #{key,jdbcType=VARCHAR},
-			</if>
-			<if test="level != null">
-				level = #{level,jdbcType=INTEGER},
-			</if>
-			<if test="gmtUpdate != null">
-				gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
-			</if>
-			<if test="gmtCreate != null">
-				gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-			</if>
-		</set>
-		where id = #{id,jdbcType=BIGINT}
-	</update>
-	<update id="updateByPrimaryKey"
-		parameterType="cn.cash.register.dao.domain.GoodsCategory">
-		update goods_category
-		set category_name = #{categoryName,jdbcType=VARCHAR},
-		parent_id = #{parentId,jdbcType=BIGINT},
-		key = #{key,jdbcType=VARCHAR},
-		level = #{level,jdbcType=INTEGER},
-		gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
-		gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
-		where id = #{id,jdbcType=BIGINT}
-	</update>
-
-	<insert id="insertWithKey"
-		parameterType="cn.cash.register.dao.domain.GoodsCategory"
-		useGeneratedKeys="true" keyProperty="id">
-		insert into goods_category (id, category_name, parent_id,
-		key, level, gmt_update,
-		gmt_create)
-		values (#{id,jdbcType=BIGINT}, #{categoryName,jdbcType=VARCHAR},
-		#{parentId,jdbcType=BIGINT},
-		#{key,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{gmtUpdate,jdbcType=TIMESTAMP},
-		#{gmtCreate,jdbcType=TIMESTAMP})
-	</insert>
-	
-	<delete id="deleteChildren" parameterType="java.lang.Long">
-		delete from goods_category
-		where key like '%#{parentId,jdbcType=BIGINT}%'
-	</delete>
+  <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.GoodsCategory">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, category_name, parent_id, gmt_update, gmt_create
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods_category
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from goods_category
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.cash.register.dao.domain.GoodsCategory">
+    insert into goods_category (id, category_name, parent_id, 
+      gmt_update, gmt_create)
+    values (#{id,jdbcType=BIGINT}, #{categoryName,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, 
+      #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.GoodsCategory">
+    insert into goods_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="categoryName != null">
+        category_name,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="categoryName != null">
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.GoodsCategory">
+    update goods_category
+    <set>
+      <if test="categoryName != null">
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.GoodsCategory">
+    update goods_category
+    set category_name = #{categoryName,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>
