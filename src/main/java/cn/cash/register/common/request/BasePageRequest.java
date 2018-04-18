@@ -1,4 +1,4 @@
-package cn.cash.register.common.request.base;
+package cn.cash.register.common.request;
 
 import cn.cash.register.util.AssertUtil;
 
@@ -22,7 +22,7 @@ public class BasePageRequest extends BaseRequest {
     /** 排序字段名*/
     protected String          sidx;
 
-    /** 排序方式*/
+    /** 排序方式,默认：降序*/
     protected String          order;
 
     /**

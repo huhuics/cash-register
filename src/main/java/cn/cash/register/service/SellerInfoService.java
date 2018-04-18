@@ -4,6 +4,9 @@
  */
 package cn.cash.register.service;
 
+import com.github.pagehelper.PageInfo;
+
+import cn.cash.register.common.request.SellerInfoQueryRequest;
 import cn.cash.register.dao.domain.SellerInfo;
 
 /**
@@ -25,9 +28,17 @@ public interface SellerInfoService {
 
     /**
      * 根据id删除收银员
-     * @param id
-     * @return
      */
     int delete(Long id);
+
+    /**
+     * 分页查询收银员信息
+     */
+    PageInfo<SellerInfo> queryList(SellerInfoQueryRequest request);
+
+    /**
+     * 根据id查询收银员信息
+     */
+    SellerInfo queryById(Long id);
 
 }

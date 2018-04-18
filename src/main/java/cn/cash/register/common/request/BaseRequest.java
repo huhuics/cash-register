@@ -1,4 +1,4 @@
-package cn.cash.register.common.request.base;
+package cn.cash.register.common.request;
 
 import java.io.Serializable;
 
