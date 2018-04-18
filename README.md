@@ -34,7 +34,7 @@
 | id | value | parent_id | key   | level |                                
 | 1  | a     | 0         | "-"    | 1     |
 | 2  | b     | 0         | "-"    | 1     |
-| 3  | c     | 0         | "-"    | 2     |
+| 3  | c     | 0         | "-"    | 1     |
 | 4  | d     | 1         | "1-"   | 2     |
 | 5  | e     | 1         | "1-"   | 2     |
 | 6  | f     | 1         | "1-"   | 2     |
@@ -56,7 +56,13 @@
 
 于是，在给定一个节点d的时候：
 
-+ 查找d的所有子孙节点
++ 查找level=1的d的所有子孙节点
+
+```SQL
+select * from table_name where key like "${d.id}-%"
+```
+
++ 查找level>=2的d的所有子孙节点
 
 ```SQL
 select * from table_name where key like "${d.key}${d.id}-%"
