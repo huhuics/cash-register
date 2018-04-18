@@ -1,5 +1,7 @@
 package cn.cash.register.dao;
 
+import java.util.List;
+
 import cn.cash.register.dao.domain.GoodsCategory;
 
 public interface GoodsCategoryMapper {
@@ -23,6 +25,12 @@ public interface GoodsCategoryMapper {
     /**
      * 删除id所代表的节点的子节点
      */
-    void deleteChildren(Long id);
+    void deleteChildren(Long parentId);
+
+    /**
+     * 查找子节点
+     * @param parentId 父节点id
+     */
+    List<GoodsCategory> selectByParentId(Long parentId);
 
 }
