@@ -1,5 +1,7 @@
 package cn.cash.register.dao;
 
+import java.util.List;
+
 import cn.cash.register.dao.domain.GoodsCategory;
 
 public interface GoodsCategoryMapper {
@@ -16,10 +18,19 @@ public interface GoodsCategoryMapper {
     int updateByPrimaryKey(GoodsCategory record);
 
     /**
-     * 插入成功后返回该记录自增id
-     * @return
+     * 插入记录并返回主键
      */
-    long insertWithKey(GoodsCategory record);
+    Long insertWithKey(GoodsCategory record);
 
-    int deleteChildren(Long parentId);
+    /**
+     * 删除id所代表的节点的子节点
+     */
+    void deleteChildren(Long parentId);
+
+    /**
+     * 查找子节点
+     * @param parentId 父节点id
+     */
+    List<GoodsCategory> selectByParentId(Long parentId);
+
 }

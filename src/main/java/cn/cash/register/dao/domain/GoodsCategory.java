@@ -4,17 +4,13 @@ import java.util.Date;
 
 public class GoodsCategory extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = 4130421467436363391L;
+    private static final long serialVersionUID = -6983401174804111687L;
 
     private Long              id;
 
     private String            categoryName;
 
     private Long              parentId;
-
-    private String            key;
-
-    private Integer           level;
 
     private Date              gmtUpdate;
 
@@ -42,22 +38,6 @@ public class GoodsCategory extends BaseDomain {
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key == null ? null : key.trim();
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
     }
 
     public Date getGmtUpdate() {

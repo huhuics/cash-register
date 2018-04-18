@@ -8,15 +8,13 @@
 			property="categoryName" />
 		<result column="parent_id" jdbcType="BIGINT"
 			property="parentId" />
-		<result column="key" jdbcType="VARCHAR" property="key" />
-		<result column="level" jdbcType="INTEGER" property="level" />
 		<result column="gmt_update" jdbcType="TIMESTAMP"
 			property="gmtUpdate" />
 		<result column="gmt_create" jdbcType="TIMESTAMP"
 			property="gmtCreate" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, category_name, parent_id, key, level, gmt_update, gmt_create
+		id, category_name, parent_id, gmt_update, gmt_create
 	</sql>
 	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
 		resultMap="BaseResultMap">
@@ -26,18 +24,19 @@
 		where id = #{id,jdbcType=BIGINT}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-		delete from goods_category
+		delete from
+		goods_category
 		where id = #{id,jdbcType=BIGINT}
 	</delete>
 	<insert id="insert"
 		parameterType="cn.cash.register.dao.domain.GoodsCategory">
-		insert into goods_category (id, category_name, parent_id,
-		key, level, gmt_update,
-		gmt_create)
-		values (#{id,jdbcType=BIGINT}, #{categoryName,jdbcType=VARCHAR},
+		insert into goods_category (id, category_name,
+		parent_id,
+		gmt_update, gmt_create)
+		values (#{id,jdbcType=BIGINT},
+		#{categoryName,jdbcType=VARCHAR},
 		#{parentId,jdbcType=BIGINT},
-		#{key,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{gmtUpdate,jdbcType=TIMESTAMP},
-		#{gmtCreate,jdbcType=TIMESTAMP})
+		#{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
 	</insert>
 	<insert id="insertSelective"
 		parameterType="cn.cash.register.dao.domain.GoodsCategory">
@@ -51,12 +50,6 @@
 			</if>
 			<if test="parentId != null">
 				parent_id,
-			</if>
-			<if test="key != null">
-				key,
-			</if>
-			<if test="level != null">
-				level,
 			</if>
 			<if test="gmtUpdate != null">
 				gmt_update,
@@ -74,12 +67,6 @@
 			</if>
 			<if test="parentId != null">
 				#{parentId,jdbcType=BIGINT},
-			</if>
-			<if test="key != null">
-				#{key,jdbcType=VARCHAR},
-			</if>
-			<if test="level != null">
-				#{level,jdbcType=INTEGER},
 			</if>
 			<if test="gmtUpdate != null">
 				#{gmtUpdate,jdbcType=TIMESTAMP},
@@ -99,12 +86,6 @@
 			<if test="parentId != null">
 				parent_id = #{parentId,jdbcType=BIGINT},
 			</if>
-			<if test="key != null">
-				key = #{key,jdbcType=VARCHAR},
-			</if>
-			<if test="level != null">
-				level = #{level,jdbcType=INTEGER},
-			</if>
 			<if test="gmtUpdate != null">
 				gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
 			</if>
@@ -117,29 +98,45 @@
 	<update id="updateByPrimaryKey"
 		parameterType="cn.cash.register.dao.domain.GoodsCategory">
 		update goods_category
-		set category_name = #{categoryName,jdbcType=VARCHAR},
-		parent_id = #{parentId,jdbcType=BIGINT},
-		key = #{key,jdbcType=VARCHAR},
-		level = #{level,jdbcType=INTEGER},
-		gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
-		gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+		set category_name =
+		#{categoryName,jdbcType=VARCHAR},
+		parent_id =
+		#{parentId,jdbcType=BIGINT},
+		gmt_update =
+		#{gmtUpdate,jdbcType=TIMESTAMP},
+		gmt_create =
+		#{gmtCreate,jdbcType=TIMESTAMP}
 		where id = #{id,jdbcType=BIGINT}
 	</update>
 
 	<insert id="insertWithKey"
 		parameterType="cn.cash.register.dao.domain.GoodsCategory"
 		useGeneratedKeys="true" keyProperty="id">
-		insert into goods_category (id, category_name, parent_id,
+		insert into goods_category (id,
+		category_name, parent_id,
 		key, level, gmt_update,
 		gmt_create)
-		values (#{id,jdbcType=BIGINT}, #{categoryName,jdbcType=VARCHAR},
+		values
+		(#{id,jdbcType=BIGINT}, #{categoryName,jdbcType=VARCHAR},
 		#{parentId,jdbcType=BIGINT},
-		#{key,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{gmtUpdate,jdbcType=TIMESTAMP},
+		#{key,jdbcType=VARCHAR},
+		#{level,jdbcType=INTEGER}, #{gmtUpdate,jdbcType=TIMESTAMP},
 		#{gmtCreate,jdbcType=TIMESTAMP})
 	</insert>
-	
+
 	<delete id="deleteChildren" parameterType="java.lang.Long">
-		delete from goods_category
+		delete from
+		goods_category
 		where key like '%#{parentId,jdbcType=BIGINT}%'
 	</delete>
+	
+	<select id="selectByParentId" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from goods_category
+		where parent_id = #{parentId,jdbcType=BIGINT}
+		order by gmt_create asc
+	</select>
+	
 </mapper>

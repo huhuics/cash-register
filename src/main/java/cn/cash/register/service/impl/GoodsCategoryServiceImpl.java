@@ -4,19 +4,24 @@
  */
 package cn.cash.register.service.impl;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 import cn.cash.register.dao.GoodsCategoryMapper;
 import cn.cash.register.dao.domain.GoodsCategory;
-import cn.cash.register.dao.domain.GoodsCategoryNode;
 import cn.cash.register.service.GoodsCategoryService;
+import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.LogUtil;
 
 /**
@@ -27,20 +32,24 @@ import cn.cash.register.util.LogUtil;
 @Service
 public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 
-    private static final Logger logger = LoggerFactory.getLogger(GoodsCategoryServiceImpl.class);
+    private static final Logger logger  = LoggerFactory.getLogger(GoodsCategoryServiceImpl.class);
+
+    private static final long   ROOT_ID = 1L;
 
     @Resource
-    private GoodsCategoryMapper categoryMapper;
+    private GoodsCategoryMapper goodsCategoryMapper;
+
+    @Resource
+    private TransactionTemplate txTemplate;
 
     @Override
     public long add(GoodsCategory category) {
-        if (category == null) {
-            throw new IllegalArgumentException("参数为空");
-        }
+
+        AssertUtil.assertNotNull(category, "参数不能为空");
 
         LogUtil.info(logger, "收到增加商品种类请求");
 
-        long id = categoryMapper.insertWithKey(category);
+        long id = goodsCategoryMapper.insertWithKey(category);
 
         return id;
     }
@@ -50,13 +59,30 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
         if (categoryId == null) {
             return;
         }
+
         LogUtil.info(logger, "收到商品种类删除请求,categoryId={0}", categoryId);
 
-        //删除结点
-        categoryMapper.deleteByPrimaryKey(categoryId);
+        AssertUtil.assertNotEquals(categoryId, ROOT_ID, "root节点不能删除");
 
-        //删除子孙结点
-        categoryMapper.deleteChildren(categoryId);
+        txTemplate.execute(new TransactionCallbackWithoutResult() {
+
+            @Override
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+
+                //删除结点
+                goodsCategoryMapper.deleteByPrimaryKey(categoryId);
+
+                //查询当前节点的所有子节点
+                List<GoodsCategory> children = goodsCategoryMapper.selectByParentId(categoryId);
+
+                //遍历子节点
+                for (GoodsCategory child : children) {
+                    delete(child.getId());
+                }
+
+            }
+        });
+
     }
 
     @Override
@@ -67,17 +93,36 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 
         LogUtil.info(logger, "收到商品种类修改请求,categoryId={0}", category.getId());
 
-        return categoryMapper.updateByPrimaryKeySelective(category);
+        return goodsCategoryMapper.updateByPrimaryKeySelective(category);
     }
 
     @Override
-    public Set<GoodsCategoryNode> queryAll() {
-        LogUtil.info(logger, "收到查询所有商品种类请求");
-        Set<GoodsCategoryNode> nodes = new LinkedHashSet<>();
+    public JSONArray getTree(Long categoryId) {
 
-        //1.查询所有
+        AssertUtil.assertTrue(categoryId > 0L, "id必须大约0");
 
-        return nodes;
+        //1.查询当前节点的所有子节点
+        List<GoodsCategory> children = goodsCategoryMapper.selectByParentId(categoryId);
+
+        JSONArray childTree = new JSONArray();
+
+        //2.遍历子节点
+        for (GoodsCategory child : children) {
+            JSONObject jsonObj = new JSONObject();
+            jsonObj.put("id", child.getId());
+            jsonObj.put("categoryName", child.getCategoryName());
+            jsonObj.put("parentId", child.getParentId());
+
+            //递归调用
+            JSONArray tree = getTree(child.getId());
+            if (!tree.isEmpty()) {
+                jsonObj.put("children", tree);
+            }
+
+            childTree.fluentAdd(jsonObj);
+        }
+
+        return childTree;
     }
 
 }

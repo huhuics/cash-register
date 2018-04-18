@@ -4,11 +4,9 @@
  */
 package cn.cash.register.service;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import com.alibaba.fastjson.JSONArray;
 
 import cn.cash.register.dao.domain.GoodsCategory;
-import cn.cash.register.dao.domain.GoodsCategoryNode;
 
 /**
  * 商品种类服务接口
@@ -38,10 +36,10 @@ public interface GoodsCategoryService {
     int update(GoodsCategory category);
 
     /**
-     * 查收所有商品种类
-     * <p>商品种类将以{@link LinkedHashSet}返回每个结点的子结点,并以创建时间顺序排序 </p>
-     * @return
+     * 获取商品种类树
+     * @param categoryId 当查询整棵树时填1,即根节点id
+     * @return json数组
      */
-    Set<GoodsCategoryNode> queryAll();
+    JSONArray getTree(Long categoryId);
 
 }

@@ -20,7 +20,7 @@
 	</bean>
 
 	<!-- 扫描注解 -->
-	<context:component-scan base-package="org.joice">
+	<context:component-scan base-package="cn.cash.register">
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
