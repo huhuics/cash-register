@@ -119,7 +119,6 @@
 			<p class="pull-left">共计0件商品</p>
 			<div class="pull-right">
 				<button type="button" class="btn btn-primary">新增商品</button>
-				<button type="button" class="btn btn-primary">网店订单</button>
 				<button type="button" class="btn btn-primary">删除</button>
 			</div>
 		</div>
