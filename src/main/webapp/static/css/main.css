@@ -1,3 +1,7 @@
+div.div-height-5 {
+	height: 5px;
+}
+
 table.largeTable > * > tr > th,td  {
 	height: 50px;
 	line-height: 50px;
@@ -5,11 +9,6 @@ table.largeTable > * > tr > th,td  {
 }
 
 /* ---cashRegister.jsp */
-div.tableDiv {
-	position: relative;
-	width: 100%;
-	min-height: 350px; 
-}
 
 div.summaryDiv {
 	position: relative;
@@ -18,27 +17,7 @@ div.summaryDiv {
 	line-height: 60px;
 	padding-left: 20px;
 	padding-right: 20px;
-	background-color: #CCC;
+	/* background-color: #CCC; */
 }
-
-div.operationDiv {
-	position: relative;
-	width: 100%;
-	height: 120px;
-	bottom: 0;
-	line-height: 120px;
-	padding-left: 20px ;
-	padding-right: 20px ;
-	background-color: #EEE;
-}
-
-div.operationDiv > div {
-	position: relative;
-	width: 300px;
-	height: 100px;
-	margin-left: 10px;
-	background-color: yellow;
-}
-
 
 /* cashRegister.jsp--- */

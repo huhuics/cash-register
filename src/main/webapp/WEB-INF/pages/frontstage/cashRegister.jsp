@@ -8,7 +8,7 @@
 </head>
 <body style="height: 100%;">
 	<div id="app" v-cloak>
-		<div class="tableDiv">
+		<div>
 			<table class="table table-bordered table-hover largeTable">
 				<thead>
 					<tr>
@@ -124,9 +124,57 @@
 			</div>
 		</div>
 		<div class="operationDiv">
-			<div class="pull-left"></div>
-			<div class="pull-left"></div>
-			<div class="pull-left"></div>
+			<table class="table table-bordered" style="background-color: #EEE;">
+				<tbody>
+					<tr>
+						<td class="col-xs-3"><div>
+								<div class="col-xs-12">
+									<div class="input-group">
+										<input type="text" class="form-control"
+											placeholder="条码/拼音码/品名"> <span
+											class="input-group-btn">
+											<button class="btn btn-default" type="button">确定</button>
+										</span>
+									</div>
+								</div>
+								<div class="col-xs-12 div-height-5"></div>
+								<div class="col-xs-12">
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="输入价格无码收银">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button">确定</button>
+										</span>
+									</div>
+								</div>
+							</div></td>
+						<td class="col-xs-3"><div>
+								<div class="col-xs-12">
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="会员号/手机号">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button">确定</button>
+										</span>
+									</div>
+								</div>
+								<div class="col-xs-12 div-height-5"></div>
+								<div class="col-xs-12">
+									<button class="btn btn-info" type="button">
+										姓名 <span class="badge">老胡</span>
+									</button>
+									<button class="btn btn-info" type="button">
+										余额 <span class="badge">￥0</span>
+									</button>
+									<button class="btn btn-info" type="button">
+										积分 <span class="badge">0</span>
+									</button>
+								</div>
+							</div></td>
+						<td class="col-xs-4" style="vertical-align: middle;"><div>
+								<button type="button" class="btn btn-danger btn-lg btn-block">收款&nbsp;&nbsp;￥0.00</button>
+							</div></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 
 	</div>
