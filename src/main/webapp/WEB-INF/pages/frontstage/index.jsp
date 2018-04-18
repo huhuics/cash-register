@@ -36,49 +36,49 @@
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">收银</a></li>
-					<li><a href="#">新增会员</a></li>
-					<li><a href="#">销售单据</a></li>
-					<li><a href="#">商品编辑</a></li>
-					<li><a href="#">帮助</a></li>
-					<li><a href="#">系统设置</a></li>
+					<li class="active"><a href="#"><i class="fa fa-cny"></i>&nbsp;收银</a></li>
+					<li><a href="#"><i class="fa fa-cog"></i>&nbsp;新增会员</a></li>
+					<li><a href="#"><i class="fa fa-cog"></i>&nbsp;销售单据</a></li>
+					<li><a href="#"><i class="fa fa-cog"></i>&nbsp;商品编辑</a></li>
+					<li><a href="#"><i class="fa fa-cog"></i>&nbsp;帮助</a></li>
+					<li><a href="#"><i class="fa fa-cog"></i>&nbsp;系统设置</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">货物货流<span class="caret"></span></a>
+						data-toggle="dropdown"><i class="fa fa-cog"></i>&nbsp;货物货流<span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">退货</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;退货</a></li>
 							<li class="divider"></li>
-							<li><a href="#">盘点</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;盘点</a></li>
 							<li class="divider"></li>
-							<li><a href="#">调货</a></li>
-							<li><a href="#">进货</a></li>
-							<li><a href="#">订货</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;调货</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;进货</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;订货</a></li>
 							<li class="divider"></li>
-							<li><a href="#">货流通知</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;货流通知</a></li>
 						</ul></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">交接班</a></li>
+					<li><a href="#"><i class="fa fa-cog"></i>&nbsp;交接班</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">所有功能<span class="caret"></span></a>
+						data-toggle="dropdown"><i class="fa fa-cog"></i>&nbsp;所有功能<span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">交接班</a></li>
-							<li><a href="#">新增会员</a></li>
-							<li><a href="#">销售单据</a></li>
-							<li><a href="#">退货</a></li>
-							<li><a href="#">盘点</a></li>
-							<li><a href="#">货流通知</a></li>
-							<li><a href="#">调货</a></li>
-							<li><a href="#">进货</a></li>
-							<li><a href="#">订货</a></li>
-							<li><a href="#">商品编辑</a></li>
-							<li><a href="#">系统设置</a></li>
-							<li><a href="#">打开钱箱</a></li>
-							<li><a href="#">报损</a></li>
-							<li><a href="#">半成品制作</a></li>
-							<li><a href="#">沽清</a></li>
-							<li><a href="#">帮助</a></li>
-							<li><a href="#">通知</a></li>
-							<li><a href="#">预付卡</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;交接班</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;新增会员</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;销售单据</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;退货</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;盘点</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;货流通知</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;调货</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;进货</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;订货</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;商品编辑</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;系统设置</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;打开钱箱</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;报损</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;半成品制作</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;沽清</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;帮助</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;通知</a></li>
+							<li><a href="#"><i class="fa fa-cog"></i>&nbsp;预付卡</a></li>
 						</ul></li>
 				</ul>
 			</div>
