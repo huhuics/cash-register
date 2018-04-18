@@ -25,6 +25,15 @@ public class PageTestController {
     }
 
     /**
+     * 后端面板
+     * @return
+     */
+    @RequestMapping(value = "/backstage/dashboard")
+    public String bdashboard() {
+        return "backstage/_dashboard";
+    }
+
+    /**
      * 后端首页
      * 
      * @return
@@ -61,7 +70,7 @@ public class PageTestController {
      */
     @RequestMapping(value = "/frontstage/cashRegister")
     public String fcashRegister(Model model) {
-        return "frontstage/cashRegister";
+        return "frontstage/_cashRegister";
     }
 
 }
