@@ -16,20 +16,6 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`cash-register` /*!40100 DEFAULT CHARACT
 
 USE `cash-register`;
 
-/*Table structure for table `good_quantity_unit` */
-
-DROP TABLE IF EXISTS `good_quantity_unit`;
-
-CREATE TABLE `good_quantity_unit` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
-  `unit_name` varchar(32) NOT NULL COMMENT '单位名称',
-  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `good_quantity_unit` */
-
 /*Table structure for table `goods_brand` */
 
 DROP TABLE IF EXISTS `goods_brand`;
@@ -76,19 +62,33 @@ CREATE TABLE `goods_color` (
 
 /*Data for the table `goods_color` */
 
-/*Table structure for table `goods_detail` */
+/*Table structure for table `goods_image` */
 
-DROP TABLE IF EXISTS `goods_detail`;
+DROP TABLE IF EXISTS `goods_image`;
 
-CREATE TABLE `goods_detail` (
+CREATE TABLE `goods_image` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `goods_image` blob NOT NULL COMMENT '图片的二进制数据，大小限制为1MB',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `goods_image` */
+
+/*Table structure for table `goods_info` */
+
+DROP TABLE IF EXISTS `goods_info`;
+
+CREATE TABLE `goods_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
   `goods_image_id` bigint(20) DEFAULT NULL COMMENT '商品图片，外键id',
-  `goods_name` varchar(256) NOT NULL COMMENT '商品名称',
+  `goods_name` varchar(128) NOT NULL COMMENT '商品名称',
   `bar_code` varchar(128) NOT NULL COMMENT '商品条码=商品货号+子条码，唯一标识一件商品',
   `product_number` varchar(128) NOT NULL COMMENT '商品货号,标识一类商品',
   `pinyin_code` varchar(128) NOT NULL COMMENT '拼音码，即商品名称首字母组合',
   `category_name` varchar(128) NOT NULL COMMENT '商品分类名称',
-  `goods_status` tinyint(1) DEFAULT NULL,
+  `goods_status` tinyint(1) DEFAULT NULL COMMENT '状态，1：启动，0：停用',
   `goods_brand` varchar(128) DEFAULT NULL COMMENT '商品品牌',
   `goods_color` varchar(64) NOT NULL COMMENT '商品颜色',
   `goods_size` varchar(64) NOT NULL COMMENT '商品尺码',
@@ -118,24 +118,25 @@ CREATE TABLE `goods_detail` (
   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `IDX_BAR_CODE` (`bar_code`),
-  KEY `IDX_PINYIN_CODE` (`pinyin_code`)
+  KEY `IDX_PINYIN_CODE` (`pinyin_code`),
+  KEY `IDX_GOODS_NAME` (`goods_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `goods_detail` */
+/*Data for the table `goods_info` */
 
-/*Table structure for table `goods_image` */
+/*Table structure for table `goods_quantity_unit` */
 
-DROP TABLE IF EXISTS `goods_image`;
+DROP TABLE IF EXISTS `goods_quantity_unit`;
 
-CREATE TABLE `goods_image` (
+CREATE TABLE `goods_quantity_unit` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
-  `goods_image` blob NOT NULL COMMENT '图片的二进制数据，大小限制为1MB',
+  `unit_name` varchar(32) NOT NULL COMMENT '单位名称',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `goods_image` */
+/*Data for the table `goods_quantity_unit` */
 
 /*Table structure for table `goods_size` */
 
@@ -151,11 +152,69 @@ CREATE TABLE `goods_size` (
 
 /*Data for the table `goods_size` */
 
-/*Table structure for table `supplier_detail` */
+/*Table structure for table `seller_info` */
 
-DROP TABLE IF EXISTS `supplier_detail`;
+DROP TABLE IF EXISTS `seller_info`;
 
-CREATE TABLE `supplier_detail` (
+CREATE TABLE `seller_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `part_of_shop` varchar(128) NOT NULL COMMENT '所属门店名',
+  `seller_no` varchar(32) NOT NULL COMMENT '收银员编号，可用作登录名',
+  `name` varchar(64) NOT NULL COMMENT '姓名',
+  `role` varchar(64) DEFAULT NULL COMMENT '角色名称',
+  `password` varchar(32) DEFAULT NULL COMMENT '收银员登录密码，明文存储',
+  `phone` varchar(32) DEFAULT NULL COMMENT '电话',
+  `status` tinyint(1) DEFAULT '1' COMMENT '状态，1表示启用，0表示禁用',
+  `cash_permission` varchar(2048) DEFAULT NULL COMMENT 'JSON格式，收银端权限代码集合',
+  `background_permission` varchar(2048) DEFAULT NULL COMMENT 'JSON格式，后台管理系统权限代码集合',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `seller_info` */
+
+/*Table structure for table `seller_permission_info` */
+
+DROP TABLE IF EXISTS `seller_permission_info`;
+
+CREATE TABLE `seller_permission_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `type` tinyint(1) NOT NULL COMMENT '权限种类，0：收银端，1：后台管理',
+  `permission_code` varchar(32) NOT NULL COMMENT '权限代码',
+  `permission_name` varchar(64) NOT NULL COMMENT '权限名称',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `seller_permission_info` */
+
+/*Table structure for table `shopper_info` */
+
+DROP TABLE IF EXISTS `shopper_info`;
+
+CREATE TABLE `shopper_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `shopper_no` varchar(32) NOT NULL COMMENT '导购员编号',
+  `name` varchar(64) NOT NULL COMMENT '导购姓名',
+  `phone` varchar(32) DEFAULT NULL COMMENT '电话',
+  `sales_percentage` double DEFAULT NULL COMMENT '销售提成。如5.3%则填5.3',
+  `recharge_percentage` double DEFAULT NULL COMMENT '充值提成。如5.3%则填5.3',
+  `shopping_card_percentage` double DEFAULT NULL COMMENT '购物卡提成。如5.3%则填5.3',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态.1：启用。0：停用',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `shopper_info` */
+
+/*Table structure for table `supplier_info` */
+
+DROP TABLE IF EXISTS `supplier_info`;
+
+CREATE TABLE `supplier_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
   `supplier_code` varchar(64) NOT NULL COMMENT '供应商编号',
   `supplier_name` varchar(128) NOT NULL COMMENT '供应商名称',
@@ -172,7 +231,23 @@ CREATE TABLE `supplier_detail` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `supplier_detail` */
+/*Data for the table `supplier_info` */
+
+/*Table structure for table `system_parameter` */
+
+DROP TABLE IF EXISTS `system_parameter`;
+
+CREATE TABLE `system_parameter` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `param_code` varchar(64) NOT NULL COMMENT '参数代码',
+  `param_value` varchar(64) NOT NULL COMMENT '参数值',
+  `example_value` varchar(64) DEFAULT NULL COMMENT '示例值',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `system_parameter` */
 
 /*Table structure for table `trade_detail` */
 

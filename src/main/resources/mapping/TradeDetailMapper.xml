@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cash.register.dao.TradeDetailMapper">
+  <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.TradeDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="trade_no" jdbcType="VARCHAR" property="tradeNo" />
+    <result column="trade_time" jdbcType="TIMESTAMP" property="tradeTime" />
+    <result column="trade_type" jdbcType="VARCHAR" property="tradeType" />
+    <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+    <result column="goods_count" jdbcType="INTEGER" property="goodsCount" />
+    <result column="total_amount" jdbcType="INTEGER" property="totalAmount" />
+    <result column="goods_discount" jdbcType="INTEGER" property="goodsDiscount" />
+    <result column="total_actual_amount" jdbcType="INTEGER" property="totalActualAmount" />
+    <result column="profit_amount" jdbcType="INTEGER" property="profitAmount" />
+    <result column="seller_no" jdbcType="VARCHAR" property="sellerNo" />
+    <result column="shopper_no" jdbcType="VARCHAR" property="shopperNo" />
+    <result column="goods_detail" jdbcType="VARCHAR" property="goodsDetail" />
+    <result column="pay_chenal" jdbcType="VARCHAR" property="payChenal" />
+    <result column="is_exchange_job" jdbcType="BIT" property="isExchangeJob" />
+    <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, trade_no, trade_time, trade_type, member_name, goods_count, total_amount, goods_discount, 
+    total_actual_amount, profit_amount, seller_no, shopper_no, goods_detail, pay_chenal, 
+    is_exchange_job, gmt_update, gmt_create
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from trade_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from trade_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.cash.register.dao.domain.TradeDetail">
+    insert into trade_detail (id, trade_no, trade_time, 
+      trade_type, member_name, goods_count, 
+      total_amount, goods_discount, total_actual_amount, 
+      profit_amount, seller_no, shopper_no, 
+      goods_detail, pay_chenal, is_exchange_job, 
+      gmt_update, gmt_create)
+    values (#{id,jdbcType=BIGINT}, #{tradeNo,jdbcType=VARCHAR}, #{tradeTime,jdbcType=TIMESTAMP}, 
+      #{tradeType,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, #{goodsCount,jdbcType=INTEGER}, 
+      #{totalAmount,jdbcType=INTEGER}, #{goodsDiscount,jdbcType=INTEGER}, #{totalActualAmount,jdbcType=INTEGER}, 
+      #{profitAmount,jdbcType=INTEGER}, #{sellerNo,jdbcType=VARCHAR}, #{shopperNo,jdbcType=VARCHAR}, 
+      #{goodsDetail,jdbcType=VARCHAR}, #{payChenal,jdbcType=VARCHAR}, #{isExchangeJob,jdbcType=BIT}, 
+      #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.TradeDetail">
+    insert into trade_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tradeNo != null">
+        trade_no,
+      </if>
+      <if test="tradeTime != null">
+        trade_time,
+      </if>
+      <if test="tradeType != null">
+        trade_type,
+      </if>
+      <if test="memberName != null">
+        member_name,
+      </if>
+      <if test="goodsCount != null">
+        goods_count,
+      </if>
+      <if test="totalAmount != null">
+        total_amount,
+      </if>
+      <if test="goodsDiscount != null">
+        goods_discount,
+      </if>
+      <if test="totalActualAmount != null">
+        total_actual_amount,
+      </if>
+      <if test="profitAmount != null">
+        profit_amount,
+      </if>
+      <if test="sellerNo != null">
+        seller_no,
+      </if>
+      <if test="shopperNo != null">
+        shopper_no,
+      </if>
+      <if test="goodsDetail != null">
+        goods_detail,
+      </if>
+      <if test="payChenal != null">
+        pay_chenal,
+      </if>
+      <if test="isExchangeJob != null">
+        is_exchange_job,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="tradeNo != null">
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeTime != null">
+        #{tradeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tradeType != null">
+        #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null">
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCount != null">
+        #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null">
+        #{totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDiscount != null">
+        #{goodsDiscount,jdbcType=INTEGER},
+      </if>
+      <if test="totalActualAmount != null">
+        #{totalActualAmount,jdbcType=INTEGER},
+      </if>
+      <if test="profitAmount != null">
+        #{profitAmount,jdbcType=INTEGER},
+      </if>
+      <if test="sellerNo != null">
+        #{sellerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopperNo != null">
+        #{shopperNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDetail != null">
+        #{goodsDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="payChenal != null">
+        #{payChenal,jdbcType=VARCHAR},
+      </if>
+      <if test="isExchangeJob != null">
+        #{isExchangeJob,jdbcType=BIT},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.TradeDetail">
+    update trade_detail
+    <set>
+      <if test="tradeNo != null">
+        trade_no = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeTime != null">
+        trade_time = #{tradeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tradeType != null">
+        trade_type = #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null">
+        member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCount != null">
+        goods_count = #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null">
+        total_amount = #{totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDiscount != null">
+        goods_discount = #{goodsDiscount,jdbcType=INTEGER},
+      </if>
+      <if test="totalActualAmount != null">
+        total_actual_amount = #{totalActualAmount,jdbcType=INTEGER},
+      </if>
+      <if test="profitAmount != null">
+        profit_amount = #{profitAmount,jdbcType=INTEGER},
+      </if>
+      <if test="sellerNo != null">
+        seller_no = #{sellerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopperNo != null">
+        shopper_no = #{shopperNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDetail != null">
+        goods_detail = #{goodsDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="payChenal != null">
+        pay_chenal = #{payChenal,jdbcType=VARCHAR},
+      </if>
+      <if test="isExchangeJob != null">
+        is_exchange_job = #{isExchangeJob,jdbcType=BIT},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.TradeDetail">
+    update trade_detail
+    set trade_no = #{tradeNo,jdbcType=VARCHAR},
+      trade_time = #{tradeTime,jdbcType=TIMESTAMP},
+      trade_type = #{tradeType,jdbcType=VARCHAR},
+      member_name = #{memberName,jdbcType=VARCHAR},
+      goods_count = #{goodsCount,jdbcType=INTEGER},
+      total_amount = #{totalAmount,jdbcType=INTEGER},
+      goods_discount = #{goodsDiscount,jdbcType=INTEGER},
+      total_actual_amount = #{totalActualAmount,jdbcType=INTEGER},
+      profit_amount = #{profitAmount,jdbcType=INTEGER},
+      seller_no = #{sellerNo,jdbcType=VARCHAR},
+      shopper_no = #{shopperNo,jdbcType=VARCHAR},
+      goods_detail = #{goodsDetail,jdbcType=VARCHAR},
+      pay_chenal = #{payChenal,jdbcType=VARCHAR},
+      is_exchange_job = #{isExchangeJob,jdbcType=BIT},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

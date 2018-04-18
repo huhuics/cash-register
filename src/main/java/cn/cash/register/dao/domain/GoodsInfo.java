@@ -1,78 +1,82 @@
 package cn.cash.register.dao.domain;
 
-import cn.cash.register.util.Money;
 import java.util.Date;
 
-public class GoodsDetail {
-    private Long id;
+import cn.cash.register.util.Money;
 
-    private Long goodsImageId;
+public class GoodsInfo extends BaseDomain {
+    /**  */
+    private static final long serialVersionUID = 5164344611238559512L;
 
-    private String goodsName;
+    private Long              id;
 
-    private String barCode;
+    private Long              goodsImageId;
 
-    private String productNumber;
+    private String            goodsName;
 
-    private String pinyinCode;
+    private String            barCode;
 
-    private String categoryName;
+    private String            productNumber;
 
-    private Boolean goodsStatus;
+    private String            pinyinCode;
 
-    private String goodsBrand;
+    private String            categoryName;
 
-    private String goodsColor;
+    private Boolean           goodsStatus;
 
-    private String goodsSize;
+    private String            goodsBrand;
 
-    private Integer goodsStock;
+    private String            goodsColor;
 
-    private String quantityUnit;
+    private String            goodsSize;
 
-    private Integer stockUpperLimit;
+    private Integer           goodsStock;
 
-    private Integer stockLowerLimit;
+    private String            quantityUnit;
 
-    private Money importPrice;
+    private Integer           stockUpperLimit;
 
-    private Money averageImportPrice;
+    private Integer           stockLowerLimit;
 
-    private Money salesPrice;
+    private Money             importPrice;
 
-    private Money tradePrice;
+    private Money             averageImportPrice;
 
-    private Money vipPrice;
+    private Money             salesPrice;
 
-    private Boolean isVipDiscount;
+    private Money             tradePrice;
 
-    private String supplierName;
+    private Money             vipPrice;
 
-    private Date productionDate;
+    private Boolean           isVipDiscount;
 
-    private Integer qualityGuaranteePeriod;
+    private String            supplierName;
 
-    private Boolean isIntegral;
+    private Date              productionDate;
 
-    private Boolean royaltyType;
+    private Integer           qualityGuaranteePeriod;
 
-    private Boolean isBooked;
+    private Boolean           isIntegral;
 
-    private Boolean isGift;
+    private Boolean           royaltyType;
 
-    private Boolean isWeigh;
+    private Boolean           isBooked;
 
-    private Boolean isFixedPrice;
+    private Boolean           isGift;
 
-    private Boolean isTimeingPrice;
+    private Boolean           isWeigh;
 
-    private Boolean isHidden;
+    private Boolean           isFixedPrice;
 
-    private String remark;
+    private Boolean           isTimeingPrice;
 
-    private Date gmtUpdate;
+    private Boolean           isHidden;
 
-    private Date gmtCreate;
+    private String            remark;
+
+    private Date              gmtUpdate;
+
+    private Date              gmtCreate;
 
     public Long getId() {
         return id;
