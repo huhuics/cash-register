@@ -18,7 +18,7 @@ var vm = new Vue({
 	methods : {
 		menuClick : function(url) {
 			var url = (event.currentTarget + '').split('#')[1];
-			vm.mainPage = url;
+			vm.iframeSrc = url;
 
 			var $currentA = $("a[href='#" + url + "']");
 

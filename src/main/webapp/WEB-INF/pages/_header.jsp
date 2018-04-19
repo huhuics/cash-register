@@ -8,6 +8,7 @@
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
 <link rel="stylesheet" href="${ctx}/static/plugins/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="${ctx}/static/plugins/bootstrap-select/css/bootstrap-select.min.css">
 <link rel="stylesheet" href="${ctx}/static/plugins/adminlte/css/font-awesome.min.css">
 <link rel="stylesheet" href="${ctx}/static/plugins/jqgrid/ui.jqgrid-bootstrap.css">
 <link rel="stylesheet" href="${ctx}/static/css/main.css">
@@ -15,6 +16,8 @@
 <script src="${ctx}/static/plugins/jquery/jquery-3.2.1.min.js"></script>
 <script src="${ctx}/static/plugins/layer/layer.js"></script>
 <script src="${ctx}/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="${ctx}/static/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
+<script src="${ctx}/static/plugins/adminlte/js/adminlte.min.js"></script>
 <script src="${ctx}/static/js/vue.min.js"></script>
 <script src="${ctx}/static/plugins/jqgrid/grid.locale-cn.js"></script>
 <script src="${ctx}/static/plugins/jqgrid/jquery.jqGrid.min.js"></script>
