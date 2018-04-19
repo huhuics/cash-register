@@ -4,11 +4,14 @@
  */
 package cn.cash.register.service;
 
+import java.util.List;
+
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.PageInfoQueryRequest;
 import cn.cash.register.dao.domain.GoodsImage;
 import cn.cash.register.dao.domain.GoodsInfo;
+import cn.cash.register.enums.UpdateFieldEnum;
 
 /**
  * 商品信息服务接口
@@ -25,7 +28,7 @@ public interface GoodsInfoService {
     /**
      * 根据id删除商品
      */
-    int delete(Long id);
+    void delete(List<Long> ids);
 
     /**
      * 修改商品
@@ -48,12 +51,17 @@ public interface GoodsInfoService {
      * @param goodsInfoId  商品id
      * @param goodsImage   图片二进制数据
      */
-    int updateGoodsImage(Long goodsInfoId, byte[] goodsImage);
+    void updateGoodsImage(Long goodsInfoId, byte[] goodsImage);
 
     /**
      * 查询商品图片
      * @param goodsImageId  商品图片id
      */
     GoodsImage queryGoodsImage(Long goodsImageId);
+
+    /**
+     * 批量操作
+     */
+    void batchUpdate(List<Long> goodsIds, Object newValue, UpdateFieldEnum filedEnum);
 
 }

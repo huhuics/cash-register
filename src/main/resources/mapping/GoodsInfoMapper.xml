@@ -28,7 +28,7 @@
     <result column="production_date" jdbcType="TIMESTAMP" property="productionDate" />
     <result column="quality_guarantee_period" jdbcType="INTEGER" property="qualityGuaranteePeriod" />
     <result column="is_integral" jdbcType="BIT" property="isIntegral" />
-    <result column="royalty_type" jdbcType="BIT" property="royaltyType" />
+    <result column="royalty_type" jdbcType="VARCHAR" property="royaltyType" />
     <result column="is_booked" jdbcType="BIT" property="isBooked" />
     <result column="is_gift" jdbcType="BIT" property="isGift" />
     <result column="is_weigh" jdbcType="BIT" property="isWeigh" />
@@ -78,7 +78,7 @@
       #{stockLowerLimit,jdbcType=INTEGER}, #{importPrice,jdbcType=INTEGER}, #{averageImportPrice,jdbcType=INTEGER}, 
       #{salesPrice,jdbcType=INTEGER}, #{tradePrice,jdbcType=INTEGER}, #{vipPrice,jdbcType=INTEGER}, 
       #{isVipDiscount,jdbcType=BIT}, #{supplierName,jdbcType=VARCHAR}, #{productionDate,jdbcType=TIMESTAMP}, 
-      #{qualityGuaranteePeriod,jdbcType=INTEGER}, #{isIntegral,jdbcType=BIT}, #{royaltyType,jdbcType=BIT}, 
+      #{qualityGuaranteePeriod,jdbcType=INTEGER}, #{isIntegral,jdbcType=BIT}, #{royaltyType,jdbcType=VARCHAR}, 
       #{isBooked,jdbcType=BIT}, #{isGift,jdbcType=BIT}, #{isWeigh,jdbcType=BIT}, #{isFixedPrice,jdbcType=BIT}, 
       #{isTimeingPrice,jdbcType=BIT}, #{isHidden,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, 
       #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
@@ -275,7 +275,7 @@
         #{isIntegral,jdbcType=BIT},
       </if>
       <if test="royaltyType != null">
-        #{royaltyType,jdbcType=BIT},
+        #{royaltyType,jdbcType=VARCHAR},
       </if>
       <if test="isBooked != null">
         #{isBooked,jdbcType=BIT},
@@ -385,7 +385,7 @@
         is_integral = #{isIntegral,jdbcType=BIT},
       </if>
       <if test="royaltyType != null">
-        royalty_type = #{royaltyType,jdbcType=BIT},
+        royalty_type = #{royaltyType,jdbcType=VARCHAR},
       </if>
       <if test="isBooked != null">
         is_booked = #{isBooked,jdbcType=BIT},
@@ -444,7 +444,7 @@
       production_date = #{productionDate,jdbcType=TIMESTAMP},
       quality_guarantee_period = #{qualityGuaranteePeriod,jdbcType=INTEGER},
       is_integral = #{isIntegral,jdbcType=BIT},
-      royalty_type = #{royaltyType,jdbcType=BIT},
+      royalty_type = #{royaltyType,jdbcType=VARCHAR},
       is_booked = #{isBooked,jdbcType=BIT},
       is_gift = #{isGift,jdbcType=BIT},
       is_weigh = #{isWeigh,jdbcType=BIT},
@@ -486,4 +486,5 @@
     	and pinyin_code = #{pinyinCode,jdbcType=VARCHAR}
     </if>
   </select>
+  
 </mapper>

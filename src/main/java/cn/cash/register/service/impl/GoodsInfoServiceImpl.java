@@ -4,11 +4,13 @@
  */
 package cn.cash.register.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -25,9 +28,11 @@ import cn.cash.register.dao.GoodsImageMapper;
 import cn.cash.register.dao.GoodsInfoMapper;
 import cn.cash.register.dao.domain.GoodsImage;
 import cn.cash.register.dao.domain.GoodsInfo;
+import cn.cash.register.enums.UpdateFieldEnum;
 import cn.cash.register.service.GoodsInfoService;
 import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.LogUtil;
+import cn.cash.register.util.Money;
 
 /**
  * 商品信息服务接口实现类
@@ -56,9 +61,12 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
-    public int delete(Long id) {
-        LogUtil.info(logger, "收到删除商品请求,id={0}", id);
-        return goodsInfoMapper.deleteByPrimaryKey(id);
+    public void delete(List<Long> ids) {
+        LogUtil.info(logger, "收到删除商品请求,ids={0}", ids);
+
+        for (Long id : ids) {
+            goodsInfoMapper.deleteByPrimaryKey(id);
+        }
     }
 
     @Override
@@ -87,7 +95,7 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
-    public int updateGoodsImage(Long goodsInfoId, byte[] goodsImage) {
+    public void updateGoodsImage(Long goodsInfoId, byte[] goodsImage) {
 
         LogUtil.info(logger, "收到商品图片改变请求,goodsInfoId={0}", goodsInfoId);
 
@@ -120,14 +128,67 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
                 }
             }
         });
-
-        return 0;
     }
 
     @Override
     public GoodsImage queryGoodsImage(Long goodsImageId) {
         LogUtil.info(logger, "收到查询商品图片请求imageId={0}", goodsImageId);
         return goodsImageMapper.selectByPrimaryKey(goodsImageId);
+    }
+
+    @Override
+    public void batchUpdate(List<Long> goodsIds, Object newValue, UpdateFieldEnum filedEnum) {
+        if (CollectionUtils.isEmpty(goodsIds)) {
+            return;
+        }
+
+        LogUtil.info(logger, "收到批量操作请求,ids.size={0}", goodsIds.size());
+
+        List<GoodsInfo> goodsInfos = new ArrayList<>(goodsIds.size());
+
+        for (Long id : goodsIds) {
+            GoodsInfo goodsInfo = goodsInfoMapper.selectByPrimaryKey(id);
+            if (goodsInfo != null) {
+                goodsInfos.add(goodsInfo);
+            }
+        }
+
+        for (GoodsInfo item : goodsInfos) {
+            if (filedEnum == UpdateFieldEnum.royaltyType) {
+                JSONObject json = (JSONObject) newValue;
+                item.setRoyaltyType(json.toJSONString());
+            } else if (filedEnum == UpdateFieldEnum.vipPrice) {
+                Money vipPrice = new Money((String) newValue);
+                item.setVipPrice(vipPrice);
+            } else if (filedEnum == UpdateFieldEnum.categoryName) {
+                item.setCategoryName((String) newValue);
+            } else if (filedEnum == UpdateFieldEnum.goodsTag) {
+                item.setGoodsTag((String) newValue);
+            } else if (filedEnum == UpdateFieldEnum.goodsBrand) {
+                item.setGoodsBrand((String) newValue);
+            } else if (filedEnum == UpdateFieldEnum.supplierName) {
+                item.setSupplierName((String) newValue);
+            } else if (filedEnum == UpdateFieldEnum.isIntegral) {
+                item.setIsIntegral((Boolean) newValue);
+            } else if (filedEnum == UpdateFieldEnum.isVipDiscount) {
+                item.setIsVipDiscount((Boolean) newValue);
+            } else if (filedEnum == UpdateFieldEnum.goodsStatus) {
+                item.setGoodsStatus((Boolean) newValue);
+            } else if (filedEnum == UpdateFieldEnum.isGift) {
+                item.setIsGift((Boolean) newValue);
+            } else if (filedEnum == UpdateFieldEnum.isHidden) {
+                item.setIsHidden((Boolean) newValue);
+            } else if (filedEnum == UpdateFieldEnum.isBooked) {
+                item.setIsBooked((Boolean) newValue);
+            } else if (filedEnum == UpdateFieldEnum.isFixedPrice) {
+                item.setIsFixedPrice((Boolean) newValue);
+            } else if (filedEnum == UpdateFieldEnum.isTimeingPrice) {
+                item.setIsTimeingPrice((Boolean) newValue);
+            }
+
+            goodsInfoMapper.updateByPrimaryKey(item);
+        }
+
     }
 
 }
