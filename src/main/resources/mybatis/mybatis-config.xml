@@ -3,6 +3,11 @@
  "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+	<settings>
+        <!-- 打印SQL语句 -->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>
+
 	<!-- 注册typeHandler, 处理表示Money的字段 -->
 	<typeHandlers>
 		<typeHandler
