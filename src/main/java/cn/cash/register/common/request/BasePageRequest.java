@@ -1,4 +1,4 @@
-package cn.cash.register.common.request.base;
+package cn.cash.register.common.request;
 
 import cn.cash.register.util.AssertUtil;
 
@@ -17,13 +17,13 @@ public class BasePageRequest extends BaseRequest {
     protected int             pageNum;
 
     /** 每页查询结果数 */
-    protected int             pageSize;
+    protected int             pageSize         = 10;
 
-    /** 排序字段名*/
-    protected String          sidx;
+    /** 排序字段名,默认主键排序:id*/
+    protected String          sidx             = "id";
 
-    /** 排序方式*/
-    protected String          order;
+    /** 排序方式,默认:升序*/
+    protected String          order            = "asc";
 
     /**
      * Getter method for property <tt>pageNum</tt>.

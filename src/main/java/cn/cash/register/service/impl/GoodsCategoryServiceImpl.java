@@ -69,13 +69,13 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus status) {
 
-                //删除结点
+                //1.删除结点
                 goodsCategoryMapper.deleteByPrimaryKey(categoryId);
 
-                //查询当前节点的所有子节点
+                //2.查询当前节点的所有子节点
                 List<GoodsCategory> children = goodsCategoryMapper.selectByParentId(categoryId);
 
-                //遍历子节点
+                //3.遍历子节点并删除
                 for (GoodsCategory child : children) {
                     delete(child.getId());
                 }

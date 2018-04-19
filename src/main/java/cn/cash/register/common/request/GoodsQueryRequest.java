@@ -1,6 +1,4 @@
-package cn.cash.register.common.request.backstage;
-
-import cn.cash.register.common.request.base.BasePageRequest;
+package cn.cash.register.common.request;
 
 /**
  * 后台商品列表查询请求

@@ -174,4 +174,23 @@
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="list" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.SellerInfoQueryRequest">
+  		select 
+    	<include refid="Base_Column_List" />
+    	from seller_info where 1=1
+    	<if test="sellerNo != null and sellerNo !=''">
+    		and seller_no = #{sellerNo,jdbcType=VARCHAR}
+    	</if>
+    	<if test="name != null and name !=''">
+    		and name = #{name,jdbcType=VARCHAR}
+    	</if>
+    	<if test="phone != null and phone !=''">
+    		and phone = #{phone,jdbcType=VARCHAR}
+    	</if>
+    	<if test="status != null and status !=''">
+    		and status = #{status,jdbcType=BIT}
+    	</if>
+  </select>
+  
 </mapper>

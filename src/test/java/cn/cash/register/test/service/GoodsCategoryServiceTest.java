@@ -16,9 +16,14 @@ public class GoodsCategoryServiceTest extends BaseTest {
     private GoodsCategoryService categoryService;
 
     @Test
-    public void test() {
+    public void testGetTree() {
         JSONArray tree = categoryService.getTree(1L);
         LogUtil.info(logger, "{0}", tree);
+    }
+
+    @Test
+    public void testDelete() {
+        categoryService.delete(5L);
     }
 
 }
