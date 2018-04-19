@@ -179,7 +179,6 @@
     <script src="${ctx}/static/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="${ctx}/static/plugins/adminlte/js/adminlte.min.js"></script>
     <script src="${ctx}/static/js/vue.min.js"></script>
-    <script src="${ctx}/static/js/router.js"></script>
     <script src="${ctx}/static/plugins/layer/layer.js"></script>
     <script src="${ctx}/static/js/backstage/index.js"></script>
 </body>

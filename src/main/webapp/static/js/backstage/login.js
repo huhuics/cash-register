@@ -8,14 +8,14 @@ var vm = new Vue({
     	login: function(){
     		$.ajax({
     			type : 'post',
-    			url : ctx + '/adminLogin',
+    			url : basePath + '/adminLogin',
     			data : {
     				loginName: vm.loginName,
     				loginPassword: vm.loginPassword
     			},
     			success: function(result) {
                     if (result.code == "00") {
-                    	window.location.href = ctx + '/admin/index'
+                    	window.location.href = basePath + '/admin/index'
                     } else {
                         layer.alert(result.msg);
                     }

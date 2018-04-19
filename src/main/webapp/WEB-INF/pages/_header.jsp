@@ -18,3 +18,4 @@
 <script src="${ctx}/static/js/vue.min.js"></script>
 <script src="${ctx}/static/plugins/jqgrid/grid.locale-cn.js"></script>
 <script src="${ctx}/static/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="${ctx}/static/js/common.js"></script>
