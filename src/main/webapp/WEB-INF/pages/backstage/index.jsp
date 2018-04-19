@@ -40,7 +40,7 @@
                 <ul class="sidebar-menu tree" data-widget="tree">
                     <li class="header">导航</li>
                     <li class="active">
-					    <a href="#backstage/dashboard" @click="menuClick"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
+					    <a href="#dashboard" @click="menuClick"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
 					</li>
                     <li class="treeview"><a href="#"> <i
 					class="fa fa-dashboard"></i> <span>销售</span> <span
@@ -49,13 +49,13 @@
 				</span>
 			</a>
                         <ul class="treeview-menu">
-                            <li><a href="#backstage/login" @click="menuClick"><i class="fa fa-circle-o"></i>营业概况</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>销售单据</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>日结记录</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>销售统计</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>交接班记录</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>现金收支明细</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>营业报表</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>营业概况</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>销售单据</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>日结记录</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>销售统计</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>交接班记录</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>现金收支明细</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>营业报表</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
@@ -64,11 +64,11 @@
 				</span>
 			</a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i>库存查询</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>库存预警</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>变动明细</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>盘点历史</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>商品报损</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>库存查询</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>库存预警</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>变动明细</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>盘点历史</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>商品报损</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
@@ -77,8 +77,8 @@
 				</span>
 			</a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i>促销活动设置</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>充值赠送活动设置</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>促销活动设置</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>充值赠送活动设置</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
@@ -87,9 +87,9 @@
 				</span>
 			</a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i>供货商</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>进货</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>出库</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>供货商</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>进货</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>出库</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
@@ -98,9 +98,9 @@
 				</span>
 			</a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i>商品资料</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>商品分类</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>批量操作</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>商品资料</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>商品分类</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>批量操作</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
@@ -109,11 +109,11 @@
 				</span>
 			</a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i>会员资料</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>会员等级</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>会员制度</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>会员卡报表</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>会员分析</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员资料</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员等级</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员制度</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员卡报表</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员分析</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
@@ -122,11 +122,11 @@
 				</span>
 			</a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i>收银员资料</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>收银员业绩</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>导购员资料</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>导购员业绩</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>导购明细</a></li>
+                            <li><a href="#seller" @click="menuClick"><i class="fa fa-circle-o"></i>收银员资料</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>收银员业绩</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>导购员资料</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>导购员业绩</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>导购明细</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
@@ -135,10 +135,10 @@
 				</span>
 			</a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i>账户设置</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>系统设置</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>支付方式</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>操作日志</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>账户设置</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>系统设置</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>支付方式</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>操作日志</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
@@ -147,9 +147,9 @@
 				</span>
 			</a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i>文件上传</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>报表打印</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i>缓存</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>文件上传</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>报表打印</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>缓存</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -167,7 +167,7 @@
             </section>
             <!-- Main content -->
             <section class="content" style="background:#fff;">
-                <iframe scrolling="yes" frameborder="0" style="width: 100%; min-height: 200px; overflow: visible; background: #fff;" :src="mainPage"></iframe>
+                <iframe scrolling="yes" frameborder="0" style="width: 100%; min-height: 200px; overflow: visible; background: #fff;" :src="iframeSrc"></iframe>
             </section>
             <!-- /.content -->
         </div>
@@ -179,7 +179,6 @@
     <script src="${ctx}/static/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="${ctx}/static/plugins/adminlte/js/adminlte.min.js"></script>
     <script src="${ctx}/static/js/vue.min.js"></script>
-    <script src="${ctx}/static/js/router.js"></script>
     <script src="${ctx}/static/plugins/layer/layer.js"></script>
     <script src="${ctx}/static/js/backstage/index.js"></script>
 </body>

@@ -17,7 +17,7 @@ import cn.cash.register.util.ResultSet;
  * @version $Id: BackstageGoodsController.java, v 0.1 2018年4月18日 下午4:24:57 51 Exp $
  */
 @Controller
-@RequestMapping("/backstage/goods")
+@RequestMapping("/admin/goods")
 public class BackstageGoodsController {
 
     private static final Logger logger = LoggerFactory.getLogger(BackstageGoodsController.class);

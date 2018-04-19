@@ -40,13 +40,11 @@
 			</div>
 		</form>
 	</div>
-	<script type="text/javascript">
-		var ctx = '${pageContext.request.contextPath}';
-	</script>
 	<script src="${ctx}/static/plugins/jquery/jquery-3.2.1.min.js"></script>
     <script src="${ctx}/static/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="${ctx}/static/js/vue.min.js"></script>
     <script src="${ctx}/static/plugins/layer/layer.js"></script>
+    <script src="${ctx}/static/js/common.js"></script>
 	<script src="${ctx}/static/js/backstage/login.js"></script>
 </body>
 </html>
