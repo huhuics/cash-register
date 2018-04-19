@@ -40,7 +40,7 @@
                 <ul class="sidebar-menu tree" data-widget="tree">
                     <li class="header">导航</li>
                     <li class="active">
-					    <a href="#backstage/dashboard" @click="menuClick"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
+					    <a href="#dashboard" @click="menuClick"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
 					</li>
                     <li class="treeview"><a href="#"> <i
 					class="fa fa-dashboard"></i> <span>销售</span> <span
@@ -167,7 +167,7 @@
             </section>
             <!-- Main content -->
             <section class="content" style="background:#fff;">
-                <iframe scrolling="yes" frameborder="0" style="width: 100%; min-height: 200px; overflow: visible; background: #fff;" :src="mainPage"></iframe>
+                <iframe scrolling="yes" frameborder="0" style="width: 100%; min-height: 200px; overflow: visible; background: #fff;" :src="iframeSrc"></iframe>
             </section>
             <!-- /.content -->
         </div>
