@@ -14,6 +14,15 @@ public class GoodsImage extends BaseDomain {
 
     private byte[]            goodsImage;
 
+    public GoodsImage() {
+    }
+
+    public GoodsImage(Date gmtCreate, byte[] goodsImage) {
+        super();
+        this.gmtCreate = gmtCreate;
+        this.goodsImage = goodsImage;
+    }
+
     public Long getId() {
         return id;
     }

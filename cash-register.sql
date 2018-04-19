@@ -24,7 +24,7 @@ CREATE TABLE `goods_brand` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
   `brand_name` varchar(128) NOT NULL COMMENT '品牌名称',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -38,15 +38,14 @@ CREATE TABLE `goods_category` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
   `category_name` varchar(64) NOT NULL COMMENT '分类名称',
   `parent_id` bigint(20) NOT NULL COMMENT '父节点id',
-  `key` varchar(32) NOT NULL COMMENT '线索名',
-  `level` int(11) NOT NULL COMMENT '深度，表示当前节点到根节点的距离',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  PRIMARY KEY (`id`),
-  KEY `IDX_CATEGORY_KEY` (`key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_category` */
+
+insert  into `goods_category`(`id`,`category_name`,`parent_id`,`gmt_update`,`gmt_create`) values (1,'root',0,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(2,'a',1,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(3,'b',1,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(4,'c',1,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(6,'e',2,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(7,'f',2,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(8,'x',3,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(9,'y',3,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(10,'z',3,'2018-04-18 11:42:14','2018-04-18 11:42:14');
 
 /*Table structure for table `goods_color` */
 
@@ -56,11 +55,13 @@ CREATE TABLE `goods_color` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
   `color` varchar(64) NOT NULL COMMENT '颜色',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_color` */
+
+insert  into `goods_color`(`id`,`color`,`gmt_update`,`gmt_create`) values (1,'红色','2018-04-19 10:23:23','2018-04-19 10:23:23');
 
 /*Table structure for table `goods_image` */
 
@@ -70,7 +71,7 @@ CREATE TABLE `goods_image` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
   `goods_image` blob NOT NULL COMMENT '图片的二进制数据，大小限制为1MB',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -115,7 +116,7 @@ CREATE TABLE `goods_info` (
   `is_hidden` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否隐藏，1：是。0：否',
   `remark` varchar(1024) DEFAULT NULL COMMENT '商品备注',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `IDX_BAR_CODE` (`bar_code`),
   KEY `IDX_PINYIN_CODE` (`pinyin_code`),
@@ -132,7 +133,7 @@ CREATE TABLE `goods_quantity_unit` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
   `unit_name` varchar(32) NOT NULL COMMENT '单位名称',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -146,7 +147,7 @@ CREATE TABLE `goods_size` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
   `size_name` varchar(64) NOT NULL COMMENT '尺寸名称',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -168,11 +169,13 @@ CREATE TABLE `seller_info` (
   `cash_permission` varchar(2048) DEFAULT NULL COMMENT 'JSON格式，收银端权限代码集合',
   `background_permission` varchar(2048) DEFAULT NULL COMMENT 'JSON格式，后台管理系统权限代码集合',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
 /*Data for the table `seller_info` */
+
+insert  into `seller_info`(`id`,`part_of_shop`,`seller_no`,`name`,`role`,`password`,`phone`,`status`,`cash_permission`,`background_permission`,`gmt_update`,`gmt_create`) values (1,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:06','2018-04-19 11:04:06'),(2,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(3,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(4,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(5,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(6,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(7,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(8,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(9,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(10,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(11,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(12,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(13,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(14,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(15,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(16,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(17,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(18,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(19,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(20,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(21,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(22,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(23,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(24,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(25,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(26,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(27,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(28,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(29,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(30,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(31,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(32,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(33,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49');
 
 /*Table structure for table `seller_permission_info` */
 
@@ -184,7 +187,7 @@ CREATE TABLE `seller_permission_info` (
   `permission_code` varchar(32) NOT NULL COMMENT '权限代码',
   `permission_name` varchar(64) NOT NULL COMMENT '权限名称',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -204,7 +207,7 @@ CREATE TABLE `shopper_info` (
   `shopping_card_percentage` double DEFAULT NULL COMMENT '购物卡提成。如5.3%则填5.3',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态.1：启用。0：停用',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -226,8 +229,8 @@ CREATE TABLE `supplier_info` (
   `regular_rebate` double DEFAULT NULL COMMENT '固定返利点',
   `supplier_address` varchar(256) DEFAULT NULL COMMENT '地址',
   `remark` varchar(1024) DEFAULT NULL COMMENT '备注',
-  `gmt_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `gmt_create` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -243,7 +246,7 @@ CREATE TABLE `system_parameter` (
   `param_value` varchar(64) NOT NULL COMMENT '参数值',
   `example_value` varchar(64) DEFAULT NULL COMMENT '示例值',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -256,7 +259,7 @@ DROP TABLE IF EXISTS `trade_detail`;
 CREATE TABLE `trade_detail` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
   `trade_no` varchar(64) NOT NULL COMMENT '流水号，唯一确定一笔交易，规则为年月日时分秒毫秒',
-  `trade_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '交易完成时间',
+  `trade_time` timestamp NULL DEFAULT NULL COMMENT '交易完成时间',
   `trade_type` varchar(32) NOT NULL COMMENT '交易类型。SALES：销售。REFUND：退款',
   `member_name` varchar(64) DEFAULT NULL COMMENT '会员姓名',
   `goods_count` int(11) NOT NULL COMMENT '商品数量。退款为负',
@@ -270,7 +273,7 @@ CREATE TABLE `trade_detail` (
   `pay_chenal` varchar(256) NOT NULL COMMENT 'JSON格式，支付方式及该方式对应的金额。有可能是混合支付',
   `is_exchange_job` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否交接班。1：已交接。0：未交接',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改日期',
-  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建日期',
   PRIMARY KEY (`id`),
   KEY `INX_TRADE_NO` (`trade_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -284,7 +287,7 @@ DROP TABLE IF EXISTS `trade_goods_detail`;
 CREATE TABLE `trade_goods_detail` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
   `trade_no` varchar(64) NOT NULL COMMENT '流水号，关联trade_detail表',
-  `trade_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '交易完成时间',
+  `trade_time` timestamp NULL DEFAULT NULL COMMENT '交易完成时间',
   `trade_type` varchar(32) NOT NULL COMMENT '交易类型。SALES：销售。REFUND：退款',
   `goods_name` varchar(256) DEFAULT NULL COMMENT '商品名称',
   `bar_code` varchar(128) DEFAULT NULL COMMENT '商品条码',
@@ -297,7 +300,7 @@ CREATE TABLE `trade_goods_detail` (
   `total_actual_amount` int(11) NOT NULL COMMENT '商品实收之和，单位：分。退款为负',
   `profit_amount` int(11) NOT NULL COMMENT '利润，单位：分。退款为负',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `IDX_TRADE_NO` (`trade_no`),
   KEY `IDX_BAR_CODE` (`bar_code`)

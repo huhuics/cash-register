@@ -13,8 +13,8 @@ public class BasePageRequest extends BaseRequest {
     /**  */
     private static final long serialVersionUID = 3515108529325911948L;
 
-    /** 查询页码 */
-    protected int             pageNum;
+    /** 查询页码,默认查询第一页 */
+    protected int             pageNum          = 1;
 
     /** 每页查询结果数 */
     protected int             pageSize         = 10;

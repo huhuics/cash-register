@@ -6,7 +6,7 @@ import cn.cash.register.util.Money;
 
 public class GoodsInfo extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = 5164344611238559512L;
+    private static final long serialVersionUID = -1937923309855379985L;
 
     private Long              id;
 
@@ -29,6 +29,8 @@ public class GoodsInfo extends BaseDomain {
     private String            goodsColor;
 
     private String            goodsSize;
+
+    private String            goodsTag;
 
     private Integer           goodsStock;
 
@@ -164,6 +166,14 @@ public class GoodsInfo extends BaseDomain {
 
     public void setGoodsSize(String goodsSize) {
         this.goodsSize = goodsSize == null ? null : goodsSize.trim();
+    }
+
+    public String getGoodsTag() {
+        return goodsTag;
+    }
+
+    public void setGoodsTag(String goodsTag) {
+        this.goodsTag = goodsTag == null ? null : goodsTag.trim();
     }
 
     public Integer getGoodsStock() {

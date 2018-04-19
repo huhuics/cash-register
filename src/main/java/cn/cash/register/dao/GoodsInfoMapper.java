@@ -1,5 +1,8 @@
 package cn.cash.register.dao;
 
+import java.util.List;
+
+import cn.cash.register.common.request.PageInfoQueryRequest;
 import cn.cash.register.dao.domain.GoodsInfo;
 
 public interface GoodsInfoMapper {
@@ -14,4 +17,6 @@ public interface GoodsInfoMapper {
     int updateByPrimaryKeySelective(GoodsInfo record);
 
     int updateByPrimaryKey(GoodsInfo record);
+
+    List<GoodsInfo> list(PageInfoQueryRequest request);
 }

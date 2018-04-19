@@ -64,7 +64,7 @@ public class SellerInfoServiceImpl implements SellerInfoService {
 
         List<SellerInfo> list = sellerInfoMapper.list(request);
 
-        return new PageInfo<>(list);
+        return new PageInfo<SellerInfo>(list);
     }
 
     @Override
