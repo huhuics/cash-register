@@ -16,15 +16,12 @@
 <link rel="stylesheet"
 	href="${ctx}/static/plugins/adminlte/css/font-awesome.min.css">
 <title>Cash Register Login</title>
+
 </head>
 
 <body class="login-img3-body">
-	<div class="container">
-
-		<form class="login-form" role="form" action="${ctx}/login"
-			method="post" id="myForm">
-			<!-- error tip -->
-
+	<div class="container" id="app">
+		<form class="login-form" role="form">
 			<div class="login-wrap">
 				<p class="login-img">
 					<i class="icon_lock_alt"></i>
@@ -32,23 +29,24 @@
 				<div class="input-group">
 					<span class="input-group-addon"><i class="icon_profile"></i></span>
 					<input type="text" class="form-control" placeholder="用户名"
-						name="username" required alphanumeric="true" autofocus>
+						v-model="loginName" required alphanumeric="true" autofocus>
 				</div>
 				<div class="input-group">
 					<span class="input-group-addon"><i class="icon_key_alt"></i></span>
 					<input type="password" class="form-control" placeholder="密码"
-						name="password" required alphanumeric="true">
+						v-model="loginPassword" required alphanumeric="true">
 				</div>
-
-				<button class="btn btn-primary btn-lg btn-block" type="submit">登陆</button>
-
-				<c:if test="${not empty errorMsg }">
-					<div class="alert alert-danger alert-dismissible center-block"
-						role="alert" style="max-width: 600px; margin-top: 15px;">
-						${errorMsg }</div>
-				</c:if>
+				<button class="btn btn-primary btn-lg btn-block" type="button" @click="login">登录</button>
 			</div>
 		</form>
 	</div>
+	<script type="text/javascript">
+		var ctx = '${pageContext.request.contextPath}';
+	</script>
+	<script src="${ctx}/static/plugins/jquery/jquery-3.2.1.min.js"></script>
+    <script src="${ctx}/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${ctx}/static/js/vue.min.js"></script>
+    <script src="${ctx}/static/plugins/layer/layer.js"></script>
+	<script src="${ctx}/static/js/backstage/login.js"></script>
 </body>
 </html>
