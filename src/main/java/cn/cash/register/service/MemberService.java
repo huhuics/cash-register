@@ -23,8 +23,9 @@ public interface MemberService {
 
     /**
      * 增加会员
+     * 返回主键
      */
-    int addMember(MemberInfo memberInfo);
+    Long addMember(MemberInfo memberInfo);
 
     /**
      * 根据主键删除会员
@@ -50,8 +51,9 @@ public interface MemberService {
 
     /**
      * 增加会员等级信息
+     * 返回主键
      */
-    int addMemRank(MemberRank rank);
+    Long addMemRank(MemberRank rank);
 
     /**
      * 删除会员等级

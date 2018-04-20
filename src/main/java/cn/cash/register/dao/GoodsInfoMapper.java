@@ -10,7 +10,7 @@ public interface GoodsInfoMapper {
 
     int insert(GoodsInfo record);
 
-    int insertSelective(GoodsInfo record);
+    Long insertSelective(GoodsInfo record);
 
     GoodsInfo selectByPrimaryKey(Long id);
 

@@ -17,9 +17,10 @@ public interface GoodsColorService {
 
     /**
      * 增加商品颜色
-     * @param colors 商品颜色集合
+     * @param color 商品颜色
+     * 返回主键
      */
-    void addColors(List<GoodsColor> colors);
+    Long addColor(GoodsColor color);
 
     /**
      * 查询所有商品颜色

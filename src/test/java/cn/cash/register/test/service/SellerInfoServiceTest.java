@@ -29,8 +29,7 @@ public class SellerInfoServiceTest extends BaseTest {
     @Test
     public void testAddSeller() {
         SellerInfo sellerInfo = createSeller();
-        int ret = sellerInfoService.addSeller(sellerInfo);
-        Assert.assertTrue(ret == 1);
+        sellerInfoService.addSeller(sellerInfo);
     }
 
     @Test

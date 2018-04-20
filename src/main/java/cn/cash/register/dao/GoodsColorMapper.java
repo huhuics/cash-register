@@ -9,7 +9,7 @@ public interface GoodsColorMapper {
 
     int insert(GoodsColor record);
 
-    int insertSelective(GoodsColor record);
+    Long insertSelective(GoodsColor record);
 
     GoodsColor selectByPrimaryKey(Long id);
 

@@ -83,7 +83,7 @@
       #{isTimeingPrice,jdbcType=BIT}, #{isHidden,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, 
       #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.GoodsInfo">
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.GoodsInfo" useGeneratedKeys="true" keyProperty="id">
     insert into goods_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

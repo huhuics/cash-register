@@ -22,8 +22,9 @@ public interface GoodsInfoService {
 
     /**
      * 增加商品
+     * 返回主键id
      */
-    int add(GoodsInfo goodsInfo);
+    Long add(GoodsInfo goodsInfo);
 
     /**
      * 根据id删除商品

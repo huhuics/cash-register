@@ -21,6 +21,7 @@ import cn.cash.register.dao.domain.MemberInfo;
 import cn.cash.register.dao.domain.MemberIntegral;
 import cn.cash.register.dao.domain.MemberRank;
 import cn.cash.register.service.MemberService;
+import cn.cash.register.util.LogUtil;
 
 /**
  * 会员服务接口实现类
@@ -44,27 +45,27 @@ public class MemberServiceImpl implements MemberService {
     /****************************会员信息相关接口****************************/
 
     @Override
-    public int addMember(MemberInfo memberInfo) {
-        // TODO Auto-generated method stub
-        return 0;
+    public Long addMember(MemberInfo memberInfo) {
+        LogUtil.info(logger, "收到增加会员信息请求");
+        return infoMapper.insertSelective(memberInfo);
     }
 
     @Override
     public int deleteMember(Long memberId) {
-        // TODO Auto-generated method stub
-        return 0;
+        LogUtil.info(logger, "收到删除会员信息请求,memberId={0}", memberId);
+        return infoMapper.deleteByPrimaryKey(memberId);
     }
 
     @Override
     public int updateMember(MemberInfo memberInfo) {
-        // TODO Auto-generated method stub
-        return 0;
+        LogUtil.info(logger, "收到修改会员信息请求,id={0}", memberInfo.getId());
+        return infoMapper.updateByPrimaryKeySelective(memberInfo);
     }
 
     @Override
     public MemberInfo queryMember(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+        LogUtil.info(logger, "收到查询会员信息请求,id={0}", id);
+        return infoMapper.selectByPrimaryKey(id);
     }
 
     @Override
@@ -76,27 +77,27 @@ public class MemberServiceImpl implements MemberService {
     /****************************会员等级相关接口****************************/
 
     @Override
-    public int addMemRank(MemberRank rank) {
-        // TODO Auto-generated method stub
-        return 0;
+    public Long addMemRank(MemberRank rank) {
+        LogUtil.info(logger, "收到增加会员等级请求");
+        return rankMapper.insertSelective(rank);
     }
 
     @Override
     public int deleteMemRank(Long id) {
-        // TODO Auto-generated method stub
-        return 0;
+        LogUtil.info(logger, "收到删除会员等级请求,id={0}", id);
+        return rankMapper.deleteByPrimaryKey(id);
     }
 
     @Override
     public int updateMemRank(MemberRank rank) {
-        // TODO Auto-generated method stub
-        return 0;
+        LogUtil.info(logger, "收到修改会员等级请求,id={0}", rank.getId());
+        return rankMapper.updateByPrimaryKeySelective(rank);
     }
 
     @Override
     public MemberRank queryMemRank(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+        LogUtil.info(logger, "收到查询会员等级请求,id={0}", id);
+        return rankMapper.selectByPrimaryKey(id);
     }
 
     @Override

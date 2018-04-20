@@ -7,7 +7,7 @@ public interface SystemParameterMapper {
 
     int insert(SystemParameter record);
 
-    int insertSelective(SystemParameter record);
+    Long insertSelective(SystemParameter record);
 
     SystemParameter selectByPrimaryKey(Long id);
 

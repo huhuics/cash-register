@@ -15,8 +15,9 @@ public interface SystemParameterService {
 
     /**
      * 增加系统参数
+     * 返回主键
      */
-    int add(SystemParameter param);
+    Long add(SystemParameter param);
 
     /**
      * 根据参数id查询参数

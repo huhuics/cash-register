@@ -7,7 +7,7 @@ public interface MemberRankMapper {
 
     int insert(MemberRank record);
 
-    int insertSelective(MemberRank record);
+    Long insertSelective(MemberRank record);
 
     MemberRank selectByPrimaryKey(Long id);
 

@@ -7,7 +7,7 @@ public interface MemberInfoMapper {
 
     int insert(MemberInfo record);
 
-    int insertSelective(MemberInfo record);
+    Long insertSelective(MemberInfo record);
 
     MemberInfo selectByPrimaryKey(Long id);
 

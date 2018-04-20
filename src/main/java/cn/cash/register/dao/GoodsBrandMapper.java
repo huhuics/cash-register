@@ -9,7 +9,7 @@ public interface GoodsBrandMapper {
 
     int insert(GoodsBrand record);
 
-    int insertSelective(GoodsBrand record);
+    Long insertSelective(GoodsBrand record);
 
     GoodsBrand selectByPrimaryKey(Long id);
 

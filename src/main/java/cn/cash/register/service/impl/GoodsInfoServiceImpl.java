@@ -54,7 +54,7 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     private GoodsImageMapper    goodsImageMapper;
 
     @Override
-    public int add(GoodsInfo goodsInfo) {
+    public Long add(GoodsInfo goodsInfo) {
         LogUtil.info(logger, "收到增加商品请求,goodsInfo={0}", goodsInfo);
 
         return goodsInfoMapper.insertSelective(goodsInfo);

@@ -35,7 +35,7 @@ public class SellerInfoServiceImpl implements SellerInfoService {
     private SellerInfoMapper    sellerInfoMapper;
 
     @Override
-    public int addSeller(SellerInfo sellerInfo) {
+    public Long addSeller(SellerInfo sellerInfo) {
         LogUtil.info(logger, "收到增加收银员请求,sellerInfo={0}", sellerInfo);
 
         return sellerInfoMapper.insertSelective(sellerInfo);

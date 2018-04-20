@@ -37,7 +37,7 @@
       #{rankPeriod,jdbcType=BIT}, #{prepaidCardNo,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
       #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.MemberRank">
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.MemberRank" useGeneratedKeys="true" keyProperty="id">
     insert into member_rank
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

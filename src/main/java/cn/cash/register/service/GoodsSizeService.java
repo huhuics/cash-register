@@ -17,9 +17,10 @@ public interface GoodsSizeService {
 
     /**
      * 增加商品尺寸
-     * @param sizes 商品尺寸集合
+     * @param sizes 商品尺寸
+     * 返回主键
      */
-    void addSizes(List<GoodsSize> sizes);
+    Long addSize(GoodsSize size);
 
     /**
      * 查询所有商品尺寸

@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -34,18 +33,10 @@ public class GoodsBrandServiceImpl implements GoodsBrandService {
     private GoodsBrandMapper    brandMapper;
 
     @Override
-    public void addBrands(List<GoodsBrand> brands) {
-        if (CollectionUtils.isEmpty(brands)) {
-            return;
-        }
+    public Long addBrand(GoodsBrand brand) {
+        LogUtil.info(logger, "收到增加商品品牌请求");
 
-        LogUtil.info(logger, "收到增加商品品牌请求,数量:{0}", brands.size());
-
-        for (GoodsBrand brand : brands) {
-            brandMapper.insertSelective(brand);
-        }
-
-        LogUtil.info(logger, "增加商品品牌成功");
+        return brandMapper.insertSelective(brand);
     }
 
     @Override
