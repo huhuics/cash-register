@@ -93,6 +93,7 @@ CREATE TABLE `goods_info` (
   `goods_brand` varchar(128) DEFAULT NULL COMMENT '商品品牌',
   `goods_color` varchar(64) NOT NULL COMMENT '商品颜色',
   `goods_size` varchar(64) NOT NULL COMMENT '商品尺码',
+  `goods_tag` varchar(128) DEFAULT NULL COMMENT '商品标签，半角逗号分隔开',
   `goods_stock` int(20) NOT NULL COMMENT '商品库存',
   `quantity_unit` varchar(32) DEFAULT NULL COMMENT '库存单位。个，件，杯，瓶',
   `stock_upper_limit` int(11) DEFAULT NULL COMMENT '库存上限',
@@ -107,9 +108,9 @@ CREATE TABLE `goods_info` (
   `production_date` timestamp NULL DEFAULT NULL COMMENT '生产日期',
   `quality_guarantee_period` int(11) DEFAULT NULL COMMENT '保质期，单位：天',
   `is_integral` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否积分，1：是。0：否',
-  `royalty_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '提成方式。0：不提成。1：销售价*导购员提成百分比。2：利润*导购员提成百分比。3.固定金额。4.销售价*百分比。5.利润*百分比',
+  `royalty_type` varchar(64) NOT NULL COMMENT 'JSON格式。提成方式。0：不提成。1：销售价*导购员提成百分比。2：利润*导购员提成百分比。3.固定金额。4.销售价*百分比。5.利润*百分比',
   `is_booked` tinyint(1) NOT NULL DEFAULT '0' COMMENT '能否预约，1：能。0：否',
-  `is_gift` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否有赠品，1：是。0：否',
+  `is_gift` tinyint(1) NOT NULL DEFAULT '0' COMMENT '商品是否允许赠送，1：是。0：否',
   `is_weigh` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否称重，1：是。0：否',
   `is_fixed_price` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否固价，1：是。0：否。固价表示不参与任何折扣',
   `is_timeing_price` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否时价，1：是。0：否。时价表示根据当天情况定价',
@@ -120,7 +121,8 @@ CREATE TABLE `goods_info` (
   PRIMARY KEY (`id`),
   KEY `IDX_BAR_CODE` (`bar_code`),
   KEY `IDX_PINYIN_CODE` (`pinyin_code`),
-  KEY `IDX_GOODS_NAME` (`goods_name`)
+  KEY `IDX_GOODS_NAME` (`goods_name`),
+  KEY `IDX_GOODS_TAG` (`goods_tag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_info` */
@@ -152,6 +154,72 @@ CREATE TABLE `goods_size` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_size` */
+
+/*Table structure for table `member_info` */
+
+DROP TABLE IF EXISTS `member_info`;
+
+CREATE TABLE `member_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否启用。1：启用。0：不启用',
+  `member_no` varchar(64) NOT NULL COMMENT '会员编号',
+  `member_name` varchar(64) NOT NULL COMMENT '会员姓名',
+  `member_rank` varchar(64) NOT NULL COMMENT '会员等级',
+  `member_discount` int(11) NOT NULL DEFAULT '100' COMMENT '会员折扣。默认100即不打折，8.5折填85',
+  `member_integral` double DEFAULT NULL COMMENT '会员积分',
+  `phone` varchar(32) DEFAULT NULL COMMENT '联系电话',
+  `password` varchar(32) DEFAULT NULL COMMENT '会员密码',
+  `birthday` varchar(32) DEFAULT NULL COMMENT '会员生日',
+  `is_on_credit` tinyint(1) DEFAULT '0' COMMENT '是否允许赊账。1：允许。0：不允许',
+  `qq_no` varchar(32) DEFAULT NULL COMMENT 'qq号码',
+  `email` varchar(32) DEFAULT NULL COMMENT '邮箱地址',
+  `address` varchar(128) DEFAULT NULL COMMENT '地址',
+  `shopper_name` varchar(64) DEFAULT NULL COMMENT '导购员',
+  `remark` varchar(256) DEFAULT NULL COMMENT '备注',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `member_info` */
+
+/*Table structure for table `member_integral` */
+
+DROP TABLE IF EXISTS `member_integral`;
+
+CREATE TABLE `member_integral` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否启用。1：启用。0：停用',
+  `integral_type` tinyint(1) DEFAULT NULL COMMENT '预留。积分方式.1:按金额积分。0：按商品积分',
+  `integral_value` int(11) DEFAULT NULL COMMENT '每多少元积一分',
+  `exchange_type` tinyint(1) DEFAULT NULL COMMENT '预留。积分兑换方式。1：兑换礼品。0：抵扣现金',
+  `is_clear` tinyint(1) DEFAULT '0' COMMENT '是否清空积分。1：清空。0：不清空',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `member_integral` */
+
+/*Table structure for table `member_rank` */
+
+DROP TABLE IF EXISTS `member_rank`;
+
+CREATE TABLE `member_rank` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `rank_title` varchar(128) NOT NULL COMMENT '等级名称',
+  `discount` int(11) NOT NULL COMMENT '优惠折扣，整数，8.5折填85',
+  `is_integral` tinyint(1) DEFAULT '1' COMMENT '是否积分。1：积分。0：不计分',
+  `is_auto_upgrade` tinyint(1) DEFAULT '0' COMMENT '是否自动升级。1：是。0：否',
+  `integral_to_upgrade` int(11) DEFAULT NULL COMMENT '当积分到达该值时自动升级到该等级',
+  `rank_period` tinyint(1) DEFAULT '0' COMMENT '该等级有效期。1：1年。0：永久',
+  `prepaid_card_no` varchar(64) DEFAULT NULL COMMENT '预留。储值卡卡号',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `member_rank` */
 
 /*Table structure for table `seller_info` */
 

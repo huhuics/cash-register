@@ -74,7 +74,7 @@
 			<columnOverride column="total_actual_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="profit_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
-		-->
+		
 		
 		<table tableName="goods_info" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 			<columnOverride column="import_price" javaType="cn.cash.register.util.Money"></columnOverride>
@@ -82,6 +82,17 @@
 			<columnOverride column="sales_price" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="trade_price" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="vip_price" javaType="cn.cash.register.util.Money"></columnOverride>
+		</table>
+		
+		-->
+		
+		<table tableName="member_rank" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		
+		<table tableName="member_integral" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		
+		<table tableName="member_info" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 		</table>
 		 
     </context>  

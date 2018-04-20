@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cash.register.dao.MemberInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.MemberInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="member_no" jdbcType="VARCHAR" property="memberNo" />
+    <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+    <result column="member_rank" jdbcType="VARCHAR" property="memberRank" />
+    <result column="member_discount" jdbcType="INTEGER" property="memberDiscount" />
+    <result column="member_integral" jdbcType="DOUBLE" property="memberIntegral" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="is_on_credit" jdbcType="BIT" property="isOnCredit" />
+    <result column="qq_no" jdbcType="VARCHAR" property="qqNo" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="shopper_name" jdbcType="VARCHAR" property="shopperName" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, status, member_no, member_name, member_rank, member_discount, member_integral, 
+    phone, password, birthday, is_on_credit, qq_no, email, address, shopper_name, remark, 
+    gmt_update, gmt_create
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from member_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from member_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.cash.register.dao.domain.MemberInfo">
+    insert into member_info (id, status, member_no, 
+      member_name, member_rank, member_discount, 
+      member_integral, phone, password, 
+      birthday, is_on_credit, qq_no, 
+      email, address, shopper_name, 
+      remark, gmt_update, gmt_create
+      )
+    values (#{id,jdbcType=BIGINT}, #{status,jdbcType=BIT}, #{memberNo,jdbcType=VARCHAR}, 
+      #{memberName,jdbcType=VARCHAR}, #{memberRank,jdbcType=VARCHAR}, #{memberDiscount,jdbcType=INTEGER}, 
+      #{memberIntegral,jdbcType=DOUBLE}, #{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=VARCHAR}, #{isOnCredit,jdbcType=BIT}, #{qqNo,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{shopperName,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.MemberInfo">
+    insert into member_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="memberNo != null">
+        member_no,
+      </if>
+      <if test="memberName != null">
+        member_name,
+      </if>
+      <if test="memberRank != null">
+        member_rank,
+      </if>
+      <if test="memberDiscount != null">
+        member_discount,
+      </if>
+      <if test="memberIntegral != null">
+        member_integral,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="isOnCredit != null">
+        is_on_credit,
+      </if>
+      <if test="qqNo != null">
+        qq_no,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="shopperName != null">
+        shopper_name,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="memberNo != null">
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null">
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberRank != null">
+        #{memberRank,jdbcType=VARCHAR},
+      </if>
+      <if test="memberDiscount != null">
+        #{memberDiscount,jdbcType=INTEGER},
+      </if>
+      <if test="memberIntegral != null">
+        #{memberIntegral,jdbcType=DOUBLE},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="isOnCredit != null">
+        #{isOnCredit,jdbcType=BIT},
+      </if>
+      <if test="qqNo != null">
+        #{qqNo,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="shopperName != null">
+        #{shopperName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.MemberInfo">
+    update member_info
+    <set>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="memberNo != null">
+        member_no = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null">
+        member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberRank != null">
+        member_rank = #{memberRank,jdbcType=VARCHAR},
+      </if>
+      <if test="memberDiscount != null">
+        member_discount = #{memberDiscount,jdbcType=INTEGER},
+      </if>
+      <if test="memberIntegral != null">
+        member_integral = #{memberIntegral,jdbcType=DOUBLE},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="isOnCredit != null">
+        is_on_credit = #{isOnCredit,jdbcType=BIT},
+      </if>
+      <if test="qqNo != null">
+        qq_no = #{qqNo,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="shopperName != null">
+        shopper_name = #{shopperName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.MemberInfo">
+    update member_info
+    set status = #{status,jdbcType=BIT},
+      member_no = #{memberNo,jdbcType=VARCHAR},
+      member_name = #{memberName,jdbcType=VARCHAR},
+      member_rank = #{memberRank,jdbcType=VARCHAR},
+      member_discount = #{memberDiscount,jdbcType=INTEGER},
+      member_integral = #{memberIntegral,jdbcType=DOUBLE},
+      phone = #{phone,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      is_on_credit = #{isOnCredit,jdbcType=BIT},
+      qq_no = #{qqNo,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      shopper_name = #{shopperName,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
