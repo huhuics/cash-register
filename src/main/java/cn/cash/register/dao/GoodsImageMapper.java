@@ -16,4 +16,6 @@ public interface GoodsImageMapper {
     int updateByPrimaryKeyWithBLOBs(GoodsImage record);
 
     int updateByPrimaryKey(GoodsImage record);
+
+    Long insertWithKey(GoodsImage record);
 }

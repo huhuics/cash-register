@@ -30,10 +30,10 @@ public class SystemParameterServiceImpl implements SystemParameterService {
     private SystemParameterMapper parameterMapper;
 
     @Override
-    public int add(SystemParameter param) {
+    public Long add(SystemParameter param) {
 
         if (param == null) {
-            return 0;
+            return 0L;
         }
 
         LogUtil.info(logger, "收到增加系统参数请求,param={0}", param);

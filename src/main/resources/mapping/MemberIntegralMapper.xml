@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cash.register.dao.MemberIntegralMapper">
+  <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.MemberIntegral">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="integral_type" jdbcType="BIT" property="integralType" />
+    <result column="integral_value" jdbcType="INTEGER" property="integralValue" />
+    <result column="exchange_type" jdbcType="BIT" property="exchangeType" />
+    <result column="is_clear" jdbcType="BIT" property="isClear" />
+    <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, status, integral_type, integral_value, exchange_type, is_clear, gmt_update, gmt_create
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from member_integral
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from member_integral
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.cash.register.dao.domain.MemberIntegral">
+    insert into member_integral (id, status, integral_type, 
+      integral_value, exchange_type, is_clear, 
+      gmt_update, gmt_create)
+    values (#{id,jdbcType=BIGINT}, #{status,jdbcType=BIT}, #{integralType,jdbcType=BIT}, 
+      #{integralValue,jdbcType=INTEGER}, #{exchangeType,jdbcType=BIT}, #{isClear,jdbcType=BIT}, 
+      #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.MemberIntegral">
+    insert into member_integral
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="integralType != null">
+        integral_type,
+      </if>
+      <if test="integralValue != null">
+        integral_value,
+      </if>
+      <if test="exchangeType != null">
+        exchange_type,
+      </if>
+      <if test="isClear != null">
+        is_clear,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="integralType != null">
+        #{integralType,jdbcType=BIT},
+      </if>
+      <if test="integralValue != null">
+        #{integralValue,jdbcType=INTEGER},
+      </if>
+      <if test="exchangeType != null">
+        #{exchangeType,jdbcType=BIT},
+      </if>
+      <if test="isClear != null">
+        #{isClear,jdbcType=BIT},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.MemberIntegral">
+    update member_integral
+    <set>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="integralType != null">
+        integral_type = #{integralType,jdbcType=BIT},
+      </if>
+      <if test="integralValue != null">
+        integral_value = #{integralValue,jdbcType=INTEGER},
+      </if>
+      <if test="exchangeType != null">
+        exchange_type = #{exchangeType,jdbcType=BIT},
+      </if>
+      <if test="isClear != null">
+        is_clear = #{isClear,jdbcType=BIT},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.MemberIntegral">
+    update member_integral
+    set status = #{status,jdbcType=BIT},
+      integral_type = #{integralType,jdbcType=BIT},
+      integral_value = #{integralValue,jdbcType=INTEGER},
+      exchange_type = #{exchangeType,jdbcType=BIT},
+      is_clear = #{isClear,jdbcType=BIT},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

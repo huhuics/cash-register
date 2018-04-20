@@ -26,7 +26,7 @@
     values (#{id,jdbcType=BIGINT}, #{color,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
       #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.GoodsColor">
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.GoodsColor" useGeneratedKeys="true" keyProperty="id">
     insert into goods_color
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

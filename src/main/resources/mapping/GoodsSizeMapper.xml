@@ -26,7 +26,7 @@
     values (#{id,jdbcType=BIGINT}, #{sizeName,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
       #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.GoodsSize">
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.GoodsSize" useGeneratedKeys="true" keyProperty="id">
     insert into goods_size
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

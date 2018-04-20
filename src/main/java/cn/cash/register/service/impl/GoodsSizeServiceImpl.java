@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -34,18 +33,10 @@ public class GoodsSizeServiceImpl implements GoodsSizeService {
     private GoodsSizeMapper     sizeMapper;
 
     @Override
-    public void addSizes(List<GoodsSize> sizes) {
-        if (CollectionUtils.isEmpty(sizes)) {
-            return;
-        }
+    public Long addSize(GoodsSize size) {
+        LogUtil.info(logger, "收到增加商品尺寸请求");
 
-        LogUtil.info(logger, "收到增加商品尺寸请求,数量:{0}", sizes.size());
-
-        for (GoodsSize size : sizes) {
-            sizeMapper.insertSelective(size);
-        }
-
-        LogUtil.info(logger, "增加商品尺寸成功");
+        return sizeMapper.insertSelective(size);
     }
 
     @Override

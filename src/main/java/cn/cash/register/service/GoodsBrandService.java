@@ -17,9 +17,10 @@ public interface GoodsBrandService {
 
     /**
      * 增加商品品牌
-     * @param brands 商品品牌集合
+     * @param brands 商品品牌
+     * 返回主键
      */
-    void addBrands(List<GoodsBrand> brands);
+    Long addBrand(GoodsBrand brand);
 
     /**
      * 查询所有商品品牌

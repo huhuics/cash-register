@@ -30,7 +30,7 @@
       #{exampleValue,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.SystemParameter">
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.SystemParameter" useGeneratedKeys="true" keyProperty="id">
     insert into system_parameter
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

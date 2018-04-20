@@ -9,7 +9,7 @@ public interface GoodsSizeMapper {
 
     int insert(GoodsSize record);
 
-    int insertSelective(GoodsSize record);
+    Long insertSelective(GoodsSize record);
 
     GoodsSize selectByPrimaryKey(Long id);
 

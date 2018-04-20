@@ -18,8 +18,9 @@ public interface SellerInfoService {
 
     /**
      * 增加收银员
+     * 返回主键id
      */
-    int addSeller(SellerInfo sellerInfo);
+    Long addSeller(SellerInfo sellerInfo);
 
     /**
      * 修改收银员资料

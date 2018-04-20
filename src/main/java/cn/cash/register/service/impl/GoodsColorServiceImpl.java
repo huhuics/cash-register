@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -34,18 +33,10 @@ public class GoodsColorServiceImpl implements GoodsColorService {
     private GoodsColorMapper    colorMapper;
 
     @Override
-    public void addColors(List<GoodsColor> colors) {
-        if (CollectionUtils.isEmpty(colors)) {
-            return;
-        }
+    public Long addColor(GoodsColor color) {
+        LogUtil.info(logger, "收到增加商品颜色请求");
 
-        LogUtil.info(logger, "收到增加商品颜色请求,数量:{0}", colors.size());
-
-        for (GoodsColor color : colors) {
-            colorMapper.insertSelective(color);
-        }
-
-        LogUtil.info(logger, "增加商品颜色成功");
+        return colorMapper.insertSelective(color);
     }
 
     @Override

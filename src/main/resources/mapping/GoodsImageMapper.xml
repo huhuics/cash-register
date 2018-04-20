@@ -92,4 +92,11 @@
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <insert id="insertWithKey" parameterType="cn.cash.register.dao.domain.GoodsImage" useGeneratedKeys="true" keyProperty="id">
+    insert into goods_image (id, gmt_update, gmt_create, 
+      goods_image)
+    values (#{id,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{goodsImage,jdbcType=LONGVARBINARY})
+  </insert>
 </mapper>

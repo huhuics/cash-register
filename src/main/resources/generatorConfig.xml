@@ -29,10 +29,10 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="cn.cash.register.dao" targetProject="src/main/java">  
             <property name="enableSubPackages" value="true"/>  
         </javaClientGenerator> 
-        
+   <!--        
         <table tableName="goods_category" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 		</table> 
-  <!--       
+      
         <table tableName="goods_brand" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 		</table>
 		
@@ -83,6 +83,17 @@
 			<columnOverride column="trade_price" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="vip_price" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
-		 -->
+		
+		-->
+		
+		<table tableName="member_rank" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		
+		<table tableName="member_integral" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		
+		<table tableName="member_info" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		 
     </context>  
 </generatorConfiguration>

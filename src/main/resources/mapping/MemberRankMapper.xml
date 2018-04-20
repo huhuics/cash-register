@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cash.register.dao.MemberRankMapper">
+  <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.MemberRank">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="rank_title" jdbcType="VARCHAR" property="rankTitle" />
+    <result column="discount" jdbcType="INTEGER" property="discount" />
+    <result column="is_integral" jdbcType="BIT" property="isIntegral" />
+    <result column="is_auto_upgrade" jdbcType="BIT" property="isAutoUpgrade" />
+    <result column="integral_to_upgrade" jdbcType="INTEGER" property="integralToUpgrade" />
+    <result column="rank_period" jdbcType="BIT" property="rankPeriod" />
+    <result column="prepaid_card_no" jdbcType="VARCHAR" property="prepaidCardNo" />
+    <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, rank_title, discount, is_integral, is_auto_upgrade, integral_to_upgrade, rank_period, 
+    prepaid_card_no, gmt_update, gmt_create
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from member_rank
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from member_rank
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.cash.register.dao.domain.MemberRank">
+    insert into member_rank (id, rank_title, discount, 
+      is_integral, is_auto_upgrade, integral_to_upgrade, 
+      rank_period, prepaid_card_no, gmt_update, 
+      gmt_create)
+    values (#{id,jdbcType=BIGINT}, #{rankTitle,jdbcType=VARCHAR}, #{discount,jdbcType=INTEGER}, 
+      #{isIntegral,jdbcType=BIT}, #{isAutoUpgrade,jdbcType=BIT}, #{integralToUpgrade,jdbcType=INTEGER}, 
+      #{rankPeriod,jdbcType=BIT}, #{prepaidCardNo,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
+      #{gmtCreate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.MemberRank" useGeneratedKeys="true" keyProperty="id">
+    insert into member_rank
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="rankTitle != null">
+        rank_title,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="isIntegral != null">
+        is_integral,
+      </if>
+      <if test="isAutoUpgrade != null">
+        is_auto_upgrade,
+      </if>
+      <if test="integralToUpgrade != null">
+        integral_to_upgrade,
+      </if>
+      <if test="rankPeriod != null">
+        rank_period,
+      </if>
+      <if test="prepaidCardNo != null">
+        prepaid_card_no,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="rankTitle != null">
+        #{rankTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=INTEGER},
+      </if>
+      <if test="isIntegral != null">
+        #{isIntegral,jdbcType=BIT},
+      </if>
+      <if test="isAutoUpgrade != null">
+        #{isAutoUpgrade,jdbcType=BIT},
+      </if>
+      <if test="integralToUpgrade != null">
+        #{integralToUpgrade,jdbcType=INTEGER},
+      </if>
+      <if test="rankPeriod != null">
+        #{rankPeriod,jdbcType=BIT},
+      </if>
+      <if test="prepaidCardNo != null">
+        #{prepaidCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.MemberRank">
+    update member_rank
+    <set>
+      <if test="rankTitle != null">
+        rank_title = #{rankTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=INTEGER},
+      </if>
+      <if test="isIntegral != null">
+        is_integral = #{isIntegral,jdbcType=BIT},
+      </if>
+      <if test="isAutoUpgrade != null">
+        is_auto_upgrade = #{isAutoUpgrade,jdbcType=BIT},
+      </if>
+      <if test="integralToUpgrade != null">
+        integral_to_upgrade = #{integralToUpgrade,jdbcType=INTEGER},
+      </if>
+      <if test="rankPeriod != null">
+        rank_period = #{rankPeriod,jdbcType=BIT},
+      </if>
+      <if test="prepaidCardNo != null">
+        prepaid_card_no = #{prepaidCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.MemberRank">
+    update member_rank
+    set rank_title = #{rankTitle,jdbcType=VARCHAR},
+      discount = #{discount,jdbcType=INTEGER},
+      is_integral = #{isIntegral,jdbcType=BIT},
+      is_auto_upgrade = #{isAutoUpgrade,jdbcType=BIT},
+      integral_to_upgrade = #{integralToUpgrade,jdbcType=INTEGER},
+      rank_period = #{rankPeriod,jdbcType=BIT},
+      prepaid_card_no = #{prepaidCardNo,jdbcType=VARCHAR},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
