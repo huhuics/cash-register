@@ -474,16 +474,16 @@
     	and supplier_name = #{supplierName,jdbcType=VARCHAR}
     </if>
     <if test="goodsTag != null and goodsTag !=''">
-    	and goods_tag like "%"#{goodsTag,jdbcType=VARCHAR}"%"
+    	and goods_tag like #{goodsTag,jdbcType=VARCHAR}"%"
     </if>
     <if test="barCode != null and barCode !=''">
     	and bar_code = #{barCode,jdbcType=VARCHAR}
     </if>
     <if test="goodsName != null and goodsName !=''">
-    	and goods_name like "%"#{goodsName,jdbcType=VARCHAR}"%"
+    	and goods_name like #{goodsName,jdbcType=VARCHAR}"%"
     </if>
     <if test="pinyinCode != null and pinyinCode !=''">
-    	and pinyin_code like "%"#{pinyinCode,jdbcType=VARCHAR}"%"
+    	and pinyin_code like #{pinyinCode,jdbcType=VARCHAR}"%"
     </if>
   </select>
   

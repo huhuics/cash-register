@@ -7,11 +7,15 @@
     <result column="trade_time" jdbcType="TIMESTAMP" property="tradeTime" />
     <result column="trade_type" jdbcType="VARCHAR" property="tradeType" />
     <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_brand" jdbcType="VARCHAR" property="goodsBrand" />
     <result column="bar_code" jdbcType="VARCHAR" property="barCode" />
     <result column="product_number" jdbcType="VARCHAR" property="productNumber" />
     <result column="goods_color" jdbcType="VARCHAR" property="goodsColor" />
     <result column="goods_size" jdbcType="VARCHAR" property="goodsSize" />
     <result column="goods_count" jdbcType="INTEGER" property="goodsCount" />
+    <result column="goods_tag" jdbcType="VARCHAR" property="goodsTag" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="supplier_name" jdbcType="VARCHAR" property="supplierName" />
     <result column="total_amount" jdbcType="INTEGER" property="totalAmount" />
     <result column="goods_discount" jdbcType="INTEGER" property="goodsDiscount" />
     <result column="total_actual_amount" jdbcType="INTEGER" property="totalActualAmount" />
@@ -20,9 +24,9 @@
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, trade_no, trade_time, trade_type, goods_name, bar_code, product_number, goods_color, 
-    goods_size, goods_count, total_amount, goods_discount, total_actual_amount, profit_amount, 
-    gmt_update, gmt_create
+    id, trade_no, trade_time, trade_type, goods_name, goods_brand, bar_code, product_number, 
+    goods_color, goods_size, goods_count, goods_tag, category_name, supplier_name, total_amount, 
+    goods_discount, total_actual_amount, profit_amount, gmt_update, gmt_create
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -36,17 +40,19 @@
   </delete>
   <insert id="insert" parameterType="cn.cash.register.dao.domain.TradeGoodsDetail">
     insert into trade_goods_detail (id, trade_no, trade_time, 
-      trade_type, goods_name, bar_code, 
-      product_number, goods_color, goods_size, 
-      goods_count, total_amount, goods_discount, 
-      total_actual_amount, profit_amount, gmt_update, 
-      gmt_create)
+      trade_type, goods_name, goods_brand, 
+      bar_code, product_number, goods_color, 
+      goods_size, goods_count, goods_tag, 
+      category_name, supplier_name, total_amount, 
+      goods_discount, total_actual_amount, profit_amount, 
+      gmt_update, gmt_create)
     values (#{id,jdbcType=BIGINT}, #{tradeNo,jdbcType=VARCHAR}, #{tradeTime,jdbcType=TIMESTAMP}, 
-      #{tradeType,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{barCode,jdbcType=VARCHAR}, 
-      #{productNumber,jdbcType=VARCHAR}, #{goodsColor,jdbcType=VARCHAR}, #{goodsSize,jdbcType=VARCHAR}, 
-      #{goodsCount,jdbcType=INTEGER}, #{totalAmount,jdbcType=INTEGER}, #{goodsDiscount,jdbcType=INTEGER}, 
-      #{totalActualAmount,jdbcType=INTEGER}, #{profitAmount,jdbcType=INTEGER}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
-      #{gmtCreate,jdbcType=TIMESTAMP})
+      #{tradeType,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{goodsBrand,jdbcType=VARCHAR}, 
+      #{barCode,jdbcType=VARCHAR}, #{productNumber,jdbcType=VARCHAR}, #{goodsColor,jdbcType=VARCHAR}, 
+      #{goodsSize,jdbcType=VARCHAR}, #{goodsCount,jdbcType=INTEGER}, #{goodsTag,jdbcType=VARCHAR}, 
+      #{categoryName,jdbcType=VARCHAR}, #{supplierName,jdbcType=VARCHAR}, #{totalAmount,jdbcType=INTEGER}, 
+      #{goodsDiscount,jdbcType=INTEGER}, #{totalActualAmount,jdbcType=INTEGER}, #{profitAmount,jdbcType=INTEGER}, 
+      #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.TradeGoodsDetail">
     insert into trade_goods_detail
@@ -66,6 +72,9 @@
       <if test="goodsName != null">
         goods_name,
       </if>
+      <if test="goodsBrand != null">
+        goods_brand,
+      </if>
       <if test="barCode != null">
         bar_code,
       </if>
@@ -80,6 +89,15 @@
       </if>
       <if test="goodsCount != null">
         goods_count,
+      </if>
+      <if test="goodsTag != null">
+        goods_tag,
+      </if>
+      <if test="categoryName != null">
+        category_name,
+      </if>
+      <if test="supplierName != null">
+        supplier_name,
       </if>
       <if test="totalAmount != null">
         total_amount,
@@ -116,6 +134,9 @@
       <if test="goodsName != null">
         #{goodsName,jdbcType=VARCHAR},
       </if>
+      <if test="goodsBrand != null">
+        #{goodsBrand,jdbcType=VARCHAR},
+      </if>
       <if test="barCode != null">
         #{barCode,jdbcType=VARCHAR},
       </if>
@@ -130,6 +151,15 @@
       </if>
       <if test="goodsCount != null">
         #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsTag != null">
+        #{goodsTag,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null">
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null">
+        #{supplierName,jdbcType=VARCHAR},
       </if>
       <if test="totalAmount != null">
         #{totalAmount,jdbcType=INTEGER},
@@ -166,6 +196,9 @@
       <if test="goodsName != null">
         goods_name = #{goodsName,jdbcType=VARCHAR},
       </if>
+      <if test="goodsBrand != null">
+        goods_brand = #{goodsBrand,jdbcType=VARCHAR},
+      </if>
       <if test="barCode != null">
         bar_code = #{barCode,jdbcType=VARCHAR},
       </if>
@@ -180,6 +213,15 @@
       </if>
       <if test="goodsCount != null">
         goods_count = #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsTag != null">
+        goods_tag = #{goodsTag,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null">
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null">
+        supplier_name = #{supplierName,jdbcType=VARCHAR},
       </if>
       <if test="totalAmount != null">
         total_amount = #{totalAmount,jdbcType=INTEGER},
@@ -208,11 +250,15 @@
       trade_time = #{tradeTime,jdbcType=TIMESTAMP},
       trade_type = #{tradeType,jdbcType=VARCHAR},
       goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_brand = #{goodsBrand,jdbcType=VARCHAR},
       bar_code = #{barCode,jdbcType=VARCHAR},
       product_number = #{productNumber,jdbcType=VARCHAR},
       goods_color = #{goodsColor,jdbcType=VARCHAR},
       goods_size = #{goodsSize,jdbcType=VARCHAR},
       goods_count = #{goodsCount,jdbcType=INTEGER},
+      goods_tag = #{goodsTag,jdbcType=VARCHAR},
+      category_name = #{categoryName,jdbcType=VARCHAR},
+      supplier_name = #{supplierName,jdbcType=VARCHAR},
       total_amount = #{totalAmount,jdbcType=INTEGER},
       goods_discount = #{goodsDiscount,jdbcType=INTEGER},
       total_actual_amount = #{totalActualAmount,jdbcType=INTEGER},
@@ -221,4 +267,34 @@
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="list" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.TradeDetailQueryRequest">
+  	select 
+    <include refid="Base_Column_List" />
+  	from trade_goods_detail where 1=1
+  	<if test="categoryName != null and categoryName !=''">
+  		category_name = #{categoryName,jdbcType=VARCHAR}
+    </if>
+    <if test="goodsBrand != null and goodsBrand !=''">
+  		goods_brand = #{goodsBrand,jdbcType=VARCHAR}
+    </if>
+    <if test="supplierName != null and supplierName !=''">
+  		supplier_name = #{supplierName,jdbcType=VARCHAR}
+    </if>
+    <if test="goodsTag != null and goodsTag !=''">
+  		goods_tag like #{goodsTag,jdbcType=VARCHAR}"%"
+    </if>
+    <if test=" != null and  !=''">
+  		trade_time &lt;= #{tradeTimeUp,jdbcType=TIMESTAMP}
+  		and
+  		trade_time &gt;= #{tradeTimeDown,jdbcType=TIMESTAMP}
+    </if>
+    <if test="barCode != null and barCode !=''">
+  		bar_code = #{barCode,jdbcType=VARCHAR}
+    </if>
+    <if test="goodsName != null and goodsName !=''">
+  		goods_name = #{goodsName,jdbcType=VARCHAR}
+    </if>
+   </select>
+  
 </mapper>

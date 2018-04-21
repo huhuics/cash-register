@@ -6,7 +6,7 @@ import cn.cash.register.util.Money;
 
 public class TradeGoodsDetail extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = 4598649567732101338L;
+    private static final long serialVersionUID = -5495936401343730269L;
 
     private Long              id;
 
@@ -18,6 +18,8 @@ public class TradeGoodsDetail extends BaseDomain {
 
     private String            goodsName;
 
+    private String            goodsBrand;
+
     private String            barCode;
 
     private String            productNumber;
@@ -27,6 +29,12 @@ public class TradeGoodsDetail extends BaseDomain {
     private String            goodsSize;
 
     private Integer           goodsCount;
+
+    private String            goodsTag;
+
+    private String            categoryName;
+
+    private String            supplierName;
 
     private Money             totalAmount;
 
@@ -80,6 +88,14 @@ public class TradeGoodsDetail extends BaseDomain {
         this.goodsName = goodsName == null ? null : goodsName.trim();
     }
 
+    public String getGoodsBrand() {
+        return goodsBrand;
+    }
+
+    public void setGoodsBrand(String goodsBrand) {
+        this.goodsBrand = goodsBrand == null ? null : goodsBrand.trim();
+    }
+
     public String getBarCode() {
         return barCode;
     }
@@ -118,6 +134,30 @@ public class TradeGoodsDetail extends BaseDomain {
 
     public void setGoodsCount(Integer goodsCount) {
         this.goodsCount = goodsCount;
+    }
+
+    public String getGoodsTag() {
+        return goodsTag;
+    }
+
+    public void setGoodsTag(String goodsTag) {
+        this.goodsTag = goodsTag == null ? null : goodsTag.trim();
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName == null ? null : categoryName.trim();
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName == null ? null : supplierName.trim();
     }
 
     public Money getTotalAmount() {

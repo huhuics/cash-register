@@ -12,7 +12,7 @@
             <property name="addRemarkComments" value="false"/>      
         </commentGenerator>  
         <!-- 数据库连接信息 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://168.33.131.164:3306/cash-register" userId="root" password="huhui"/>  
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/cash-register" userId="root" password="huhui"/>  
         <javaTypeResolver>  
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>  
@@ -69,13 +69,6 @@
 			<columnOverride column="profit_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
 		
-		<table tableName="trade_goods_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-			<columnOverride column="total_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-			<columnOverride column="total_actual_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-			<columnOverride column="profit_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-		</table>
-		
-		
 		<table tableName="goods_info" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 			<columnOverride column="import_price" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="average_import_price" javaType="cn.cash.register.util.Money"></columnOverride>
@@ -84,8 +77,6 @@
 			<columnOverride column="vip_price" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
 		
-		-->
-		
 		<table tableName="member_rank" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 		</table>
 		
@@ -93,6 +84,14 @@
 		</table>
 		
 		<table tableName="member_info" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		
+		-->
+		
+		<table tableName="trade_goods_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<columnOverride column="total_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="total_actual_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="profit_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
 		 
     </context>  

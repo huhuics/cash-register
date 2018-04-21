@@ -1,5 +1,8 @@
 package cn.cash.register.dao;
 
+import java.util.List;
+
+import cn.cash.register.common.request.TradeGoodsDetailQueryRequest;
 import cn.cash.register.dao.domain.TradeGoodsDetail;
 
 public interface TradeGoodsDetailMapper {
@@ -14,4 +17,6 @@ public interface TradeGoodsDetailMapper {
     int updateByPrimaryKeySelective(TradeGoodsDetail record);
 
     int updateByPrimaryKey(TradeGoodsDetail record);
+
+    List<TradeGoodsDetail> list(TradeGoodsDetailQueryRequest request);
 }

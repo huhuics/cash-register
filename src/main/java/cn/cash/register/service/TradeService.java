@@ -7,7 +7,9 @@ package cn.cash.register.service;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.TradeDetailQueryRequest;
+import cn.cash.register.common.request.TradeGoodsDetailQueryRequest;
 import cn.cash.register.dao.domain.TradeDetail;
+import cn.cash.register.dao.domain.TradeGoodsDetail;
 
 /**
  * 交易服务接口
@@ -18,8 +20,19 @@ import cn.cash.register.dao.domain.TradeDetail;
 public interface TradeService {
 
     /**
+     * 收银
+     * TODO
+     */
+    boolean checkout();
+
+    /**
      * 销售单据分页查询
      */
     PageInfo<TradeDetail> queryTradeDetailList(TradeDetailQueryRequest request);
+
+    /**
+     * 商品销售明细分页查询
+     */
+    PageInfo<TradeGoodsDetail> queryTradeGoodsDetailList(TradeGoodsDetailQueryRequest request);
 
 }
