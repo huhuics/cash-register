@@ -2,7 +2,7 @@ package cn.cash.register.dao;
 
 import java.util.List;
 
-import cn.cash.register.common.request.PageInfoQueryRequest;
+import cn.cash.register.common.request.GoodsInfoQueryRequest;
 import cn.cash.register.dao.domain.GoodsInfo;
 
 public interface GoodsInfoMapper {
@@ -18,5 +18,5 @@ public interface GoodsInfoMapper {
 
     int updateByPrimaryKey(GoodsInfo record);
 
-    List<GoodsInfo> list(PageInfoQueryRequest request);
+    List<GoodsInfo> list(GoodsInfoQueryRequest request);
 }

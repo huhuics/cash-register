@@ -4,10 +4,11 @@
  */
 package cn.cash.register.service;
 
+import java.util.List;
+
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.MemberInfoQueryRequest;
-import cn.cash.register.common.request.MemberRankQueryRequest;
 import cn.cash.register.dao.domain.MemberInfo;
 import cn.cash.register.dao.domain.MemberIntegral;
 import cn.cash.register.dao.domain.MemberRank;
@@ -71,11 +72,11 @@ public interface MemberService {
     MemberRank queryMemRank(Long id);
 
     /**
-     * 分页查询会员等级
+     * 查询所有会员等级
      */
-    PageInfo<MemberRank> queryList(MemberRankQueryRequest request);
+    List<MemberRank> queryAll();
 
-    /****************************会员积分相关接口****************************/
+    /****************************会员积分方式相关接口****************************/
 
     /**
      * 查询会员积分策略（策略只有一条记录）

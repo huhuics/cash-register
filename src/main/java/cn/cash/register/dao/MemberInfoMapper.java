@@ -1,5 +1,8 @@
 package cn.cash.register.dao;
 
+import java.util.List;
+
+import cn.cash.register.common.request.MemberInfoQueryRequest;
 import cn.cash.register.dao.domain.MemberInfo;
 
 public interface MemberInfoMapper {
@@ -14,4 +17,6 @@ public interface MemberInfoMapper {
     int updateByPrimaryKeySelective(MemberInfo record);
 
     int updateByPrimaryKey(MemberInfo record);
+
+    List<MemberInfo> list(MemberInfoQueryRequest request);
 }

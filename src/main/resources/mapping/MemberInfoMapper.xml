@@ -245,4 +245,28 @@
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="list" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.MemberInfoQueryRequest">
+  	select 
+    <include refid="Base_Column_List" />
+    from member_info where 1=1
+    <if test="memberRank != null and memberRank !=''">
+    	member_rank = #{memberRank,jdbcType=VARCHAR}
+    </if>
+    <if test="shopperName != null and shopperName !=''">
+    	shopper_name = #{shopper_name,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null and status !=''">
+    	status = #{status,jdbcType=BIT}
+    </if>
+    <if test="memberNo != null and memberNo !=''">
+    	member_no = #{memberNo,jdbcType=VARCHAR}
+    </if>
+    <if test="memberName != null and memberName !=''">
+    	member_name = #{memberName,jdbcType=VARCHAR}
+    </if>
+    <if test="phone != null and phone !=''">
+    	phone = #{phone,jdbcType=VARCHAR}
+    </if>
+  </select>
 </mapper>

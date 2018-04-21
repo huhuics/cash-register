@@ -1,16 +1,16 @@
 package cn.cash.register.common.request;
 
 /**
- * 后台商品列表查询请求
+ * 商品列表查询请求类
  * @author 51
- * @version $Id: PageInfoQueryRequest.java, v 0.1 2018年4月18日 下午4:36:32 51 Exp $
+ * @version $Id: GoodsInfoQueryRequest.java, v 0.1 2018年4月18日 下午4:36:32 51 Exp $
  */
-public class PageInfoQueryRequest extends BasePageRequest {
+public class GoodsInfoQueryRequest extends BasePageRequest {
 
     /** uid */
     private static final long serialVersionUID = -1971057422449400246L;
 
-    private String            goodsStatus;
+    private boolean           goodsStatus;
 
     private String            goodsBrand;
 
@@ -31,11 +31,11 @@ public class PageInfoQueryRequest extends BasePageRequest {
         super.validate();
     }
 
-    public String getGoodsStatus() {
+    public boolean getGoodsStatus() {
         return goodsStatus;
     }
 
-    public void setGoodsStatus(String goodsStatus) {
+    public void setGoodsStatus(boolean goodsStatus) {
         this.goodsStatus = goodsStatus;
     }
 

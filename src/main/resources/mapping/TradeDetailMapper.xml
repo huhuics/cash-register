@@ -232,4 +232,26 @@
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="list" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.TradeDetailQueryRequest">
+  	select 
+    <include refid="Base_Column_List" />
+  	from trade_detail where 1=1
+  	<if test="sellerNo != null and sellerNo !=''">
+  		seller_no = #{sellerNo,jdbcType=VARCHAR}
+    </if>
+    <if test="payChenal != null and payChenal !=''">
+  		pay_chenal = #{payChenal,jdbcType=VARCHAR}
+    </if>
+    <if test="tradeType != null and tradeType !=''">
+  		trade_type = #{tradeType,jdbcType=VARCHAR}
+    </if>
+    <if test="tradeTimeUp != null and tradeTimeUp !=''">
+  		trade_time &lt;= #{tradeTimeUp,jdbcType=TIMESTAMP}
+  		and
+  		trade_time &gt;= #{tradeTimeDown,jdbcType=TIMESTAMP}
+    </if>
+    <if test="tradeNo != null and tradeNo !=''">
+  		trade_no = #{tradeNo,jdbcType=VARCHAR}
+    </if>
 </mapper>

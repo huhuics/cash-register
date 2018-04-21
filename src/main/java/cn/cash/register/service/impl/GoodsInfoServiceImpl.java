@@ -23,7 +23,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import cn.cash.register.common.request.PageInfoQueryRequest;
+import cn.cash.register.common.request.GoodsInfoQueryRequest;
 import cn.cash.register.dao.GoodsImageMapper;
 import cn.cash.register.dao.GoodsInfoMapper;
 import cn.cash.register.dao.domain.GoodsImage;
@@ -82,7 +82,7 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
-    public PageInfo<GoodsInfo> queryList(PageInfoQueryRequest request) {
+    public PageInfo<GoodsInfo> queryList(GoodsInfoQueryRequest request) {
         LogUtil.info(logger, "收到商品分页查询请求");
         request.validate();
 
