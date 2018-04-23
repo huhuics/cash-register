@@ -195,7 +195,7 @@ var vm = new Vue({
                         vm.seller.password = result.seller.password;
                         vm.seller.phone = result.seller.phone;
                         vm.seller.role = result.seller.role;
-                        vm.seller.status = result.seller.status;
+                        vm.seller.status = 1 * result.seller.status; // 直接转将转换为true，这里通过乘1转换为数字
                         vm.seller.cashPermission = JSON.parse(result.seller.cashPermission);
                         vm.seller.backgroundPermission = JSON.parse(result.seller.backgroundPermission);
                         layer.open({
