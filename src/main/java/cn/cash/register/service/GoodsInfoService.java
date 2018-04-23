@@ -37,6 +37,13 @@ public interface GoodsInfoService {
     int update(GoodsInfo goodsInfo);
 
     /**
+     * 修改商品库存
+     * @param id     商品id
+     * @param count  变动数量,可为正/负
+     */
+    int updateStock(Long id, int count);
+
+    /**
      * 根据id查询商品
      */
     GoodsInfo queryById(Long id);

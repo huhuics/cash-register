@@ -487,4 +487,10 @@
     </if>
   </select>
   
+  <update id="updateStock">
+  	update goods_info set goods_stock = goods_stock - #{count,jdbcType=INTEGER}
+  	where id = #{id,jdbcType=BIGINT}
+  	and goods_stock &gt;= #{count,jdbcType=INTEGER}
+  </update>
+  
 </mapper>

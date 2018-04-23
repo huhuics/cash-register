@@ -129,6 +129,20 @@ public class TradeServiceImpl implements TradeService {
     }
 
     /**
+     * 执行收银/退款操作
+     */
+    private void doTrade(TradeDetail tradeDetail, TradeRequest request) {
+        //1.写trade_goods_detail表
+        insertTradeGoodsDetail(tradeDetail, request);
+
+        //2.写trade_detail表
+        insertTradeDetail(tradeDetail, request);
+
+        //3.积分变动
+        memberService.updateIntegral(request.getMemberId(), tradeDetail.getTotalActualAmount());
+    }
+
+    /**
      * 收银写trade_goods_detail
      */
     private void insertTradeGoodsDetail(TradeDetail tradeDetail, TradeRequest request) {
@@ -161,6 +175,10 @@ public class TradeServiceImpl implements TradeService {
                 detail.setGoodsTag(goodsInfo.getGoodsTag());
                 detail.setCategoryName(goodsInfo.getCategoryName());
                 detail.setSupplierName(goodsInfo.getSupplierName());
+
+                //修改商品库存
+                goodsInfoService.updateStock(goodsInfo.getId(), item.getGoodsCount());
+
             }
 
             detail.setTotalAmount(new Money(item.getTotalAmount()));
@@ -199,17 +217,6 @@ public class TradeServiceImpl implements TradeService {
         tradeDetail.setGmtCreate(new Date());
 
         tradeDetailMapper.insertSelective(tradeDetail);
-    }
-
-    private void doTrade(TradeDetail tradeDetail, TradeRequest request) {
-        //1.写trade_goods_detail表
-        insertTradeGoodsDetail(tradeDetail, request);
-
-        //2.写trade_detail表
-        insertTradeDetail(tradeDetail, request);
-
-        //3.积分变动
-        memberService.updateIntegral(request.getMemberId(), tradeDetail.getTotalActualAmount());
     }
 
 }
