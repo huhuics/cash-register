@@ -20,13 +20,14 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import cn.cash.register.common.request.CheckoutRequest;
+import cn.cash.register.common.request.CancelRequest;
 import cn.cash.register.common.request.TradeDetailQueryRequest;
 import cn.cash.register.common.request.TradeGoodsDetailQueryRequest;
+import cn.cash.register.common.request.TradeRequest;
 import cn.cash.register.dao.TradeDetailMapper;
 import cn.cash.register.dao.TradeGoodsDetailMapper;
-import cn.cash.register.dao.domain.CheckoutGoodsItem;
 import cn.cash.register.dao.domain.GoodsInfo;
+import cn.cash.register.dao.domain.GoodsItem;
 import cn.cash.register.dao.domain.TradeDetail;
 import cn.cash.register.dao.domain.TradeGoodsDetail;
 import cn.cash.register.enums.TradeTypeEnum;
@@ -63,7 +64,7 @@ public class TradeServiceImpl implements TradeService {
     private GoodsInfoService       goodsInfoService;
 
     @Override
-    public boolean checkout(CheckoutRequest request) {
+    public boolean checkout(TradeRequest request) {
         LogUtil.info(logger, "收到收银请求");
         request.validate();
 
@@ -76,16 +77,48 @@ public class TradeServiceImpl implements TradeService {
 
                 TradeDetail tradeDetail = new TradeDetail(tradeNo, new Date(), TradeTypeEnum.SALES.getCode());
 
-                //1.写trade_goods_detail表
-                insertTradeGoodsDetail(tradeDetail, request.getGoodsItems());
-
-                //2.写trade_detail表
-                insertTradeDetail(tradeDetail, request);
+                doTrade(tradeDetail, request);
 
                 return true;
             }
         });
+    }
 
+    @Override
+    public boolean refund(TradeRequest request) {
+        LogUtil.info(logger, "收到退款请求");
+        request.validate();
+
+        return txTemplate.execute(new TransactionCallback<Boolean>() {
+            @Override
+            public Boolean doInTransaction(TransactionStatus status) {
+
+                //订单流水号
+                String tradeNo = DateUtil.format(new Date(), DateUtil.msecFormat);
+
+                TradeDetail tradeDetail = new TradeDetail(tradeNo, new Date(), TradeTypeEnum.REFUND.getCode());
+
+                doTrade(tradeDetail, request);
+
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public boolean cancel(CancelRequest request) {
+        LogUtil.info(logger, "收到反结账请求");
+        request.validate();
+
+        return txTemplate.execute(new TransactionCallback<Boolean>() {
+            @Override
+            public Boolean doInTransaction(TransactionStatus status) {
+
+                doCancel(request);
+
+                return true;
+            }
+        });
     }
 
     @Override
@@ -113,16 +146,30 @@ public class TradeServiceImpl implements TradeService {
     }
 
     /**
+     * 执行收银/退款操作
+     */
+    private void doTrade(TradeDetail tradeDetail, TradeRequest request) {
+        //1.写trade_goods_detail表
+        insertTradeGoodsDetail(tradeDetail, request);
+
+        //2.写trade_detail表
+        insertTradeDetail(tradeDetail, request);
+
+        //3.积分变动
+        memberService.updateIntegral(request.getMemberId(), tradeDetail.getTotalActualAmount());
+    }
+
+    /**
      * 收银写trade_goods_detail
      */
-    private void insertTradeGoodsDetail(TradeDetail tradeDetail, List<CheckoutGoodsItem> items) {
+    private void insertTradeGoodsDetail(TradeDetail tradeDetail, TradeRequest request) {
         int goodsCount = 0; //商品数量
         Money totalAmount = new Money(); //商品原价之和
         int goodsDiscount = 100; //商品折扣
         Money totalActualAmount = new Money(); //商品实收之和
         Money profitAmount = new Money(); //商品利润之和
 
-        for (CheckoutGoodsItem item : items) {
+        for (GoodsItem item : request.getGoodsItems()) {
 
             GoodsInfo goodsInfo = goodsInfoService.queryById(item.getGoodsId());
 
@@ -131,16 +178,26 @@ public class TradeServiceImpl implements TradeService {
             detail.setTradeNo(tradeDetail.getTradeNo());
             detail.setTradeTime(tradeDetail.getTradeTime());
             detail.setTradeType(tradeDetail.getTradeType());
-            detail.setGoodsName(goodsInfo.getGoodsName());
-            detail.setGoodsBrand(goodsInfo.getGoodsBrand());
-            detail.setBarCode(goodsInfo.getBarCode());
-            detail.setProductNumber(goodsInfo.getProductNumber());
-            detail.setGoodsColor(goodsInfo.getGoodsColor());
-            detail.setGoodsSize(goodsInfo.getGoodsSize());
             detail.setGoodsCount(item.getGoodsCount());
-            detail.setGoodsTag(goodsInfo.getGoodsTag());
-            detail.setCategoryName(goodsInfo.getCategoryName());
-            detail.setSupplierName(goodsInfo.getSupplierName());
+
+            if (goodsInfo == null) { //无码商品
+                detail.setGoodsName(item.getGoodsName());
+            } else {//有码商品
+                detail.setGoodsName(goodsInfo.getGoodsName());
+                detail.setGoodsBrand(goodsInfo.getGoodsBrand());
+                detail.setBarCode(goodsInfo.getBarCode());
+                detail.setProductNumber(goodsInfo.getProductNumber());
+                detail.setGoodsColor(goodsInfo.getGoodsColor());
+                detail.setGoodsSize(goodsInfo.getGoodsSize());
+                detail.setGoodsTag(goodsInfo.getGoodsTag());
+                detail.setCategoryName(goodsInfo.getCategoryName());
+                detail.setSupplierName(goodsInfo.getSupplierName());
+
+                //修改商品库存
+                goodsInfoService.updateStock(goodsInfo.getId(), item.getGoodsCount());
+
+            }
+
             detail.setTotalAmount(new Money(item.getTotalAmount()));
             detail.setGoodsDiscount(item.getGoodsDiscount());
             detail.setTotalActualAmount(new Money(item.getTotalActualAmount()));
@@ -167,7 +224,7 @@ public class TradeServiceImpl implements TradeService {
     /**
      * 收银写trade_detail
      */
-    private void insertTradeDetail(TradeDetail tradeDetail, CheckoutRequest request) {
+    private void insertTradeDetail(TradeDetail tradeDetail, TradeRequest request) {
         tradeDetail.setMemberName(request.getMemberName());
         tradeDetail.setSellerNo(request.getSellerNo());
         tradeDetail.setShopperNo(request.getShopperNo());
@@ -177,6 +234,30 @@ public class TradeServiceImpl implements TradeService {
         tradeDetail.setGmtCreate(new Date());
 
         tradeDetailMapper.insertSelective(tradeDetail);
+    }
+
+    /**
+     * 反结账
+     * 1.库存变动
+     * 2.积分变动
+     * 3.删除trade_goods_detail
+     * 4.删除trade_detail
+     */
+    private void doCancel(CancelRequest request) {
+        for (GoodsItem item : request.getGoodsItems()) {
+            Long goodsId = item.getGoodsId();
+            if (goodsId != null) { //有码商品
+                //商品库存变动
+                goodsInfoService.updateStock(goodsId, item.getGoodsCount());
+            }
+        }
+
+        //积分变动
+        memberService.updateIntegral(request.getMemberId(), request.getTotalActualAmountMoney());
+
+        tradeGoodsDetailMapper.deleteByTradeNo(request.getTradeNo());
+
+        tradeDetailMapper.deleteByTradeNo(request.getTradeNo());
     }
 
 }

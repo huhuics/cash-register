@@ -19,4 +19,6 @@ public interface TradeGoodsDetailMapper {
     int updateByPrimaryKey(TradeGoodsDetail record);
 
     List<TradeGoodsDetail> list(TradeGoodsDetailQueryRequest request);
+
+    void deleteByTradeNo(String tradeNo);
 }

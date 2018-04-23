@@ -76,6 +76,12 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
+    public int updateStock(Long id, int count) {
+        LogUtil.info(logger, "收到修改商品库存请求,id={0},count={1}", id, count);
+        return goodsInfoMapper.updateStock(id, count);
+    }
+
+    @Override
     public GoodsInfo queryById(Long id) {
         LogUtil.info(logger, "收到查询商品请求,id={0}", id);
         return goodsInfoMapper.selectByPrimaryKey(id);

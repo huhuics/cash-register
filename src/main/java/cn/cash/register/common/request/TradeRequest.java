@@ -8,29 +8,31 @@ import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
 
-import cn.cash.register.dao.domain.CheckoutGoodsItem;
+import cn.cash.register.dao.domain.GoodsItem;
 import cn.cash.register.dao.domain.PayChenal;
 import cn.cash.register.util.AssertUtil;
 
 /**
- * 收银请求类
+ * 收银/退款请求类
  * @author HuHui
- * @version $Id: CheckoutRequest.java, v 0.1 2018年4月23日 上午10:46:31 HuHui Exp $
+ * @version $Id: TradeRequest.java, v 0.1 2018年4月23日 上午10:46:31 HuHui Exp $
  */
-public class CheckoutRequest extends BaseRequest {
+public class TradeRequest extends BaseRequest {
 
     /**  */
-    private static final long       serialVersionUID = -7864023113538102948L;
+    private static final long serialVersionUID = -7864023113538102948L;
 
-    private List<CheckoutGoodsItem> goodsItems;
+    private List<GoodsItem>   goodsItems;
 
-    private List<PayChenal>         payChenals;
+    private List<PayChenal>   payChenals;
 
-    private String                  memberName;
+    private long              memberId;
 
-    private String                  sellerNo;
+    private String            memberName;
 
-    private String                  shopperNo;
+    private String            sellerNo;
+
+    private String            shopperNo;
 
     @Override
     public void validate() {
@@ -39,11 +41,11 @@ public class CheckoutRequest extends BaseRequest {
         AssertUtil.assertTrue(CollectionUtils.isNotEmpty(payChenals), "支付方式不能为空");
     }
 
-    public List<CheckoutGoodsItem> getGoodsItems() {
+    public List<GoodsItem> getGoodsItems() {
         return goodsItems;
     }
 
-    public void setGoodsItems(List<CheckoutGoodsItem> goodsItems) {
+    public void setGoodsItems(List<GoodsItem> goodsItems) {
         this.goodsItems = goodsItems;
     }
 
@@ -77,6 +79,14 @@ public class CheckoutRequest extends BaseRequest {
 
     public void setMemberName(String memberName) {
         this.memberName = memberName;
+    }
+
+    public long getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(long memberId) {
+        this.memberId = memberId;
     }
 
 }
