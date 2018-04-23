@@ -254,4 +254,11 @@
     <if test="tradeNo != null and tradeNo !=''">
   		trade_no = #{tradeNo,jdbcType=VARCHAR}
     </if>
+  </select>
+  
+  <delete id="deleteByTradeNo" parameterType="java.lang.String">
+    delete from trade_detail
+    where trade_no = #{tradeNo,jdbcType=VARCHAR}
+  </delete>
+  
 </mapper>

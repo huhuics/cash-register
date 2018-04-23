@@ -5,7 +5,7 @@
 package cn.cash.register.dao.domain;
 
 /**
- * 收银时从前台传到后台的支付方式
+ * 收银时从前台传到后台的支付/退款方式
  * @author HuHui
  * @version $Id: PayChenal.java, v 0.1 2018年4月23日 上午11:24:45 HuHui Exp $
  */
@@ -14,7 +14,7 @@ public class PayChenal extends BaseDomain {
     /**  */
     private static final long serialVersionUID = 4401972139057180239L;
 
-    /** 支付方式 */
+    /** 支付/退款方式 */
     private String            chenal;
 
     /** 金额,单位:分 */
