@@ -14,4 +14,6 @@ public interface SystemParameterMapper {
     int updateByPrimaryKeySelective(SystemParameter record);
 
     int updateByPrimaryKey(SystemParameter record);
+
+    SystemParameter selectByCode(String paramCode);
 }

@@ -174,44 +174,47 @@ public class TradeServiceImpl implements TradeService {
             GoodsInfo goodsInfo = goodsInfoService.queryById(item.getGoodsId());
 
             //创建trade_goods_detail对象
-            TradeGoodsDetail detail = new TradeGoodsDetail();
-            detail.setTradeNo(tradeDetail.getTradeNo());
-            detail.setTradeTime(tradeDetail.getTradeTime());
-            detail.setTradeType(tradeDetail.getTradeType());
-            detail.setGoodsCount(item.getGoodsCount());
+            TradeGoodsDetail tradeGoodsDetail = new TradeGoodsDetail();
+            tradeGoodsDetail.setTradeNo(tradeDetail.getTradeNo());
+            tradeGoodsDetail.setTradeTime(tradeDetail.getTradeTime());
+            tradeGoodsDetail.setTradeType(tradeDetail.getTradeType());
+            tradeGoodsDetail.setGoodsCount(item.getGoodsCount());
 
             if (goodsInfo == null) { //无码商品
-                detail.setGoodsName(item.getGoodsName());
+                tradeGoodsDetail.setGoodsName(item.getGoodsName());
             } else {//有码商品
-                detail.setGoodsName(goodsInfo.getGoodsName());
-                detail.setGoodsBrand(goodsInfo.getGoodsBrand());
-                detail.setBarCode(goodsInfo.getBarCode());
-                detail.setProductNumber(goodsInfo.getProductNumber());
-                detail.setGoodsColor(goodsInfo.getGoodsColor());
-                detail.setGoodsSize(goodsInfo.getGoodsSize());
-                detail.setGoodsTag(goodsInfo.getGoodsTag());
-                detail.setCategoryName(goodsInfo.getCategoryName());
-                detail.setSupplierName(goodsInfo.getSupplierName());
+                tradeGoodsDetail.setGoodsName(goodsInfo.getGoodsName());
+                tradeGoodsDetail.setGoodsBrand(goodsInfo.getGoodsBrand());
+                tradeGoodsDetail.setBarCode(goodsInfo.getBarCode());
+                tradeGoodsDetail.setProductNumber(goodsInfo.getProductNumber());
+                tradeGoodsDetail.setGoodsColor(goodsInfo.getGoodsColor());
+                tradeGoodsDetail.setGoodsSize(goodsInfo.getGoodsSize());
+                tradeGoodsDetail.setGoodsTag(goodsInfo.getGoodsTag());
+                tradeGoodsDetail.setCategoryName(goodsInfo.getCategoryName());
+                tradeGoodsDetail.setSupplierName(goodsInfo.getSupplierName());
 
                 //修改商品库存
                 goodsInfoService.updateStock(goodsInfo.getId(), item.getGoodsCount());
 
             }
 
-            detail.setTotalAmount(new Money(item.getTotalAmount()));
-            detail.setGoodsDiscount(item.getGoodsDiscount());
-            detail.setTotalActualAmount(new Money(item.getTotalActualAmount()));
-            detail.setProfitAmount(new Money(item.getProfitAmount()));
-            detail.setGmtCreate(new Date());
+            tradeGoodsDetail.setTotalAmount(new Money(item.getTotalAmount()));
+            tradeGoodsDetail.setGoodsDiscount(item.getGoodsDiscount());
+            tradeGoodsDetail.setTotalActualAmount(new Money(item.getTotalActualAmount()));
+            tradeGoodsDetail.setGmtCreate(new Date());
 
-            tradeGoodsDetailMapper.insertSelective(detail);
+            //计算商品利润
+            double profit = (item.getTotalActualAmount() * item.getGoodsDiscount()) / 100.0;
+            tradeGoodsDetail.setProfitAmount(new Money(profit));
+
+            tradeGoodsDetailMapper.insertSelective(tradeGoodsDetail);
 
             //计算统计类交易信息
             goodsCount += item.getGoodsCount();
-            totalAmount.addTo(detail.getTotalAmount());
+            totalAmount.addTo(tradeGoodsDetail.getTotalAmount());
             goodsDiscount = item.getGoodsDiscount();
-            totalActualAmount.addTo(detail.getTotalActualAmount());
-            profitAmount.addTo(detail.getProfitAmount());
+            totalActualAmount.addTo(tradeGoodsDetail.getTotalActualAmount());
+            profitAmount.addTo(tradeGoodsDetail.getProfitAmount());
         }
 
         tradeDetail.setGoodsCount(goodsCount);
