@@ -4,12 +4,12 @@ $.jgrid.defaults.responsive = true;
 $.jgrid.defaults.styleUI = 'Bootstrap';
 
 function getRootPath_web() {
-	var curWwwPath = window.document.location.href;	// 当前完整网址
-	var pathName = window.document.location.pathname; // 主机地址之后的目录
-	var pos = curWwwPath.indexOf(pathName);
-	var localhostPaht = curWwwPath.substring(0, pos); // 主机地址，如： http://localhost:8080
-	var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1); // 带"/"的项目名
-	return (localhostPaht + projectName);
+    var curWwwPath = window.document.location.href; // 当前完整网址
+    var pathName = window.document.location.pathname; // 主机地址之后的目录
+    var pos = curWwwPath.indexOf(pathName);
+    var localhostPaht = curWwwPath.substring(0, pos); // 主机地址，如： http://localhost:8080
+    var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1); // 带"/"的项目名
+    return (localhostPaht + projectName);
 }
 
 var basePath = getRootPath_web();
@@ -21,20 +21,21 @@ $.ajaxSetup({
 });
 
 //重写alert
-window.alert = function(msg, callback){
-    parent.layer.alert(msg, function(index){
+window.alert = function(msg, callback) {
+    parent.layer.alert(msg, function(index) {
         parent.layer.close(index);
-        if(typeof(callback) === "function"){
+        if (typeof(callback) === "function") {
             callback("ok");
         }
     });
 }
 
 //重写confirm式样框
-window.confirm = function(msg, callback){
-    parent.layer.confirm(msg, {btn: ['确定','取消']},
-        function(){//确定事件
-            if(typeof(callback) === "function"){
+window.confirm = function(msg, callback) {
+    parent.layer.confirm(msg, { btn: ['确定', '取消'] },
+        function(index) { //确定事件
+            parent.layer.close(index);
+            if (typeof(callback) === "function") {
                 callback("ok");
             }
         });
@@ -44,15 +45,15 @@ window.confirm = function(msg, callback){
 function getSelectedRow() {
     var grid = $("#jqGrid");
     var rowKey = grid.getGridParam("selrow");
-    if(!rowKey){
+    if (!rowKey) {
         alert("请选择一条记录");
-        return ;
+        return;
     }
 
     var selectedIDs = grid.getGridParam("selarrrow");
-    if(selectedIDs.length > 1){
+    if (selectedIDs.length > 1) {
         alert("只能选择一条记录");
-        return ;
+        return;
     }
 
     return selectedIDs[0];
@@ -62,15 +63,15 @@ function getSelectedRow() {
 function getSelectedRowValue(colName) {
     var grid = $("#jqGrid");
     var rowKey = grid.getGridParam("selrow");
-    if(!rowKey){
+    if (!rowKey) {
         alert("请选择一条记录");
-        return ;
+        return;
     }
 
     var selectedIDs = grid.getGridParam("selarrrow");
-    if(selectedIDs.length > 1){
+    if (selectedIDs.length > 1) {
         alert("只能选择一条记录");
-        return ;
+        return;
     }
 
     return grid.jqGrid('getRowData', selectedIDs[0])[colName];
@@ -80,9 +81,9 @@ function getSelectedRowValue(colName) {
 function getSingleSelectedRowValue(colName) {
     var grid = $("#jqGrid");
     var rowKey = grid.getGridParam("selrow");
-    if(!rowKey){
+    if (!rowKey) {
         alert("请选择一条记录");
-        return ;
+        return;
     }
     return grid.jqGrid('getRowData', rowKey)[colName];
 }
@@ -91,9 +92,9 @@ function getSingleSelectedRowValue(colName) {
 function getSelectedRows() {
     var grid = $("#jqGrid");
     var rowKey = grid.getGridParam("selrow");
-    if(!rowKey){
+    if (!rowKey) {
         alert("请选择一条记录");
-        return ;
+        return;
     }
 
     return grid.getGridParam("selarrrow");

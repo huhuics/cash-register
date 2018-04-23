@@ -53,4 +53,56 @@ public class BackstageSellerController {
         return ResultSet.success().put("page", pageInfo);
     }
 
+    /**
+     * 添加或更新收银员
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/addOrUpdate")
+    @ResponseBody
+    public ResultSet addOrUpdate(SellerInfo sellerInfo) {
+        LogUtil.info(logger, "[Controller]收到#添加或更新收银员#请求,sellerInfo={0}", sellerInfo);
+
+        // 根据ID是否为空判断是新增还是编辑
+        if (sellerInfo.getId() == null) {
+            LogUtil.info(logger, "[Controller]#添加收银员#,sellerInfo={0}", sellerInfo);
+            sellerInfoService.addSeller(sellerInfo);
+        } else {
+            LogUtil.info(logger, "[Controller]#修改收银员#,sellerInfo={0}", sellerInfo);
+            sellerInfoService.update(sellerInfo);
+        }
+
+        return ResultSet.success();
+    }
+
+    /**
+     * 根据ID获取收银员信息
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/getById", method = RequestMethod.GET)
+    @ResponseBody
+    public ResultSet getById(long id) {
+        LogUtil.info(logger, "[Controller]收到#根据ID获取收银员信息#请求,id={0}", id);
+
+        SellerInfo sellerInfo = sellerInfoService.queryById(id);
+
+        return ResultSet.success().put("seller", sellerInfo);
+    }
+
+    /**
+     * 根据ID删除收银员
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/delById", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultSet delById(long id) {
+        LogUtil.info(logger, "[Controller]收到#根据ID删除收银员信息#请求,id={0}", id);
+
+        sellerInfoService.delete(id);
+
+        return ResultSet.success();
+    }
+
 }

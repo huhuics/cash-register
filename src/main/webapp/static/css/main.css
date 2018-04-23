@@ -59,6 +59,10 @@ div.div-height-5 {
 	height: 5px;
 }
 
+form.layerForm {
+	margin: 20px 5px 20px 5px; 
+}
+
 /* table.largeTable > * > tr > th,td  {
 	height: 50px;
 	line-height: 50px;
