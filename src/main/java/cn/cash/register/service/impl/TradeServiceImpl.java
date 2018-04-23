@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.request.CancelRequest;
 import cn.cash.register.common.request.TradeDetailQueryRequest;
 import cn.cash.register.common.request.TradeGoodsDetailQueryRequest;
 import cn.cash.register.common.request.TradeRequest;
@@ -98,6 +99,22 @@ public class TradeServiceImpl implements TradeService {
                 TradeDetail tradeDetail = new TradeDetail(tradeNo, new Date(), TradeTypeEnum.REFUND.getCode());
 
                 doTrade(tradeDetail, request);
+
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public boolean cancel(CancelRequest request) {
+        LogUtil.info(logger, "收到反结账请求");
+        request.validate();
+
+        return txTemplate.execute(new TransactionCallback<Boolean>() {
+            @Override
+            public Boolean doInTransaction(TransactionStatus status) {
+
+                doCancel(request);
 
                 return true;
             }
@@ -217,6 +234,30 @@ public class TradeServiceImpl implements TradeService {
         tradeDetail.setGmtCreate(new Date());
 
         tradeDetailMapper.insertSelective(tradeDetail);
+    }
+
+    /**
+     * 反结账
+     * 1.库存变动
+     * 2.积分变动
+     * 3.删除trade_goods_detail
+     * 4.删除trade_detail
+     */
+    private void doCancel(CancelRequest request) {
+        for (GoodsItem item : request.getGoodsItems()) {
+            Long goodsId = item.getGoodsId();
+            if (goodsId != null) { //有码商品
+                //商品库存变动
+                goodsInfoService.updateStock(goodsId, item.getGoodsCount());
+            }
+        }
+
+        //积分变动
+        memberService.updateIntegral(request.getMemberId(), request.getTotalActualAmountMoney());
+
+        tradeGoodsDetailMapper.deleteByTradeNo(request.getTradeNo());
+
+        tradeDetailMapper.deleteByTradeNo(request.getTradeNo());
     }
 
 }

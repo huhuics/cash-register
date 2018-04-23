@@ -14,13 +14,13 @@ public class GoodsItem extends BaseDomain {
     /**  */
     private static final long serialVersionUID = -3156888388686240382L;
 
-    private long              goodsId;
+    private Long              goodsId;
 
     private String            goodsName;
 
     private int               goodsDiscount;
 
-    /***********收银时以下字段为正;退款时以下字段为负************/
+    /***********收银时以下字段为正;退款/反结账时以下字段为负************/
 
     private long              totalAmount;
 
@@ -32,16 +32,16 @@ public class GoodsItem extends BaseDomain {
 
     /***************************end****************************/
 
-    public long getGoodsId() {
+    public long getTotalAmount() {
+        return totalAmount;
+    }
+
+    public Long getGoodsId() {
         return goodsId;
     }
 
-    public void setGoodsId(long goodsId) {
+    public void setGoodsId(Long goodsId) {
         this.goodsId = goodsId;
-    }
-
-    public long getTotalAmount() {
-        return totalAmount;
     }
 
     public void setTotalAmount(long totalAmount) {

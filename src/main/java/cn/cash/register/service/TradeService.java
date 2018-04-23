@@ -6,9 +6,10 @@ package cn.cash.register.service;
 
 import com.github.pagehelper.PageInfo;
 
-import cn.cash.register.common.request.TradeRequest;
+import cn.cash.register.common.request.CancelRequest;
 import cn.cash.register.common.request.TradeDetailQueryRequest;
 import cn.cash.register.common.request.TradeGoodsDetailQueryRequest;
+import cn.cash.register.common.request.TradeRequest;
 import cn.cash.register.dao.domain.TradeDetail;
 import cn.cash.register.dao.domain.TradeGoodsDetail;
 
@@ -29,6 +30,11 @@ public interface TradeService {
      * 退款
      */
     boolean refund(TradeRequest request);
+
+    /**
+     * 反结账
+     */
+    boolean cancel(CancelRequest request);
 
     /**
      * 销售单据分页查询

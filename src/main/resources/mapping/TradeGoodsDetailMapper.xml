@@ -296,5 +296,10 @@
   		goods_name = #{goodsName,jdbcType=VARCHAR}
     </if>
    </select>
+   
+   <delete id="deleteByTradeNo" parameterType="java.lang.String">
+    delete from trade_goods_detail
+    where trade_no = #{tradeNo,jdbcType=VARCHAR}
+  </delete>
   
 </mapper>
