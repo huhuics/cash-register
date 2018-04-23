@@ -4,6 +4,7 @@
  */
 package cn.cash.register.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -37,6 +38,12 @@ public class SellerInfoServiceImpl implements SellerInfoService {
     @Override
     public Long addSeller(SellerInfo sellerInfo) {
         LogUtil.info(logger, "收到增加收银员请求,sellerInfo={0}", sellerInfo);
+
+        sellerInfo.setPartOfShop("小熊维尼的糖果店"); // TODO 获取所属门店名
+
+        Date createTime = new Date();
+        sellerInfo.setGmtCreate(createTime); // 创建时间
+        sellerInfo.setGmtUpdate(createTime); // 更新时间
 
         return sellerInfoMapper.insertSelective(sellerInfo);
     }
