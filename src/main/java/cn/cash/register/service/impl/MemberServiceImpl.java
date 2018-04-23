@@ -24,6 +24,7 @@ import cn.cash.register.dao.domain.MemberIntegral;
 import cn.cash.register.dao.domain.MemberRank;
 import cn.cash.register.service.MemberService;
 import cn.cash.register.util.LogUtil;
+import cn.cash.register.util.Money;
 
 /**
  * 会员服务接口实现类
@@ -80,6 +81,40 @@ public class MemberServiceImpl implements MemberService {
         List<MemberInfo> list = infoMapper.list(request);
 
         return new PageInfo<MemberInfo>(list);
+    }
+
+    @Override
+    public void updateIntegral(Long memberId, Money money) {
+        LogUtil.info(logger, "收到修改会员积分请求,memberId={0},money={1}", memberId, money.getCent());
+
+        //计算积分值
+        MemberIntegral memIntegral = queryMemIntegral();
+        if (memIntegral == null || !memIntegral.getStatus()) {
+            return;
+        }
+
+        double integralValue = money.getAmount().doubleValue() / memIntegral.getIntegralValue();
+
+        //查询会员信息并修改
+        MemberInfo member = infoMapper.selectByPrimaryKey(memberId);
+
+        if (member == null || !member.getStatus()) {//不启用
+            return;
+        }
+
+        double newValue = member.getMemberIntegral() + integralValue;
+        member.setMemberIntegral(newValue);
+
+        infoMapper.updateByPrimaryKeySelective(member);
+
+        //会员自动升级
+        List<MemberRank> memberRanks = rankMapper.listAll();
+        for (MemberRank rank : memberRanks) {
+            if (rank.getIsIntegral() && rank.getIsAutoUpgrade()) {
+
+            }
+        }
+
     }
 
     /****************************会员等级相关接口****************************/

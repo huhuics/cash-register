@@ -457,7 +457,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   
-  <select id="list" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.PageInfoQueryRequest">
+  <select id="list" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.GoodsInfoQueryRequest">
  	select 
     <include refid="Base_Column_List" />
     from goods_info where 1 = 1

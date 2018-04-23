@@ -42,6 +42,15 @@ public class TradeDetail extends BaseDomain {
 
     private Date              gmtCreate;
 
+    public TradeDetail() {
+    }
+
+    public TradeDetail(String tradeNo, Date tradeTime, String tradeType) {
+        this.tradeNo = tradeNo;
+        this.tradeTime = tradeTime;
+        this.tradeType = tradeType;
+    }
+
     public Long getId() {
         return id;
     }

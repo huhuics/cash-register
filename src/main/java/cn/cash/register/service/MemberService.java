@@ -12,6 +12,7 @@ import cn.cash.register.common.request.MemberInfoQueryRequest;
 import cn.cash.register.dao.domain.MemberInfo;
 import cn.cash.register.dao.domain.MemberIntegral;
 import cn.cash.register.dao.domain.MemberRank;
+import cn.cash.register.util.Money;
 
 /**
  * 会员服务接口
@@ -47,6 +48,11 @@ public interface MemberService {
      * 分页查询会员信息
      */
     PageInfo<MemberInfo> queryList(MemberInfoQueryRequest request);
+
+    /**
+     * 修改会员积分值
+     */
+    void updateIntegral(Long memberId, Money money);
 
     /****************************会员等级相关接口****************************/
 
