@@ -29,13 +29,13 @@
                     </select>
                 </div>
                 <div class="form-group col-xs-2 pull-right">
-                    <a class="btn btn-default" @click="search"><i
-                class="fa fa-search"></i>&nbsp;搜索</a> <a class="btn btn-default" @click="resetSearch"><i class="fa fa-undo"></i>&nbsp;刷新</a>
+                    <a class="btn btn-default" @click="search"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                    <a class="btn btn-default" @click="resetSearch"><i class="fa fa-undo"></i>&nbsp;刷新</a>
                 </div>
                 <div class="clearfix"></div>
                 <div class="pull-right">
                     <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-                    <a class="btn btn-info" @click="update"><i class="fa fa-edit"></i>&nbsp;编辑</a>
+                    <a class="btn btn-success" @click="update"><i class="fa fa-edit"></i>&nbsp;编辑</a>
                     <a class="btn btn-danger" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
                 </div>
                 <div class="clearfix"></div>
