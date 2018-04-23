@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.cash.register.common.request.PageInfoQueryRequest;
+import cn.cash.register.common.request.GoodsInfoQueryRequest;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -34,7 +34,7 @@ public class BackstageGoodsController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public ResultSet queryList(PageInfoQueryRequest request) {
+    public ResultSet queryList(GoodsInfoQueryRequest request) {
 
         Object pageInfo = new Object(); // TODO 需要根据查询条件查询并返回PageInfo对象
 

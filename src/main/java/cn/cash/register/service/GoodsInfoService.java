@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 
-import cn.cash.register.common.request.PageInfoQueryRequest;
+import cn.cash.register.common.request.GoodsInfoQueryRequest;
 import cn.cash.register.dao.domain.GoodsImage;
 import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.enums.UpdateFieldEnum;
@@ -44,7 +44,7 @@ public interface GoodsInfoService {
     /**
      * 翻页查询
      */
-    PageInfo<GoodsInfo> queryList(PageInfoQueryRequest request);
+    PageInfo<GoodsInfo> queryList(GoodsInfoQueryRequest request);
 
     /**
      * 修改商品图片

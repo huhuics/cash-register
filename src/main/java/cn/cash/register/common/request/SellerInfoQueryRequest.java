@@ -20,7 +20,7 @@ public class SellerInfoQueryRequest extends BasePageRequest {
 
     private String            phone;
 
-    private String            status;
+    private boolean           status;
 
     public String getSellerNo() {
         return sellerNo;
@@ -46,11 +46,11 @@ public class SellerInfoQueryRequest extends BasePageRequest {
         this.phone = phone;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

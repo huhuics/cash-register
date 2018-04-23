@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v12.09 (64 bit)
-MySQL - 5.6.37 : Database - cash-register
+MySQL - 5.5.28 : Database - cash-register
 *********************************************************************
 */
 
@@ -41,7 +41,7 @@ CREATE TABLE `goods_category` (
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_category` */
 
@@ -197,7 +197,7 @@ CREATE TABLE `member_integral` (
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员积分方式表';
 
 /*Data for the table `member_integral` */
 
@@ -217,7 +217,7 @@ CREATE TABLE `member_rank` (
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员等级表';
 
 /*Data for the table `member_rank` */
 
@@ -358,11 +358,15 @@ CREATE TABLE `trade_goods_detail` (
   `trade_time` timestamp NULL DEFAULT NULL COMMENT '交易完成时间',
   `trade_type` varchar(32) NOT NULL COMMENT '交易类型。SALES：销售。REFUND：退款',
   `goods_name` varchar(256) DEFAULT NULL COMMENT '商品名称',
+  `goods_brand` varchar(128) DEFAULT NULL COMMENT '商品品牌',
   `bar_code` varchar(128) DEFAULT NULL COMMENT '商品条码',
   `product_number` varchar(128) DEFAULT NULL COMMENT '商品货号',
   `goods_color` varchar(64) DEFAULT NULL COMMENT '商品颜色',
   `goods_size` varchar(64) DEFAULT NULL COMMENT '商品尺码',
   `goods_count` int(11) NOT NULL COMMENT '商品数量，退款为负',
+  `goods_tag` varchar(128) DEFAULT NULL COMMENT '商品标签，半角逗号分隔开',
+  `category_name` varchar(128) DEFAULT NULL COMMENT '商品分类名称',
+  `supplier_name` varchar(128) DEFAULT NULL COMMENT '供货商名称',
   `total_amount` int(11) NOT NULL COMMENT '商品原价之和，单位：分。退款为负',
   `goods_discount` int(100) NOT NULL COMMENT '商品折扣，如9.8折就填98.默认100即不打折',
   `total_actual_amount` int(11) NOT NULL COMMENT '商品实收之和，单位：分。退款为负',
@@ -371,7 +375,8 @@ CREATE TABLE `trade_goods_detail` (
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `IDX_TRADE_NO` (`trade_no`),
-  KEY `IDX_BAR_CODE` (`bar_code`)
+  KEY `IDX_BAR_CODE` (`bar_code`),
+  KEY `IDX_GOODS_TAG` (`goods_tag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `trade_goods_detail` */

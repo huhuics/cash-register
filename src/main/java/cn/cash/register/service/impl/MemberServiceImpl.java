@@ -4,16 +4,18 @@
  */
 package cn.cash.register.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.MemberInfoQueryRequest;
-import cn.cash.register.common.request.MemberRankQueryRequest;
 import cn.cash.register.dao.MemberInfoMapper;
 import cn.cash.register.dao.MemberIntegralMapper;
 import cn.cash.register.dao.MemberRankMapper;
@@ -70,8 +72,14 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public PageInfo<MemberInfo> queryList(MemberInfoQueryRequest request) {
-        // TODO Auto-generated method stub
-        return null;
+        LogUtil.info(logger, "收到分页查询会员请求");
+        request.validate();
+        PageHelper.startPage(request.getPageNum(), request.getPageSize());
+        PageHelper.orderBy(request.getSidx() + " " + request.getOrder());
+
+        List<MemberInfo> list = infoMapper.list(request);
+
+        return new PageInfo<MemberInfo>(list);
     }
 
     /****************************会员等级相关接口****************************/
@@ -101,23 +109,24 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public PageInfo<MemberRank> queryList(MemberRankQueryRequest request) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<MemberRank> queryAll() {
+        LogUtil.info(logger, "收到查询所有会员等级请求");
+
+        return rankMapper.listAll();
     }
 
-    /****************************会员积分相关接口****************************/
+    /****************************会员积分方式相关接口****************************/
 
     @Override
     public MemberIntegral queryMemIntegral() {
-        // TODO Auto-generated method stub
-        return null;
+        LogUtil.info(logger, "收到查询会员积分方式请求");
+        return integralMapper.selectByPrimaryKey(1L);//只有一条记录
     }
 
     @Override
     public int updateMemIntegral(MemberIntegral integral) {
-        // TODO Auto-generated method stub
-        return 0;
+        LogUtil.info(logger, "收到修改会员积分方式请求");
+        return integralMapper.updateByPrimaryKeySelective(integral);
     }
 
 }
