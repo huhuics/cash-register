@@ -6,7 +6,7 @@ package cn.cash.register.service;
 
 import com.github.pagehelper.PageInfo;
 
-import cn.cash.register.common.request.CheckoutRequest;
+import cn.cash.register.common.request.TradeRequest;
 import cn.cash.register.common.request.TradeDetailQueryRequest;
 import cn.cash.register.common.request.TradeGoodsDetailQueryRequest;
 import cn.cash.register.dao.domain.TradeDetail;
@@ -23,7 +23,12 @@ public interface TradeService {
     /**
      * 收银
      */
-    boolean checkout(CheckoutRequest request);
+    boolean checkout(TradeRequest request);
+
+    /**
+     * 退款
+     */
+    boolean refund(TradeRequest request);
 
     /**
      * 销售单据分页查询

@@ -15,7 +15,7 @@ public enum TradeTypeEnum {
 
                            SALES("sales", "销售"),
 
-                           seller("refund", "退款")
+                           REFUND("refund", "退款")
 
     ;
 
