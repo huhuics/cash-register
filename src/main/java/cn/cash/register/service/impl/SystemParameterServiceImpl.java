@@ -70,4 +70,9 @@ public class SystemParameterServiceImpl implements SystemParameterService {
         return parameterMapper.deleteByPrimaryKey(id);
     }
 
+    @Override
+    public SystemParameter getByCode(String code) {
+        return parameterMapper.selectByCode(code);
+    }
+
 }

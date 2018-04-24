@@ -28,8 +28,6 @@ public class GoodsItem extends BaseDomain {
 
     private long              totalActualAmount;
 
-    private long              profitAmount;
-
     /***************************end****************************/
 
     public long getTotalAmount() {
@@ -62,14 +60,6 @@ public class GoodsItem extends BaseDomain {
 
     public void setGoodsCount(int goodsCount) {
         this.goodsCount = goodsCount;
-    }
-
-    public long getProfitAmount() {
-        return profitAmount;
-    }
-
-    public void setProfitAmount(long profitAmount) {
-        this.profitAmount = profitAmount;
     }
 
     public long getTotalActualAmount() {

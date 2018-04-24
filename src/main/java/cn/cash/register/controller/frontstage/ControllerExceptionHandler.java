@@ -2,7 +2,7 @@
  * Cash-Register
  * Copyright (c) 1995-2018 All Rights Reserved.
  */
-package cn.cash.register.controller;
+package cn.cash.register.controller.frontstage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

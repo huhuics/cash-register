@@ -25,6 +25,11 @@ public interface SystemParameterService {
     SystemParameter getById(Long id);
 
     /**
+     * 根据参数编码查询
+     */
+    SystemParameter getByCode(String code);
+
+    /**
      * 根据id修改参数值
      * @param id     
      * @param newValue  参数新值

@@ -1,4 +1,4 @@
-package cn.cash.register.controller;
+package cn.cash.register.controller.frontstage;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

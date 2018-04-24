@@ -37,6 +37,7 @@ public class SellerInfoServiceTest extends BaseTest {
         SellerInfoQueryRequest request = new SellerInfoQueryRequest();
         request.setPageNum(2);
         request.setSidx("id");
+        request.setStatus(true);
 
         PageInfo<SellerInfo> sellers = sellerInfoService.queryList(request);
         Assert.assertTrue(sellers.getList().size() == 10);

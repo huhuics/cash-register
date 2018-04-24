@@ -1,4 +1,4 @@
-package cn.cash.register.controller;
+package cn.cash.register.controller.backstage;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,13 +18,13 @@ import cn.cash.register.util.ResultSet;
  * 后台管理基本Controller
  * 
  * @author 51
- * @version $Id: BackstageCommonController.java, v 0.1 2018年4月19日 下午6:42:19 51 Exp $
+ * @version $Id: CommonController.java, v 0.1 2018年4月19日 下午6:42:19 51 Exp $
  */
 @Controller
 @RequestMapping("/")
-public class BackstageCommonController {
+public class CommonController {
 
-    private static final Logger logger = LoggerFactory.getLogger(BackstageGoodsController.class);
+    private static final Logger logger = LoggerFactory.getLogger(GoodsController.class);
 
     /**
      * 后端首页

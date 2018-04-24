@@ -1,4 +1,4 @@
-package cn.cash.register.controller;
+package cn.cash.register.controller.backstage;
 
 import javax.annotation.Resource;
 
@@ -21,13 +21,13 @@ import cn.cash.register.util.ResultSet;
  * 后台管理收银员相关Controller
  * 
  * @author 51
- * @version $Id: BackstageSellerController.java, v 0.1 2018年4月19日 下午8:02:52 51 Exp $
+ * @version $Id: SellerController.java, v 0.1 2018年4月19日 下午8:02:52 51 Exp $
  */
 @Controller
 @RequestMapping("/admin/seller")
-public class BackstageSellerController {
+public class SellerController {
 
-    private static final Logger logger = LoggerFactory.getLogger(BackstageSellerController.class);
+    private static final Logger logger = LoggerFactory.getLogger(SellerController.class);
 
     @Resource
     private SellerInfoService   sellerInfoService;
