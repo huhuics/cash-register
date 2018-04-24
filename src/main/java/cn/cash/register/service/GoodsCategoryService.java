@@ -24,7 +24,7 @@ public interface GoodsCategoryService {
 
     /**
      * 删除商品种类
-     * <p>该删除删除会将该结点及其子孙结点都删除</p>
+     * <p>该删除方法会将该结点及其子孙结点都删除</p>
      * @param categoryId
      */
     void delete(Long categoryId);

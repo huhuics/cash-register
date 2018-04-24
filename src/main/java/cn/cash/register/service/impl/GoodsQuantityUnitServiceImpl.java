@@ -4,6 +4,7 @@
  */
 package cn.cash.register.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -29,6 +30,7 @@ public class GoodsQuantityUnitServiceImpl implements GoodsQuantityUnitService {
     public Long add(String unitName) {
         GoodsQuantityUnit unit = new GoodsQuantityUnit();
         unit.setUnitName(unitName);
+        unit.setGmtCreate(new Date());
         return unitMapper.insertSelective(unit);
     }
 
