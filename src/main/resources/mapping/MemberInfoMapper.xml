@@ -256,7 +256,7 @@
     <if test="shopperName != null and shopperName !=''">
     	shopper_name = #{shopper_name,jdbcType=VARCHAR}
     </if>
-    <if test="status != null and status !=''">
+    <if test="status != null">
     	status = #{status,jdbcType=BIT}
     </if>
     <if test="memberNo != null and memberNo !=''">

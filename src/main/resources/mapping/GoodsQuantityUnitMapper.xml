@@ -26,7 +26,7 @@
     values (#{id,jdbcType=BIGINT}, #{unitName,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
       #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.GoodsQuantityUnit">
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.GoodsQuantityUnit" useGeneratedKeys="true" keyProperty="id">
     insert into goods_quantity_unit
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -79,4 +79,9 @@
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods_quantity_unit
+  </select>
 </mapper>

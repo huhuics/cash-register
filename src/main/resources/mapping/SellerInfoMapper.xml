@@ -188,7 +188,7 @@
     	<if test="phone != null and phone !=''">
     		and phone = #{phone,jdbcType=VARCHAR}
     	</if>
-    	<if test="status != null and status !=''">
+    	<if test="status != null">
     		and status = #{status,jdbcType=BIT}
     	</if>
   </select>
