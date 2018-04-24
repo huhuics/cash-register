@@ -1,76 +1,131 @@
-html { overflow-x:hidden; }
+html {
+	overflow-x: hidden;
+}
+
 .content-header {
 	position: relative;
 	padding: 0 0 3px 8px
 }
 
 .content-header>.breadcrumb {
-    position: relative;
-    top: 0;
-    right: 0;
-    float: none;
-    margin-top: 0px;
-    padding-left: 10px;
-    background: #ecf0f5;
+	position: relative;
+	top: 0;
+	right: 0;
+	float: none;
+	margin-top: 0px;
+	padding-left: 10px;
+	background: #ecf0f5;
 }
 
 .main-footer {
-    padding: 7px;
-    color: #444;
-    border-top: 1px solid #eee;
+	padding: 7px;
+	color: #444;
+	border-top: 1px solid #eee;
 }
 
 [v-cloak] {
-  display: none;
+	display: none;
 }
 
-.grid-btn{
-	margin-bottom:12px;
+.grid-btn {
+	font-size: 12px;
+	margin-bottom: 12px;
 }
-.grid-btn .btn{
-	margin-right:10px;
-}
-.pointer{cursor: pointer;}
 
-.ml-10 { margin-left:0 !important; }
-@media (min-width: 768px) {
-	.ml-10 { margin-left:10px !important; }
-	.col-sm-10 {width: 70%;padding-left: 0px;}
-	.col-sm-2 {width: 24%;}
+.grid-btn .btn {
+	margin-right: 10px;
 }
-tbody > tr > th {font-weight: normal; }
-.panel .table { margin:0 0; }
-.panel .pagination { margin:0; }
-.panel-default>.panel-heading {background-color: #f5f5f5;}
-.row{
+
+.pointer {
+	cursor: pointer;
+}
+
+.ml-10 {
+	margin-left: 0 !important;
+}
+
+@media ( min-width : 768px) {
+	.ml-10 {
+		margin-left: 10px !important;
+	}
+	.col-sm-10 {
+		width: 70%;
+		padding-left: 0px;
+	}
+	.col-sm-2 {
+		width: 24%;
+	}
+}
+
+tbody>tr>th {
+	font-weight: normal;
+}
+
+.panel .table {
+	margin: 0 0;
+}
+
+.panel .pagination {
+	margin: 0;
+}
+
+.panel-default>.panel-heading {
+	background-color: #f5f5f5;
+}
+
+.row {
 	border-top: 1px solid #ddd;
-	margin:0;
-	padding:20px 2px 0px 2px;
+	margin: 0;
+	padding: 20px 2px 0px 2px;
 }
-.col-xs-6{padding-left: 0px;padding-right: 0px;}
-.form-horizontal .form-group {margin-left:0px;margin-right:0px;}
-table.detailtable > tbody > tr > th {
+
+.col-xs-6 {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.form-horizontal .form-group {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+table.detailtable>tbody>tr>th {
 	text-align: right;
 }
 
-.placeholder {position: absolute;top: 7px;margin-left:14px;z-index: 10;color: #888;}
+.placeholder {
+	position: absolute;
+	top: 7px;
+	margin-left: 14px;
+	z-index: 10;
+	color: #888;
+}
 
 div.div-height-5 {
 	height: 5px;
 }
 
 form.layerForm {
-	margin: 20px 5px 20px 5px; 
+	margin: 20px 5px 20px 5px;
 }
 
-/* table.largeTable > * > tr > th,td  {
-	height: 50px;
-	line-height: 50px;
-	text-align: center;
-} */
+.ui-jqgrid .ui-jqgrid-title {
+	font-size: 12px;
+	font-family: "Microsoft YaHei";
+} /*修改grid标题的字体大小*/
+
+.ui-jqgrid-sortable {
+	font-size: 12px;
+	font-family: "Microsoft YaHei";
+} /*修改列名的字体大小*/
+
+.ui-jqgrid tr.jqgrow td {
+	font-size: 12px;
+	font-family: "Microsoft YaHei";
+} /*修改表格内容字体*/
+
 
 /* ---cashRegister.jsp */
-
 div.summaryDiv {
 	position: relative;
 	width: 100%;

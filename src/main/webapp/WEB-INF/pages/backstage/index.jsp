@@ -92,37 +92,37 @@
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>出库</a></li>
                         </ul>
                     </li>
-                    <li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
+                    <li class="treeview"><a href="#"> <i class="fa fa-shopping-cart"></i>
 					<span>商品</span> <span class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
 				</span>
 			</a>
                         <ul class="treeview-menu">
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>商品资料</a></li>
+                            <li><a href="#goods" @click="menuClick"><i class="fa fa-shopping-bag"></i>商品资料</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>商品分类</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>批量操作</a></li>
                         </ul>
                     </li>
-                    <li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
+                    <li class="treeview"><a href="#"> <i class="fa fa-vcard"></i>
 					<span>会员</span> <span class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
 				</span>
 			</a>
                         <ul class="treeview-menu">
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员资料</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-user-circle"></i>会员资料</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员等级</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员制度</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员卡报表</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员分析</a></li>
                         </ul>
                     </li>
-                    <li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
+                    <li class="treeview"><a href="#"> <i class="fa fa-users"></i>
 					<span>员工</span> <span class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
 				</span>
 			</a>
                         <ul class="treeview-menu">
-                            <li><a href="#seller" @click="menuClick"><i class="fa fa-circle-o"></i>收银员资料</a></li>
+                            <li><a href="#seller" @click="menuClick"><i class="fa fa-user"></i>收银员资料</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>收银员业绩</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>导购员资料</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>导购员业绩</a></li>
