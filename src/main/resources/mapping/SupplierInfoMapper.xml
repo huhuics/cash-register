@@ -211,5 +211,6 @@
   
   <select id="selectAllNames"  resultType="java.lang.String">
     select supplier_name from supplier_info
+    where status = true;
   </select>
 </mapper>

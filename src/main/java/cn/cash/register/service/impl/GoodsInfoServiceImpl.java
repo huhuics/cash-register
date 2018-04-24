@@ -88,6 +88,12 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
+    public List<GoodsInfo> search(String keyword) {
+        LogUtil.info(logger, "收到商品搜索请求,keyword={0}", keyword);
+        return goodsInfoMapper.search(keyword);
+    }
+
+    @Override
     public PageInfo<GoodsInfo> queryList(GoodsInfoQueryRequest request) {
         LogUtil.info(logger, "收到商品分页查询请求");
         request.validate();

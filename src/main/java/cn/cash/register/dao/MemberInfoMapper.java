@@ -19,4 +19,6 @@ public interface MemberInfoMapper {
     int updateByPrimaryKey(MemberInfo record);
 
     List<MemberInfo> list(MemberInfoQueryRequest request);
+
+    List<MemberInfo> search(String keyword);
 }

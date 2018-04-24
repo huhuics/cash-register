@@ -194,7 +194,8 @@ CREATE TABLE `member_info` (
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `IDX_MEMBER_NO` (`member_no`),
-  KEY `IDX_PHONE` (`phone`)
+  KEY `IDX_PHONE` (`phone`),
+  KEY `IDX_MEMBER_NAME` (`member_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `member_info` */
@@ -305,22 +306,26 @@ DROP TABLE IF EXISTS `supplier_info`;
 
 CREATE TABLE `supplier_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
-  `supplier_code` varchar(64) NOT NULL COMMENT '供应商编号',
-  `supplier_name` varchar(128) NOT NULL COMMENT '供应商名称',
+  `supplier_code` varchar(64) NOT NULL COMMENT '供货商编号',
+  `supplier_name` varchar(128) NOT NULL COMMENT '供货商名称',
   `pinyin_code` varchar(128) DEFAULT NULL COMMENT '拼音码，即名称首字母组合',
   `contact_name` varchar(64) DEFAULT NULL COMMENT '联系人',
   `contact_phone` varchar(64) DEFAULT NULL COMMENT '联系电话',
   `contact_email` varchar(64) DEFAULT NULL COMMENT '联系邮箱',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态。1：启用，0：禁用',
   `delivery_rebate` double DEFAULT NULL COMMENT '配送费返点',
   `regular_rebate` double DEFAULT NULL COMMENT '固定返利点',
   `supplier_address` varchar(256) DEFAULT NULL COMMENT '地址',
   `remark` varchar(1024) DEFAULT NULL COMMENT '备注',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `IDX_SUPPLIER_NAME` (`supplier_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `supplier_info` */
+
+insert  into `supplier_info`(`id`,`supplier_code`,`supplier_name`,`pinyin_code`,`contact_name`,`contact_phone`,`contact_email`,`status`,`delivery_rebate`,`regular_rebate`,`supplier_address`,`remark`,`gmt_update`,`gmt_create`) values (1,'1001','优衣库',NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,'2018-04-24 21:27:51','0000-00-00 00:00:00'),(2,'1002','JackJonse',NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,'2018-04-24 21:28:07','0000-00-00 00:00:00');
 
 /*Table structure for table `system_parameter` */
 

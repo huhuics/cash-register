@@ -72,6 +72,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public List<MemberInfo> search(String keyword) {
+        LogUtil.info(logger, "收到搜索会员信息请求,keyword={0}", keyword);
+        return infoMapper.search(keyword);
+    }
+
+    @Override
     public PageInfo<MemberInfo> queryList(MemberInfoQueryRequest request) {
         LogUtil.info(logger, "收到分页查询会员请求");
         request.validate();

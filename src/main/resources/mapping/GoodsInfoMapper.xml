@@ -476,14 +476,12 @@
     <if test="goodsTag != null and goodsTag !=''">
     	and goods_tag like #{goodsTag,jdbcType=VARCHAR}"%"
     </if>
-    <if test="barCode != null and barCode !=''">
-    	and bar_code = #{barCode,jdbcType=VARCHAR}
-    </if>
-    <if test="goodsName != null and goodsName !=''">
-    	and goods_name like #{goodsName,jdbcType=VARCHAR}"%"
-    </if>
-    <if test="pinyinCode != null and pinyinCode !=''">
-    	and pinyin_code like #{pinyinCode,jdbcType=VARCHAR}"%"
+    <if test="keyword != null and keyword !=''">
+    	and (
+    			bar_code = #{keyword,jdbcType=VARCHAR}
+    			or goods_name like #{keyword,jdbcType=VARCHAR}"%"
+    			or pinyin_code like #{keyword,jdbcType=VARCHAR}"%"
+    		)
     </if>
   </select>
   
@@ -492,5 +490,14 @@
   	where id = #{id,jdbcType=BIGINT}
   	and goods_stock &gt;= #{count,jdbcType=INTEGER}
   </update>
+  
+  <select id="search" resultMap="BaseResultMap" parameterType="java.lang.String">
+ 	select 
+    <include refid="Base_Column_List" />
+    from goods_info where 
+    bar_code = #{keyword,jdbcType=VARCHAR}
+    or goods_name like #{keyword,jdbcType=VARCHAR}"%"
+    or pinyin_code like #{keyword,jdbcType=VARCHAR}"%"
+  </select>
   
 </mapper>
