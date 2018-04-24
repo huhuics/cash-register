@@ -22,10 +22,10 @@
                 <div class="form-group col-xs-2">
                     <input type="text" class="form-control" v-model="q.phone" @keyup.enter="query" placeholder="电话">
                 </div>
-                <div class="form-group col-xs-2">
-                    <select class="selectpicker" v-model="q.status" data-live-search="true">
-                        <option value="1">启用</option>
-                        <option value="0">禁用</option>
+                <div class="form-group col-xs-1">
+                    <select class="form-control" v-model="q.status">
+                        <option value="true">启用</option>
+                        <option value="false">禁用</option>
                     </select>
                 </div>
                 <div class="form-group col-xs-2 pull-right">
@@ -85,10 +85,10 @@
                     <label class="col-xs-3 control-label">是否启用</label>
                     <div class="col-xs-7">
                         <label class="radio-inline">
-                            <input type="radio" v-model="seller.status" value="1"> 启用
+                            <input type="radio" v-model="seller.status" value="true"> 启用
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" v-model="seller.status" value="0"> 禁用
+                            <input type="radio" v-model="seller.status" value="false"> 禁用
                         </label>
                     </div>
                 </div>
@@ -128,7 +128,7 @@
                 </div>
             </form>
         </div>
-        <!-- /添加收银员 -->
+        <!-- /添加或更新收银员 -->
     </div>
     <script src="${ctx}/static/js/backstage/_seller-list.js"></script>
 </body>

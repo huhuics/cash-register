@@ -105,7 +105,7 @@ var vm = new Vue({
             sellerNo: null,
             name: null,
             phone: null,
-            status: '1'
+            status: true
         },
         seller: {
             id: null,
@@ -128,13 +128,12 @@ var vm = new Vue({
             vm.q.sellerNo = null;
             vm.q.name = null;
             vm.q.phone = null;
-            vm.q.status = '1';
-            $(".selectpicker").selectpicker('val', '1');
+            vm.q.status = true;
             vm.reload();
         },
         add: function() {
             vm.resetSeller();
-            vm.seller.status = '1'; // 默认状态为启用
+            vm.seller.status = true; // 默认状态为启用
             vm.seller.role = 'seller'; // 默认角色为收银员
             vm.seller.cashPermission = ["option1", "option2"]; // 默认收银端权限
             vm.seller.backgroundPermission = ["option2", "option3"]; // 默认后台权限
@@ -195,7 +194,7 @@ var vm = new Vue({
                         vm.seller.password = result.seller.password;
                         vm.seller.phone = result.seller.phone;
                         vm.seller.role = result.seller.role;
-                        vm.seller.status = 1 * result.seller.status; // 直接转将转换为true，这里通过乘1转换为数字
+                        vm.seller.status = result.seller.status;
                         vm.seller.cashPermission = JSON.parse(result.seller.cashPermission);
                         vm.seller.backgroundPermission = JSON.parse(result.seller.backgroundPermission);
                         layer.open({
