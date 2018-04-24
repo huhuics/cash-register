@@ -16,10 +16,12 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.CashRegisterConstants;
 import cn.cash.register.common.request.SellerInfoQueryRequest;
 import cn.cash.register.dao.SellerInfoMapper;
 import cn.cash.register.dao.domain.SellerInfo;
 import cn.cash.register.service.SellerInfoService;
+import cn.cash.register.service.SystemParameterService;
 import cn.cash.register.util.LogUtil;
 
 /**
@@ -30,16 +32,19 @@ import cn.cash.register.util.LogUtil;
 @Service
 public class SellerInfoServiceImpl implements SellerInfoService {
 
-    private static final Logger logger = LoggerFactory.getLogger(SellerInfoServiceImpl.class);
+    private static final Logger    logger = LoggerFactory.getLogger(SellerInfoServiceImpl.class);
 
     @Resource
-    private SellerInfoMapper    sellerInfoMapper;
+    private SellerInfoMapper       sellerInfoMapper;
+
+    @Resource
+    private SystemParameterService parameterService;
 
     @Override
     public Long addSeller(SellerInfo sellerInfo) {
         LogUtil.info(logger, "收到增加收银员请求,sellerInfo={0}", sellerInfo);
 
-        sellerInfo.setPartOfShop("小熊维尼的糖果店"); // TODO 获取所属门店名
+        sellerInfo.setPartOfShop(parameterService.getByCode(CashRegisterConstants.SHOP_NAME).getParamValue());
 
         Date createTime = new Date();
         sellerInfo.setGmtCreate(createTime); // 创建时间
