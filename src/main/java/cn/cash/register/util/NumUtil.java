@@ -4,6 +4,7 @@
  */
 package cn.cash.register.util;
 
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -18,6 +19,20 @@ public class NumUtil {
      */
     public static String getUUID() {
         return UUID.randomUUID().toString().replace("-", "");
+    }
+
+    /**
+     * 生成商品条码bar_code
+     */
+    public static String getBarCode() {
+        return DateUtil.format(new Date(), DateUtil.msecFormat);
+    }
+
+    /**
+     * 生成订单流水号
+     */
+    public static String getTradeNo() {
+        return DateUtil.format(new Date(), DateUtil.msecFormat);
     }
 
 }

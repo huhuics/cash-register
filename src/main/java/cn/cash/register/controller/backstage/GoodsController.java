@@ -17,10 +17,12 @@ import cn.cash.register.common.request.GoodsInfoQueryRequest;
 import cn.cash.register.dao.domain.GoodsBrand;
 import cn.cash.register.dao.domain.GoodsCategory;
 import cn.cash.register.dao.domain.GoodsColor;
+import cn.cash.register.dao.domain.GoodsImage;
 import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.dao.domain.GoodsQuantityUnit;
 import cn.cash.register.dao.domain.GoodsSize;
 import cn.cash.register.dao.domain.GoodsTag;
+import cn.cash.register.enums.UpdateFieldEnum;
 import cn.cash.register.service.GoodsBrandService;
 import cn.cash.register.service.GoodsCategoryService;
 import cn.cash.register.service.GoodsColorService;
@@ -28,6 +30,7 @@ import cn.cash.register.service.GoodsInfoService;
 import cn.cash.register.service.GoodsQuantityUnitService;
 import cn.cash.register.service.GoodsSizeService;
 import cn.cash.register.service.GoodsTagService;
+import cn.cash.register.util.NumUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -77,6 +80,94 @@ public class GoodsController {
     public ResultSet queryGoodsInfoList(GoodsInfoQueryRequest request) {
         PageInfo<GoodsInfo> queryList = goodsInfoService.queryList(request);
         return ResultSet.success().put("page", queryList);
+    }
+
+    /**
+     * 增加商品信息
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addGoodsInfo")
+    public ResultSet addGoodsInfo(GoodsInfo goodsInfo) {
+        Long id = goodsInfoService.add(goodsInfo);
+        return ResultSet.success().put("id", id);
+    }
+
+    /**
+     * 修改商品信息
+     * 1:修改成功,0:修改失败
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateGoodsInfo")
+    public ResultSet updateGoodsInfo(GoodsInfo goodsInfo) {
+        int result = goodsInfoService.update(goodsInfo);
+        return ResultSet.success().put("result", result);
+    }
+
+    /**
+     * 删除商品信息
+     * 可删除单个商品,也支持批量删除
+     * @param ids  商品主键id
+     */
+    @ResponseBody
+    @RequestMapping(value = "/deleteGoodsInfo")
+    public void deleteGoodsInfo(List<Long> ids) {
+        goodsInfoService.delete(ids);
+    }
+
+    /**
+     * 根据商品id查询商品详情
+     * @param goodsInfoId  商品id
+     * @return             商品信息对象
+     */
+    @ResponseBody
+    @RequestMapping(value = "/queryGoodsInfoById")
+    public ResultSet queryGoodsInfoById(Long goodsInfoId) {
+        GoodsInfo goodsInfo = goodsInfoService.queryById(goodsInfoId);
+        return ResultSet.success().put("goodsInfo", goodsInfo);
+    }
+
+    /**
+     * 批量修改操作
+     * @param goodsIds   商品id集合
+     * @param newValue   被修改字段的新的值
+     * @param filedEnum  被修改的字段枚举{@link UpdateFieldEnum},只有枚举中的字段才支持批量修改
+     */
+    @ResponseBody
+    @RequestMapping(value = "/batchUpdate")
+    public void batchUpdate(List<Long> goodsIds, Object newValue, UpdateFieldEnum filedEnum) {
+        goodsInfoService.batchUpdate(goodsIds, newValue, filedEnum);
+    }
+
+    /**
+     * 获取商品条码
+     */
+    @ResponseBody
+    @GetMapping(value = "/getBarCode")
+    public ResultSet getBarCode() {
+        return ResultSet.success().put("barCode", NumUtil.getBarCode());
+    }
+
+    /**
+     * 获取商品图片
+     * @param goodsImageId 商品图片id
+     * @return 图片对象
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getGoodsImage")
+    public ResultSet getGoodsImage(Long goodsImageId) {
+        GoodsImage image = goodsInfoService.queryGoodsImage(goodsImageId);
+        return ResultSet.success().put("image", image);
+    }
+
+    /**
+     * 商品图片的增、删、改都可以调用此方法,删除的时候图片数组传null
+     * @param goodsInfoId  商品id
+     * @param goodsImage   图片二进制数据
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateGoodsImage")
+    public void updateGoodsImage(Long goodsInfoId, byte[] goodsImage) {
+        goodsInfoService.updateGoodsImage(goodsInfoId, goodsImage);
     }
 
     /*******************************end****************************/
