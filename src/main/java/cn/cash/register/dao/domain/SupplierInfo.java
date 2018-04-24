@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class SupplierInfo extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = -4872946528710795185L;
+    private static final long serialVersionUID = 7651373595491664603L;
 
     private Long              id;
 
@@ -19,6 +19,8 @@ public class SupplierInfo extends BaseDomain {
     private String            contactPhone;
 
     private String            contactEmail;
+
+    private Boolean           status;
 
     private Double            deliveryRebate;
 
@@ -86,6 +88,14 @@ public class SupplierInfo extends BaseDomain {
 
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail == null ? null : contactEmail.trim();
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public Double getDeliveryRebate() {

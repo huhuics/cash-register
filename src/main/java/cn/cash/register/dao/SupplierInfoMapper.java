@@ -1,5 +1,8 @@
 package cn.cash.register.dao;
 
+import java.util.List;
+
+import cn.cash.register.common.request.SupplierQueryRequest;
 import cn.cash.register.dao.domain.SupplierInfo;
 
 public interface SupplierInfoMapper {
@@ -7,11 +10,15 @@ public interface SupplierInfoMapper {
 
     int insert(SupplierInfo record);
 
-    int insertSelective(SupplierInfo record);
+    Long insertSelective(SupplierInfo record);
 
     SupplierInfo selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(SupplierInfo record);
 
     int updateByPrimaryKey(SupplierInfo record);
+
+    List<SupplierInfo> list(SupplierQueryRequest request);
+
+    List<String> selectAllNames();
 }

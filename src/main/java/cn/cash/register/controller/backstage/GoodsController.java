@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
@@ -66,7 +65,7 @@ public class GoodsController {
     /**
      * 跳转到商品资料页
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String list() {
         return "backstage/_goods-list";
     }
