@@ -5,6 +5,7 @@
 package cn.cash.register.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -33,8 +34,11 @@ public class GoodsSizeServiceImpl implements GoodsSizeService {
     private GoodsSizeMapper     sizeMapper;
 
     @Override
-    public Long addSize(GoodsSize size) {
+    public Long addSize(String sizeName) {
         LogUtil.info(logger, "收到增加商品尺寸请求");
+        GoodsSize size = new GoodsSize();
+        size.setSizeName(sizeName);
+        size.setGmtCreate(new Date());
 
         return sizeMapper.insertSelective(size);
     }

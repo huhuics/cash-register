@@ -5,6 +5,7 @@
 package cn.cash.register.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -33,8 +34,11 @@ public class GoodsBrandServiceImpl implements GoodsBrandService {
     private GoodsBrandMapper    brandMapper;
 
     @Override
-    public Long addBrand(GoodsBrand brand) {
+    public Long addBrand(String brandName) {
         LogUtil.info(logger, "收到增加商品品牌请求");
+        GoodsBrand brand = new GoodsBrand();
+        brand.setBrandName(brandName);
+        brand.setGmtCreate(new Date());
 
         return brandMapper.insertSelective(brand);
     }

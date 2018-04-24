@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v12.09 (64 bit)
-MySQL - 5.5.28 : Database - cash-register
+MySQL - 5.6.37 : Database - cash-register
 *********************************************************************
 */
 
@@ -99,7 +99,7 @@ CREATE TABLE `goods_info` (
   `stock_upper_limit` int(11) DEFAULT NULL COMMENT '库存上限',
   `stock_lower_limit` int(11) DEFAULT NULL COMMENT '库存下限',
   `import_price` int(11) NOT NULL COMMENT '进货价，单位：分',
-  `average_import_price` int(11) NOT NULL COMMENT '加权平均进货价，单位：分',
+  `average_import_price` int(11) NOT NULL COMMENT '加权平均进货价，页面进货价显示该值，单位：分',
   `sales_price` int(11) NOT NULL COMMENT '销售价，单位：分',
   `trade_price` int(11) DEFAULT NULL COMMENT '批发价，单位：分',
   `vip_price` int(11) DEFAULT NULL COMMENT '会员价，单位：分',
@@ -155,6 +155,20 @@ CREATE TABLE `goods_size` (
 
 /*Data for the table `goods_size` */
 
+/*Table structure for table `goods_tag` */
+
+DROP TABLE IF EXISTS `goods_tag`;
+
+CREATE TABLE `goods_tag` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `tag_name` varchar(32) NOT NULL COMMENT '标签名称',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `goods_tag` */
+
 /*Table structure for table `member_info` */
 
 DROP TABLE IF EXISTS `member_info`;
@@ -178,7 +192,9 @@ CREATE TABLE `member_info` (
   `remark` varchar(256) DEFAULT NULL COMMENT '备注',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `IDX_MEMBER_NO` (`member_no`),
+  KEY `IDX_PHONE` (`phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `member_info` */
@@ -234,16 +250,17 @@ CREATE TABLE `seller_info` (
   `password` varchar(32) DEFAULT NULL COMMENT '收银员登录密码，明文存储',
   `phone` varchar(32) DEFAULT NULL COMMENT '电话',
   `status` tinyint(1) DEFAULT '1' COMMENT '状态，1表示启用，0表示禁用',
-  `cash_permission` varchar(2048) DEFAULT NULL COMMENT 'JSON格式，收银端权限代码集合',
-  `background_permission` varchar(2048) DEFAULT NULL COMMENT 'JSON格式，后台管理系统权限代码集合',
+  `cash_permission` varchar(2048) DEFAULT '[]' COMMENT 'JSON格式，收银端权限代码集合',
+  `background_permission` varchar(2048) DEFAULT '[]' COMMENT 'JSON格式，后台管理系统权限代码集合',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `UQ_SELLER_NO` (`seller_no`)
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
 /*Data for the table `seller_info` */
 
-insert  into `seller_info`(`id`,`part_of_shop`,`seller_no`,`name`,`role`,`password`,`phone`,`status`,`cash_permission`,`background_permission`,`gmt_update`,`gmt_create`) values (1,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:06','2018-04-19 11:04:06'),(2,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(3,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(4,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(5,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(6,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(7,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(8,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(9,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(10,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(11,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(12,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(13,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(14,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(15,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(16,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(17,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(18,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(19,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(20,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(21,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(22,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(23,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(24,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(25,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(26,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(27,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(28,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(29,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(30,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(31,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(32,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49'),(33,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,NULL,NULL,'2018-04-19 11:04:49','2018-04-19 11:04:49');
+insert  into `seller_info`(`id`,`part_of_shop`,`seller_no`,`name`,`role`,`password`,`phone`,`status`,`cash_permission`,`background_permission`,`gmt_update`,`gmt_create`) values (1,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',0,'[]','[]','2018-04-24 15:07:49','2018-04-19 11:04:06'),(2,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',0,'[]','[]','2018-04-24 15:07:51','2018-04-19 11:04:49'),(3,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(4,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(5,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(6,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(7,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(8,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(9,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(10,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(11,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(12,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(13,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(14,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(15,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(16,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(17,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(18,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(19,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(20,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(21,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(22,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(23,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(24,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(25,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(26,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(27,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(28,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(29,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(30,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(31,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(32,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49'),(33,'小熊维尼的糖果店','1001','维尼','seller','123','88886666',1,'[]','[]','2018-04-23 20:28:19','2018-04-19 11:04:49');
 
 /*Table structure for table `seller_permission_info` */
 
@@ -276,7 +293,8 @@ CREATE TABLE `shopper_info` (
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态.1：启用。0：停用',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `UQ_SHOPPER_NO` (`shopper_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `shopper_info` */
@@ -315,10 +333,13 @@ CREATE TABLE `system_parameter` (
   `example_value` varchar(64) DEFAULT NULL COMMENT '示例值',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UQ_PARAM_CODE` (`param_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `system_parameter` */
+
+insert  into `system_parameter`(`id`,`param_code`,`param_value`,`example_value`,`gmt_update`,`gmt_create`) values (1,'SHOP_NAME','小熊维尼的糖果店','小熊维尼的糖果店','2018-04-23 21:54:31','2018-04-23 21:44:25');
 
 /*Table structure for table `trade_detail` */
 
@@ -337,13 +358,13 @@ CREATE TABLE `trade_detail` (
   `profit_amount` int(11) NOT NULL COMMENT '利润，单位：分。退款为负',
   `seller_no` varchar(32) NOT NULL COMMENT '收银员编号',
   `shopper_no` varchar(64) DEFAULT NULL COMMENT '导购员编号',
-  `goods_detail` varchar(2048) NOT NULL COMMENT 'JSON格式，商品明细。包含商品名称、商品条码、颜色、尺寸、数量、原价、实收、利润、导购员字段',
-  `pay_chenal` varchar(256) NOT NULL COMMENT 'JSON格式，支付方式及该方式对应的金额。有可能是混合支付',
+  `goods_detail` varchar(2048) DEFAULT NULL COMMENT 'JSON格式，商品明细。包含商品名称、商品条码、颜色、尺寸、数量、原价、实收、利润、导购员字段',
+  `pay_chenal` varchar(256) NOT NULL COMMENT 'JSON格式，支付方式及该方式对应的金额。金额单位：分有可能是混合支付',
   `is_exchange_job` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否交接班。1：已交接。0：未交接',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改日期',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建日期',
   PRIMARY KEY (`id`),
-  KEY `INX_TRADE_NO` (`trade_no`)
+  UNIQUE KEY `INX_TRADE_NO` (`trade_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `trade_detail` */
@@ -356,20 +377,20 @@ CREATE TABLE `trade_goods_detail` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
   `trade_no` varchar(64) NOT NULL COMMENT '流水号，关联trade_detail表',
   `trade_time` timestamp NULL DEFAULT NULL COMMENT '交易完成时间',
-  `trade_type` varchar(32) NOT NULL COMMENT '交易类型。SALES：销售。REFUND：退款',
+  `trade_type` varchar(32) NOT NULL COMMENT '交易类型。sales：销售。refund：退款',
   `goods_name` varchar(256) DEFAULT NULL COMMENT '商品名称',
   `goods_brand` varchar(128) DEFAULT NULL COMMENT '商品品牌',
-  `bar_code` varchar(128) DEFAULT NULL COMMENT '商品条码',
+  `bar_code` varchar(128) DEFAULT NULL COMMENT '商品条码，唯一标识一件商品',
   `product_number` varchar(128) DEFAULT NULL COMMENT '商品货号',
   `goods_color` varchar(64) DEFAULT NULL COMMENT '商品颜色',
   `goods_size` varchar(64) DEFAULT NULL COMMENT '商品尺码',
-  `goods_count` int(11) NOT NULL COMMENT '商品数量，退款为负',
+  `goods_count` int(11) DEFAULT NULL COMMENT '商品数量，退款为负',
   `goods_tag` varchar(128) DEFAULT NULL COMMENT '商品标签，半角逗号分隔开',
   `category_name` varchar(128) DEFAULT NULL COMMENT '商品分类名称',
   `supplier_name` varchar(128) DEFAULT NULL COMMENT '供货商名称',
-  `total_amount` int(11) NOT NULL COMMENT '商品原价之和，单位：分。退款为负',
+  `total_amount` int(11) NOT NULL COMMENT '商品原价，单位：分。退款为负',
   `goods_discount` int(100) NOT NULL COMMENT '商品折扣，如9.8折就填98.默认100即不打折',
-  `total_actual_amount` int(11) NOT NULL COMMENT '商品实收之和，单位：分。退款为负',
+  `total_actual_amount` int(11) NOT NULL COMMENT '商品实收，单位：分。退款为负',
   `profit_amount` int(11) NOT NULL COMMENT '利润，单位：分。退款为负',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',

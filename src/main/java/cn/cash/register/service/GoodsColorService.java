@@ -17,10 +17,10 @@ public interface GoodsColorService {
 
     /**
      * 增加商品颜色
-     * @param color 商品颜色
+     * @param colorName 商品颜色
      * 返回主键
      */
-    Long addColor(GoodsColor color);
+    Long addColor(String colorName);
 
     /**
      * 查询所有商品颜色

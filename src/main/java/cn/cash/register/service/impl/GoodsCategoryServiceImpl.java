@@ -4,6 +4,7 @@
  */
 package cn.cash.register.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -48,6 +49,8 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
         AssertUtil.assertNotNull(category, "参数不能为空");
 
         LogUtil.info(logger, "收到增加商品种类请求");
+
+        category.setGmtCreate(new Date());
 
         long id = goodsCategoryMapper.insertWithKey(category);
 

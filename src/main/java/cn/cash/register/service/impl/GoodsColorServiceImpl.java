@@ -5,6 +5,7 @@
 package cn.cash.register.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -33,8 +34,11 @@ public class GoodsColorServiceImpl implements GoodsColorService {
     private GoodsColorMapper    colorMapper;
 
     @Override
-    public Long addColor(GoodsColor color) {
+    public Long addColor(String colorName) {
         LogUtil.info(logger, "收到增加商品颜色请求");
+        GoodsColor color = new GoodsColor();
+        color.setColor(colorName);
+        color.setGmtCreate(new Date());
 
         return colorMapper.insertSelective(color);
     }
