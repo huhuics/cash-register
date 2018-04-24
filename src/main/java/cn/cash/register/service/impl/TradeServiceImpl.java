@@ -34,9 +34,9 @@ import cn.cash.register.enums.TradeTypeEnum;
 import cn.cash.register.service.GoodsInfoService;
 import cn.cash.register.service.MemberService;
 import cn.cash.register.service.TradeService;
-import cn.cash.register.util.DateUtil;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.Money;
+import cn.cash.register.util.NumUtil;
 
 /**
  * 交易服务接口实现类
@@ -73,7 +73,7 @@ public class TradeServiceImpl implements TradeService {
             public Boolean doInTransaction(TransactionStatus status) {
 
                 //订单流水号
-                String tradeNo = DateUtil.format(new Date(), DateUtil.msecFormat);
+                String tradeNo = NumUtil.getTradeNo();
 
                 TradeDetail tradeDetail = new TradeDetail(tradeNo, new Date(), TradeTypeEnum.SALES.getCode());
 
@@ -94,7 +94,7 @@ public class TradeServiceImpl implements TradeService {
             public Boolean doInTransaction(TransactionStatus status) {
 
                 //订单流水号
-                String tradeNo = DateUtil.format(new Date(), DateUtil.msecFormat);
+                String tradeNo = NumUtil.getTradeNo();
 
                 TradeDetail tradeDetail = new TradeDetail(tradeNo, new Date(), TradeTypeEnum.REFUND.getCode());
 

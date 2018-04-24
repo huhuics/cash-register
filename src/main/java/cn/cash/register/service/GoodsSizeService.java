@@ -20,7 +20,7 @@ public interface GoodsSizeService {
      * @param sizes 商品尺寸
      * 返回主键
      */
-    Long addSize(GoodsSize size);
+    Long addSize(String sizeName);
 
     /**
      * 查询所有商品尺寸
