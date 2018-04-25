@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cash.register.dao.GoodsTrafficMapper">
+  <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.GoodsTraffic">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="traffic_no" jdbcType="VARCHAR" property="trafficNo" />
+    <result column="traffic_type" jdbcType="VARCHAR" property="trafficType" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="bar_code" jdbcType="VARCHAR" property="barCode" />
+    <result column="goods_color" jdbcType="VARCHAR" property="goodsColor" />
+    <result column="goods_size" jdbcType="VARCHAR" property="goodsSize" />
+    <result column="supplier_name" jdbcType="VARCHAR" property="supplierName" />
+    <result column="goods_stock" jdbcType="INTEGER" property="goodsStock" />
+    <result column="in_count" jdbcType="INTEGER" property="inCount" />
+    <result column="in_amount" jdbcType="INTEGER" property="inAmount" />
+    <result column="free_count" jdbcType="INTEGER" property="freeCount" />
+    <result column="advance_payment_amount" jdbcType="INTEGER" property="advancePaymentAmount" />
+    <result column="quantity_unit" jdbcType="VARCHAR" property="quantityUnit" />
+    <result column="out_price_type" jdbcType="VARCHAR" property="outPriceType" />
+    <result column="out_amount" jdbcType="INTEGER" property="outAmount" />
+    <result column="out_count" jdbcType="INTEGER" property="outCount" />
+    <result column="total_amount" jdbcType="INTEGER" property="totalAmount" />
+    <result column="operator_no" jdbcType="VARCHAR" property="operatorNo" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, traffic_no, traffic_type, status, goods_name, bar_code, goods_color, goods_size, 
+    supplier_name, goods_stock, in_count, in_amount, free_count, advance_payment_amount, 
+    quantity_unit, out_price_type, out_amount, out_count, total_amount, operator_no, 
+    remark, gmt_update, gmt_create
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods_traffic
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from goods_traffic
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.cash.register.dao.domain.GoodsTraffic">
+    insert into goods_traffic (id, traffic_no, traffic_type, 
+      status, goods_name, bar_code, 
+      goods_color, goods_size, supplier_name, 
+      goods_stock, in_count, in_amount, 
+      free_count, advance_payment_amount, quantity_unit, 
+      out_price_type, out_amount, out_count, 
+      total_amount, operator_no, remark, 
+      gmt_update, gmt_create)
+    values (#{id,jdbcType=BIGINT}, #{trafficNo,jdbcType=VARCHAR}, #{trafficType,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIT}, #{goodsName,jdbcType=VARCHAR}, #{barCode,jdbcType=VARCHAR}, 
+      #{goodsColor,jdbcType=VARCHAR}, #{goodsSize,jdbcType=VARCHAR}, #{supplierName,jdbcType=VARCHAR}, 
+      #{goodsStock,jdbcType=INTEGER}, #{inCount,jdbcType=INTEGER}, #{inAmount,jdbcType=INTEGER}, 
+      #{freeCount,jdbcType=INTEGER}, #{advancePaymentAmount,jdbcType=INTEGER}, #{quantityUnit,jdbcType=VARCHAR}, 
+      #{outPriceType,jdbcType=VARCHAR}, #{outAmount,jdbcType=INTEGER}, #{outCount,jdbcType=INTEGER}, 
+      #{totalAmount,jdbcType=INTEGER}, #{operatorNo,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.GoodsTraffic" useGeneratedKeys="true" keyProperty="id">
+    insert into goods_traffic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="trafficNo != null">
+        traffic_no,
+      </if>
+      <if test="trafficType != null">
+        traffic_type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="barCode != null">
+        bar_code,
+      </if>
+      <if test="goodsColor != null">
+        goods_color,
+      </if>
+      <if test="goodsSize != null">
+        goods_size,
+      </if>
+      <if test="supplierName != null">
+        supplier_name,
+      </if>
+      <if test="goodsStock != null">
+        goods_stock,
+      </if>
+      <if test="inCount != null">
+        in_count,
+      </if>
+      <if test="inAmount != null">
+        in_amount,
+      </if>
+      <if test="freeCount != null">
+        free_count,
+      </if>
+      <if test="advancePaymentAmount != null">
+        advance_payment_amount,
+      </if>
+      <if test="quantityUnit != null">
+        quantity_unit,
+      </if>
+      <if test="outPriceType != null">
+        out_price_type,
+      </if>
+      <if test="outAmount != null">
+        out_amount,
+      </if>
+      <if test="outCount != null">
+        out_count,
+      </if>
+      <if test="totalAmount != null">
+        total_amount,
+      </if>
+      <if test="operatorNo != null">
+        operator_no,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="trafficNo != null">
+        #{trafficNo,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficType != null">
+        #{trafficType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null">
+        #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsColor != null">
+        #{goodsColor,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSize != null">
+        #{goodsSize,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null">
+        #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStock != null">
+        #{goodsStock,jdbcType=INTEGER},
+      </if>
+      <if test="inCount != null">
+        #{inCount,jdbcType=INTEGER},
+      </if>
+      <if test="inAmount != null">
+        #{inAmount,jdbcType=INTEGER},
+      </if>
+      <if test="freeCount != null">
+        #{freeCount,jdbcType=INTEGER},
+      </if>
+      <if test="advancePaymentAmount != null">
+        #{advancePaymentAmount,jdbcType=INTEGER},
+      </if>
+      <if test="quantityUnit != null">
+        #{quantityUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="outPriceType != null">
+        #{outPriceType,jdbcType=VARCHAR},
+      </if>
+      <if test="outAmount != null">
+        #{outAmount,jdbcType=INTEGER},
+      </if>
+      <if test="outCount != null">
+        #{outCount,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null">
+        #{totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="operatorNo != null">
+        #{operatorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.GoodsTraffic">
+    update goods_traffic
+    <set>
+      <if test="trafficNo != null">
+        traffic_no = #{trafficNo,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficType != null">
+        traffic_type = #{trafficType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null">
+        bar_code = #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsColor != null">
+        goods_color = #{goodsColor,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSize != null">
+        goods_size = #{goodsSize,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null">
+        supplier_name = #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStock != null">
+        goods_stock = #{goodsStock,jdbcType=INTEGER},
+      </if>
+      <if test="inCount != null">
+        in_count = #{inCount,jdbcType=INTEGER},
+      </if>
+      <if test="inAmount != null">
+        in_amount = #{inAmount,jdbcType=INTEGER},
+      </if>
+      <if test="freeCount != null">
+        free_count = #{freeCount,jdbcType=INTEGER},
+      </if>
+      <if test="advancePaymentAmount != null">
+        advance_payment_amount = #{advancePaymentAmount,jdbcType=INTEGER},
+      </if>
+      <if test="quantityUnit != null">
+        quantity_unit = #{quantityUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="outPriceType != null">
+        out_price_type = #{outPriceType,jdbcType=VARCHAR},
+      </if>
+      <if test="outAmount != null">
+        out_amount = #{outAmount,jdbcType=INTEGER},
+      </if>
+      <if test="outCount != null">
+        out_count = #{outCount,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null">
+        total_amount = #{totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="operatorNo != null">
+        operator_no = #{operatorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.GoodsTraffic">
+    update goods_traffic
+    set traffic_no = #{trafficNo,jdbcType=VARCHAR},
+      traffic_type = #{trafficType,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      bar_code = #{barCode,jdbcType=VARCHAR},
+      goods_color = #{goodsColor,jdbcType=VARCHAR},
+      goods_size = #{goodsSize,jdbcType=VARCHAR},
+      supplier_name = #{supplierName,jdbcType=VARCHAR},
+      goods_stock = #{goodsStock,jdbcType=INTEGER},
+      in_count = #{inCount,jdbcType=INTEGER},
+      in_amount = #{inAmount,jdbcType=INTEGER},
+      free_count = #{freeCount,jdbcType=INTEGER},
+      advance_payment_amount = #{advancePaymentAmount,jdbcType=INTEGER},
+      quantity_unit = #{quantityUnit,jdbcType=VARCHAR},
+      out_price_type = #{outPriceType,jdbcType=VARCHAR},
+      out_amount = #{outAmount,jdbcType=INTEGER},
+      out_count = #{outCount,jdbcType=INTEGER},
+      total_amount = #{totalAmount,jdbcType=INTEGER},
+      operator_no = #{operatorNo,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="list" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.GoodsTrafficQueryRequest">
+  	select 
+    <include refid="Base_Column_List" />
+  	from goods_traffic where 1=1
+  	<if test="trafficType != null and trafficType !=''">
+  		and traffic_type = #{trafficType,jdbcType=VARCHAR}
+    </if>
+    <if test="trafficNo != null and trafficNo !=''">
+  		and traffic_no = #{trafficNo,jdbcType=VARCHAR}
+    </if>
+    <if test="createTimeUp != null and createTimeUp !=''">
+    	and
+  		gmt_create &lt;= #{createTimeUp,jdbcType=TIMESTAMP}
+  		and
+  		gmt_create &gt;= #{createTimeDown,jdbcType=TIMESTAMP}
+    </if>
+    
+  </select>
+  
+</mapper>
