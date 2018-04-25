@@ -34,11 +34,11 @@ public class OutTrafficRequest extends BaseRequest {
 
     private String            outPriceType;
 
-    private double            outAmount;
+    private String            outAmount;
 
     private Integer           outCount;
 
-    private double            totalAmount;
+    private String            totalAmount;
 
     private String            operatorNo;
 
@@ -153,19 +153,19 @@ public class OutTrafficRequest extends BaseRequest {
         this.remark = remark;
     }
 
-    public double getOutAmount() {
+    public String getOutAmount() {
         return outAmount;
     }
 
-    public void setOutAmount(double outAmount) {
+    public void setOutAmount(String outAmount) {
         this.outAmount = outAmount;
     }
 
-    public double getTotalAmount() {
+    public String getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(double totalAmount) {
+    public void setTotalAmount(String totalAmount) {
         this.totalAmount = totalAmount;
     }
 

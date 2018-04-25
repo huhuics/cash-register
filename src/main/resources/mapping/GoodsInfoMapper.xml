@@ -25,7 +25,7 @@
     <result column="vip_price" jdbcType="INTEGER" property="vipPrice" />
     <result column="is_vip_discount" jdbcType="BIT" property="isVipDiscount" />
     <result column="supplier_name" jdbcType="VARCHAR" property="supplierName" />
-    <result column="production_date" jdbcType="TIMESTAMP" property="productionDate" />
+    <result column="production_date" jdbcType="VARCHAR" property="productionDate" />
     <result column="quality_guarantee_period" jdbcType="INTEGER" property="qualityGuaranteePeriod" />
     <result column="is_integral" jdbcType="BIT" property="isIntegral" />
     <result column="royalty_type" jdbcType="VARCHAR" property="royaltyType" />
@@ -77,7 +77,7 @@
       #{goodsStock,jdbcType=INTEGER}, #{quantityUnit,jdbcType=VARCHAR}, #{stockUpperLimit,jdbcType=INTEGER}, 
       #{stockLowerLimit,jdbcType=INTEGER}, #{lastImportPrice,jdbcType=INTEGER}, #{averageImportPrice,jdbcType=INTEGER}, 
       #{salesPrice,jdbcType=INTEGER}, #{tradePrice,jdbcType=INTEGER}, #{vipPrice,jdbcType=INTEGER}, 
-      #{isVipDiscount,jdbcType=BIT}, #{supplierName,jdbcType=VARCHAR}, #{productionDate,jdbcType=TIMESTAMP}, 
+      #{isVipDiscount,jdbcType=BIT}, #{supplierName,jdbcType=VARCHAR}, #{productionDate,jdbcType=VARCHAR}, 
       #{qualityGuaranteePeriod,jdbcType=INTEGER}, #{isIntegral,jdbcType=BIT}, #{royaltyType,jdbcType=VARCHAR}, 
       #{isBooked,jdbcType=BIT}, #{isGift,jdbcType=BIT}, #{isWeigh,jdbcType=BIT}, #{isFixedPrice,jdbcType=BIT}, 
       #{isTimeingPrice,jdbcType=BIT}, #{isHidden,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, 
@@ -266,7 +266,7 @@
         #{supplierName,jdbcType=VARCHAR},
       </if>
       <if test="productionDate != null">
-        #{productionDate,jdbcType=TIMESTAMP},
+        #{productionDate,jdbcType=VARCHAR},
       </if>
       <if test="qualityGuaranteePeriod != null">
         #{qualityGuaranteePeriod,jdbcType=INTEGER},
@@ -376,7 +376,7 @@
         supplier_name = #{supplierName,jdbcType=VARCHAR},
       </if>
       <if test="productionDate != null">
-        production_date = #{productionDate,jdbcType=TIMESTAMP},
+        production_date = #{productionDate,jdbcType=VARCHAR},
       </if>
       <if test="qualityGuaranteePeriod != null">
         quality_guarantee_period = #{qualityGuaranteePeriod,jdbcType=INTEGER},
@@ -441,7 +441,7 @@
       vip_price = #{vipPrice,jdbcType=INTEGER},
       is_vip_discount = #{isVipDiscount,jdbcType=BIT},
       supplier_name = #{supplierName,jdbcType=VARCHAR},
-      production_date = #{productionDate,jdbcType=TIMESTAMP},
+      production_date = #{productionDate,jdbcType=VARCHAR},
       quality_guarantee_period = #{qualityGuaranteePeriod,jdbcType=INTEGER},
       is_integral = #{isIntegral,jdbcType=BIT},
       royalty_type = #{royaltyType,jdbcType=VARCHAR},

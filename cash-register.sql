@@ -105,7 +105,7 @@ CREATE TABLE `goods_info` (
   `vip_price` int(11) DEFAULT NULL COMMENT '会员价，单位：分',
   `is_vip_discount` tinyint(1) NOT NULL DEFAULT '1' COMMENT '会员是否有折扣。1：是。0：否',
   `supplier_name` varchar(128) DEFAULT NULL COMMENT '供货商名称',
-  `production_date` timestamp NULL DEFAULT NULL COMMENT '生产日期',
+  `production_date` varchar(32) DEFAULT NULL COMMENT '生产日期，年-月-日',
   `quality_guarantee_period` int(11) DEFAULT NULL COMMENT '保质期，单位：天',
   `is_integral` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否积分，1：是。0：否',
   `royalty_type` varchar(64) NOT NULL COMMENT 'JSON格式。提成方式。0：不提成。1：销售价*导购员提成百分比。2：利润*导购员提成百分比。3.固定金额。4.销售价*百分比。5.利润*百分比',
@@ -168,6 +168,40 @@ CREATE TABLE `goods_tag` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_tag` */
+
+/*Table structure for table `goods_traffic` */
+
+DROP TABLE IF EXISTS `goods_traffic`;
+
+CREATE TABLE `goods_traffic` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `traffic_no` varchar(64) NOT NULL COMMENT '货流单号',
+  `traffic_type` varchar(8) NOT NULL COMMENT '货流类型.in:进货,ordinaryOut:普通出库；supplierOut：退货给供货商',
+  `status` tinyint(1) NOT NULL COMMENT '状态。1：已完成。0：处理中',
+  `goods_name` varchar(128) NOT NULL COMMENT '商品名称',
+  `bar_code` varchar(128) NOT NULL COMMENT '商品条码',
+  `goods_color` varchar(64) DEFAULT NULL COMMENT '商品颜色',
+  `goods_size` varchar(64) DEFAULT NULL COMMENT '商品尺寸',
+  `supplier_name` varchar(128) DEFAULT NULL COMMENT '供货商名称',
+  `goods_stock` int(11) NOT NULL COMMENT '商品库存',
+  `in_count` int(11) DEFAULT NULL COMMENT '进货量',
+  `in_amount` int(11) DEFAULT NULL COMMENT '进货价，单位：分',
+  `free_count` int(11) DEFAULT NULL COMMENT '进货赠送量',
+  `advance_payment_amount` int(11) DEFAULT NULL COMMENT '预付款，单位：分',
+  `quantity_unit` varchar(32) DEFAULT NULL COMMENT '单位',
+  `out_price_type` varchar(64) DEFAULT NULL COMMENT '出库价格类型。last_import_price：以最近进货价出库；average_import_price：以平均进货价出库；sales_price：以商品销售价；trade_price：以商品批发价',
+  `out_amount` int(11) DEFAULT NULL COMMENT '出库价，单位：分',
+  `out_count` int(11) DEFAULT NULL COMMENT '出库量',
+  `total_amount` int(11) DEFAULT NULL COMMENT '小计。即进货总价或出库总价',
+  `operator_no` varchar(64) DEFAULT NULL COMMENT '操作员编号',
+  `remark` varchar(512) DEFAULT NULL COMMENT '备注',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `IDX_TRAFFIC_NO` (`traffic_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='货流表';
+
+/*Data for the table `goods_traffic` */
 
 /*Table structure for table `member_info` */
 

@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.GoodsInfoQueryRequest;
+import cn.cash.register.common.request.GoodsInfoRequest;
 import cn.cash.register.dao.GoodsImageMapper;
 import cn.cash.register.dao.GoodsInfoMapper;
 import cn.cash.register.dao.domain.GoodsImage;
@@ -54,8 +56,10 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     private GoodsImageMapper    goodsImageMapper;
 
     @Override
-    public Long add(GoodsInfo goodsInfo) {
-        LogUtil.info(logger, "收到增加商品请求,goodsInfo={0}", goodsInfo);
+    public Long add(GoodsInfoRequest request) {
+        LogUtil.info(logger, "收到增加商品请求");
+
+        GoodsInfo goodsInfo = convert(request);
 
         return goodsInfoMapper.insertSelective(goodsInfo);
     }
@@ -67,6 +71,13 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
         for (Long id : ids) {
             goodsInfoMapper.deleteByPrimaryKey(id);
         }
+    }
+
+    @Override
+    public int update(GoodsInfoRequest request) {
+        LogUtil.info(logger, "收到修改商品请求,id={0}", request.getId());
+        GoodsInfo goodsInfo = convert(request);
+        return goodsInfoMapper.updateByPrimaryKeySelective(goodsInfo);
     }
 
     @Override
@@ -201,6 +212,57 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
             goodsInfoMapper.updateByPrimaryKey(item);
         }
 
+    }
+
+    private GoodsInfo convert(GoodsInfoRequest request) {
+        GoodsInfo info = new GoodsInfo();
+        info.setId(request.getId());
+        info.setGoodsImageId(request.getGoodsImageId());
+        info.setGoodsName(request.getGoodsName());
+        info.setBarCode(request.getBarCode());
+        info.setProductNumber(request.getProductNumber());
+        info.setPinyinCode(request.getPinyinCode());
+        info.setCategoryName(request.getCategoryName());
+        info.setGoodsStatus(request.getGoodsStatus());
+        info.setGoodsBrand(request.getGoodsBrand());
+        info.setGoodsColor(request.getGoodsColor());
+        info.setGoodsSize(request.getGoodsSize());
+        info.setGoodsTag(request.getGoodsTag());
+        info.setGoodsStock(request.getGoodsStock());
+        info.setQuantityUnit(request.getQuantityUnit());
+        info.setStockUpperLimit(request.getStockUpperLimit());
+        info.setStockLowerLimit(request.getStockLowerLimit());
+        if (StringUtils.isNotBlank(request.getLastImportPrice())) {
+            info.setLastImportPrice(new Money(request.getLastImportPrice()));
+        }
+        if (StringUtils.isNotBlank(request.getAverageImportPrice())) {
+            info.setAverageImportPrice(new Money(request.getAverageImportPrice()));
+        }
+        if (StringUtils.isNotBlank(request.getSalesPrice())) {
+            info.setSalesPrice(new Money(request.getSalesPrice()));
+        }
+        if (StringUtils.isNotBlank(request.getTradePrice())) {
+            info.setTradePrice(new Money(request.getTradePrice()));
+        }
+        if (StringUtils.isNotBlank(request.getVipPrice())) {
+            info.setVipPrice(new Money(request.getVipPrice()));
+        }
+        info.setIsVipDiscount(request.getIsVipDiscount());
+        info.setSupplierName(request.getSupplierName());
+        info.setProductionDate(request.getProductionDate());
+        info.setQualityGuaranteePeriod(request.getQualityGuaranteePeriod());
+        info.setIsIntegral(request.getIsIntegral());
+        info.setRoyaltyType(request.getRoyaltyType());
+        info.setIsBooked(request.getIsBooked());
+        info.setIsGift(request.getIsGift());
+        info.setIsWeigh(request.getIsWeigh());
+        info.setIsFixedPrice(request.getIsFixedPrice());
+        info.setIsTimeingPrice(request.getIsTimeingPrice());
+        info.setIsHidden(request.getIsHidden());
+        info.setRemark(request.getRemark());
+        info.setGmtCreate(new Date());
+
+        return info;
     }
 
 }

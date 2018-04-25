@@ -4,6 +4,7 @@
  */
 package cn.cash.register.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -50,6 +51,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Long addMember(MemberInfo memberInfo) {
         LogUtil.info(logger, "收到增加会员信息请求");
+        memberInfo.setGmtCreate(new Date());
         return infoMapper.insertSelective(memberInfo);
     }
 
@@ -138,6 +140,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Long addMemRank(MemberRank rank) {
         LogUtil.info(logger, "收到增加会员等级请求");
+        rank.setGmtCreate(new Date());
         return rankMapper.insertSelective(rank);
     }
 

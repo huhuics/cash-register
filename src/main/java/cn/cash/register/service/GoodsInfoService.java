@@ -9,6 +9,7 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.GoodsInfoQueryRequest;
+import cn.cash.register.common.request.GoodsInfoRequest;
 import cn.cash.register.dao.domain.GoodsImage;
 import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.enums.UpdateFieldEnum;
@@ -24,12 +25,17 @@ public interface GoodsInfoService {
      * 增加商品
      * 返回主键id
      */
-    Long add(GoodsInfo goodsInfo);
+    Long add(GoodsInfoRequest request);
 
     /**
      * 根据id删除商品
      */
     void delete(List<Long> ids);
+
+    /**
+     * 修改商品
+     */
+    int update(GoodsInfoRequest request);
 
     /**
      * 修改商品

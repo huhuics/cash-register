@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -55,7 +56,7 @@ public class GoodsTrafficServiceImpl implements GoodsTrafficService {
 
                 //查询并修改商品信息
                 GoodsInfo goodsInfo = goodsInfoService.queryById(request.getGoodsId());
-                updateGoodsInfo(goodsInfo, traffic);
+                inUpdateGoodsInfo(goodsInfo, traffic);
 
                 return trafficMapper.insertSelective(traffic);
             }
@@ -65,7 +66,17 @@ public class GoodsTrafficServiceImpl implements GoodsTrafficService {
     @Override
     public Long addOutTraffic(OutTrafficRequest request) {
         GoodsTraffic traffic = convert(request);
-        return null;
+        return txTemplate.execute(new TransactionCallback<Long>() {
+            @Override
+            public Long doInTransaction(TransactionStatus status) {
+
+                //查询并修改商品信息
+                GoodsInfo goodsInfo = goodsInfoService.queryById(request.getGoodsId());
+                outUpdateGoodsInfo(goodsInfo, traffic);
+
+                return trafficMapper.insertSelective(traffic);
+            }
+        });
     }
 
     @Override
@@ -84,14 +95,14 @@ public class GoodsTrafficServiceImpl implements GoodsTrafficService {
     }
 
     /**
-     * 修改商品信息属性值
+     * 进货--修改商品信息属性值
      */
-    private void updateGoodsInfo(GoodsInfo goodsInfo, GoodsTraffic traffic) {
+    private void inUpdateGoodsInfo(GoodsInfo goodsInfo, GoodsTraffic traffic) {
         //库存
         int inStock = goodsInfo.getGoodsStock() + traffic.getInCount();//实际进货库存
         int newTotalStock = inStock + traffic.getFreeCount();//实际总库存
 
-        //计算加权进货价 = ((原库存*原加权进货价)+(入库数*进货价))/实际进货库存
+        //新加权进货价 = ((原库存*原加权进货价)+(入库数*进货价))/实际进货库存
         Money newAvgPrice = ((goodsInfo.getAverageImportPrice().multiply(goodsInfo.getGoodsStock()))//
             .add((traffic.getInAmount().multiply(traffic.getInCount()))))//
                 .divide(inStock);
@@ -99,6 +110,22 @@ public class GoodsTrafficServiceImpl implements GoodsTrafficService {
         goodsInfo.setGoodsStock(newTotalStock);
         goodsInfo.setAverageImportPrice(newAvgPrice);
         goodsInfo.setLastImportPrice(traffic.getInAmount());
+
+        goodsInfoService.update(goodsInfo);
+    }
+
+    /**
+     * 出库--修改商品信息属性值
+     */
+    private void outUpdateGoodsInfo(GoodsInfo goodsInfo, GoodsTraffic traffic) {
+        //库存
+        int newTotalStock = goodsInfo.getGoodsStock() - traffic.getOutCount();
+
+        //新加权进货价 = 旧加权进货价 - (变动库存*(出货价 - 旧加权进货价)) / (原库存 - 变动库存)
+        Money newAvgPrice = goodsInfo.getAverageImportPrice().subtract((traffic.getOutAmount().subtract(goodsInfo.getAverageImportPrice())).multiply(traffic.getOutCount() / newTotalStock));
+
+        goodsInfo.setGoodsStock(newTotalStock);
+        goodsInfo.setAverageImportPrice(newAvgPrice);
 
         goodsInfoService.update(goodsInfo);
     }
@@ -115,11 +142,17 @@ public class GoodsTrafficServiceImpl implements GoodsTrafficService {
         traffic.setSupplierName(request.getSupplierName());
         traffic.setGoodsStock(request.getGoodsStock());
         traffic.setInCount(request.getInCount());
-        traffic.setInAmount(new Money(request.getInAmount()));
+        if (StringUtils.isNotBlank(request.getInAmount())) {
+            traffic.setInAmount(new Money(request.getInAmount()));
+        }
         traffic.setFreeCount(request.getFreeCount());
-        traffic.setAdvancePaymentAmount(new Money(request.getAdvancePaymentAmount()));
+        if (StringUtils.isNotBlank(request.getAdvancePaymentAmount())) {
+            traffic.setAdvancePaymentAmount(new Money(request.getAdvancePaymentAmount()));
+        }
         traffic.setQuantityUnit(request.getQuantityUnit());
-        traffic.setTotalAmount(new Money(request.getTotalAmount()));
+        if (StringUtils.isNotBlank(request.getTotalAmount())) {
+            traffic.setTotalAmount(new Money(request.getTotalAmount()));
+        }
         traffic.setOperatorNo(request.getOperatorNo());
         traffic.setRemark(request.getRemark());
         traffic.setGmtCreate(new Date());
@@ -140,9 +173,13 @@ public class GoodsTrafficServiceImpl implements GoodsTrafficService {
         traffic.setGoodsStock(request.getGoodsStock());
         traffic.setQuantityUnit(request.getQuantityUnit());
         traffic.setOutPriceType(request.getOutPriceType());
-        traffic.setOutAmount(new Money(request.getOutAmount()));
+        if (StringUtils.isNotBlank(request.getOutAmount())) {
+            traffic.setOutAmount(new Money(request.getOutAmount()));
+        }
         traffic.setOutCount(request.getOutCount());
-        traffic.setTotalAmount(new Money(request.getTotalAmount()));
+        if (StringUtils.isNotBlank(request.getTotalAmount())) {
+            traffic.setTotalAmount(new Money(request.getTotalAmount()));
+        }
         traffic.setOperatorNo(request.getOperatorNo());
         traffic.setRemark(request.getRemark());
         traffic.setGmtCreate(new Date());

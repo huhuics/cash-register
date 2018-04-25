@@ -22,17 +22,13 @@ public class GoodsItem extends BaseDomain {
 
     /***********收银时以下字段为正;退款/反结账时以下字段为负************/
 
-    private long              totalAmount;
+    private String            totalAmount;
 
     private int               goodsCount;
 
-    private long              totalActualAmount;
+    private String            totalActualAmount;
 
     /***************************end****************************/
-
-    public long getTotalAmount() {
-        return totalAmount;
-    }
 
     public Long getGoodsId() {
         return goodsId;
@@ -40,10 +36,6 @@ public class GoodsItem extends BaseDomain {
 
     public void setGoodsId(Long goodsId) {
         this.goodsId = goodsId;
-    }
-
-    public void setTotalAmount(long totalAmount) {
-        this.totalAmount = totalAmount;
     }
 
     public int getGoodsDiscount() {
@@ -62,20 +54,28 @@ public class GoodsItem extends BaseDomain {
         this.goodsCount = goodsCount;
     }
 
-    public long getTotalActualAmount() {
-        return totalActualAmount;
-    }
-
-    public void setTotalActualAmount(long totalActualAmount) {
-        this.totalActualAmount = totalActualAmount;
-    }
-
     public String getGoodsName() {
         return goodsName;
     }
 
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
+    }
+
+    public String getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(String totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public String getTotalActualAmount() {
+        return totalActualAmount;
+    }
+
+    public void setTotalActualAmount(String totalActualAmount) {
+        this.totalActualAmount = totalActualAmount;
     }
 
 }

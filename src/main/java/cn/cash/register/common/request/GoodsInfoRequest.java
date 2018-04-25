@@ -1,12 +1,19 @@
-package cn.cash.register.dao.domain;
+/**
+ * Cash-Register
+ * Copyright (c) 1995-2018 All Rights Reserved.
+ */
+package cn.cash.register.common.request;
 
-import java.util.Date;
+/**
+ * 商品信息请求类
+ * 增加/修改商品
+ * @author HuHui
+ * @version $Id: GoodsInfoRequest.java, v 0.1 2018年4月25日 下午8:12:03 HuHui Exp $
+ */
+public class GoodsInfoRequest extends BaseRequest {
 
-import cn.cash.register.util.Money;
-
-public class GoodsInfo extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = 3706844316320387568L;
+    private static final long serialVersionUID = -4032486780540066578L;
 
     private Long              id;
 
@@ -40,15 +47,15 @@ public class GoodsInfo extends BaseDomain {
 
     private Integer           stockLowerLimit;
 
-    private Money             lastImportPrice;
+    private String            lastImportPrice;
 
-    private Money             averageImportPrice;
+    private String            averageImportPrice;
 
-    private Money             salesPrice;
+    private String            salesPrice;
 
-    private Money             tradePrice;
+    private String            tradePrice;
 
-    private Money             vipPrice;
+    private String            vipPrice;
 
     private Boolean           isVipDiscount;
 
@@ -76,9 +83,11 @@ public class GoodsInfo extends BaseDomain {
 
     private String            remark;
 
-    private Date              gmtUpdate;
+    @Override
+    public void validate() {
+        // TODO Auto-generated method stub
 
-    private Date              gmtCreate;
+    }
 
     public Long getId() {
         return id;
@@ -101,7 +110,7 @@ public class GoodsInfo extends BaseDomain {
     }
 
     public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName == null ? null : goodsName.trim();
+        this.goodsName = goodsName;
     }
 
     public String getBarCode() {
@@ -109,7 +118,7 @@ public class GoodsInfo extends BaseDomain {
     }
 
     public void setBarCode(String barCode) {
-        this.barCode = barCode == null ? null : barCode.trim();
+        this.barCode = barCode;
     }
 
     public String getProductNumber() {
@@ -117,7 +126,7 @@ public class GoodsInfo extends BaseDomain {
     }
 
     public void setProductNumber(String productNumber) {
-        this.productNumber = productNumber == null ? null : productNumber.trim();
+        this.productNumber = productNumber;
     }
 
     public String getPinyinCode() {
@@ -125,7 +134,7 @@ public class GoodsInfo extends BaseDomain {
     }
 
     public void setPinyinCode(String pinyinCode) {
-        this.pinyinCode = pinyinCode == null ? null : pinyinCode.trim();
+        this.pinyinCode = pinyinCode;
     }
 
     public String getCategoryName() {
@@ -133,7 +142,7 @@ public class GoodsInfo extends BaseDomain {
     }
 
     public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName == null ? null : categoryName.trim();
+        this.categoryName = categoryName;
     }
 
     public Boolean getGoodsStatus() {
@@ -149,7 +158,7 @@ public class GoodsInfo extends BaseDomain {
     }
 
     public void setGoodsBrand(String goodsBrand) {
-        this.goodsBrand = goodsBrand == null ? null : goodsBrand.trim();
+        this.goodsBrand = goodsBrand;
     }
 
     public String getGoodsColor() {
@@ -157,7 +166,7 @@ public class GoodsInfo extends BaseDomain {
     }
 
     public void setGoodsColor(String goodsColor) {
-        this.goodsColor = goodsColor == null ? null : goodsColor.trim();
+        this.goodsColor = goodsColor;
     }
 
     public String getGoodsSize() {
@@ -165,7 +174,7 @@ public class GoodsInfo extends BaseDomain {
     }
 
     public void setGoodsSize(String goodsSize) {
-        this.goodsSize = goodsSize == null ? null : goodsSize.trim();
+        this.goodsSize = goodsSize;
     }
 
     public String getGoodsTag() {
@@ -173,7 +182,7 @@ public class GoodsInfo extends BaseDomain {
     }
 
     public void setGoodsTag(String goodsTag) {
-        this.goodsTag = goodsTag == null ? null : goodsTag.trim();
+        this.goodsTag = goodsTag;
     }
 
     public Integer getGoodsStock() {
@@ -189,7 +198,7 @@ public class GoodsInfo extends BaseDomain {
     }
 
     public void setQuantityUnit(String quantityUnit) {
-        this.quantityUnit = quantityUnit == null ? null : quantityUnit.trim();
+        this.quantityUnit = quantityUnit;
     }
 
     public Integer getStockUpperLimit() {
@@ -208,46 +217,6 @@ public class GoodsInfo extends BaseDomain {
         this.stockLowerLimit = stockLowerLimit;
     }
 
-    public Money getLastImportPrice() {
-        return lastImportPrice;
-    }
-
-    public void setLastImportPrice(Money lastImportPrice) {
-        this.lastImportPrice = lastImportPrice;
-    }
-
-    public Money getAverageImportPrice() {
-        return averageImportPrice;
-    }
-
-    public void setAverageImportPrice(Money averageImportPrice) {
-        this.averageImportPrice = averageImportPrice;
-    }
-
-    public Money getSalesPrice() {
-        return salesPrice;
-    }
-
-    public void setSalesPrice(Money salesPrice) {
-        this.salesPrice = salesPrice;
-    }
-
-    public Money getTradePrice() {
-        return tradePrice;
-    }
-
-    public void setTradePrice(Money tradePrice) {
-        this.tradePrice = tradePrice;
-    }
-
-    public Money getVipPrice() {
-        return vipPrice;
-    }
-
-    public void setVipPrice(Money vipPrice) {
-        this.vipPrice = vipPrice;
-    }
-
     public Boolean getIsVipDiscount() {
         return isVipDiscount;
     }
@@ -261,7 +230,7 @@ public class GoodsInfo extends BaseDomain {
     }
 
     public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName == null ? null : supplierName.trim();
+        this.supplierName = supplierName;
     }
 
     public String getProductionDate() {
@@ -269,7 +238,7 @@ public class GoodsInfo extends BaseDomain {
     }
 
     public void setProductionDate(String productionDate) {
-        this.productionDate = productionDate == null ? null : productionDate.trim();
+        this.productionDate = productionDate;
     }
 
     public Integer getQualityGuaranteePeriod() {
@@ -293,7 +262,7 @@ public class GoodsInfo extends BaseDomain {
     }
 
     public void setRoyaltyType(String royaltyType) {
-        this.royaltyType = royaltyType == null ? null : royaltyType.trim();
+        this.royaltyType = royaltyType;
     }
 
     public Boolean getIsBooked() {
@@ -349,22 +318,47 @@ public class GoodsInfo extends BaseDomain {
     }
 
     public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
+        this.remark = remark;
     }
 
-    public Date getGmtUpdate() {
-        return gmtUpdate;
+    public String getLastImportPrice() {
+        return lastImportPrice;
     }
 
-    public void setGmtUpdate(Date gmtUpdate) {
-        this.gmtUpdate = gmtUpdate;
+    public void setLastImportPrice(String lastImportPrice) {
+        this.lastImportPrice = lastImportPrice;
     }
 
-    public Date getGmtCreate() {
-        return gmtCreate;
+    public String getAverageImportPrice() {
+        return averageImportPrice;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
+    public void setAverageImportPrice(String averageImportPrice) {
+        this.averageImportPrice = averageImportPrice;
     }
+
+    public String getSalesPrice() {
+        return salesPrice;
+    }
+
+    public void setSalesPrice(String salesPrice) {
+        this.salesPrice = salesPrice;
+    }
+
+    public String getTradePrice() {
+        return tradePrice;
+    }
+
+    public void setTradePrice(String tradePrice) {
+        this.tradePrice = tradePrice;
+    }
+
+    public String getVipPrice() {
+        return vipPrice;
+    }
+
+    public void setVipPrice(String vipPrice) {
+        this.vipPrice = vipPrice;
+    }
+
 }
