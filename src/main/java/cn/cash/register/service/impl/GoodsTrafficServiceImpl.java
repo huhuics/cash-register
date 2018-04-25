@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -141,11 +142,17 @@ public class GoodsTrafficServiceImpl implements GoodsTrafficService {
         traffic.setSupplierName(request.getSupplierName());
         traffic.setGoodsStock(request.getGoodsStock());
         traffic.setInCount(request.getInCount());
-        traffic.setInAmount(new Money(request.getInAmount()));
+        if (StringUtils.isNotBlank(request.getInAmount())) {
+            traffic.setInAmount(new Money(request.getInAmount()));
+        }
         traffic.setFreeCount(request.getFreeCount());
-        traffic.setAdvancePaymentAmount(new Money(request.getAdvancePaymentAmount()));
+        if (StringUtils.isNotBlank(request.getAdvancePaymentAmount())) {
+            traffic.setAdvancePaymentAmount(new Money(request.getAdvancePaymentAmount()));
+        }
         traffic.setQuantityUnit(request.getQuantityUnit());
-        traffic.setTotalAmount(new Money(request.getTotalAmount()));
+        if (StringUtils.isNotBlank(request.getTotalAmount())) {
+            traffic.setTotalAmount(new Money(request.getTotalAmount()));
+        }
         traffic.setOperatorNo(request.getOperatorNo());
         traffic.setRemark(request.getRemark());
         traffic.setGmtCreate(new Date());
@@ -166,9 +173,13 @@ public class GoodsTrafficServiceImpl implements GoodsTrafficService {
         traffic.setGoodsStock(request.getGoodsStock());
         traffic.setQuantityUnit(request.getQuantityUnit());
         traffic.setOutPriceType(request.getOutPriceType());
-        traffic.setOutAmount(new Money(request.getOutAmount()));
+        if (StringUtils.isNotBlank(request.getOutAmount())) {
+            traffic.setOutAmount(new Money(request.getOutAmount()));
+        }
         traffic.setOutCount(request.getOutCount());
-        traffic.setTotalAmount(new Money(request.getTotalAmount()));
+        if (StringUtils.isNotBlank(request.getTotalAmount())) {
+            traffic.setTotalAmount(new Money(request.getTotalAmount()));
+        }
         traffic.setOperatorNo(request.getOperatorNo());
         traffic.setRemark(request.getRemark());
         traffic.setGmtCreate(new Date());

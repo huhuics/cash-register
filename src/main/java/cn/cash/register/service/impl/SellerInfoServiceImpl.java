@@ -48,7 +48,6 @@ public class SellerInfoServiceImpl implements SellerInfoService {
 
         Date createTime = new Date();
         sellerInfo.setGmtCreate(createTime); // 创建时间
-        sellerInfo.setGmtUpdate(createTime); // 更新时间
 
         return sellerInfoMapper.insertSelective(sellerInfo);
     }

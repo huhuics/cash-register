@@ -204,8 +204,8 @@ public class TradeServiceImpl implements TradeService {
             tradeGoodsDetail.setGmtCreate(new Date());
 
             //计算商品利润
-            double profit = (item.getTotalActualAmount() * item.getGoodsDiscount()) / 100.0;
-            tradeGoodsDetail.setProfitAmount(new Money(profit));
+            Money profit = (tradeGoodsDetail.getTotalActualAmount().multiply(item.getGoodsDiscount())).divide(100.00);
+            tradeGoodsDetail.setProfitAmount(profit);
 
             tradeGoodsDetailMapper.insertSelective(tradeGoodsDetail);
 

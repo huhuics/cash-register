@@ -4,6 +4,8 @@
  */
 package cn.cash.register.service.impl;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -37,6 +39,7 @@ public class SystemParameterServiceImpl implements SystemParameterService {
         }
 
         LogUtil.info(logger, "收到增加系统参数请求,param={0}", param);
+        param.setGmtCreate(new Date());
 
         return parameterMapper.insertSelective(param);
 

@@ -26,7 +26,7 @@ public class TradeRequest extends BaseRequest {
 
     private List<PayChenal>   payChenals;
 
-    private long              memberId;
+    private Long              memberId;
 
     private String            memberName;
 
@@ -81,11 +81,11 @@ public class TradeRequest extends BaseRequest {
         this.memberName = memberName;
     }
 
-    public long getMemberId() {
+    public Long getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(long memberId) {
+    public void setMemberId(Long memberId) {
         this.memberId = memberId;
     }
 

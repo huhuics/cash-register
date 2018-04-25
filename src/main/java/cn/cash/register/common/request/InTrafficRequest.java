@@ -32,15 +32,15 @@ public class InTrafficRequest extends BaseRequest {
 
     private Integer           inCount;
 
-    private double            inAmount;
+    private String            inAmount;
 
     private Integer           freeCount;
 
     private String            quantityUnit;
 
-    private double            totalAmount;
+    private String            totalAmount;
 
-    private double            advancePaymentAmount;
+    private String            advancePaymentAmount;
 
     private String            operatorNo;
 
@@ -155,27 +155,27 @@ public class InTrafficRequest extends BaseRequest {
         this.operatorNo = operatorNo;
     }
 
-    public double getInAmount() {
+    public String getInAmount() {
         return inAmount;
     }
 
-    public void setInAmount(double inAmount) {
+    public void setInAmount(String inAmount) {
         this.inAmount = inAmount;
     }
 
-    public double getTotalAmount() {
+    public String getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(double totalAmount) {
+    public void setTotalAmount(String totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public double getAdvancePaymentAmount() {
+    public String getAdvancePaymentAmount() {
         return advancePaymentAmount;
     }
 
-    public void setAdvancePaymentAmount(double advancePaymentAmount) {
+    public void setAdvancePaymentAmount(String advancePaymentAmount) {
         this.advancePaymentAmount = advancePaymentAmount;
     }
 

@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.GoodsInfoQueryRequest;
+import cn.cash.register.common.request.GoodsInfoRequest;
 import cn.cash.register.dao.domain.GoodsBrand;
 import cn.cash.register.dao.domain.GoodsCategory;
 import cn.cash.register.dao.domain.GoodsColor;
@@ -86,8 +87,8 @@ public class GoodsController {
      */
     @ResponseBody
     @RequestMapping(value = "/addGoodsInfo")
-    public ResultSet addGoodsInfo(GoodsInfo goodsInfo) {
-        Long id = goodsInfoService.add(goodsInfo);
+    public ResultSet addGoodsInfo(GoodsInfoRequest request) {
+        Long id = goodsInfoService.add(request);
         return ResultSet.success().put("id", id);
     }
 
@@ -97,8 +98,8 @@ public class GoodsController {
      */
     @ResponseBody
     @RequestMapping(value = "/updateGoodsInfo")
-    public ResultSet updateGoodsInfo(GoodsInfo goodsInfo) {
-        int result = goodsInfoService.update(goodsInfo);
+    public ResultSet updateGoodsInfo(GoodsInfoRequest request) {
+        int result = goodsInfoService.update(request);
         return ResultSet.success().put("result", result);
     }
 

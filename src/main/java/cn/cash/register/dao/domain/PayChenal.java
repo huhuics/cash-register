@@ -17,8 +17,8 @@ public class PayChenal extends BaseDomain {
     /** 支付/退款方式 */
     private String            chenal;
 
-    /** 金额,单位:分 */
-    private long              cent;
+    /** 金额,单位:元 */
+    private String            amount;
 
     public String getChenal() {
         return chenal;
@@ -28,12 +28,12 @@ public class PayChenal extends BaseDomain {
         this.chenal = chenal;
     }
 
-    public long getCent() {
-        return cent;
+    public String getAmount() {
+        return amount;
     }
 
-    public void setCent(long cent) {
-        this.cent = cent;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
 }

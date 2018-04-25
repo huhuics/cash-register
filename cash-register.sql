@@ -105,7 +105,7 @@ CREATE TABLE `goods_info` (
   `vip_price` int(11) DEFAULT NULL COMMENT '会员价，单位：分',
   `is_vip_discount` tinyint(1) NOT NULL DEFAULT '1' COMMENT '会员是否有折扣。1：是。0：否',
   `supplier_name` varchar(128) DEFAULT NULL COMMENT '供货商名称',
-  `production_date` timestamp NULL DEFAULT NULL COMMENT '生产日期',
+  `production_date` varchar(32) DEFAULT NULL COMMENT '生产日期，年-月-日',
   `quality_guarantee_period` int(11) DEFAULT NULL COMMENT '保质期，单位：天',
   `is_integral` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否积分，1：是。0：否',
   `royalty_type` varchar(64) NOT NULL COMMENT 'JSON格式。提成方式。0：不提成。1：销售价*导购员提成百分比。2：利润*导购员提成百分比。3.固定金额。4.销售价*百分比。5.利润*百分比',
