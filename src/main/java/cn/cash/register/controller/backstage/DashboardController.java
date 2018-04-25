@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class DashboardController {
 
-    private static final Logger logger = LoggerFactory.getLogger(GoodsController.class);
+    private static final Logger logger = LoggerFactory.getLogger(DashboardController.class);
 
     /**
      * 后端面板
