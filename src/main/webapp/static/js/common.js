@@ -104,3 +104,8 @@ function getSelectedRows() {
 function isBlank(value) {
     return !value || !/\S/.test(value)
 }
+
+//克隆JSON对象
+function cloneJsonObj(obj) {
+	return JSON.parse(JSON.stringify(obj));
+}
