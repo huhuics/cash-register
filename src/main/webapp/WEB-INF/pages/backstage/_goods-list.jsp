@@ -3,10 +3,8 @@
 <%@ include file="../_header.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
 <head>
     <title>商品资料</title>
-    <link rel="stylesheet" href="${ctx}/static/plugins/bootstrap-fileinput/css/fileinput.min.css">
 </head>
 
 <body>
@@ -76,94 +74,80 @@
         <div id="goodsDiv" style="display: none;">
             <form class="form-horizontal layerForm">
                 <div class="form-group">
-                    <div class="col-xs-6">
-                        <div class="btn-group" role="group">
-                        	<div class="btn-group" data-toggle="buttons">
-							  <label class="btn btn-default active">
-							    <input type="radio" name="options" id="option1" autocomplete="off" checked>启用
-							  </label>
-							  <label class="btn btn-default">
-							    <input type="radio" name="options" id="option2" autocomplete="off">禁用
-							  </label>
-							</div>
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                    	<input v-if="displayImageUpload" type="file" name="image" class="form-control" value=""/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-xs-6">
-                    	<div class="btn-group" role="group">
-                        	<div class="btn-group" data-toggle="buttons">
-							  <label class="btn btn-default active">
-							    <input type="radio" name="options" id="option1" autocomplete="off" checked>颜色尺码开启
-							  </label>
-							  <label class="btn btn-default">
-							    <input type="radio" name="options" id="option2" autocomplete="off">颜色尺码关闭
-							  </label>
-							</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-xs-6">
-                        <div class="input-group">
-                            <span class="input-group-addon">*条码</span>
-                            <input type="text" class="form-control" placeholder="">
-                            <span class="input-group-btn">
-     <button class="btn btn-default" type="button">生成</button>
-   </span>
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="input-group">
-                            <span class="input-group-addon">*品名</span>
-                            <input type="text" class="form-control" placeholder="">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-xs-6">
-                        <select class="form-control">
-                            <option value="">分类</option>
-                            <option></option>
-                        </select>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="input-group">
-                            <span class="input-group-addon">*货号</span>
-                            <input type="text" class="form-control" placeholder="">
+                    <div class="col-xs-7">
+                    	<div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-exclamation"></i>&nbsp;状态</span>
                             <span class="input-group-addon">
-     <input type="checkbox">和条码一致
-   </span>
+                            	<input type="radio" v-model="goods.goodsStatus" value="true">启用
+                            </span>
+                            <span class="input-group-addon">
+                            	<input type="radio" v-model="goods.goodsStatus" value="false">禁用
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                    	<input v-if="switches.displayImageUpload" type="file" name="image" class="form-control" value=""/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-7">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-exclamation"></i>&nbsp;条码</span>
+                            <input type="text" class="form-control" v-model="goods.barCode">
+                            <span class="input-group-btn"><button class="btn btn-success" type="button" @click="getBarCode">生成</button></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-exclamation"></i>&nbsp;品名</span>
+                            <input type="text" class="form-control" v-model="goods.goodsName">
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-12">
+                    <div class="col-xs-7">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-exclamation"></i>&nbsp;货号</span>
+                            <input type="text" class="form-control" v-model="goods.productNumber" id="productNumberInput">
+                            <span class="input-group-addon"><input type="checkbox" v-model="switches.prodNumSame">和条码一致</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-exclamation"></i>&nbsp;分类</span>
+                            <input type="text" class="form-control" v-model="goods.categoryName">
+                            <span class="input-group-btn"><button class="btn btn-primary" type="button">选择分类</button></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                	<div class="col-xs-7">
+                    	<div class="input-group">
+                            <span class="input-group-addon"><input type="checkbox" v-model="switches.colorSize"></span>
+                            <input type="text" class="form-control" readonly placeholder="未选择任何颜色尺码">
+                            <span class="input-group-btn"><button id="colorSizeBtn" class="btn btn-primary" type="button" disabled>选择颜色尺码</button></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
                         <div class="btn-group btn-group-justified" role="group">
                             <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-default">颜色尺码</button>
-                            </div>
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-default">库存</button>
+                                <button type="button" class="btn btn-default" @click="_editGoodsStock"><i class="fa fa-exclamation"></i>&nbsp;输入库存</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-6">
+                    <div class="col-xs-7">
                         <div class="input-group">
-                            <span class="input-group-addon">*售价</span>
-                            <input type="text" class="form-control" placeholder="0.00">
+                            <span class="input-group-addon"><i class="fa fa-exclamation"></i>&nbsp;售价</span>
+                            <input type="text" class="form-control" v-model="goods.salesPrice" placeholder="0.00">
                             <span class="input-group-addon">元</span>
                         </div>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-5">
                         <div class="input-group">
-                            <span class="input-group-addon">进价</span>
-                            <input type="text" class="form-control" placeholder="0.00">
+                            <span class="input-group-addon"><i class="fa fa-exclamation"></i>&nbsp;进价</span>
+                            <input type="text" class="form-control" v-model="goods.lastImportPrice" placeholder="0.00">
                             <span class="input-group-addon">元</span>
                         </div>
                     </div>
@@ -174,92 +158,101 @@
                     完善下列商品拓展信息，有助于日常的经营管理哦！
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-6">
+                    <div class="col-xs-7">
                         <div class="input-group">
-                            <span class="input-group-addon">
-     <input type="checkbox">会员折扣
-   </span>
+                            <span class="input-group-addon"><input type="checkbox" v-model="goods.isVipDiscount">会员折扣</span>
                             <span class="input-group-addon">会员价</span>
-                            <input type="text" class="form-control" placeholder="0.00">
+                            <input type="text" class="form-control" id="goodsVipPriceInput" v-model="goods.vipPrice" placeholder="未设置" readonly>
                             <span class="input-group-addon">元</span>
                         </div>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-5">
                         <div class="input-group">
                             <span class="input-group-addon">批发价</span>
-                            <input type="text" class="form-control" placeholder="0.00">
+                            <input type="text" class="form-control" v-model="goods.tradePrice" placeholder="0.00">
                             <span class="input-group-addon">元</span>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-6">
-                        <div class="btn-group btn-group-justified">
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    商品品牌<span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                </ul>
-                            </div>
+                    <div class="col-xs-7">
+                        <div class="input-group">
+                            <span class="input-group-addon">主单位</span>
+                            <input type="text" class="form-control" v-model="goods.quantityUnit" readonly>
+                            <span class="input-group-btn"><button class="btn btn-primary" type="button">选择单位</button></span>
                         </div>
                     </div>
-                    <div class="col-xs-6">
-                        <div class="btn-group btn-group-justified">
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    供货商<span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                </ul>
-                            </div>
+                    <div class="col-xs-5">
+                        <div class="input-group">
+                            <span class="input-group-addon">拼音码</span>
+                            <input type="text" class="form-control" v-model="goods.pinyinCode">
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-6">
+                    <div class="col-xs-7">
                         <div class="input-group">
-                            <span class="input-group-addon">生产日期</span>
-                            <input type="text" class="form-control" placeholder="">
+                            <span class="input-group-addon">商品品牌</span>
+                            <input type="text" class="form-control" v-model="goods.goodsBrand" readonly>
+                            <span class="input-group-btn"><button class="btn btn-primary" type="button">选择品牌</button></span>
                         </div>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-5">
+                        <div class="input-group">
+                            <span class="input-group-addon">供货商</span>
+                            <input type="text" class="form-control" v-model="goods.supplierName" readonly>
+                            <span class="input-group-btn"><button class="btn btn-primary" type="button">选择供货商</button></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-7">
+                        <div class="input-group">
+                            <span class="input-group-addon">生产日期</span>
+                            <input type="text" class="form-control" v-model="goods.productionDate">
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
                         <div class="input-group">
                             <span class="input-group-addon">保质期</span>
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" v-model="goods.qualityGuaranteePeriod">
                             <span class="input-group-addon">天</span>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-6">
+                    <div class="col-xs-7">
                         <div class="input-group">
                             <span class="input-group-addon">库存上限</span>
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" v-model="goods.stockUpperLimit">
                         </div>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-5">
                         <div class="input-group">
                             <span class="input-group-addon">库存下限</span>
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" v-model="goods.stockLowerLimit">
                         </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon">标签</span>
+                            <input type="text" class="form-control" readonly v-model="goods.goodsTag">
+                            <span class="input-group-btn"><button class="btn btn-primary" type="button">选择标签</button></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                    	<textarea class="form-control" rows="3" placeholder="备注" v-model="goods.remark"></textarea>
                     </div>
                 </div>
             </form>
         </div>
         <!-- /添加或更新商品 -->
     </div>
-    <script src="${ctx}/static/plugins/bootstrap-fileinput/js/fileinput.min.js"></script>
+    
     <script src="${ctx}/static/js/backstage/_goods-list.js"></script>
 </body>
 
