@@ -20,11 +20,10 @@ public class MemberInfoQueryRequest extends BasePageRequest {
 
     private boolean           status;
 
-    private String            memberNo;
-
-    private String            memberName;
-
-    private String            phone;
+    /**
+     * 会员号/姓名/手机号
+     */
+    private String            keyword;
 
     public String getMemberRank() {
         return memberRank;
@@ -50,28 +49,12 @@ public class MemberInfoQueryRequest extends BasePageRequest {
         this.status = status;
     }
 
-    public String getMemberNo() {
-        return memberNo;
+    public String getKeyword() {
+        return keyword;
     }
 
-    public void setMemberNo(String memberNo) {
-        this.memberNo = memberNo;
-    }
-
-    public String getMemberName() {
-        return memberName;
-    }
-
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
 }

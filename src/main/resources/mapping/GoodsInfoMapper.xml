@@ -18,7 +18,7 @@
     <result column="quantity_unit" jdbcType="VARCHAR" property="quantityUnit" />
     <result column="stock_upper_limit" jdbcType="INTEGER" property="stockUpperLimit" />
     <result column="stock_lower_limit" jdbcType="INTEGER" property="stockLowerLimit" />
-    <result column="import_price" jdbcType="INTEGER" property="importPrice" />
+    <result column="last_import_price" jdbcType="INTEGER" property="lastImportPrice" />
     <result column="average_import_price" jdbcType="INTEGER" property="averageImportPrice" />
     <result column="sales_price" jdbcType="INTEGER" property="salesPrice" />
     <result column="trade_price" jdbcType="INTEGER" property="tradePrice" />
@@ -42,7 +42,7 @@
   <sql id="Base_Column_List">
     id, goods_image_id, goods_name, bar_code, product_number, pinyin_code, category_name, 
     goods_status, goods_brand, goods_color, goods_size, goods_tag, goods_stock, quantity_unit, 
-    stock_upper_limit, stock_lower_limit, import_price, average_import_price, sales_price, 
+    stock_upper_limit, stock_lower_limit, last_import_price, average_import_price, sales_price, 
     trade_price, vip_price, is_vip_discount, supplier_name, production_date, quality_guarantee_period, 
     is_integral, royalty_type, is_booked, is_gift, is_weigh, is_fixed_price, is_timeing_price, 
     is_hidden, remark, gmt_update, gmt_create
@@ -63,7 +63,7 @@
       category_name, goods_status, goods_brand, 
       goods_color, goods_size, goods_tag, 
       goods_stock, quantity_unit, stock_upper_limit, 
-      stock_lower_limit, import_price, average_import_price, 
+      stock_lower_limit, last_import_price, average_import_price, 
       sales_price, trade_price, vip_price, 
       is_vip_discount, supplier_name, production_date, 
       quality_guarantee_period, is_integral, royalty_type, 
@@ -75,7 +75,7 @@
       #{categoryName,jdbcType=VARCHAR}, #{goodsStatus,jdbcType=BIT}, #{goodsBrand,jdbcType=VARCHAR}, 
       #{goodsColor,jdbcType=VARCHAR}, #{goodsSize,jdbcType=VARCHAR}, #{goodsTag,jdbcType=VARCHAR}, 
       #{goodsStock,jdbcType=INTEGER}, #{quantityUnit,jdbcType=VARCHAR}, #{stockUpperLimit,jdbcType=INTEGER}, 
-      #{stockLowerLimit,jdbcType=INTEGER}, #{importPrice,jdbcType=INTEGER}, #{averageImportPrice,jdbcType=INTEGER}, 
+      #{stockLowerLimit,jdbcType=INTEGER}, #{lastImportPrice,jdbcType=INTEGER}, #{averageImportPrice,jdbcType=INTEGER}, 
       #{salesPrice,jdbcType=INTEGER}, #{tradePrice,jdbcType=INTEGER}, #{vipPrice,jdbcType=INTEGER}, 
       #{isVipDiscount,jdbcType=BIT}, #{supplierName,jdbcType=VARCHAR}, #{productionDate,jdbcType=TIMESTAMP}, 
       #{qualityGuaranteePeriod,jdbcType=INTEGER}, #{isIntegral,jdbcType=BIT}, #{royaltyType,jdbcType=VARCHAR}, 
@@ -134,8 +134,8 @@
       <if test="stockLowerLimit != null">
         stock_lower_limit,
       </if>
-      <if test="importPrice != null">
-        import_price,
+      <if test="lastImportPrice != null">
+        last_import_price,
       </if>
       <if test="averageImportPrice != null">
         average_import_price,
@@ -244,8 +244,8 @@
       <if test="stockLowerLimit != null">
         #{stockLowerLimit,jdbcType=INTEGER},
       </if>
-      <if test="importPrice != null">
-        #{importPrice,jdbcType=INTEGER},
+      <if test="lastImportPrice != null">
+        #{lastImportPrice,jdbcType=INTEGER},
       </if>
       <if test="averageImportPrice != null">
         #{averageImportPrice,jdbcType=INTEGER},
@@ -354,8 +354,8 @@
       <if test="stockLowerLimit != null">
         stock_lower_limit = #{stockLowerLimit,jdbcType=INTEGER},
       </if>
-      <if test="importPrice != null">
-        import_price = #{importPrice,jdbcType=INTEGER},
+      <if test="lastImportPrice != null">
+        last_import_price = #{lastImportPrice,jdbcType=INTEGER},
       </if>
       <if test="averageImportPrice != null">
         average_import_price = #{averageImportPrice,jdbcType=INTEGER},
@@ -434,7 +434,7 @@
       quantity_unit = #{quantityUnit,jdbcType=VARCHAR},
       stock_upper_limit = #{stockUpperLimit,jdbcType=INTEGER},
       stock_lower_limit = #{stockLowerLimit,jdbcType=INTEGER},
-      import_price = #{importPrice,jdbcType=INTEGER},
+      last_import_price = #{lastImportPrice,jdbcType=INTEGER},
       average_import_price = #{averageImportPrice,jdbcType=INTEGER},
       sales_price = #{salesPrice,jdbcType=INTEGER},
       trade_price = #{tradePrice,jdbcType=INTEGER},
@@ -476,14 +476,12 @@
     <if test="goodsTag != null and goodsTag !=''">
     	and goods_tag like #{goodsTag,jdbcType=VARCHAR}"%"
     </if>
-    <if test="barCode != null and barCode !=''">
-    	and bar_code = #{barCode,jdbcType=VARCHAR}
-    </if>
-    <if test="goodsName != null and goodsName !=''">
-    	and goods_name like #{goodsName,jdbcType=VARCHAR}"%"
-    </if>
-    <if test="pinyinCode != null and pinyinCode !=''">
-    	and pinyin_code like #{pinyinCode,jdbcType=VARCHAR}"%"
+    <if test="keyword != null and keyword !=''">
+    	and (
+    			bar_code = #{keyword,jdbcType=VARCHAR}
+    			or goods_name like #{keyword,jdbcType=VARCHAR}"%"
+    			or pinyin_code like #{keyword,jdbcType=VARCHAR}"%"
+    		)
     </if>
   </select>
   
@@ -493,4 +491,12 @@
   	and goods_stock &gt;= #{count,jdbcType=INTEGER}
   </update>
   
+  <select id="search" resultMap="BaseResultMap" parameterType="java.lang.String">
+ 	select 
+    <include refid="Base_Column_List" />
+    from goods_info where 
+    bar_code = #{keyword,jdbcType=VARCHAR}
+    or goods_name like #{keyword,jdbcType=VARCHAR}"%"
+    or pinyin_code like #{keyword,jdbcType=VARCHAR}"%"
+  </select>
 </mapper>

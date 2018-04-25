@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
@@ -66,7 +65,7 @@ public class GoodsController {
     /**
      * 跳转到商品资料页
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String list() {
         return "backstage/_goods-list";
     }
@@ -124,6 +123,18 @@ public class GoodsController {
     public ResultSet queryGoodsInfoById(Long goodsInfoId) {
         GoodsInfo goodsInfo = goodsInfoService.queryById(goodsInfoId);
         return ResultSet.success().put("goodsInfo", goodsInfo);
+    }
+
+    /**
+     * 根据关键字搜索商品
+     * @param keyword 条码/拼音码/商品名
+     * @return  商品信息列表
+     */
+    @ResponseBody
+    @RequestMapping(value = "/searchGoodsInfo")
+    public ResultSet searchGoodsInfo(String keyword) {
+        List<GoodsInfo> goodsInfos = goodsInfoService.search(keyword);
+        return ResultSet.success().put("goodsInfos", goodsInfos);
     }
 
     /**

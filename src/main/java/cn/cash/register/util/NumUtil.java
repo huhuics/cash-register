@@ -35,4 +35,11 @@ public class NumUtil {
         return DateUtil.format(new Date(), DateUtil.msecFormat);
     }
 
+    /**
+     * 生成货流单号
+     */
+    public static String getTrafficNo() {
+        return DateUtil.format(new Date(), DateUtil.msecFormat);
+    }
+
 }

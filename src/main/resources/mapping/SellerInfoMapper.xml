@@ -183,7 +183,7 @@
     		and seller_no = #{sellerNo,jdbcType=VARCHAR}
     	</if>
     	<if test="name != null and name !=''">
-    		and name like "%"#{name,jdbcType=VARCHAR}"%"
+    		and name like #{name,jdbcType=VARCHAR}"%"
     	</if>
     	<if test="phone != null and phone !=''">
     		and phone = #{phone,jdbcType=VARCHAR}

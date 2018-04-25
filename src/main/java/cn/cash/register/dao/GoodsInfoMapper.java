@@ -23,4 +23,6 @@ public interface GoodsInfoMapper {
     List<GoodsInfo> list(GoodsInfoQueryRequest request);
 
     int updateStock(@Param("id") Long id, @Param("count") int count);
+
+    List<GoodsInfo> search(String keyword);
 }

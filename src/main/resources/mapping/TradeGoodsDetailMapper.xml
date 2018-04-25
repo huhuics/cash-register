@@ -273,27 +273,28 @@
     <include refid="Base_Column_List" />
   	from trade_goods_detail where 1=1
   	<if test="categoryName != null and categoryName !=''">
-  		category_name = #{categoryName,jdbcType=VARCHAR}
+  		and category_name = #{categoryName,jdbcType=VARCHAR}
     </if>
     <if test="goodsBrand != null and goodsBrand !=''">
-  		goods_brand = #{goodsBrand,jdbcType=VARCHAR}
+  		and goods_brand = #{goodsBrand,jdbcType=VARCHAR}
     </if>
     <if test="supplierName != null and supplierName !=''">
-  		supplier_name = #{supplierName,jdbcType=VARCHAR}
+  		and supplier_name = #{supplierName,jdbcType=VARCHAR}
     </if>
     <if test="goodsTag != null and goodsTag !=''">
-  		goods_tag like #{goodsTag,jdbcType=VARCHAR}"%"
+  		and goods_tag like #{goodsTag,jdbcType=VARCHAR}"%"
     </if>
-    <if test=" != null and  !=''">
+    <if test="tradeTimeUp != null and tradeTimeUp !=''">
+    	and 
   		trade_time &lt;= #{tradeTimeUp,jdbcType=TIMESTAMP}
   		and
   		trade_time &gt;= #{tradeTimeDown,jdbcType=TIMESTAMP}
     </if>
     <if test="barCode != null and barCode !=''">
-  		bar_code = #{barCode,jdbcType=VARCHAR}
+  		and bar_code = #{barCode,jdbcType=VARCHAR}
     </if>
     <if test="goodsName != null and goodsName !=''">
-  		goods_name = #{goodsName,jdbcType=VARCHAR}
+  		and goods_name = #{goodsName,jdbcType=VARCHAR}
     </if>
    </select>
    

@@ -45,6 +45,13 @@ public interface MemberService {
     MemberInfo queryMember(Long id);
 
     /**
+     * 根据关键字搜索会员
+     * @param keyword 会员号/姓名/手机号
+     * @return  结果不翻页
+     */
+    List<MemberInfo> search(String keyword);
+
+    /**
      * 分页查询会员信息
      */
     PageInfo<MemberInfo> queryList(MemberInfoQueryRequest request);

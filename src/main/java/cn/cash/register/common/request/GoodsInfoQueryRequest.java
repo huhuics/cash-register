@@ -10,7 +10,7 @@ public class GoodsInfoQueryRequest extends BasePageRequest {
     /** uid */
     private static final long serialVersionUID = -1971057422449400246L;
 
-    private boolean           goodsStatus;
+    private Boolean           goodsStatus;
 
     private String            goodsBrand;
 
@@ -20,22 +20,21 @@ public class GoodsInfoQueryRequest extends BasePageRequest {
 
     private String            goodsTag;
 
-    private String            barCode;
-
-    private String            goodsName;
-
-    private String            pinyinCode;
+    /**
+     * 条码/拼音码/商品名
+     */
+    private String            keyword;
 
     @Override
     public void validate() {
         super.validate();
     }
 
-    public boolean getGoodsStatus() {
+    public Boolean getGoodsStatus() {
         return goodsStatus;
     }
 
-    public void setGoodsStatus(boolean goodsStatus) {
+    public void setGoodsStatus(Boolean goodsStatus) {
         this.goodsStatus = goodsStatus;
     }
 
@@ -71,28 +70,12 @@ public class GoodsInfoQueryRequest extends BasePageRequest {
         this.goodsTag = goodsTag;
     }
 
-    public String getBarCode() {
-        return barCode;
+    public String getKeyword() {
+        return keyword;
     }
 
-    public void setBarCode(String barCode) {
-        this.barCode = barCode;
-    }
-
-    public String getGoodsName() {
-        return goodsName;
-    }
-
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
-    }
-
-    public String getPinyinCode() {
-        return pinyinCode;
-    }
-
-    public void setPinyinCode(String pinyinCode) {
-        this.pinyinCode = pinyinCode;
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
 }

@@ -49,6 +49,12 @@ public interface GoodsInfoService {
     GoodsInfo queryById(Long id);
 
     /**
+     * 根据条码/拼音码/商品名查询商品
+     * @return 结果不翻页
+     */
+    List<GoodsInfo> search(String keyword);
+
+    /**
      * 翻页查询
      */
     PageInfo<GoodsInfo> queryList(GoodsInfoQueryRequest request);
