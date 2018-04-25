@@ -55,7 +55,7 @@ public class GoodsTrafficServiceImpl implements GoodsTrafficService {
 
                 //查询并修改商品信息
                 GoodsInfo goodsInfo = goodsInfoService.queryById(request.getGoodsId());
-                updateGoodsInfo(goodsInfo, traffic);
+                inUpdateGoodsInfo(goodsInfo, traffic);
 
                 return trafficMapper.insertSelective(traffic);
             }
@@ -65,7 +65,17 @@ public class GoodsTrafficServiceImpl implements GoodsTrafficService {
     @Override
     public Long addOutTraffic(OutTrafficRequest request) {
         GoodsTraffic traffic = convert(request);
-        return null;
+        return txTemplate.execute(new TransactionCallback<Long>() {
+            @Override
+            public Long doInTransaction(TransactionStatus status) {
+
+                //查询并修改商品信息
+                GoodsInfo goodsInfo = goodsInfoService.queryById(request.getGoodsId());
+                outUpdateGoodsInfo(goodsInfo, traffic);
+
+                return trafficMapper.insertSelective(traffic);
+            }
+        });
     }
 
     @Override
@@ -84,14 +94,14 @@ public class GoodsTrafficServiceImpl implements GoodsTrafficService {
     }
 
     /**
-     * 修改商品信息属性值
+     * 进货--修改商品信息属性值
      */
-    private void updateGoodsInfo(GoodsInfo goodsInfo, GoodsTraffic traffic) {
+    private void inUpdateGoodsInfo(GoodsInfo goodsInfo, GoodsTraffic traffic) {
         //库存
         int inStock = goodsInfo.getGoodsStock() + traffic.getInCount();//实际进货库存
         int newTotalStock = inStock + traffic.getFreeCount();//实际总库存
 
-        //计算加权进货价 = ((原库存*原加权进货价)+(入库数*进货价))/实际进货库存
+        //新加权进货价 = ((原库存*原加权进货价)+(入库数*进货价))/实际进货库存
         Money newAvgPrice = ((goodsInfo.getAverageImportPrice().multiply(goodsInfo.getGoodsStock()))//
             .add((traffic.getInAmount().multiply(traffic.getInCount()))))//
                 .divide(inStock);
@@ -99,6 +109,22 @@ public class GoodsTrafficServiceImpl implements GoodsTrafficService {
         goodsInfo.setGoodsStock(newTotalStock);
         goodsInfo.setAverageImportPrice(newAvgPrice);
         goodsInfo.setLastImportPrice(traffic.getInAmount());
+
+        goodsInfoService.update(goodsInfo);
+    }
+
+    /**
+     * 出库--修改商品信息属性值
+     */
+    private void outUpdateGoodsInfo(GoodsInfo goodsInfo, GoodsTraffic traffic) {
+        //库存
+        int newTotalStock = goodsInfo.getGoodsStock() - traffic.getOutCount();
+
+        //新加权进货价 = 旧加权进货价 - (变动库存*(出货价 - 旧加权进货价)) / (原库存 - 变动库存)
+        Money newAvgPrice = goodsInfo.getAverageImportPrice().subtract((traffic.getOutAmount().subtract(goodsInfo.getAverageImportPrice())).multiply(traffic.getOutCount() / newTotalStock));
+
+        goodsInfo.setGoodsStock(newTotalStock);
+        goodsInfo.setAverageImportPrice(newAvgPrice);
 
         goodsInfoService.update(goodsInfo);
     }
