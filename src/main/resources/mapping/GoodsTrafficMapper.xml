@@ -316,9 +316,9 @@
     </if>
     <if test="createTimeUp != null and createTimeUp !=''">
     	and
-  		gmt_create &lt;= #{createTimeUp,jdbcType=TIMESTAMP}
+  		gmt_create &lt;= to_date(#{createTimeUp},'yyyy-MM-dd HH:mm:ss')
   		and
-  		gmt_create &gt;= #{createTimeDown,jdbcType=TIMESTAMP}
+  		gmt_create &gt;= to_date(#{createTimeDown},'yyyy-MM-dd HH:mm:ss')
     </if>
     
   </select>
