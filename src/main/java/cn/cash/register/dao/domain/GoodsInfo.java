@@ -6,7 +6,7 @@ import cn.cash.register.util.Money;
 
 public class GoodsInfo extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = 2950870970579595841L;
+    private static final long serialVersionUID = -8294630578526094875L;
 
     private Long              id;
 
@@ -40,7 +40,7 @@ public class GoodsInfo extends BaseDomain {
 
     private Integer           stockLowerLimit;
 
-    private Money             importPrice;
+    private Money             lastImportPrice;
 
     private Money             averageImportPrice;
 
@@ -208,12 +208,12 @@ public class GoodsInfo extends BaseDomain {
         this.stockLowerLimit = stockLowerLimit;
     }
 
-    public Money getImportPrice() {
-        return importPrice;
+    public Money getLastImportPrice() {
+        return lastImportPrice;
     }
 
-    public void setImportPrice(Money importPrice) {
-        this.importPrice = importPrice;
+    public void setLastImportPrice(Money lastImportPrice) {
+        this.lastImportPrice = lastImportPrice;
     }
 
     public Money getAverageImportPrice() {

@@ -10,7 +10,7 @@ public class GoodsInfoQueryRequest extends BasePageRequest {
     /** uid */
     private static final long serialVersionUID = -1971057422449400246L;
 
-    private boolean           goodsStatus;
+    private Boolean           goodsStatus;
 
     private String            goodsBrand;
 
@@ -30,11 +30,11 @@ public class GoodsInfoQueryRequest extends BasePageRequest {
         super.validate();
     }
 
-    public boolean getGoodsStatus() {
+    public Boolean getGoodsStatus() {
         return goodsStatus;
     }
 
-    public void setGoodsStatus(boolean goodsStatus) {
+    public void setGoodsStatus(Boolean goodsStatus) {
         this.goodsStatus = goodsStatus;
     }
 

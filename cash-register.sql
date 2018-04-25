@@ -98,7 +98,7 @@ CREATE TABLE `goods_info` (
   `quantity_unit` varchar(32) DEFAULT NULL COMMENT '库存单位。个，件，杯，瓶',
   `stock_upper_limit` int(11) DEFAULT NULL COMMENT '库存上限',
   `stock_lower_limit` int(11) DEFAULT NULL COMMENT '库存下限',
-  `import_price` int(11) NOT NULL COMMENT '进货价，单位：分',
+  `last_import_price` int(11) NOT NULL COMMENT '该商品最近一次进货价，单位：分',
   `average_import_price` int(11) NOT NULL COMMENT '加权平均进货价，页面进货价显示该值，单位：分',
   `sales_price` int(11) NOT NULL COMMENT '销售价，单位：分',
   `trade_price` int(11) DEFAULT NULL COMMENT '批发价，单位：分',
