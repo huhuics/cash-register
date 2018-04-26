@@ -83,6 +83,10 @@ public class GoodsInfoRequest extends BaseRequest {
 
     private String            remark;
 
+    private String            gmtUpdate;
+
+    private String            gmtCreate;
+
     @Override
     public void validate() {
         // TODO Auto-generated method stub
@@ -359,6 +363,22 @@ public class GoodsInfoRequest extends BaseRequest {
 
     public void setVipPrice(String vipPrice) {
         this.vipPrice = vipPrice;
+    }
+
+    public String getGmtUpdate() {
+        return gmtUpdate;
+    }
+
+    public void setGmtUpdate(String gmtUpdate) {
+        this.gmtUpdate = gmtUpdate;
+    }
+
+    public String getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(String gmtCreate) {
+        this.gmtCreate = gmtCreate;
     }
 
 }

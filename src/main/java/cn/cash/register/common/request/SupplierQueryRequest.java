@@ -14,15 +14,15 @@ public class SupplierQueryRequest extends BasePageRequest {
     /**  */
     private static final long serialVersionUID = -1595294356303845168L;
 
-    private boolean           status;
+    private Boolean           status;
 
     private String            supplierName;
 
-    public boolean isStatus() {
+    public Boolean isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

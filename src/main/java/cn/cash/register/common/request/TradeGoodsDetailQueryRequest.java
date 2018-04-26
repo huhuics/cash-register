@@ -4,8 +4,6 @@
  */
 package cn.cash.register.common.request;
 
-import java.util.Date;
-
 /**
  * 商品销售明细查询请求
  * @author HuHui
@@ -24,9 +22,9 @@ public class TradeGoodsDetailQueryRequest extends BasePageRequest {
 
     private String            goodsTag;
 
-    private Date              tradeTimeUp;
+    private String            tradeTimeUp;
 
-    private Date              tradeTimeDown;
+    private String            tradeTimeDown;
 
     private String            barCode;
 
@@ -64,22 +62,6 @@ public class TradeGoodsDetailQueryRequest extends BasePageRequest {
         this.goodsTag = goodsTag;
     }
 
-    public Date getTradeTimeUp() {
-        return tradeTimeUp;
-    }
-
-    public void setTradeTimeUp(Date tradeTimeUp) {
-        this.tradeTimeUp = tradeTimeUp;
-    }
-
-    public Date getTradeTimeDown() {
-        return tradeTimeDown;
-    }
-
-    public void setTradeTimeDown(Date tradeTimeDown) {
-        this.tradeTimeDown = tradeTimeDown;
-    }
-
     public String getBarCode() {
         return barCode;
     }
@@ -94,6 +76,22 @@ public class TradeGoodsDetailQueryRequest extends BasePageRequest {
 
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
+    }
+
+    public String getTradeTimeUp() {
+        return tradeTimeUp;
+    }
+
+    public void setTradeTimeUp(String tradeTimeUp) {
+        this.tradeTimeUp = tradeTimeUp;
+    }
+
+    public String getTradeTimeDown() {
+        return tradeTimeDown;
+    }
+
+    public void setTradeTimeDown(String tradeTimeDown) {
+        this.tradeTimeDown = tradeTimeDown;
     }
 
 }

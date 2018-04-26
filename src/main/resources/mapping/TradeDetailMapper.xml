@@ -246,11 +246,11 @@
     <if test="tradeType != null and tradeType !=''">
   		and trade_type = #{tradeType,jdbcType=VARCHAR}
     </if>
-    <if test="tradeTimeUp != null and tradeTimeUp !=''">
+    <if test="tradeTimeUp != null">
   		and
-  		trade_time &lt;= #{tradeTimeUp,jdbcType=TIMESTAMP}
+  		trade_time &lt;= to_date(#{tradeTimeUp},'yyyy-MM-dd HH:mm:ss')
   		and
-  		trade_time &gt;= #{tradeTimeDown,jdbcType=TIMESTAMP}
+  		trade_time &gt;= to_date(#{tradeTimeDown},'yyyy-MM-dd HH:mm:ss')
     </if>
     <if test="tradeNo != null and tradeNo !=''">
   		and trade_no = #{tradeNo,jdbcType=VARCHAR}
