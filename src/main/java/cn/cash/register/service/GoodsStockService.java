@@ -6,7 +6,11 @@ package cn.cash.register.service;
 
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
+
 import cn.cash.register.common.request.StockFlowQueryRequest;
+import cn.cash.register.common.request.StockWarningQueryRequest;
+import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.dao.domain.GoodsStockFlow;
 import cn.cash.register.enums.StockFlowTypeEnum;
 
@@ -32,5 +36,10 @@ public interface GoodsStockService {
      * 查询商品库存变动明细
      */
     List<GoodsStockFlow> query(StockFlowQueryRequest request);
+
+    /**
+     * 查询库存预警的商品
+     */
+    PageInfo<GoodsInfo> queryStockWarningGoods(StockWarningQueryRequest request);
 
 }

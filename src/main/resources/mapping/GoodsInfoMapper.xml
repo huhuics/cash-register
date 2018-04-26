@@ -499,4 +499,23 @@
     or goods_name like #{keyword,jdbcType=VARCHAR}"%"
     or pinyin_code like #{keyword,jdbcType=VARCHAR}"%"
   </select>
+  
+  <select id="queryByStock" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.StockWarningQueryRequest">
+ 	select 
+    <include refid="Base_Column_List" />
+    from goods_info where 1 = 1
+    <if test="categoryName != null and categoryName !=''">
+    	and category_name = #{categoryName,jdbcType=VARCHAR}
+    </if>
+    <if test="supplierName != null and supplierName !=''">
+    	and supplier_name = #{supplierName,jdbcType=VARCHAR}
+    </if>
+    <if test="warningType == 'over'.toString()">
+    	and goods_stock &gt; stock_upper_limit
+    </if>
+    <if test="warningType == 'less'.toString()">
+    	and goods_stock &lt; stock_lower_limit
+    </if>
+  </select>
+  
 </mapper>

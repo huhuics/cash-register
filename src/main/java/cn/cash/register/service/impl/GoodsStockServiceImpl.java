@@ -12,8 +12,14 @@ import javax.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 import cn.cash.register.common.request.StockFlowQueryRequest;
+import cn.cash.register.common.request.StockWarningQueryRequest;
+import cn.cash.register.dao.GoodsInfoMapper;
 import cn.cash.register.dao.GoodsStockFlowMapper;
+import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.dao.domain.GoodsStockFlow;
 import cn.cash.register.enums.StockFlowTypeEnum;
 import cn.cash.register.service.GoodsStockService;
@@ -28,6 +34,9 @@ public class GoodsStockServiceImpl implements GoodsStockService {
 
     @Resource
     private GoodsStockFlowMapper flowMapper;
+
+    @Resource
+    private GoodsInfoMapper      infoMapper;
 
     @Override
     public int record(String goodsName, String barCode, StockFlowTypeEnum type, int flowCount, String outBizNo) {
@@ -52,6 +61,16 @@ public class GoodsStockServiceImpl implements GoodsStockService {
 
         List<GoodsStockFlow> flows = flowMapper.list(request);
         return flows;
+    }
+
+    @Override
+    public PageInfo<GoodsInfo> queryStockWarningGoods(StockWarningQueryRequest request) {
+        PageHelper.startPage(request.getPageNum(), request.getPageSize());
+        PageHelper.orderBy(request.getSidx() + " " + request.getOrder());
+
+        List<GoodsInfo> list = infoMapper.queryByStock(request);
+
+        return new PageInfo<GoodsInfo>(list);
     }
 
 }

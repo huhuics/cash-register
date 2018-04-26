@@ -12,7 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageInfo;
+
 import cn.cash.register.common.request.StockFlowQueryRequest;
+import cn.cash.register.common.request.StockWarningQueryRequest;
+import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.dao.domain.GoodsStockFlow;
 import cn.cash.register.service.GoodsStockService;
 import cn.cash.register.util.ResultSet;
@@ -36,6 +40,16 @@ public class GoodsStockController {
     @RequestMapping(value = "/queryStockFlow")
     public ResultSet queryStockFlow(StockFlowQueryRequest request) {
         List<GoodsStockFlow> list = stockService.query(request);
+        return ResultSet.success().put("list", list);
+    }
+
+    /**
+     * 查询库存预警的商品
+     */
+    @ResponseBody
+    @RequestMapping(value = "/queryStockWarningGoods")
+    public ResultSet queryStockWarningGoods(StockWarningQueryRequest request) {
+        PageInfo<GoodsInfo> list = stockService.queryStockWarningGoods(request);
         return ResultSet.success().put("list", list);
     }
 
