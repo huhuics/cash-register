@@ -59,6 +59,29 @@ var vm = new Vue({
     		} else {
     			return null;
     		}
+    	},
+    	color_size_stock() {
+    		var ret = [];
+    		var colors = this.select_goods_colors;
+    		var sizes = this.select_goods_sizes;
+    		if (colors.length>0 && sizes.length>0) {
+    			for (var i = 0; i < colors.length; i++) {
+                    for (var j = 0; j < sizes.length; j++) {
+                        ret.push({'color':colors[i], 'size':sizes[j], 'stock':'0'});
+                    }
+                }
+    		} else if (colors.length>0) {
+    			for (var i = 0; i < colors.length; i++) {
+                    ret.push({'color':colors[i], 'size':'', 'stock':'0'});
+                }
+    		} else if (sizes.length>0) {
+    			for (var i = 0; i < sizes.length; i++) {
+                    ret.push({'color':'', 'size':sizes[i], 'stock':'0'});
+                }
+    		} else {
+    			
+    		}
+            return ret;
     	}
     },
     watch: {
@@ -131,22 +154,50 @@ var vm = new Vue({
                 content: jQuery("#goodsAddDiv"),
                 btn: ['提交', '取消'],
                 btn1: function(index) {
-                    $.ajax({
-                        url: basePath + "/admin/goods/addGoodsInfo",
-                        data: vm.goods,
-                        success: function(result) {
-                            if (result.code == "00") {
-                                layer.alert('添加成功');
-                                layer.close(index);
-                                vm.resetGoods();
-                                vm.select_goods_colors = [];
-                                vm.select_goods_sizes = [];
-                            } else {
-                                layer.alert(result.msg);
+                	if(!vm.switches.colorSize) { // 未选择颜色尺码
+                		$.ajax({
+                            url: basePath + "/admin/goods/addGoodsInfo",
+                            data: vm.goods,
+                            success: function(result) {
+                                if (result.code == "00") {
+                                    layer.alert('添加成功');
+                                    layer.close(index);
+                                    vm.resetGoods();
+                                    vm.select_goods_colors = [];
+                                    vm.select_goods_sizes = [];
+                                } else {
+                                    layer.alert(result.msg);
+                                }
+                                vm.reloadPage();
                             }
-                            vm.reloadPage();
-                        }
-                    });
+                        });
+                	} else { // 选择颜色尺码
+                		var num_success = 0;
+                		var num_failed = 0;
+                		var err_msg = '';
+                		var css = vm.color_size_stock;
+                		for(var i=0; i<css.length; i++) {
+                			vm.goods.goodsColor = css[i].color;
+                			vm.goods.goodsSize = css[i].size;
+                			vm.goods.goodsStock = css[i].stock;
+                			$.ajax({
+                				async: false,
+                                url: basePath + "/admin/goods/addGoodsInfo",
+                                data: vm.goods,
+                                success: function(result) {
+                                    if (result.code == "00") {
+                                    	num_success++;
+                                    } else {
+                                    	num_failed++;
+                                    	err_msg += vm.goods.goodsName + '创建失败[' + result.msg + ']';
+                                    }
+                                    
+                                }
+                            });
+                		}
+                		vm.reloadPage();
+                		layer.alert(num_success+'个商品创建成功,'+num_failed+'个商品创建失败.'+err_msg);
+                	}
                 }
             });
         },

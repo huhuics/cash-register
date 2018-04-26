@@ -16,16 +16,28 @@
     </form>
     <!-- 设置颜色尺码 -->
     <form class="form-horizontal layerForm" v-if="switches.colorSize">
-    	<h1>多颜色尺码库存还在开发中</h1>
-    	<table>
-    		<thead>
-    			<!-- <th v-for=""></th> -->
-    		</thead>
-    		<tbody>
-    		
-    		</tbody>
-    	</table>
-        
+    	<div class="form-group">
+            <div class="col-xs-4">
+                <span class="label label-primary">颜色</span>
+            </div>
+            <div class="col-xs-4">
+                <span class="label label-primary">尺码</span>
+            </div>
+            <div class="col-xs-4">
+                <span class="label label-default">库存</span>
+            </div>
+        </div>
+    	<div class="form-group" v-for="css in color_size_stock">
+            <div class="col-xs-4">
+            	<input type="text" class="form-control" v-model="css.color" readonly>
+            </div>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" v-model="css.size" readonly>
+            </div>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" v-model="css.stock" place-holder="库存">
+            </div>
+        </div>
     </form>
 </div>
 <!-- /编辑库存 -->
