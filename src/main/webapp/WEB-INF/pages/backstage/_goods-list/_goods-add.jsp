@@ -7,7 +7,7 @@
         <div class="form-group">
             <div class="col-xs-7">
             	<div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-exclamation"></i>&nbsp;状态</span>
+                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;状态</span>
                     <span class="input-group-addon">
                     	<input type="radio" v-model="goods.goodsStatus" value="true">启用
                     </span>
@@ -23,14 +23,14 @@
         <div class="form-group">
             <div class="col-xs-7">
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-exclamation"></i>&nbsp;条码</span>
+                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;条码</span>
                     <input type="text" class="form-control" v-model="goods.barCode">
                     <span class="input-group-btn"><button class="btn btn-success" type="button" @click="getBarCode">生成</button></span>
                 </div>
             </div>
             <div class="col-xs-5">
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-exclamation"></i>&nbsp;品名</span>
+                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;品名</span>
                     <input type="text" class="form-control" v-model="goods.goodsName">
                 </div>
             </div>
@@ -38,14 +38,14 @@
         <div class="form-group">
             <div class="col-xs-7">
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-exclamation"></i>&nbsp;货号</span>
+                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;货号</span>
                     <input type="text" class="form-control" v-model="goods.productNumber" id="productNumberInput">
                     <span class="input-group-addon"><input type="checkbox" v-model="switches.prodNumSame">和条码一致</span>
                 </div>
             </div>
             <div class="col-xs-5">
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-exclamation"></i>&nbsp;分类</span>
+                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;分类</span>
                     <input type="text" class="form-control" v-model="goods.categoryName">
                     <span class="input-group-btn"><button class="btn btn-primary" type="button" @click="_editGoodsCategory">选择</button></span>
                 </div>
@@ -62,7 +62,7 @@
             <div class="col-xs-5">
                 <div class="btn-group btn-group-justified" role="group">
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-default" @click="_editGoodsStock"><i class="fa fa-exclamation"></i>&nbsp;输入库存</button>
+                        <button type="button" class="btn btn-default" @click="_editGoodsStock"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;输入库存</button>
                     </div>
                 </div>
             </div>
@@ -70,14 +70,14 @@
         <div class="form-group">
             <div class="col-xs-7">
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-exclamation"></i>&nbsp;售价</span>
+                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;售价</span>
                     <input type="text" class="form-control" v-model="goods.salesPrice" placeholder="0.00">
                     <span class="input-group-addon">元</span>
                 </div>
             </div>
             <div class="col-xs-5">
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-exclamation"></i>&nbsp;进价</span>
+                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;进价</span>
                     <input type="text" class="form-control" v-model="goods.lastImportPrice" placeholder="0.00">
                     <span class="input-group-addon">元</span>
                 </div>

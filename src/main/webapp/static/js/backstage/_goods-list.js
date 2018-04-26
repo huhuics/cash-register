@@ -4,18 +4,12 @@
  * var-goods-entity.js
  * 请在文件同页面之前引用
  */
-$(function() {
-    $("#jqGrid").jqGrid(option);
-});
-
 var vm = new Vue({
     el: '#goodsListDiv',
     data: {
         q: {
-            barCode: null,
-            goodsName: null,
-            pinyinCode: null,
-            goodsStatus: true,
+        	keyword: null,
+            goodsStatus: '',
             categoryName: '',
             goodsBrand: '',
             supplierName: '',
@@ -108,15 +102,19 @@ var vm = new Vue({
         	this.reloadPage();
         },
         resetSearch: function() {
+        	this.q.goodsStatus = '';
+        	this.q.categoryName = '';
+        	this.q.goodsBrand = '';
+        	this.q.supplierName = '';
+        	this.q.goodsTag = '';
+        	this.q.keyword = null;
         	this.reloadPage();
         },
         reloadPage: function() {
             var page = $("#jqGrid").jqGrid('getGridParam', 'page');
             $("#jqGrid").jqGrid('setGridParam', {
                 postData: {
-                    'barCode': this.q.barCode,
-                    'goodsName': this.q.goodsName,
-                    'pinyinCode': this.q.pinyinCode,
+                    'keyword': this.q.keyword,
                     'goodsStatus': this.q.goodsStatus,
                     'categoryName': this.q.categoryName,
                     'goodsBrand': this.q.goodsBrand,
@@ -246,48 +244,12 @@ var vm = new Vue({
         		}
         	});
         },
-        _editGoodsStock: function() { // 编辑库存
-        	layer.open({
-                type: 1, skin: 'layui-layer-lan', title: "编辑库存", area: '650px', shadeClose: false,
-                content: jQuery("#goodsStockDiv"),
-                btn: ['确定']
-            });
-        },
-        _editGoodsColorSize: function() {
-        	layer.open({
-                type: 1, skin: 'layui-layer-lan', title: "编辑颜色尺码", area: '650px', shadeClose: false,
-                content: jQuery("#goodsColorSizeDiv"),
-                btn: ['确定']
-            });
-        },
-        _editGoodsUnit: function() {
-        	layer.open({
-        		type: 1, skin: 'layui-layer-lan', title: "选择单位", area: '350px', shadeClose: false,
-        		content: jQuery("#goodsUnitDiv"),
-        		btn: ['确定']
-        	});
-        },
-        _editGoodsBrand: function() {
-        	layer.open({
-        		type: 1, skin: 'layui-layer-lan', title: "选择品牌", area: '350px', shadeClose: false,
-        		content: jQuery("#goodsBrandDiv"),
-        		btn: ['确定']
-        	});
-        },
-        _editGoodsTag: function() {
-        	layer.open({
-        		type: 1, skin: 'layui-layer-lan', title: "选择标签", area: '350px', shadeClose: false,
-        		content: jQuery("#goodsTagDiv"),
-        		btn: ['确定']
-        	});
-        },
-        _editGoodsSupplier: function() {
-        	layer.open({
-        		type: 1, skin: 'layui-layer-lan', title: "选择供货商", area: '350px', shadeClose: false,
-        		content: jQuery("#goodsSupplierDiv"),
-        		btn: ['确定']
-        	});
-        },
+        _editGoodsStock: function() { layerOpen_skinlan_nobtn("编辑库存",'650px',"#goodsStockDiv"); },
+        _editGoodsColorSize: function() { layerOpen_skinlan_nobtn("编辑颜色尺码",'650px',"#goodsColorSizeDiv"); },
+        _editGoodsUnit: function() { layerOpen_skinlan_nobtn("选择单位",'350px',"#goodsUnitDiv"); },
+        _editGoodsBrand: function() { layerOpen_skinlan_nobtn("选择品牌",'350px',"#goodsBrandDiv"); },
+        _editGoodsTag: function() { layerOpen_skinlan_nobtn("选择标签",'350px',"#goodsTagDiv"); },
+        _editGoodsSupplier: function() { layerOpen_skinlan_nobtn("选择供货商",'350px',"#goodsSupplierDiv"); },
         _editGoodsCategory: function() {
         	layer.alert('暂不支持分类管理，请手动输入分类');
         },
@@ -560,4 +522,8 @@ var vm = new Vue({
     	this.loadGoodsColors();
     	this.loadGoodsSizes();
     }
+});
+
+$(function() {
+    $("#jqGrid").jqGrid(option);
 });

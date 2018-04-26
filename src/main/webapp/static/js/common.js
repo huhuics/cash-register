@@ -43,6 +43,13 @@ window.confirm = function(msg, callback) {
         });
 }
 
+function layerOpen_skinlan_nobtn(title, area, id) {
+	layer.open({
+		type: 1, skin: 'layui-layer-lan', title: title, area: area, shadeClose: false,
+		content: jQuery(id)
+	});
+}
+
 //选择一条记录
 function getSelectedRow() {
     var grid = $("#jqGrid");
