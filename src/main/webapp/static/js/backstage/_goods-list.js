@@ -196,6 +196,7 @@ var vm = new Vue({
                             });
                 		}
                 		vm.reloadPage();
+                		layer.close(index);
                 		layer.alert(num_success+'个商品创建成功,'+num_failed+'个商品创建失败.'+err_msg);
                 	}
                 }
@@ -246,6 +247,9 @@ var vm = new Vue({
                 }
             });
 
+        },
+        batchUpdate: function() {
+        	// TODO
         },
         del: function() {
         	var goodsIds = getSelectedRows();
@@ -446,6 +450,12 @@ var vm = new Vue({
         },
         resetGoods: function() {
         	this.goods = cloneJsonObj(goods_entity);
+        	this.select_goods_tags = [];
+        	this.select_goods_colors = [];
+        	this.select_goods_sizes = [];
+        	this.switches.displayImageUpload = false;
+        	this.switches.colorSize = false;
+        	this.switches.prodNumSame = false;
         },
         resetGoodsColor: function() {
         	this.goodsColor = cloneJsonObj(goodsColor_entity);
