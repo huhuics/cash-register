@@ -53,7 +53,7 @@
         </div>
         <div class="form-group">
         	<div class="col-xs-7">
-            	<div class="input-group">
+            	<div class="input-group" v-if="goods.id==null">
                     <span class="input-group-addon"><input type="checkbox" v-model="switches.colorSize"></span>
                     <input type="text" class="form-control" readonly placeholder="未开启颜色尺码选择开关" :value="select_color_size">
                     <span class="input-group-btn"><button id="colorSizeBtn" class="btn btn-primary" type="button" @click="_editGoodsColorSize" disabled>选择颜色尺码</button></span>

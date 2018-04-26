@@ -15,12 +15,12 @@ var option = {
 		label : '条码',
 		name : 'barCode',
 		index : 'bar_Code',
-		width : 100
+		width : 150
 	}, {
 		label : '货号',
 		name : 'productNumber',
 		index : 'product_Number',
-		width : 80
+		width : 150
 	}, {
 		label : '拼音码',
 		name : 'pinyinCode',
@@ -43,29 +43,52 @@ var option = {
 		width : 60
 	}, {
 		label : '进货价',
-		name : 'importPrice',
+		name : 'importPrice.amount',
 		index : 'import_Price',
-		width : 80
+		width : 80,
+        formatter: "number",
+        formatoptions: {
+            thousandsSeparator: ','
+        }
 	}, {
 		label : '销售价',
-		name : 'salesPrice',
+		name : 'salesPrice.amount',
 		index : 'sales_Price',
-		width : 80
+		width : 80,
+        formatter: "number",
+        formatoptions: {
+            thousandsSeparator: ','
+        }
 	}, {
 		label : '批发价',
-		name : 'tradePrice',
+		name : 'tradePrice.amount',
 		index : 'trade_Price',
-		width : 80
+		width : 80,
+        formatter: "number",
+        formatoptions: {
+            thousandsSeparator: ','
+        }
 	}, {
 		label : '会员价',
-		name : 'vipPrice',
+		name : 'vipPrice.amount',
 		index : 'vip_Price',
-		width : 80
+		width : 80,
+        formatter: "number",
+        formatoptions: {
+            thousandsSeparator: ','
+        }
 	}, {
 		label : '会员折扣',
 		name : 'isVipDiscount',
 		index : 'is_Vip_Discount',
-		width : 80
+		width : 80,
+		formatter: function(value, options, row) {
+            if (value) {
+                return '是';
+            } else {
+            	return '否';
+            }
+        }
 	}, {
 		label : '供货商',
 		name : 'supplierName',
@@ -85,7 +108,12 @@ var option = {
 		label : '创建日期',
 		name : 'gmtCreate',
 		index : 'gmt_Create',
-		width : 100
+		width : 120,
+        formatter: "date",
+        formatoptions: {
+            srcformat: 'Y-m-d',
+            newformat: 'Y-m-d'
+        }
 	} ],
 	viewrecords : true,
 	height : "500",

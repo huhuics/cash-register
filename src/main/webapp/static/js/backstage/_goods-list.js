@@ -153,12 +153,74 @@ var vm = new Vue({
             });
         },
         update: function() {
+        	var goodsId = getSelectedRow();
+        	if (isBlank(goodsId)) {
+                return;
+            }
         	this.resetGoods();
+        	$.ajax({
+                url: basePath + "/admin/goods/queryGoodsInfoById",
+                data: {
+                    'goodsInfoId': goodsId
+                },
+                success: function(result) {
+                    if (result.code == "00") {
+                        vm.goods = result.goodsInfo;
+                        vm.goods.salesPrice = result.goodsInfo.salesPrice.amount;
+                        vm.goods.lastImportPrice = result.goodsInfo.lastImportPrice.amount;
+                        vm.goods.vipPrice = result.goodsInfo.vipPrice==null?null:result.goodsInfo.vipPrice.amount;
+                        vm.goods.tradePrice = result.goodsInfo.tradePrice.amount;
+                        if(!isBlank(vm.goods.goodsTag)) {
+                        	vm.select_goods_tags = vm.goods.goodsTag.split(',');
+                        }
+                        layer.open({
+                        	type: 1, skin: 'layui-layer-lan', title: "编辑商品", area: '650px', shadeClose: false,
+                            content: jQuery("#goodsAddDiv"),
+                            btn: ['提交', '取消'],
+                            btn1: function(index) {
+                                $.ajax({
+                                    url: basePath + "/admin/goods/updateGoodsInfo",
+                                    data: vm.goods,
+                                    success: function(result) {
+                                        if (result.code == "00") {
+                                            layer.alert('操作成功');
+                                            layer.close(index);
+                                        } else {
+                                            layer.alert(result.msg);
+                                        }
+                                        vm.reloadPage();
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        layer.alert("获取商品信息失败:" + result.msg);
+                    }
+                }
+            });
 
         },
         del: function() {
-        	this.resetGoods();
-        	
+        	var goodsIds = getSelectedRows();
+        	if (isBlank(goodsIds) || goodsIds.length < 1) {
+                return;
+            }
+        	confirm("确定删除这" + goodsIds.length + "个商品吗?", function() {
+                $.ajax({
+                    url: basePath + "/admin/goods/deleteGoodsInfo",
+                    data: {
+                        'ids': goodsIds
+                    },
+                    success: function(result) {
+                        if (result.code == "00") {
+                            layer.alert('删除成功');
+                            vm.reload();
+                        } else {
+                            layer.alert(result.msg);
+                        }
+                    }
+                });
+            });
         },
         importGoods: function() {},
         exportGoods: function() {},
