@@ -17,6 +17,8 @@ var basePath = getRootPath_web();
 //全局配置
 $.ajaxSetup({
     dataType: "json",
+    type: "POST",
+    contentType : "application/x-www-form-urlencoded; charset=UTF-8",
     cache: false
 });
 
@@ -93,7 +95,7 @@ function getSelectedRows() {
     var grid = $("#jqGrid");
     var rowKey = grid.getGridParam("selrow");
     if (!rowKey) {
-        alert("请选择一条记录");
+        alert("请至少选择一条记录");
         return;
     }
 
@@ -103,4 +105,9 @@ function getSelectedRows() {
 //判断是否为空
 function isBlank(value) {
     return !value || !/\S/.test(value)
+}
+
+//克隆JSON对象
+function cloneJsonObj(obj) {
+	return JSON.parse(JSON.stringify(obj));
 }
