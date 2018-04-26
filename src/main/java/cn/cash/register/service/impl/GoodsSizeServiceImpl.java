@@ -4,7 +4,6 @@
  */
 package cn.cash.register.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,10 +46,9 @@ public class GoodsSizeServiceImpl implements GoodsSizeService {
     public List<GoodsSize> queryAll() {
         LogUtil.info(logger, "收到查询所有商品尺寸请求");
 
-        List<GoodsSize> sizes = new ArrayList<>();
-        sizes.addAll(sizeMapper.selectAll());
+        List<GoodsSize> sizes = sizeMapper.selectAll();
 
-        LogUtil.info(logger, "商品尺寸查询结果,数量:{0}", sizes.size());
+        LogUtil.info(logger, "商品尺寸查询结果,sizes={0}", sizes);
 
         return sizes;
     }

@@ -4,8 +4,6 @@
  */
 package cn.cash.register.common.request;
 
-import java.util.Date;
-
 /**
  * 货流分页查询请求类
  * @author HuHui
@@ -18,9 +16,9 @@ public class GoodsTrafficQueryRequest extends BasePageRequest {
 
     private String            trafficType;
 
-    private Date              createTimeUp;
+    private String            createTimeUp;
 
-    private Date              createTimeDown;
+    private String            createTimeDown;
 
     private String            trafficNo;
 
@@ -40,19 +38,19 @@ public class GoodsTrafficQueryRequest extends BasePageRequest {
         this.trafficNo = trafficNo;
     }
 
-    public Date getCreateTimeUp() {
+    public String getCreateTimeUp() {
         return createTimeUp;
     }
 
-    public void setCreateTimeUp(Date createTimeUp) {
+    public void setCreateTimeUp(String createTimeUp) {
         this.createTimeUp = createTimeUp;
     }
 
-    public Date getCreateTimeDown() {
+    public String getCreateTimeDown() {
         return createTimeDown;
     }
 
-    public void setCreateTimeDown(Date createTimeDown) {
+    public void setCreateTimeDown(String createTimeDown) {
         this.createTimeDown = createTimeDown;
     }
 

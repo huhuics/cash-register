@@ -18,7 +18,7 @@ public class MemberInfoQueryRequest extends BasePageRequest {
 
     private String            shopperName;
 
-    private boolean           status;
+    private Boolean           status;
 
     /**
      * 会员号/姓名/手机号
@@ -41,11 +41,11 @@ public class MemberInfoQueryRequest extends BasePageRequest {
         this.shopperName = shopperName;
     }
 
-    public boolean isStatus() {
+    public Boolean isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

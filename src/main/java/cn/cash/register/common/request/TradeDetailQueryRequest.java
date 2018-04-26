@@ -4,8 +4,6 @@
  */
 package cn.cash.register.common.request;
 
-import java.util.Date;
-
 /**
  * 销售单据分页查询请求类
  * @author HuHui
@@ -23,10 +21,10 @@ public class TradeDetailQueryRequest extends BasePageRequest {
     private String            tradeType;
 
     /** 时间上限 */
-    private Date              tradeTimeUp;
+    private String            tradeTimeUp;
 
     /** 时间下限 */
-    private Date              tradeTimeDown;
+    private String            tradeTimeDown;
 
     private String            tradeNo;
 
@@ -54,19 +52,19 @@ public class TradeDetailQueryRequest extends BasePageRequest {
         this.tradeType = tradeType;
     }
 
-    public Date getTradeTimeUp() {
+    public String getTradeTimeUp() {
         return tradeTimeUp;
     }
 
-    public void setTradeTimeUp(Date tradeTimeUp) {
+    public void setTradeTimeUp(String tradeTimeUp) {
         this.tradeTimeUp = tradeTimeUp;
     }
 
-    public Date getTradeTimeDown() {
+    public String getTradeTimeDown() {
         return tradeTimeDown;
     }
 
-    public void setTradeTimeDown(Date tradeTimeDown) {
+    public void setTradeTimeDown(String tradeTimeDown) {
         this.tradeTimeDown = tradeTimeDown;
     }
 

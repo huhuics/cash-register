@@ -18,13 +18,13 @@ public class GoodsItem extends BaseDomain {
 
     private String            goodsName;
 
-    private int               goodsDiscount;
+    private Integer           goodsDiscount;
 
     /***********收银时以下字段为正;退款/反结账时以下字段为负************/
 
     private String            totalAmount;
 
-    private int               goodsCount;
+    private Integer           goodsCount;
 
     private String            totalActualAmount;
 
@@ -38,19 +38,19 @@ public class GoodsItem extends BaseDomain {
         this.goodsId = goodsId;
     }
 
-    public int getGoodsDiscount() {
+    public Integer getGoodsDiscount() {
         return goodsDiscount;
     }
 
-    public void setGoodsDiscount(int goodsDiscount) {
+    public void setGoodsDiscount(Integer goodsDiscount) {
         this.goodsDiscount = goodsDiscount;
     }
 
-    public int getGoodsCount() {
+    public Integer getGoodsCount() {
         return goodsCount;
     }
 
-    public void setGoodsCount(int goodsCount) {
+    public void setGoodsCount(Integer goodsCount) {
         this.goodsCount = goodsCount;
     }
 

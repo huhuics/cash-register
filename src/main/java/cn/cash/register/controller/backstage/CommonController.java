@@ -24,7 +24,7 @@ import cn.cash.register.util.ResultSet;
 @RequestMapping("/")
 public class CommonController {
 
-    private static final Logger logger = LoggerFactory.getLogger(GoodsController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CommonController.class);
 
     /**
      * 后端首页
