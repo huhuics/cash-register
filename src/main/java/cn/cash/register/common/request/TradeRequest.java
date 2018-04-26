@@ -4,7 +4,7 @@
  */
 package cn.cash.register.common.request;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -20,41 +20,25 @@ import cn.cash.register.util.AssertUtil;
 public class TradeRequest extends BaseRequest {
 
     /**  */
-    private static final long serialVersionUID = -7864023113538102948L;
+    private static final long    serialVersionUID = -7864023113538102948L;
 
-    private List<GoodsItem>   goodsItems;
+    private ArrayList<GoodsItem> goodsItems;
 
-    private List<PayChenal>   payChenals;
+    private ArrayList<PayChenal> payChenals;
 
-    private Long              memberId;
+    private Long                 memberId;
 
-    private String            memberName;
+    private String               memberName;
 
-    private String            sellerNo;
+    private String               sellerNo;
 
-    private String            shopperNo;
+    private String               shopperNo;
 
     @Override
     public void validate() {
         AssertUtil.assertNotBlank(sellerNo, "收银员编号不能为空");
         AssertUtil.assertTrue(CollectionUtils.isNotEmpty(goodsItems), "收银商品不能为空");
         AssertUtil.assertTrue(CollectionUtils.isNotEmpty(payChenals), "支付方式不能为空");
-    }
-
-    public List<GoodsItem> getGoodsItems() {
-        return goodsItems;
-    }
-
-    public void setGoodsItems(List<GoodsItem> goodsItems) {
-        this.goodsItems = goodsItems;
-    }
-
-    public List<PayChenal> getPayChenals() {
-        return payChenals;
-    }
-
-    public void setPayChenals(List<PayChenal> payChenals) {
-        this.payChenals = payChenals;
     }
 
     public String getSellerNo() {
@@ -87,6 +71,22 @@ public class TradeRequest extends BaseRequest {
 
     public void setMemberId(Long memberId) {
         this.memberId = memberId;
+    }
+
+    public ArrayList<GoodsItem> getGoodsItems() {
+        return goodsItems;
+    }
+
+    public void setGoodsItems(ArrayList<GoodsItem> goodsItems) {
+        this.goodsItems = goodsItems;
+    }
+
+    public ArrayList<PayChenal> getPayChenals() {
+        return payChenals;
+    }
+
+    public void setPayChenals(ArrayList<PayChenal> payChenals) {
+        this.payChenals = payChenals;
     }
 
 }

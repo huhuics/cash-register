@@ -18,13 +18,13 @@ import cn.cash.register.service.GoodsStockService;
 import cn.cash.register.util.ResultSet;
 
 /**
- * 商品库存变动明细Controller
+ * 商品库存相关Controller
  * @author HuHui
  * @version $Id: GoodsStockFlowController.java, v 0.1 2018年4月26日 上午11:45:00 HuHui Exp $
  */
 @Controller
-@RequestMapping("/admin/stockFlow")
-public class GoodsStockFlowController {
+@RequestMapping("/admin/stock")
+public class GoodsStockController {
 
     @Resource
     private GoodsStockService stockService;
@@ -33,8 +33,8 @@ public class GoodsStockFlowController {
      * 查询商品库存变动明细
      */
     @ResponseBody
-    @RequestMapping(value = "/query")
-    public ResultSet query(StockFlowQueryRequest request) {
+    @RequestMapping(value = "/queryStockFlow")
+    public ResultSet queryStockFlow(StockFlowQueryRequest request) {
         List<GoodsStockFlow> list = stockService.query(request);
         return ResultSet.success().put("list", list);
     }

@@ -26,9 +26,11 @@ CREATE TABLE `goods_brand` (
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_brand` */
+
+insert  into `goods_brand`(`id`,`brand_name`,`gmt_update`,`gmt_create`) values (1,'优衣库','2018-04-26 15:19:54','2018-04-26 15:19:39');
 
 /*Table structure for table `goods_category` */
 
@@ -57,7 +59,7 @@ CREATE TABLE `goods_color` (
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_color` */
 
@@ -123,11 +125,44 @@ CREATE TABLE `goods_info` (
   KEY `IDX_PINYIN_CODE` (`pinyin_code`),
   KEY `IDX_GOODS_NAME` (`goods_name`),
   KEY `IDX_GOODS_TAG` (`goods_tag`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_info` */
 
-insert  into `goods_info`(`id`,`goods_image_id`,`goods_name`,`bar_code`,`product_number`,`pinyin_code`,`category_name`,`goods_status`,`goods_brand`,`goods_color`,`goods_size`,`goods_tag`,`goods_stock`,`quantity_unit`,`stock_upper_limit`,`stock_lower_limit`,`last_import_price`,`average_import_price`,`sales_price`,`trade_price`,`vip_price`,`is_vip_discount`,`supplier_name`,`production_date`,`quality_guarantee_period`,`is_integral`,`royalty_type`,`is_booked`,`is_gift`,`is_weigh`,`is_fixed_price`,`is_timeing_price`,`is_hidden`,`remark`,`gmt_update`,`gmt_create`) values (1,NULL,'测试','20180425211249395','20180425211249395','cs','测试',1,'','','','',10,'',1000,0,5000,5000,10000,7000,NULL,1,'','2018-04-25',100,0,'',0,0,0,0,0,0,'备注','2018-04-25 21:14:08','2018-04-25 21:13:54'),(2,NULL,'cs','20180425225119244','20180425225119244','cs','cs',1,'','','','',15,'',0,10,1000,1000,1000,1000,NULL,1,'','2018-04-25',10,0,'',0,0,0,0,0,0,'','2018-04-25 22:52:29','2018-04-25 22:52:15');
+insert  into `goods_info`(`id`,`goods_image_id`,`goods_name`,`bar_code`,`product_number`,`pinyin_code`,`category_name`,`goods_status`,`goods_brand`,`goods_color`,`goods_size`,`goods_tag`,`goods_stock`,`quantity_unit`,`stock_upper_limit`,`stock_lower_limit`,`last_import_price`,`average_import_price`,`sales_price`,`trade_price`,`vip_price`,`is_vip_discount`,`supplier_name`,`production_date`,`quality_guarantee_period`,`is_integral`,`royalty_type`,`is_booked`,`is_gift`,`is_weigh`,`is_fixed_price`,`is_timeing_price`,`is_hidden`,`remark`,`gmt_update`,`gmt_create`) values (1,NULL,'测试','20180425211249395','20180425211249395','cs','测试',1,'','','','',10,'',1000,0,5000,5000,10000,7000,NULL,1,'','2018-04-25',100,0,'',0,0,0,0,0,0,'备注','2018-04-25 21:14:08','2018-04-25 21:13:54'),(2,NULL,'cs','20180425225119244','20180425225119244','cs','cs',1,'','','','',15,'',0,10,1000,1000,1000,1000,NULL,1,'','2018-04-25',10,0,'',0,0,0,0,0,0,'','2018-04-25 22:52:29','2018-04-25 22:52:15'),(3,NULL,'中文','20180426154741060','20180426154741060','ss','中文',1,'优衣库','','','tag1',100,'条',10,0,5000,5000,10000,5000,NULL,1,'优衣库','2018-04-26',5,0,'',0,0,0,0,0,0,'','2018-04-26 17:25:07','2018-04-26 17:24:52'),(4,NULL,'1','20180426160319770','20180426160319770','','1',0,'','','','',1,'条',NULL,NULL,100,100,100,100,NULL,1,'','',NULL,0,'',0,0,0,0,0,0,'','2018-04-26 18:51:51','2018-04-26 18:51:35'),(5,NULL,'中文测试','20180426160938522','20180426160938522','','中文测试',1,'优衣库','','','tag1,中文测试',1,'条',1,1,100,100,100,100,NULL,1,'优衣库','1',1,0,'',0,0,0,0,0,0,'中文测试','2018-04-26 16:10:57','2018-04-26 16:10:41');
+
+/*Table structure for table `goods_lose_info` */
+
+DROP TABLE IF EXISTS `goods_lose_info`;
+
+CREATE TABLE `goods_lose_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `shop_name` varchar(128) DEFAULT NULL COMMENT '报损门店',
+  `goods_detail` varchar(2048) DEFAULT NULL COMMENT '报损商品信息详情',
+  `total_lose_amount` int(11) NOT NULL COMMENT '报损金额。单位：分',
+  `turnover_percent` double DEFAULT NULL COMMENT '预留，营业额占比',
+  `operator_no` varchar(32) DEFAULT NULL COMMENT '操作员编号',
+  `remark` varchar(512) DEFAULT NULL COMMENT '备注',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品报损表';
+
+/*Data for the table `goods_lose_info` */
+
+/*Table structure for table `goods_lose_reason` */
+
+DROP TABLE IF EXISTS `goods_lose_reason`;
+
+CREATE TABLE `goods_lose_reason` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `reason` varchar(128) DEFAULT NULL COMMENT '报损原因',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `goods_lose_reason` */
 
 /*Table structure for table `goods_quantity_unit` */
 
@@ -139,9 +174,11 @@ CREATE TABLE `goods_quantity_unit` (
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_quantity_unit` */
+
+insert  into `goods_quantity_unit`(`id`,`unit_name`,`gmt_update`,`gmt_create`) values (1,'条','2018-04-26 15:02:09','2018-04-26 15:01:53'),(2,'件','2018-04-26 15:02:14','2018-04-26 15:01:59');
 
 /*Table structure for table `goods_size` */
 
@@ -153,9 +190,11 @@ CREATE TABLE `goods_size` (
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_size` */
+
+insert  into `goods_size`(`id`,`size_name`,`gmt_update`,`gmt_create`) values (1,'XS','2018-04-26 14:28:35','2018-04-26 14:28:20');
 
 /*Table structure for table `goods_stock_flow` */
 
@@ -189,9 +228,11 @@ CREATE TABLE `goods_tag` (
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_tag` */
+
+insert  into `goods_tag`(`id`,`tag_name`,`gmt_update`,`gmt_create`) values (1,'tag1','2018-04-26 15:20:18','2018-04-26 15:20:02');
 
 /*Table structure for table `goods_traffic` */
 

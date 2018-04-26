@@ -4,6 +4,7 @@
  */
 package cn.cash.register.controller.backstage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -83,7 +84,7 @@ public class GoodsInfoController {
      */
     @ResponseBody
     @RequestMapping(value = "/deleteGoodsInfo")
-    public void deleteGoodsInfo(List<Long> ids) {
+    public void deleteGoodsInfo(ArrayList<Long> ids) {
         goodsInfoService.delete(ids);
     }
 
@@ -119,7 +120,7 @@ public class GoodsInfoController {
      */
     @ResponseBody
     @RequestMapping(value = "/batchUpdate")
-    public void batchUpdate(List<Long> goodsIds, String newValue, String filedEnumCode) {
+    public void batchUpdate(ArrayList<Long> goodsIds, String newValue, String filedEnumCode) {
         goodsInfoService.batchUpdate(goodsIds, newValue, filedEnumCode);
     }
 
