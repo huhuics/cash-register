@@ -14,6 +14,7 @@
             <div class="grid-btn">
                 <div class="form-group col-xs-2">
                     <select class="form-control" v-model="q.goodsStatus" data-live-search="true">
+                        <option value="">全部状态</option>
                         <option value="true">启用</option>
                         <option value="false">禁用</option>
                     </select>
@@ -39,22 +40,16 @@
                 <div class="form-group col-xs-2">
                     <select class="form-control" v-model="q.supplierName" data-live-search="true">
                         <option value="">供货商</option>
-                        <option v-for="supplier in goods_suppliers" :value="supplier.name">{{supplier.name}}</option>
+                        <option v-for="supplier in goods_suppliers" :value="supplier">{{supplier}}</option>
                     </select>
                 </div>
                 <div class="clearfix"></div>
-                <div class="form-group col-xs-2">
-                    <input type="text" class="form-control" v-model="q.barCode" @keyup.enter="search" placeholder="条码">
+                <div class="form-group col-xs-3">
+                    <input type="text" class="form-control" v-model="q.keyword" @keyup.enter="search" placeholder="条码/拼音码/商品名">
                 </div>
-                <div class="form-group col-xs-2">
-                    <input type="text" class="form-control" v-model="q.goodsName" @keyup.enter="search" placeholder="名称">
-                </div>
-                <div class="form-group col-xs-2">
-                    <input type="text" class="form-control" v-model="q.pinyinCode" @keyup.enter="search" placeholder="拼音码">
-                </div>
-                <div class="form-group col-xs-3 pull-right">
-                    <a class="btn btn-default pull-right" @click="search"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                    <a class="btn btn-default pull-right" @click="resetSearch"><i class="fa fa-undo"></i>&nbsp;刷新</a>
+                <div class="form-group col-xs-4">
+                    <a class="btn btn-default" @click="search"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                    <a class="btn btn-default" @click="resetSearch"><i class="fa fa-undo"></i>&nbsp;刷新</a>
                 </div>
                 <div class="clearfix"></div>
                 <div class="pull-right">
