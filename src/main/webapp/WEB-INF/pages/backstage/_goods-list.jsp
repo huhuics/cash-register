@@ -74,6 +74,8 @@
         <%@ include file="./_goods-list/_goods-add.jsp"%>
     </div>
     
+    <script src="${ctx}/static/js/backstage/_goods-list/var-jqGrid-option.js"></script>
+    <script src="${ctx}/static/js/backstage/_goods-list/var-goods-entity.js"></script>
     <script src="${ctx}/static/js/backstage/_goods-list.js"></script>
     
 </body>

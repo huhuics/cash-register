@@ -1,139 +1,14 @@
+/*
+ * 本文件依赖：
+ * var-jqGrid-option.js
+ * var-goods-entity.js
+ * 请在文件同页面之前引用
+ */
 $(function() {
-    $("#jqGrid")
-        .jqGrid({
-            url: basePath + '/admin/goods/goodsInfoList',
-            datatype: "json",
-            colModel: [{
-                    label: '商品ID',
-                    name: 'id',
-                    hidden: true,
-                    key: true
-                },
-                {
-                    label: '商品名称',
-                    name: 'goodsName',
-                    index: 'goods_Name',
-                    width: 150
-                },
-                {
-                    label: '条码',
-                    name: 'barCode',
-                    index: 'bar_Code',
-                    width: 100
-                },
-                {
-                    label: '货号',
-                    name: 'productNumber',
-                    index: 'product_Number',
-                    width: 80
-                },
-                {
-                    label: '拼音码',
-                    name: 'pinyinCode',
-                    index: 'pinyin_Code',
-                    width: 80
-                },
-                {
-                    label: '分类',
-                    name: 'categoryName',
-                    index: 'category_Name',
-                    width: 80
-                },
-                {
-                    label: '库存',
-                    name: 'goodsStock',
-                    index: 'goods_Stock',
-                    width: 60
-                },
-                {
-                    label: '主单位',
-                    name: 'quantityUnit',
-                    index: 'quantity_Unit',
-                    width: 60
-                },
-                {
-                    label: '进货价',
-                    name: 'importPrice',
-                    index: 'import_Price',
-                    width: 80
-                },
-                {
-                    label: '销售价',
-                    name: 'salesPrice',
-                    index: 'sales_Price',
-                    width: 80
-                },
-                {
-                    label: '批发价',
-                    name: 'tradePrice',
-                    index: 'trade_Price',
-                    width: 80
-                },
-                {
-                    label: '会员价',
-                    name: 'vipPrice',
-                    index: 'vip_Price',
-                    width: 80
-                },
-                {
-                    label: '会员折扣',
-                    name: 'isVipDiscount',
-                    index: 'is_Vip_Discount',
-                    width: 80
-                },
-                {
-                    label: '供货商',
-                    name: 'supplierName',
-                    index: 'supplier_Name',
-                    width: 100
-                },
-                {
-                    label: '生产日期',
-                    name: 'productionDate',
-                    index: 'production_Date',
-                    width: 100
-                },
-                {
-                    label: '保质期',
-                    name: 'qualityGuaranteePeriod',
-                    index: 'quality_Guarantee_Period',
-                    width: 100
-                },
-                {
-                    label: '创建日期',
-                    name: 'gmtCreate',
-                    index: 'gmt_Create',
-                    width: 100
-                }
-            ],
-            viewrecords: true,
-            height: "500",
-            width: "100%",
-            shrinkToFit: false,
-            rowNum: 10,
-            rowList: [10, 30, 50],
-            rownumbers: true,
-            rownumWidth: 45,
-            autowidth: true,
-            multiselect: true,
-            sortname: "gmt_Update",
-            sortorder: "desc",
-            pager: "#jqGridPager",
-            jsonReader: {
-                root: "page.list",
-                page: "page.pageNum",
-                total: "page.pages",
-                records: "page.total"
-            },
-            prmNames: {
-                page: "pageNum",
-                rows: "pageSize",
-                order: "order"
-            }
-        });
+    $("#jqGrid").jqGrid(option);
 });
 
-var vm_goodsListDiv = new Vue({
+var vm = new Vue({
     el: '#goodsListDiv',
     data: {
         q: {
@@ -153,121 +28,20 @@ var vm_goodsListDiv = new Vue({
         goods_units: [], // 全部单位
         goods_colors: [], // 全部颜色
         goods_sizes: [], // 全部尺码
-        // --------add---------
-        selected: { // 所勾选的
-        	goods_category: [], // 分类
-            goods_brand: [], // 品牌
-            goods_supplier: [], // 供货商
-            goods_tags: [], // 标签
-            goods_units: [], // 单位
-            goods_colors: [], // 颜色
-            goods_sizes: [], // 尺码
-        },
+    	select_goods_tags: [], // 所选择的标签
+    	select_goods_colors: [], // 所选择的颜色
+    	select_goods_sizes: [], // 所选择的尺码
         switches: {
         	displayImageUpload: false, // 显示图片上传框开关(仅编辑时显示)
             colorSize: false, // 颜色尺码开关
             prodNumSame: false, // 货号和条码一致开关
         },
-		goods: { // 商品实体
-        	id: null,
-        	goodsImageId: null,
-        	goodsName: null,
-        	barCode: null,
-        	productNumber: null,
-        	pinyinCode: null,
-        	categoryName: null,
-        	goodsStatus: true, // 默认启用
-        	goodsBrand: null,
-        	goodsColor: null,
-        	goodsSize: null,
-        	goodsTag: null,
-        	goodsStock: null,
-        	quantityUnit: null,
-        	stockUpperLimit: null,
-        	stockLowerLimit: null,
-        	lastImportPrice: null,
-        	averageImportPrice: null,
-        	salesPrice: null,
-        	tradePrice: null,
-        	vipPrice: null,
-        	isVipDiscount: true, // 默认开启会员折扣
-        	supplierName: null,
-        	productionDate: null,
-        	qualityGuaranteePeriod: null,
-        	isIntegral: null,
-        	royaltyType: null,
-        	isBooked: null,
-        	isGift: null,
-        	isWeigh: null,
-        	isFixedPrice: null,
-        	isTimeingPrice: null,
-        	isHidden: null,
-        	remark: null,
-        	gmtUpdate: null,
-        	gmtCreate: null
-        },
-        DEFAULT_GOODS: { // 默认初始商品实体，用于重置goods
-        	id: null,
-        	goodsImageId: null,
-        	goodsName: null,
-        	barCode: null,
-        	productNumber: null,
-        	pinyinCode: null,
-        	categoryName: null,
-        	goodsStatus: true, // 默认启用
-        	goodsBrand: null,
-        	goodsColor: null,
-        	goodsSize: null,
-        	goodsTag: null,
-        	goodsStock: null,
-        	quantityUnit: null,
-        	stockUpperLimit: null,
-        	stockLowerLimit: null,
-        	lastImportPrice: null,
-        	averageImportPrice: null,
-        	salesPrice: null,
-        	tradePrice: null,
-        	vipPrice: null,
-        	isVipDiscount: true, // 默认开启会员折扣
-        	supplierName: null,
-        	productionDate: null,
-        	qualityGuaranteePeriod: null,
-        	isIntegral: null,
-        	royaltyType: null,
-        	isBooked: null,
-        	isGift: null,
-        	isWeigh: null,
-        	isFixedPrice: null,
-        	isTimeingPrice: null,
-        	isHidden: null,
-        	remark: null,
-        	gmtUpdate: null,
-        	gmtCreate: null
-        },
-        goodsColor: { // 颜色实体
-        	id: null,
-        	color: null,
-        	gmtUpdate: null,
-        	gmtCreate: null
-        },
-        DEFAULT_GOODSCOLOR: { // 默认颜色实体
-        	id: null,
-        	color: null,
-        	gmtUpdate: null,
-        	gmtCreate: null
-        },
-        goodsSize: { // 尺寸实体
-        	id: null,
-        	sizeName: null,
-        	gmtUpdate: null,
-        	gmtCreate: null
-        },
-        DEFAULT_GOODSSIZE: { // 默认尺寸实体
-        	id: null,
-        	sizeName: null,
-        	gmtUpdate: null,
-        	gmtCreate: null
-        },
+		goods: cloneJsonObj(goods_entity), // 商品实体
+        goodsColor: cloneJsonObj(goodsColor_entity), // 颜色实体
+        goodsSize: cloneJsonObj(goodsSize_entity), // 尺码实体
+        goodsUnit: cloneJsonObj(goodsUnit_entity), // 单位实体
+        goodsBrand: cloneJsonObj(goodsBrand_entity), // 品牌实体
+        goodsTag: cloneJsonObj(goodsTag_entity), // 标签实体
     },
     computed: {
     	goods_barCode() {
@@ -284,6 +58,13 @@ var vm_goodsListDiv = new Vue({
     	},
     	goods_lastImportPrice() {
     		return this.goods.lastImportPrice;
+    	},
+    	select_color_size() {
+    		if(this.switches.colorSize) {
+    			return this.select_goods_colors + '-' + this.select_goods_sizes;
+    		} else {
+    			return null;
+    		}
     	}
     },
     watch: {
@@ -317,6 +98,9 @@ var vm_goodsListDiv = new Vue({
     	},
     	goods_lastImportPrice: function() { // 最后一次进价
     		this.goods.averageImportPrice = this.goods.lastImportPrice;
+    	},
+    	select_goods_tags :function() { // 选择标签变化时更新商品标签
+    		this.goods.goodsTag = this.select_goods_tags.toString();
     	}
     },
     methods: {
@@ -345,27 +129,24 @@ var vm_goodsListDiv = new Vue({
         add: function() {
         	this.resetGoods();
             layer.open({
-                type: 1,
-                skin: 'layui-layer-lan',
-                title: "新增商品",
-                area: '650px',
-                shadeClose: false,
+                type: 1, skin: 'layui-layer-lan', title: "新增商品", area: '650px', shadeClose: false,
                 content: jQuery("#goodsAddDiv"),
                 btn: ['提交', '取消'],
                 btn1: function(index) {
                     $.ajax({
-                        type: "POST",
                         url: basePath + "/admin/goods/addGoodsInfo",
-                        data: vm_goodsListDiv.goods,
+                        data: vm.goods,
                         success: function(result) {
                             if (result.code == "00") {
                                 layer.alert('添加成功');
                                 layer.close(index);
-                                vm_goodsListDiv.resetGoods();
+                                vm.resetGoods();
+                                vm.select_goods_colors = [];
+                                vm.select_goods_sizes = [];
                             } else {
                                 layer.alert(result.msg);
                             }
-                            vm_goodsListDiv.reloadPage();
+                            vm.reloadPage();
                         }
                     });
                 }
@@ -379,123 +160,15 @@ var vm_goodsListDiv = new Vue({
         	this.resetGoods();
         	
         },
-        importGoods: function() {
-
-        },
-        exportGoods: function() {
-
-        },
-        loadGoodsCategorys: function() {
-        	// 加载所有商品分类列表
-            $.ajax({
-                type: "POST",
-                url: basePath + "/admin/goods/getGoodsCategoryTree",
-                data: {
-                	'categoryId': 1
-                },
-                success: function(result) {
-                    if (result.code == "00") {
-                        this.goods_categorys = result.tree;
-                    } else {
-                        layer.alert("加载商品分类列表出错" + result.msg);
-                    }
-                }
-            });
-        },
-        loadGoodsBrands: function() {
-        	// 加载所有商品品牌列表
-        	$.ajax({
-        		type: "GET",
-        		url: basePath + "/admin/goods/queryAllGoodsBrand",
-        		success: function(result) {
-        			if (result.code == "00") {
-        				vm_goodsListDiv.goods_brands = result.brands;
-        			} else {
-        				layer.alert("加载商品品牌列表出错" + result.msg);
-        			}
-        		}
-        	});
-        },
-        loadGoodsSuppliers: function() {
-        	// 加载所有商品供货商列表
-        	$.ajax({
-        		type: "GET",
-        		url: basePath + "/admin/goods/queryAllGoodsBrand",
-        		success: function(result) {
-        			if (result.code == "00") {
-        				vm_goodsListDiv.goods_suppliers = result.suppliers;
-        			} else {
-        				layer.alert("加载商品供货商列表出错" + result.msg);
-        			}
-        		}
-        	});
-        },
-        loadGoodsTags: function() {
-        	// 加载所有商品标签列表
-        	$.ajax({
-        		type: "GET",
-        		url: basePath + "/admin/goods/queryAllGoodsTag",
-        		success: function(result) {
-        			if (result.code == "00") {
-        				vm_goodsListDiv.goods_tags = result.tags;
-        			} else {
-        				layer.alert("加载商品标签列表出错" + result.msg);
-        			}
-        		}
-        	});
-        },
-        loadGoodsUnits: function() {
-        	// 加载所有商品单位列表
-        	$.ajax({
-        		type: "GET",
-        		url: basePath + "/admin/goods/queryAllGoodsUnit",
-        		success: function(result) {
-        			if (result.code == "00") {
-        				vm_goodsListDiv.goods_units = result.units;
-        			} else {
-        				layer.alert("加载商品单位列表出错" + result.msg);
-        			}
-        		}
-        	});
-        },
-        loadGoodscolors: function() {
-        	// 加载所有商品颜色列表
-        	$.ajax({
-        		type: "GET",
-        		url: basePath + "/admin/goods/queryAllGoodsColor",
-        		success: function(result) {
-        			if (result.code == "00") {
-        				vm_goodsListDiv.goods_colors = result.colors;
-        			} else {
-        				layer.alert("加载商品颜色列表出错" + result.msg);
-        			}
-        		}
-        	});
-        },
-        loadGoodsSizes: function() {
-        	// 加载所有商品尺寸列表
-        	$.ajax({
-        		type: "GET",
-        		url: basePath + "/admin/goods/queryAllGoodsSize",
-        		success: function(result) {
-        			if (result.code == "00") {
-        				vm_goodsListDiv.goods_sizes = result.sizes;
-        			} else {
-        				layer.alert("加载商品尺寸列表出错" + result.msg);
-        			}
-        		}
-        	});
-        },
-        resetGoods: function() {
-        	this.goods = cloneJsonObj(this.DEFAULT_GOODS);
-        },
+        importGoods: function() {},
+        exportGoods: function() {},
         getBarCode: function() {
         	$.ajax({
                 type: "GET",
                 url: basePath + "/admin/goods/getBarCode",
                 success: function(result) {
                     if (result.code == "00") {
-                    	vm_goodsListDiv.goods.barCode = result.barCode;
+                    	vm.goods.barCode = result.barCode;
                     } else {
                         layer.alert("条码生成失败：" + result.msg);
                     }
@@ -513,32 +186,352 @@ var vm_goodsListDiv = new Vue({
                 btn: ['确定']
             });
         },
+        _editGoodsColorSize: function() {
+        	layer.open({
+                type: 1,
+                skin: 'layui-layer-lan',
+                title: "编辑颜色尺码",
+                area: '650px',
+                shadeClose: false,
+                content: jQuery("#goodsColorSizeDiv"),
+                btn: ['确定']
+            });
+        },
+        _editGoodsUnit: function() {
+        	layer.open({
+        		type: 1,
+        		skin: 'layui-layer-lan',
+        		title: "选择单位",
+        		area: '350px',
+        		shadeClose: false,
+        		content: jQuery("#goodsUnitDiv"),
+        		btn: ['确定']
+        	});
+        },
+        _editGoodsBrand: function() {
+        	layer.open({
+        		type: 1,
+        		skin: 'layui-layer-lan',
+        		title: "选择品牌",
+        		area: '350px',
+        		shadeClose: false,
+        		content: jQuery("#goodsBrandDiv"),
+        		btn: ['确定']
+        	});
+        },
+        _editGoodsTag: function() {
+        	layer.open({
+        		type: 1,
+        		skin: 'layui-layer-lan',
+        		title: "选择标签",
+        		area: '350px',
+        		shadeClose: false,
+        		content: jQuery("#goodsTagDiv"),
+        		btn: ['确定']
+        	});
+        },
+        _editGoodsSupplier: function() {
+        	layer.open({
+        		type: 1,
+        		skin: 'layui-layer-lan',
+        		title: "选择供货商",
+        		area: '350px',
+        		shadeClose: false,
+        		content: jQuery("#goodsSupplierDiv"),
+        		btn: ['确定']
+        	});
+        },
+        _editGoodsCategory: function() {
+        	layer.alert('暂不支持分类管理，请手动输入分类');
+        },
         addGoodsColor: function() { // 添加颜色
         	$.ajax({
                 type: "POST",
                 url: basePath + "/admin/goods/addGoodsColor",
                 data: {
-                	'colorName': vm_goodsListDiv.goodsColor.color
+                	'colorName': vm.goodsColor.color
                 },
                 success: function(result) {
                     if (result.code == "00") {
-                    	vm_goodsListDiv.goodsColor.id = result.id;
-                    	vm_goodsListDiv.goods_colors.push(cloneJsonObj(vm_goodsListDiv.goodsColor));
-                    	vm_goodsListDiv.resetGoodsColor();
+                    	vm.loadGoodsColors();
+                    	vm.resetGoodsColor();
                     } else {
-                        layer.alert("添加颜色失败：" + result.msg);
+                        layer.alert("添加颜色异常：" + result.msg);
                     }
                 }
             });
         },
-        addGoodsSize: function() { // 添加尺寸
-        	
+        deleteGoodsColorById: function(id) { // 根据id删除颜色
+        	$.ajax({
+                type: "POST",
+                url: basePath + "/admin/goods/deleteGoodsColor",
+                data: {
+                	'id': id
+                },
+                success: function(result) {
+                    if (result.code == "00") {
+                    	vm.loadGoodsColors();
+                    	vm.select_goods_colors = []; // 删除颜色成功后清空选择
+                    } else {
+                        layer.alert("删除颜色失败：" + result.msg);
+                    }
+                }
+            });
+        },
+        addGoodsSize: function() { // 添加尺码
+        	$.ajax({
+                type: "POST",
+                url: basePath + "/admin/goods/addGoodsSize",
+                data: {
+                	'sizeName': vm.goodsSize.sizeName
+                },
+                success: function(result) {
+                    if (result.code == "00") {
+                    	vm.loadGoodsSizes();
+                    	vm.resetGoodsSize();
+                    } else {
+                        layer.alert("添加尺码异常：" + result.msg);
+                    }
+                }
+            });
+        },
+        deleteGoodsSizeById: function(id) { // 根据id删除尺码
+        	$.ajax({
+                type: "POST",
+                url: basePath + "/admin/goods/deleteGoodsSize",
+                data: {
+                	'id': id
+                },
+                success: function(result) {
+                    if (result.code == "00") {
+                    	vm.loadGoodsSizes();
+                    	vm.select_goods_sizes = []; // 删除尺码成功后清空选择
+                    } else {
+                        layer.alert("删除尺码失败：" + result.msg);
+                    }
+                }
+            });
+        },
+        addGoodsUnit: function() { // 添加单位
+        	$.ajax({
+        		type: "POST",
+        		url: basePath + "/admin/goods/addGoodsUnit",
+        		data: {
+        			'unitName': vm.goodsUnit.unitName
+        		},
+        		success: function(result) {
+        			if (result.code == "00") {
+        				vm.loadGoodsUnits();
+        				vm.resetGoodsUnit();
+        			} else {
+        				layer.alert("添加单位异常：" + result.msg);
+        			}
+        		}
+        	});
+        },
+        deleteGoodsUnitById: function(id) { // 根据id删除单位
+        	$.ajax({
+        		type: "POST",
+        		url: basePath + "/admin/goods/deleteGoodsUnit",
+        		data: {
+        			'id': id
+        		},
+        		success: function(result) {
+        			if (result.code == "00") {
+        				vm.loadGoodsUnits();
+        				vm.goods.quantityUnit = null; // 删除单位成功后清空选择
+        			} else {
+        				layer.alert("删除单位失败：" + result.msg);
+        			}
+        		}
+        	});
+        },
+        addGoodsBrand: function() { // 添加品牌
+        	$.ajax({
+        		type: "POST",
+        		url: basePath + "/admin/goods/addGoodsBrand",
+        		data: {
+        			'brandName': vm.goodsBrand.brandName
+        		},
+        		success: function(result) {
+        			if (result.code == "00") {
+        				vm.loadGoodsBrands();
+        				vm.resetGoodsBrand();
+        			} else {
+        				layer.alert("添加品牌异常：" + result.msg);
+        			}
+        		}
+        	});
+        },
+        deleteGoodsBrandById: function(id) { // 根据id删除品牌
+        	$.ajax({
+        		type: "POST",
+        		url: basePath + "/admin/goods/deleteGoodsBrand",
+        		data: {
+        			'id': id
+        		},
+        		success: function(result) {
+        			if (result.code == "00") {
+        				vm.loadGoodsBrands();
+        				vm.goods.goodsBrand = null; // 删除品牌成功后清空选择
+        			} else {
+        				layer.alert("删除品牌失败：" + result.msg);
+        			}
+        		}
+        	});
+        },
+        addGoodsTag: function() { // 添加标签
+        	$.ajax({
+                type: "POST",
+                url: basePath + "/admin/goods/addGoodsTag",
+                data: {
+                	'tagName': vm.goodsTag.tagName
+                },
+                success: function(result) {
+                    if (result.code == "00") {
+                    	vm.loadGoodsTags();
+                    	vm.resetGoodsTag();
+                    } else {
+                        layer.alert("添加标签异常：" + result.msg);
+                    }
+                }
+            });
+        },
+        deleteGoodsTagById: function(id) { // 根据id删除标签
+        	$.ajax({
+                type: "POST",
+                url: basePath + "/admin/goods/deleteGoodsTag",
+                data: {
+                	'id': id
+                },
+                success: function(result) {
+                    if (result.code == "00") {
+                    	vm.loadGoodsTags();
+                    	vm.select_goods_tags = []; // 删除标签成功后清空选择
+                    } else {
+                        layer.alert("删除标签失败：" + result.msg);
+                    }
+                }
+            });
+        },
+        resetGoods: function() {
+        	this.goods = cloneJsonObj(goods_entity);
         },
         resetGoodsColor: function() {
-        	this.goodsColor = cloneJsonObj(this.DEFAULT_GOODSCOLOR);
+        	this.goodsColor = cloneJsonObj(goodsColor_entity);
         },
         resetGoodsSize: function() {
-        	this.goodsSize = cloneJsonObj(this.DEFAULT_GOODSSIZE);
+        	this.goodsSize = cloneJsonObj(goodsSize_entity);
+        },
+        resetGoodsUnit: function() {
+        	this.goodsUnit = cloneJsonObj(goodsUnit_entity);
+        },
+        resetGoodsBrand: function() {
+        	this.goodsBrand = cloneJsonObj(goodsBrand_entity);
+        },
+        resetGoodsTag: function() {
+        	this.goodsTag = cloneJsonObj(goodsTag_entity);
+        },
+        loadGoodsCategorys: function() {
+        	// 加载所有商品分类列表
+            $.ajax({
+                type: "POST",
+                url: basePath + "/admin/goods/getGoodsCategoryTree",
+                data: {
+                	'categoryId': 1
+                },
+                success: function(result) {
+                    if (result.code == "00") {
+                    	vm.goods_categorys = result.tree;
+                    } else {
+                        layer.alert("加载商品分类列表出错" + result.msg);
+                    }
+                }
+            });
+        },
+        loadGoodsBrands: function() {
+        	// 加载所有商品品牌列表
+        	$.ajax({
+        		type: "GET",
+        		url: basePath + "/admin/goods/queryAllGoodsBrand",
+        		success: function(result) {
+        			if (result.code == "00") {
+        				vm.goods_brands = result.brands;
+        			} else {
+        				layer.alert("加载商品品牌列表出错" + result.msg);
+        			}
+        		}
+        	});
+        },
+        loadGoodsSuppliers: function() {
+        	// 加载所有供货商列表
+        	$.ajax({
+        		type: "GET",
+        		url: basePath + "/admin/supplier/queryAllSupplierNames",
+        		success: function(result) {
+        			if (result.code == "00") {
+        				vm.goods_suppliers = result.names;
+        			} else {
+        				layer.alert("加载供货商列表出错" + result.msg);
+        			}
+        		}
+        	});
+        },
+        loadGoodsTags: function() {
+        	// 加载所有商品标签列表
+        	$.ajax({
+        		type: "GET",
+        		url: basePath + "/admin/goods/queryAllGoodsTag",
+        		success: function(result) {
+        			if (result.code == "00") {
+        				vm.goods_tags = result.tags;
+        			} else {
+        				layer.alert("加载商品标签列表出错" + result.msg);
+        			}
+        		}
+        	});
+        },
+        loadGoodsUnits: function() {
+        	// 加载所有商品单位列表
+        	$.ajax({
+        		type: "GET",
+        		url: basePath + "/admin/goods/queryAllGoodsUnit",
+        		success: function(result) {
+        			if (result.code == "00") {
+        				vm.goods_units = result.units;
+        			} else {
+        				layer.alert("加载商品单位列表出错" + result.msg);
+        			}
+        		}
+        	});
+        },
+        loadGoodsColors: function() {
+        	// 加载所有商品颜色列表
+        	$.ajax({
+        		type: "GET",
+        		url: basePath + "/admin/goods/queryAllGoodsColor",
+        		success: function(result) {
+        			if (result.code == "00") {
+        				vm.goods_colors = result.colors;
+        			} else {
+        				layer.alert("加载商品颜色列表出错" + result.msg);
+        			}
+        		}
+        	});
+        },
+        loadGoodsSizes: function() {
+        	// 加载所有商品尺码列表
+        	$.ajax({
+        		type: "GET",
+        		url: basePath + "/admin/goods/queryAllGoodsSize",
+        		success: function(result) {
+        			if (result.code == "00") {
+        				vm.goods_sizes = result.sizes;
+        			} else {
+        				layer.alert("加载商品尺码列表出错" + result.msg);
+        			}
+        		}
+        	});
         },
     },
     mounted: function() {
@@ -547,7 +540,7 @@ var vm_goodsListDiv = new Vue({
     	this.loadGoodsSuppliers();
     	this.loadGoodsTags();
     	this.loadGoodsUnits();
-    	this.loadGoodscolors();
+    	this.loadGoodsColors();
     	this.loadGoodsSizes();
     }
 });

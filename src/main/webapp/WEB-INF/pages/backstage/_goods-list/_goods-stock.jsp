@@ -16,9 +16,10 @@
     </form>
     <!-- 设置颜色尺码 -->
     <form class="form-horizontal layerForm" v-if="switches.colorSize">
+    	<h1>多颜色尺码库存还在开发中</h1>
     	<table>
     		<thead>
-    			<th v-for=""></th>
+    			<!-- <th v-for=""></th> -->
     		</thead>
     		<tbody>
     		

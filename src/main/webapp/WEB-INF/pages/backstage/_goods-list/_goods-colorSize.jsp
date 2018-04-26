@@ -6,19 +6,17 @@
     <form class="form-horizontal layerForm">
     	<div class="form-group">
             <div class="col-xs-7">
-            	<div class="checkbox" v-for="color in goods_colors">
-				  <label>
-				    <input type="checkbox" :value="color.color" v-model="selected.goods_colors">
-				    {{color.color}}
-				  </label>
-				</div>
+            	<div class="input-group" v-for="color in goods_colors">
+                    <span class="input-group-addon"><input type="checkbox" :value="color.color" v-model="select_goods_colors"></span>
+                    <input type="text" class="form-control" :value="color.color" readonly>
+                    <span class="input-group-btn"><button class="btn btn-danger" type="button" @click="deleteGoodsColorById(color.id)">删除</button></span>
+                </div>
             </div>
             <div class="col-xs-5">
-            	<div class="checkbox" v-for="size in goods_sizes">
-				  <label>
-				    <input type="checkbox" :value="size.sizeName" v-model="selected.goods_sizes">
-				    {{size.sizeName}}
-				  </label>
+            	<div class="input-group" v-for="size in goods_sizes">
+            		<span class="input-group-addon"><input type="checkbox" :value="size.sizeName" v-model="select_goods_sizes"></span>
+                    <input type="text" class="form-control" :value="size.sizeName" readonly>
+                    <span class="input-group-btn"><button class="btn btn-danger" type="button" @click="deleteGoodsSizeById(size.id)">删除</button></span>
 				</div>
             </div>
         </div>
@@ -32,7 +30,7 @@
             </div>
             <div class="col-xs-5">
             	<div class="input-group">
-                    <span class="input-group-addon">添加尺寸</span>
+                    <span class="input-group-addon">添加尺码</span>
                     <input type="text" class="form-control" v-model="goodsSize.sizeName">
                     <span class="input-group-btn"><button class="btn btn-primary" type="button" @click="addGoodsSize">添加</button></span>
                 </div>
@@ -40,4 +38,4 @@
         </div>
     </form>
 </div>
-<!-- /编辑库存 -->
+<!-- /编辑颜色尺码 -->

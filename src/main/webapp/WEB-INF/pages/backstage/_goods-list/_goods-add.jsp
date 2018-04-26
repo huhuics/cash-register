@@ -47,7 +47,7 @@
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-exclamation"></i>&nbsp;分类</span>
                     <input type="text" class="form-control" v-model="goods.categoryName">
-                    <span class="input-group-btn"><button class="btn btn-primary" type="button">选择分类</button></span>
+                    <span class="input-group-btn"><button class="btn btn-primary" type="button" @click="_editGoodsCategory">选择</button></span>
                 </div>
             </div>
         </div>
@@ -55,8 +55,8 @@
         	<div class="col-xs-7">
             	<div class="input-group">
                     <span class="input-group-addon"><input type="checkbox" v-model="switches.colorSize"></span>
-                    <input type="text" class="form-control" readonly placeholder="未选择任何颜色尺码">
-                    <span class="input-group-btn"><button id="colorSizeBtn" class="btn btn-primary" type="button" disabled>选择颜色尺码</button></span>
+                    <input type="text" class="form-control" readonly placeholder="未开启颜色尺码选择开关" :value="select_color_size">
+                    <span class="input-group-btn"><button id="colorSizeBtn" class="btn btn-primary" type="button" @click="_editGoodsColorSize" disabled>选择颜色尺码</button></span>
                 </div>
             </div>
             <div class="col-xs-5">
@@ -110,7 +110,7 @@
                 <div class="input-group">
                     <span class="input-group-addon">主单位</span>
                     <input type="text" class="form-control" v-model="goods.quantityUnit" readonly>
-                    <span class="input-group-btn"><button class="btn btn-primary" type="button">选择单位</button></span>
+                    <span class="input-group-btn"><button class="btn btn-primary" type="button" @click="_editGoodsUnit">选择</button></span>
                 </div>
             </div>
             <div class="col-xs-5">
@@ -125,14 +125,14 @@
                 <div class="input-group">
                     <span class="input-group-addon">商品品牌</span>
                     <input type="text" class="form-control" v-model="goods.goodsBrand" readonly>
-                    <span class="input-group-btn"><button class="btn btn-primary" type="button">选择品牌</button></span>
+                    <span class="input-group-btn"><button class="btn btn-primary" type="button" @click="_editGoodsBrand">选择</button></span>
                 </div>
             </div>
             <div class="col-xs-5">
                 <div class="input-group">
                     <span class="input-group-addon">供货商</span>
                     <input type="text" class="form-control" v-model="goods.supplierName" readonly>
-                    <span class="input-group-btn"><button class="btn btn-primary" type="button">选择供货商</button></span>
+                    <span class="input-group-btn"><button class="btn btn-primary" type="button" @click="_editGoodsSupplier">选择</button></span>
                 </div>
             </div>
         </div>
@@ -170,7 +170,7 @@
                 <div class="input-group">
                     <span class="input-group-addon">标签</span>
                     <input type="text" class="form-control" readonly v-model="goods.goodsTag">
-                    <span class="input-group-btn"><button class="btn btn-primary" type="button">选择标签</button></span>
+                    <span class="input-group-btn"><button class="btn btn-primary" type="button" @click="_editGoodsTag">选择</button></span>
                 </div>
             </div>
         </div>
@@ -182,5 +182,9 @@
     </form>
 </div>
 <%@ include file="./_goods-colorSize.jsp"%>
-<%@ include file="./_goods-editStock.jsp"%>
+<%@ include file="./_goods-stock.jsp"%>
+<%@ include file="./_goods-unit.jsp"%>
+<%@ include file="./_goods-brand.jsp"%>
+<%@ include file="./_goods-tag.jsp"%>
+<%@ include file="./_goods-supplier.jsp"%>
 <!-- /添加或更新商品 -->
