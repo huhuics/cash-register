@@ -21,6 +21,7 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -271,7 +272,7 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
         info.setProductionDate(request.getProductionDate());
         info.setQualityGuaranteePeriod(request.getQualityGuaranteePeriod());
         info.setIsIntegral(request.getIsIntegral());
-        info.setRoyaltyType(request.getRoyaltyType());
+        info.setRoyaltyType(JSON.toJSONString(request.getRoyaltyType()));
         info.setIsBooked(request.getIsBooked());
         info.setIsGift(request.getIsGift());
         info.setIsWeigh(request.getIsWeigh());
