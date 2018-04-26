@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cash.register.dao.GoodsStockFlowMapper">
+  <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.GoodsStockFlow">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="bar_code" jdbcType="VARCHAR" property="barCode" />
+    <result column="flow_type" jdbcType="VARCHAR" property="flowType" />
+    <result column="flow_count" jdbcType="INTEGER" property="flowCount" />
+    <result column="check_count" jdbcType="INTEGER" property="checkCount" />
+    <result column="out_biz_no" jdbcType="VARCHAR" property="outBizNo" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goods_name, bar_code, flow_type, flow_count, check_count, out_biz_no, remark, 
+    gmt_update, gmt_create
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods_stock_flow
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from goods_stock_flow
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.cash.register.dao.domain.GoodsStockFlow">
+    insert into goods_stock_flow (id, goods_name, bar_code, 
+      flow_type, flow_count, check_count, 
+      out_biz_no, remark, gmt_update, 
+      gmt_create)
+    values (#{id,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR}, #{barCode,jdbcType=VARCHAR}, 
+      #{flowType,jdbcType=VARCHAR}, #{flowCount,jdbcType=INTEGER}, #{checkCount,jdbcType=INTEGER}, 
+      #{outBizNo,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
+      #{gmtCreate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.GoodsStockFlow">
+    insert into goods_stock_flow
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="barCode != null">
+        bar_code,
+      </if>
+      <if test="flowType != null">
+        flow_type,
+      </if>
+      <if test="flowCount != null">
+        flow_count,
+      </if>
+      <if test="checkCount != null">
+        check_count,
+      </if>
+      <if test="outBizNo != null">
+        out_biz_no,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null">
+        #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="flowType != null">
+        #{flowType,jdbcType=VARCHAR},
+      </if>
+      <if test="flowCount != null">
+        #{flowCount,jdbcType=INTEGER},
+      </if>
+      <if test="checkCount != null">
+        #{checkCount,jdbcType=INTEGER},
+      </if>
+      <if test="outBizNo != null">
+        #{outBizNo,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.GoodsStockFlow">
+    update goods_stock_flow
+    <set>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null">
+        bar_code = #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="flowType != null">
+        flow_type = #{flowType,jdbcType=VARCHAR},
+      </if>
+      <if test="flowCount != null">
+        flow_count = #{flowCount,jdbcType=INTEGER},
+      </if>
+      <if test="checkCount != null">
+        check_count = #{checkCount,jdbcType=INTEGER},
+      </if>
+      <if test="outBizNo != null">
+        out_biz_no = #{outBizNo,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.GoodsStockFlow">
+    update goods_stock_flow
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      bar_code = #{barCode,jdbcType=VARCHAR},
+      flow_type = #{flowType,jdbcType=VARCHAR},
+      flow_count = #{flowCount,jdbcType=INTEGER},
+      check_count = #{checkCount,jdbcType=INTEGER},
+      out_biz_no = #{outBizNo,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="list" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.StockFlowQueryRequest">
+  	select 
+    <include refid="Base_Column_List" />
+  	from goods_stock_flow where 1=1
+  	<if test="flowType != null and flowType !=''">
+  		and flow_type = #{flowType,jdbcType=VARCHAR}
+    </if>
+    <if test="goodsName != null and goodsName !=''">
+  		and goods_name like #{goodsName,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="barCode != null and barCode !=''">
+  		and bar_code = #{barCode,jdbcType=VARCHAR}
+    </if>
+    <if test="gmtCreateUp != null">
+  		and
+  		gmt_create &lt;= to_date(#{gmtCreateUp},'yyyy-MM-dd HH:mm:ss')
+  		and
+  		gmt_create &gt;= to_date(#{gmtCreateDown},'yyyy-MM-dd HH:mm:ss')
+    </if>
+  </select>
+  
+</mapper>

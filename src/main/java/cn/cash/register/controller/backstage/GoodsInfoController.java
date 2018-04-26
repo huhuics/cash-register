@@ -119,8 +119,8 @@ public class GoodsInfoController {
      */
     @ResponseBody
     @RequestMapping(value = "/batchUpdate")
-    public void batchUpdate(List<Long> goodsIds, Object newValue, UpdateFieldEnum filedEnum) {
-        goodsInfoService.batchUpdate(goodsIds, newValue, filedEnum);
+    public void batchUpdate(List<Long> goodsIds, String newValue, String filedEnumCode) {
+        goodsInfoService.batchUpdate(goodsIds, newValue, filedEnumCode);
     }
 
     /**

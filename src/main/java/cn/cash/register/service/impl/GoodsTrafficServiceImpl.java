@@ -24,8 +24,10 @@ import cn.cash.register.common.request.OutTrafficRequest;
 import cn.cash.register.dao.GoodsTrafficMapper;
 import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.dao.domain.GoodsTraffic;
+import cn.cash.register.enums.StockFlowTypeEnum;
 import cn.cash.register.enums.TrafficTypeEnum;
 import cn.cash.register.service.GoodsInfoService;
+import cn.cash.register.service.GoodsStockService;
 import cn.cash.register.service.GoodsTrafficService;
 import cn.cash.register.util.Money;
 import cn.cash.register.util.NumUtil;
@@ -47,6 +49,9 @@ public class GoodsTrafficServiceImpl implements GoodsTrafficService {
     @Resource
     private TransactionTemplate txTemplate;
 
+    @Resource
+    private GoodsStockService   stockService;
+
     @Override
     public Long addInTraffic(InTrafficRequest request) {
         GoodsTraffic traffic = convert(request);
@@ -57,6 +62,10 @@ public class GoodsTrafficServiceImpl implements GoodsTrafficService {
                 //查询并修改商品信息
                 GoodsInfo goodsInfo = goodsInfoService.queryById(request.getGoodsId());
                 inUpdateGoodsInfo(goodsInfo, traffic);
+
+                //记录库存变化
+                int flowCount = traffic.getInCount() + traffic.getFreeCount();
+                stockService.record(goodsInfo.getGoodsName(), goodsInfo.getBarCode(), StockFlowTypeEnum.TRAFFIC_IN, flowCount, traffic.getTrafficNo());
 
                 return trafficMapper.insertSelective(traffic);
             }
@@ -73,6 +82,17 @@ public class GoodsTrafficServiceImpl implements GoodsTrafficService {
                 //查询并修改商品信息
                 GoodsInfo goodsInfo = goodsInfoService.queryById(request.getGoodsId());
                 outUpdateGoodsInfo(goodsInfo, traffic);
+
+                //记录库存变化
+                int flowCount = -traffic.getOutCount();//负号
+
+                StockFlowTypeEnum typeEnum = null;
+                if (StringUtils.equals(traffic.getTrafficType(), TrafficTypeEnum.ORDINARY_OUT.getCode())) {
+                    typeEnum = StockFlowTypeEnum.TRAFFIC_OUT;
+                } else if (StringUtils.equals(traffic.getTrafficType(), TrafficTypeEnum.SUPPLIER_OUT.getCode())) {
+                    typeEnum = StockFlowTypeEnum.TRAFFIC_OUT_SUPPLIER;
+                }
+                stockService.record(goodsInfo.getGoodsName(), goodsInfo.getBarCode(), typeEnum, flowCount, traffic.getTrafficNo());
 
                 return trafficMapper.insertSelective(traffic);
             }

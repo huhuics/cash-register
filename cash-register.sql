@@ -123,9 +123,11 @@ CREATE TABLE `goods_info` (
   KEY `IDX_PINYIN_CODE` (`pinyin_code`),
   KEY `IDX_GOODS_NAME` (`goods_name`),
   KEY `IDX_GOODS_TAG` (`goods_tag`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_info` */
+
+insert  into `goods_info`(`id`,`goods_image_id`,`goods_name`,`bar_code`,`product_number`,`pinyin_code`,`category_name`,`goods_status`,`goods_brand`,`goods_color`,`goods_size`,`goods_tag`,`goods_stock`,`quantity_unit`,`stock_upper_limit`,`stock_lower_limit`,`last_import_price`,`average_import_price`,`sales_price`,`trade_price`,`vip_price`,`is_vip_discount`,`supplier_name`,`production_date`,`quality_guarantee_period`,`is_integral`,`royalty_type`,`is_booked`,`is_gift`,`is_weigh`,`is_fixed_price`,`is_timeing_price`,`is_hidden`,`remark`,`gmt_update`,`gmt_create`) values (1,NULL,'测试','20180425211249395','20180425211249395','cs','测试',1,'','','','',10,'',1000,0,5000,5000,10000,7000,NULL,1,'','2018-04-25',100,0,'',0,0,0,0,0,0,'备注','2018-04-25 21:14:08','2018-04-25 21:13:54'),(2,NULL,'cs','20180425225119244','20180425225119244','cs','cs',1,'','','','',15,'',0,10,1000,1000,1000,1000,NULL,1,'','2018-04-25',10,0,'',0,0,0,0,0,0,'','2018-04-25 22:52:29','2018-04-25 22:52:15');
 
 /*Table structure for table `goods_quantity_unit` */
 
@@ -154,6 +156,28 @@ CREATE TABLE `goods_size` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_size` */
+
+/*Table structure for table `goods_stock_flow` */
+
+DROP TABLE IF EXISTS `goods_stock_flow`;
+
+CREATE TABLE `goods_stock_flow` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `goods_name` varchar(128) DEFAULT NULL COMMENT '商品名称',
+  `bar_code` varchar(128) NOT NULL COMMENT '商品条码',
+  `flow_type` varchar(64) NOT NULL COMMENT '库存变动类型。商户退货、商品销售、货流进货、货流退货等等',
+  `flow_count` int(11) NOT NULL COMMENT '库存变动数量',
+  `check_count` int(11) DEFAULT NULL COMMENT '校正库存数量',
+  `out_biz_no` varchar(64) DEFAULT NULL COMMENT '外部流水号。例如商品销售，则是交易订单号；进货则是进货单号',
+  `remark` varchar(256) DEFAULT NULL COMMENT '备注',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `IDX_GOODS_NAME` (`goods_name`),
+  KEY `IDX_BAR_CODE` (`bar_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='库存流水表';
+
+/*Data for the table `goods_stock_flow` */
 
 /*Table structure for table `goods_tag` */
 
