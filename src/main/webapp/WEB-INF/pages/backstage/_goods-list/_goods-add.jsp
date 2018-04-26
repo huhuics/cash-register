@@ -117,6 +117,7 @@
                 <div class="input-group">
                     <span class="input-group-addon">拼音码</span>
                     <input type="text" class="form-control" v-model="goods.pinyinCode">
+                    <span class="input-group-btn"><button class="btn btn-success" type="button" @click="getPinyinCode">生成</button></span>
                 </div>
             </div>
         </div>

@@ -233,6 +233,19 @@ var vm = new Vue({
                 }
             });
         },
+        getPinyinCode: function() {
+        	$.ajax({
+        		url: basePath + "/admin/goods/genePinyinShort",
+        		data: {'goodsName': vm.goods.goodsName},
+        		success: function(result) {
+        			if (result.code == "00") {
+        				vm.goods.pinyinCode = result.pinyin;
+        			} else {
+        				layer.alert("拼音码生成失败：" + result.msg);
+        			}
+        		}
+        	});
+        },
         _editGoodsStock: function() { // 编辑库存
         	layer.open({
                 type: 1, skin: 'layui-layer-lan', title: "编辑库存", area: '650px', shadeClose: false,
