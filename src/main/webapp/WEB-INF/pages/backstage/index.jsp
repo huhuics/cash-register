@@ -100,7 +100,6 @@
                         <ul class="treeview-menu">
                             <li><a href="#goods" @click="menuClick"><i class="fa fa-shopping-bag"></i>商品资料</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>商品分类</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>批量操作</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-vcard"></i>
