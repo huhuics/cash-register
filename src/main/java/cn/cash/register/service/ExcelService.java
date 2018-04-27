@@ -20,7 +20,7 @@ public interface ExcelService {
      * @param contents 内容
      * @return         生成的excel路径
      */
-    String write(String fileName, List<String> titles, List<Object> contents);
+    String write(String fileName, List<String> titles, List<?> contents);
 
     /**
      * 读Excel文件内容

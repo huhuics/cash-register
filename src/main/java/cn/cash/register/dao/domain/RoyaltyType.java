@@ -9,7 +9,7 @@ package cn.cash.register.dao.domain;
  * @author HuHui
  * @version $Id: RoroyaltyType.java, v 0.1 2018年4月26日 下午9:40:36 HuHui Exp $
  */
-public class RoroyaltyType extends BaseDomain {
+public class RoyaltyType extends BaseDomain {
 
     /**  */
     private static final long serialVersionUID = -7626436449421855634L;

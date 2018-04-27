@@ -4,7 +4,7 @@
  */
 package cn.cash.register.common.request;
 
-import cn.cash.register.dao.domain.RoroyaltyType;
+import cn.cash.register.dao.domain.RoyaltyType;
 
 /**
  * 商品信息请求类
@@ -69,7 +69,7 @@ public class GoodsInfoRequest extends BaseRequest {
 
     private Boolean           isIntegral;
 
-    private RoroyaltyType     royaltyType;
+    private RoyaltyType     royaltyType;
 
     private Boolean           isBooked;
 
@@ -263,11 +263,11 @@ public class GoodsInfoRequest extends BaseRequest {
         this.isIntegral = isIntegral;
     }
 
-    public RoroyaltyType getRoyaltyType() {
+    public RoyaltyType getRoyaltyType() {
         return royaltyType;
     }
 
-    public void setRoyaltyType(RoroyaltyType royaltyType) {
+    public void setRoyaltyType(RoyaltyType royaltyType) {
         this.royaltyType = royaltyType;
     }
 

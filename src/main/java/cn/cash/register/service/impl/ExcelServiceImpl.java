@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -17,7 +18,9 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.springframework.stereotype.Service;
 
+import cn.cash.register.common.Constants;
 import cn.cash.register.service.ExcelService;
 import cn.cash.register.util.AssertUtil;
 
@@ -26,12 +29,13 @@ import cn.cash.register.util.AssertUtil;
  * @author HuHui
  * @version $Id: ExcelServiceImpl.java, v 0.1 2018年4月27日 下午7:52:49 HuHui Exp $
  */
+@Service
 public class ExcelServiceImpl implements ExcelService {
 
-    private static final String PATH = "";
+    private static final String PATH = "F:\\";
 
     @Override
-    public String write(String fileName, List<String> titles, List<Object> contents) {
+    public String write(String fileName, List<String> titles, List<?> contents) {
 
         AssertUtil.assertNotBlank(fileName, "文件名不能为空");
         AssertUtil.assertNotBlank(titles, "excel标题不能为空");
@@ -63,7 +67,10 @@ public class ExcelServiceImpl implements ExcelService {
             for (int m = 0; m < fields.length; m++) {
                 Field filed = fields[m];
                 try {
-                    row.createCell(m).setCellValue((String) FieldUtils.readDeclaredField(contents.get(k), filed.getName()));
+                    String cellValue = (String) FieldUtils.readDeclaredField(contents.get(k), filed.getName(), true);
+                    if (StringUtils.isNotBlank(cellValue) && !StringUtils.equals(cellValue, Constants.NULL_STR)) {
+                        row.createCell(m).setCellValue(cellValue);
+                    }
                 } catch (IllegalAccessException e) {
                     throw new RuntimeException(e);
                 }
@@ -86,8 +93,7 @@ public class ExcelServiceImpl implements ExcelService {
             } catch (IOException e) {
             }
         }
-        //https://blog.csdn.net/chenssy/article/details/8759840
-        return null;
+        return file.getAbsolutePath();
     }
 
     @Override
