@@ -6,6 +6,8 @@ package cn.cash.register.controller.backstage;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +16,7 @@ import com.alibaba.fastjson.JSONArray;
 
 import cn.cash.register.dao.domain.GoodsCategory;
 import cn.cash.register.service.GoodsCategoryService;
+import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -24,6 +27,8 @@ import cn.cash.register.util.ResultSet;
 @Controller
 @RequestMapping("/admin/goods")
 public class GoodsCategoryController {
+
+    private static final Logger  logger = LoggerFactory.getLogger(GoodsCategoryController.class);
 
     @Resource
     private GoodsCategoryService categoryService;
@@ -73,6 +78,7 @@ public class GoodsCategoryController {
     @ResponseBody
     @RequestMapping(value = "/getGoodsCategoryTree")
     public ResultSet getGoodsCategoryTree(Long categoryId) {
+        LogUtil.info(logger, "收到查询商品种类树请求,categoryId={0}", categoryId);
         JSONArray tree = categoryService.getTree(categoryId);
         return ResultSet.success().put("tree", tree);
     }

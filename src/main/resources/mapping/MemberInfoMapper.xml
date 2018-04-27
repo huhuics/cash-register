@@ -262,7 +262,7 @@
     <if test="keyword != null and keyword !=''">
     	and (
     		member_no = #{keyword,jdbcType=VARCHAR}
-    		or member_name like #{keyword,jdbcType=VARCHAR}"%"
+    		or member_name like concat(#{keyword,jdbcType=VARCHAR},'%')
     		or phone = #{keyword,jdbcType=VARCHAR}
     	)
     </if>
@@ -273,7 +273,7 @@
     <include refid="Base_Column_List" />
     from member_info where 
     member_no = #{keyword,jdbcType=VARCHAR}
-    or member_name like #{keyword,jdbcType=VARCHAR}"%"
+    or member_name like concat(#{keyword,jdbcType=VARCHAR},'%')
     or phone = #{keyword,jdbcType=VARCHAR}
   </select>
   

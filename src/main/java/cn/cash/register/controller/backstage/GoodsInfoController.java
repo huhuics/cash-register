@@ -4,11 +4,12 @@
  */
 package cn.cash.register.controller.backstage;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.beanutils.ConvertUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import cn.cash.register.dao.domain.GoodsImage;
 import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.enums.UpdateFieldEnum;
 import cn.cash.register.service.GoodsInfoService;
+import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.NumUtil;
 import cn.cash.register.util.PinyinUtil;
 import cn.cash.register.util.ResultSet;
@@ -36,7 +38,9 @@ import cn.cash.register.util.ResultSet;
 public class GoodsInfoController {
 
     @Resource
-    private GoodsInfoService goodsInfoService;
+    private GoodsInfoService    goodsInfoService;
+
+    private static final String SEP = ",";
 
     /**
      * 跳转到商品资料页
@@ -80,12 +84,16 @@ public class GoodsInfoController {
     /**
      * 删除商品信息
      * 可删除单个商品,也支持批量删除
-     * @param ids  商品主键id
+     * @param idStr  商品主键id,使用半角逗号隔开
      */
     @ResponseBody
     @RequestMapping(value = "/deleteGoodsInfo")
-    public void deleteGoodsInfo(ArrayList<Long> ids) {
-        goodsInfoService.delete(ids);
+    public ResultSet deleteGoodsInfo(String idStr) {
+        AssertUtil.assertNotBlank(idStr, "商品id不能为空");
+        String[] idArray = idStr.split(SEP);
+        Long[] ids = (Long[]) ConvertUtils.convert(idArray, Long.class);
+        goodsInfoService.delete(Arrays.asList(ids));
+        return ResultSet.success();
     }
 
     /**
@@ -114,14 +122,17 @@ public class GoodsInfoController {
 
     /**
      * 批量修改操作
-     * @param goodsIds   商品id集合
+     * @param goodsIds   商品id集合,使用半角逗号隔开
      * @param newValue   被修改字段的新的值
      * @param filedEnum  被修改的字段枚举{@link UpdateFieldEnum},只有枚举中的字段才支持批量修改
      */
     @ResponseBody
     @RequestMapping(value = "/batchUpdate")
-    public void batchUpdate(ArrayList<Long> goodsIds, String newValue, String filedEnumCode) {
-        goodsInfoService.batchUpdate(goodsIds, newValue, filedEnumCode);
+    public void batchUpdate(String goodsIdStr, String newValue, String filedEnumCode) {
+        AssertUtil.assertNotBlank(goodsIdStr, "商品id不能为空");
+        String[] idArray = goodsIdStr.split(SEP);
+        Long[] ids = (Long[]) ConvertUtils.convert(idArray, Long.class);
+        goodsInfoService.batchUpdate(Arrays.asList(ids), newValue, filedEnumCode);
     }
 
     /**

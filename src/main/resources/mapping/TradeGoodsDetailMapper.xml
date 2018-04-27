@@ -282,7 +282,7 @@
   		and supplier_name = #{supplierName,jdbcType=VARCHAR}
     </if>
     <if test="goodsTag != null and goodsTag !=''">
-  		and goods_tag like #{goodsTag,jdbcType=VARCHAR}"%"
+  		and goods_tag like concat(#{goodsTag,jdbcType=VARCHAR},'%')
     </if>
     <if test="tradeTimeUp != null">
     	and 

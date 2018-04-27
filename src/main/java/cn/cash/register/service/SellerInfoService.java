@@ -42,4 +42,9 @@ public interface SellerInfoService {
      */
     SellerInfo queryById(Long id);
 
+    /**
+     * 根据收银员编号查询收银员信息
+     */
+    SellerInfo queryBySellerNo(String sellerNo);
+
 }

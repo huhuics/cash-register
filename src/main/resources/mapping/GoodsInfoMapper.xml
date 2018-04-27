@@ -474,13 +474,13 @@
     	and supplier_name = #{supplierName,jdbcType=VARCHAR}
     </if>
     <if test="goodsTag != null and goodsTag !=''">
-    	and goods_tag like #{goodsTag,jdbcType=VARCHAR}"%"
+    	and goods_tag like concat(#{goodsTag,jdbcType=VARCHAR},'%')
     </if>
     <if test="keyword != null and keyword !=''">
     	and (
     			bar_code = #{keyword,jdbcType=VARCHAR}
-    			or goods_name like #{keyword,jdbcType=VARCHAR}"%"
-    			or pinyin_code like #{keyword,jdbcType=VARCHAR}"%"
+    			or goods_name like concat(#{keyword,jdbcType=VARCHAR},'%')
+    			or pinyin_code like concat(#{keyword,jdbcType=VARCHAR},'%')
     		)
     </if>
   </select>
@@ -496,8 +496,8 @@
     <include refid="Base_Column_List" />
     from goods_info where 
     bar_code = #{keyword,jdbcType=VARCHAR}
-    or goods_name like #{keyword,jdbcType=VARCHAR}"%"
-    or pinyin_code like #{keyword,jdbcType=VARCHAR}"%"
+    or goods_name like concat(#{keyword,jdbcType=VARCHAR},'%')
+    or pinyin_code like concat(#{keyword,jdbcType=VARCHAR},'%')
   </select>
   
   <select id="queryByStock" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.StockWarningQueryRequest">

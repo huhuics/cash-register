@@ -85,4 +85,11 @@ public class SellerInfoServiceImpl implements SellerInfoService {
         return sellerInfoMapper.selectByPrimaryKey(id);
     }
 
+    @Override
+    public SellerInfo queryBySellerNo(String sellerNo) {
+        SellerInfo seller = sellerInfoMapper.selectBySellerNo(sellerNo);
+
+        return seller;
+    }
+
 }

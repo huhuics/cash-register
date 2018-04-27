@@ -4,7 +4,6 @@
  */
 package cn.cash.register.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,12 +46,7 @@ public class GoodsColorServiceImpl implements GoodsColorService {
     public List<GoodsColor> queryAll() {
         LogUtil.info(logger, "收到查询所有商品颜色请求");
 
-        List<GoodsColor> colors = new ArrayList<>();
-        colors.addAll(colorMapper.selectAll());
-
-        LogUtil.info(logger, "商品颜色查询结果,数量:{0}", colors.size());
-
-        return colors;
+        return colorMapper.selectAll();
     }
 
     @Override

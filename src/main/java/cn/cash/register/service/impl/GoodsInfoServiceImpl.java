@@ -234,6 +234,17 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
 
     }
 
+    @Override
+    public String export(GoodsInfoQueryRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void inport(String fileFullPath) {
+        // TODO Auto-generated method stub
+    }
+
     private GoodsInfo convert(GoodsInfoRequest request) {
         GoodsInfo info = new GoodsInfo();
         info.setId(request.getId());

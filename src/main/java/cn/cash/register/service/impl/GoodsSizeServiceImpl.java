@@ -46,11 +46,7 @@ public class GoodsSizeServiceImpl implements GoodsSizeService {
     public List<GoodsSize> queryAll() {
         LogUtil.info(logger, "收到查询所有商品尺寸请求");
 
-        List<GoodsSize> sizes = sizeMapper.selectAll();
-
-        LogUtil.info(logger, "商品尺寸查询结果,sizes={0}", sizes);
-
-        return sizes;
+        return sizeMapper.selectAll();
     }
 
     @Override
