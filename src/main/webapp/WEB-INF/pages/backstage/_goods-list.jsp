@@ -28,7 +28,7 @@
                 <div class="form-group col-xs-2">
                     <select class="form-control" v-model="q.categoryName" data-live-search="true">
                         <option value="">全部种类</option>
-                        <option v-for="category in goods_categorys" :value="category.id">{{category.name}}</option>
+                        <option v-for="category in goods_categorys" :value="category.name">{{category.name}}</option>
                     </select>
                 </div>
                 <div class="form-group col-xs-2">
