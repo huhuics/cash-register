@@ -1,6 +1,7 @@
 var option = {
 	url : basePath + '/admin/goods/goodsInfoList',
 	datatype : "json",
+	mtype: "post",
 	colModel : [ {
 		label : '商品ID',
 		name : 'id',
