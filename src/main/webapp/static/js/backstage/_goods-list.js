@@ -4,6 +4,10 @@
  * var-goods-entity.js
  * 请在文件同页面之前引用
  */
+$(function() {
+    $("#jqGrid").jqGrid(option);
+});
+
 var vm = new Vue({
     el: '#goodsListDiv',
     data: {
@@ -36,6 +40,11 @@ var vm = new Vue({
         goodsUnit: cloneJsonObj(goodsUnit_entity), // 单位实体
         goodsBrand: cloneJsonObj(goodsBrand_entity), // 品牌实体
         goodsTag: cloneJsonObj(goodsTag_entity), // 标签实体
+        batchEdit: {
+        	royaltyType: '', // 提成方式，0~5
+        	royaltyValue: '', // 提成方式对应值
+        	
+        },
     },
     computed: {
     	goods_barCode() {
@@ -82,7 +91,8 @@ var vm = new Vue({
     			
     		}
             return ret;
-    	}
+    	},
+    	
     },
     watch: {
     	switches_prodNumSame: function() { // 货号与条码一致开关
@@ -472,101 +482,105 @@ var vm = new Vue({
         resetGoodsTag: function() {
         	this.goodsTag = cloneJsonObj(goodsTag_entity);
         },
-        loadGoodsCategorys: function() {
-        	// 加载所有商品分类列表
+        loadGoodsCategorys: function() { // 加载所有商品分类列表
+        	var _self = this;
             $.ajax({
-                type: "POST",
+                async: false,
                 url: basePath + "/admin/goods/getGoodsCategoryTree",
-                data: {
-                	'categoryId': 1
-                },
+                data: { 'categoryId': 1 },
                 success: function(result) {
                     if (result.code == "00") {
-                    	vm.goods_categorys = result.tree;
+                    	_self.goods_categorys = result.tree;
                     } else {
                         layer.alert("加载商品分类列表出错" + result.msg);
                     }
                 }
             });
         },
-        loadGoodsBrands: function() {
-        	// 加载所有商品品牌列表
+        loadGoodsBrands: function() { // 加载所有商品品牌列表
+        	var _self = this;
         	$.ajax({
         		type: "GET",
+        		async: false,
         		url: basePath + "/admin/goods/queryAllGoodsBrand",
         		success: function(result) {
         			if (result.code == "00") {
-        				vm.goods_brands = result.brands;
+        				_self.goods_brands = result.brands;
         			} else {
         				layer.alert("加载商品品牌列表出错" + result.msg);
         			}
         		}
         	});
         },
-        loadGoodsSuppliers: function() {
-        	// 加载所有供货商列表
+        loadGoodsSuppliers: function() { // 加载所有供货商列表
+        	var _self = this;
         	$.ajax({
         		type: "GET",
+        		async: false,
         		url: basePath + "/admin/supplier/queryAllSupplierNames",
         		success: function(result) {
         			if (result.code == "00") {
-        				vm.goods_suppliers = result.names;
+        				_self.goods_suppliers = result.names;
         			} else {
         				layer.alert("加载供货商列表出错" + result.msg);
         			}
         		}
         	});
         },
-        loadGoodsTags: function() {
-        	// 加载所有商品标签列表
+        loadGoodsTags: function() { // 加载所有商品标签列表
+        	var _self = this;
         	$.ajax({
         		type: "GET",
+        		async: false,
         		url: basePath + "/admin/goods/queryAllGoodsTag",
         		success: function(result) {
         			if (result.code == "00") {
-        				vm.goods_tags = result.tags;
+        				_self.goods_tags = result.tags;
         			} else {
         				layer.alert("加载商品标签列表出错" + result.msg);
         			}
         		}
         	});
         },
-        loadGoodsUnits: function() {
-        	// 加载所有商品单位列表
+        loadGoodsUnits: function() { // 加载所有商品单位列表
+        	var _self = this;
         	$.ajax({
         		type: "GET",
+        		async: false,
         		url: basePath + "/admin/goods/queryAllGoodsUnit",
         		success: function(result) {
         			if (result.code == "00") {
-        				vm.goods_units = result.units;
+        				_self.goods_units = result.units;
         			} else {
         				layer.alert("加载商品单位列表出错" + result.msg);
         			}
         		}
         	});
         },
-        loadGoodsColors: function() {
-        	// 加载所有商品颜色列表
+        loadGoodsColors: function() { // 加载所有商品颜色列表
+        	var _self = this;
         	$.ajax({
         		type: "GET",
+        		async: false,
         		url: basePath + "/admin/goods/queryAllGoodsColor",
         		success: function(result) {
         			if (result.code == "00") {
-        				vm.goods_colors = result.colors;
+        				_self.goods_colors = result.colors;
         			} else {
         				layer.alert("加载商品颜色列表出错" + result.msg);
         			}
         		}
         	});
         },
-        loadGoodsSizes: function() {
-        	// 加载所有商品尺码列表
+        loadGoodsSizes: function() { // 加载所有商品尺码列表
+        	var _self = this;
         	$.ajax({
         		type: "GET",
+        		async: false,
         		url: basePath + "/admin/goods/queryAllGoodsSize",
         		success: function(result) {
         			if (result.code == "00") {
-        				vm.goods_sizes = result.sizes;
+        				_self.goods_sizes = result.sizes;
         			} else {
         				layer.alert("加载商品尺码列表出错" + result.msg);
         			}
@@ -585,6 +599,3 @@ var vm = new Vue({
     }
 });
 
-$(function() {
-    $("#jqGrid").jqGrid(option);
-});
