@@ -1,6 +1,7 @@
 var option = {
 	url : basePath + '/admin/goods/goodsInfoList',
 	datatype : "json",
+	mtype: "post",
 	colModel : [ {
 		label : '商品ID',
 		name : 'id',
@@ -116,13 +117,13 @@ var option = {
         }
 	} ],
 	viewrecords : true,
-	height : "500",
+	height : "auto",
 	width : "100%",
-	shrinkToFit : false,
 	rowNum : 10,
 	rowList : [ 10, 30, 50 ],
 	rownumbers : true,
 	rownumWidth : 45,
+	shrinkToFit : false,
 	autowidth : true,
 	multiselect : true,
 	sortname : "gmt_Update",

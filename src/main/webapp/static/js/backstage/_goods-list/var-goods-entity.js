@@ -1,3 +1,6 @@
+/*
+ * 与java对象对应的json实体
+ */
 var goods_entity = { // 商品实体 cloneJsonObj(goods_entity)
 	id : null,
 	goodsImageId : null,

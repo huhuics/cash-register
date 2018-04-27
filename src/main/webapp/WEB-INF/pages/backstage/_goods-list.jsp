@@ -39,7 +39,7 @@
                 </div>
                 <div class="form-group col-xs-2">
                     <select class="form-control" v-model="q.supplierName" data-live-search="true">
-                        <option value="">供货商</option>
+                        <option value="">全部供货商</option>
                         <option v-for="supplier in goods_suppliers" :value="supplier">{{supplier}}</option>
                     </select>
                 </div>
@@ -68,10 +68,12 @@
         <!-- /.分页表格 -->
         
         <%@ include file="./_goods-list/_goods-add.jsp"%>
+        <%@ include file="./_goods-list/_goods-batchEdit.jsp"%>
     </div>
     
     <script src="${ctx}/static/js/backstage/_goods-list/var-jqGrid-option.js"></script>
     <script src="${ctx}/static/js/backstage/_goods-list/var-goods-entity.js"></script>
+    <script src="${ctx}/static/js/backstage/_goods-list/var-vue-data.js"></script>
     <script src="${ctx}/static/js/backstage/_goods-list.js"></script>
     
 </body>
