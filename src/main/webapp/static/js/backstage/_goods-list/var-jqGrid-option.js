@@ -108,11 +108,11 @@ var option = {
 		label : '创建日期',
 		name : 'gmtCreate',
 		index : 'gmt_Create',
-		width : 120,
+		width : 150,
         formatter: "date",
         formatoptions: {
-            srcformat: 'Y-m-d',
-            newformat: 'Y-m-d'
+            srcformat: 'Y-m-d H:i:s',
+            newformat: 'Y-m-d H:i:s'
         }
 	} ],
 	viewrecords : true,
