@@ -68,10 +68,12 @@
         <!-- /.分页表格 -->
         
         <%@ include file="./_goods-list/_goods-add.jsp"%>
+        <%@ include file="./_goods-list/_goods-batchEdit.jsp"%>
     </div>
     
     <script src="${ctx}/static/js/backstage/_goods-list/var-jqGrid-option.js"></script>
     <script src="${ctx}/static/js/backstage/_goods-list/var-goods-entity.js"></script>
+    <script src="${ctx}/static/js/backstage/_goods-list/var-vue-data.js"></script>
     <script src="${ctx}/static/js/backstage/_goods-list.js"></script>
     
 </body>
