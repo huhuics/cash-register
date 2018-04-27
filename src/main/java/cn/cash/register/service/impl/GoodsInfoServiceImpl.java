@@ -17,10 +17,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -30,8 +31,10 @@ import cn.cash.register.dao.GoodsImageMapper;
 import cn.cash.register.dao.GoodsInfoMapper;
 import cn.cash.register.dao.domain.GoodsImage;
 import cn.cash.register.dao.domain.GoodsInfo;
+import cn.cash.register.enums.StockFlowTypeEnum;
 import cn.cash.register.enums.UpdateFieldEnum;
 import cn.cash.register.service.GoodsInfoService;
+import cn.cash.register.service.GoodsStockService;
 import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.Money;
@@ -55,6 +58,9 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     @Resource
     private GoodsImageMapper    goodsImageMapper;
 
+    @Resource
+    private GoodsStockService   stockService;
+
     @Override
     public Long add(GoodsInfoRequest request) {
         LogUtil.info(logger, "收到增加商品请求");
@@ -76,8 +82,21 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     @Override
     public int update(GoodsInfoRequest request) {
         LogUtil.info(logger, "收到修改商品请求,id={0}", request.getId());
-        GoodsInfo goodsInfo = convert(request);
-        return goodsInfoMapper.updateByPrimaryKeySelective(goodsInfo);
+
+        return txTemplate.execute(new TransactionCallback<Integer>() {
+            @Override
+            public Integer doInTransaction(TransactionStatus status) {
+                //判断库存是否发送变化
+                GoodsInfo nativeGoodsInfo = goodsInfoMapper.selectByPrimaryKey(request.getId());
+                if (request.getGoodsStock() != nativeGoodsInfo.getGoodsStock()) {
+                    int flowCount = request.getGoodsStock() - nativeGoodsInfo.getGoodsStock();
+                    stockService.record(request.getGoodsName(), request.getBarCode(), StockFlowTypeEnum.GOODS_STOCK_EDIT, flowCount, request.getBarCode());
+                }
+
+                GoodsInfo goodsInfo = convert(request);
+                return goodsInfoMapper.updateByPrimaryKeySelective(goodsInfo);
+            }
+        });
     }
 
     @Override
@@ -160,12 +179,14 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
-    public void batchUpdate(List<Long> goodsIds, Object newValue, UpdateFieldEnum filedEnum) {
+    public void batchUpdate(List<Long> goodsIds, String newValue, String filedEnumCode) {
         if (CollectionUtils.isEmpty(goodsIds)) {
             return;
         }
 
         LogUtil.info(logger, "收到批量操作请求,ids.size={0}", goodsIds.size());
+
+        UpdateFieldEnum filedEnum = UpdateFieldEnum.valueOf(filedEnumCode);
 
         List<GoodsInfo> goodsInfos = new ArrayList<>(goodsIds.size());
 
@@ -178,35 +199,34 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
 
         for (GoodsInfo item : goodsInfos) {
             if (filedEnum == UpdateFieldEnum.royaltyType) {
-                JSONObject json = (JSONObject) newValue;
-                item.setRoyaltyType(json.toJSONString());
+                item.setRoyaltyType(newValue);
             } else if (filedEnum == UpdateFieldEnum.vipPrice) {
-                Money vipPrice = new Money((String) newValue);
+                Money vipPrice = new Money(newValue);
                 item.setVipPrice(vipPrice);
             } else if (filedEnum == UpdateFieldEnum.categoryName) {
-                item.setCategoryName((String) newValue);
+                item.setCategoryName(newValue);
             } else if (filedEnum == UpdateFieldEnum.goodsTag) {
-                item.setGoodsTag((String) newValue);
+                item.setGoodsTag(newValue);
             } else if (filedEnum == UpdateFieldEnum.goodsBrand) {
-                item.setGoodsBrand((String) newValue);
+                item.setGoodsBrand(newValue);
             } else if (filedEnum == UpdateFieldEnum.supplierName) {
-                item.setSupplierName((String) newValue);
+                item.setSupplierName(newValue);
             } else if (filedEnum == UpdateFieldEnum.isIntegral) {
-                item.setIsIntegral((Boolean) newValue);
+                item.setIsIntegral(Boolean.valueOf(newValue));
             } else if (filedEnum == UpdateFieldEnum.isVipDiscount) {
-                item.setIsVipDiscount((Boolean) newValue);
+                item.setIsVipDiscount(Boolean.valueOf(newValue));
             } else if (filedEnum == UpdateFieldEnum.goodsStatus) {
-                item.setGoodsStatus((Boolean) newValue);
+                item.setGoodsStatus(Boolean.valueOf(newValue));
             } else if (filedEnum == UpdateFieldEnum.isGift) {
-                item.setIsGift((Boolean) newValue);
+                item.setIsGift(Boolean.valueOf(newValue));
             } else if (filedEnum == UpdateFieldEnum.isHidden) {
-                item.setIsHidden((Boolean) newValue);
+                item.setIsHidden(Boolean.valueOf(newValue));
             } else if (filedEnum == UpdateFieldEnum.isBooked) {
-                item.setIsBooked((Boolean) newValue);
+                item.setIsBooked(Boolean.valueOf(newValue));
             } else if (filedEnum == UpdateFieldEnum.isFixedPrice) {
-                item.setIsFixedPrice((Boolean) newValue);
+                item.setIsFixedPrice(Boolean.valueOf(newValue));
             } else if (filedEnum == UpdateFieldEnum.isTimeingPrice) {
-                item.setIsTimeingPrice((Boolean) newValue);
+                item.setIsTimeingPrice(Boolean.valueOf(newValue));
             }
 
             goodsInfoMapper.updateByPrimaryKey(item);
@@ -252,7 +272,7 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
         info.setProductionDate(request.getProductionDate());
         info.setQualityGuaranteePeriod(request.getQualityGuaranteePeriod());
         info.setIsIntegral(request.getIsIntegral());
-        info.setRoyaltyType(request.getRoyaltyType());
+        info.setRoyaltyType(JSON.toJSONString(request.getRoyaltyType()));
         info.setIsBooked(request.getIsBooked());
         info.setIsGift(request.getIsGift());
         info.setIsWeigh(request.getIsWeigh());

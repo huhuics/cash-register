@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import cn.cash.register.common.request.GoodsInfoQueryRequest;
+import cn.cash.register.common.request.StockWarningQueryRequest;
 import cn.cash.register.dao.domain.GoodsInfo;
 
 public interface GoodsInfoMapper {
@@ -25,4 +26,6 @@ public interface GoodsInfoMapper {
     int updateStock(@Param("id") Long id, @Param("count") int count);
 
     List<GoodsInfo> search(String keyword);
+
+    List<GoodsInfo> queryByStock(StockWarningQueryRequest request);
 }

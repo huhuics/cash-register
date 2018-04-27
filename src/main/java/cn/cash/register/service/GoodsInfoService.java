@@ -12,7 +12,6 @@ import cn.cash.register.common.request.GoodsInfoQueryRequest;
 import cn.cash.register.common.request.GoodsInfoRequest;
 import cn.cash.register.dao.domain.GoodsImage;
 import cn.cash.register.dao.domain.GoodsInfo;
-import cn.cash.register.enums.UpdateFieldEnum;
 
 /**
  * 商品信息服务接口
@@ -82,6 +81,6 @@ public interface GoodsInfoService {
     /**
      * 批量操作
      */
-    void batchUpdate(List<Long> goodsIds, Object newValue, UpdateFieldEnum filedEnum);
+    void batchUpdate(List<Long> goodsIds, String newValue, String filedEnumCode);
 
 }
