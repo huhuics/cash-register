@@ -229,7 +229,15 @@ var vm = new Vue({
         	if (isBlank(goodsIds) || goodsIds.length < 1) {
                 return;
             }
-        	// TODO
+        	this.resetBatchEditParam();
+        	layer.open({
+                type: 1, skin: 'layui-layer-lan', title: "批量编辑商品", area: '1000px', shadeClose: false,
+                content: jQuery("#goodsbatchEditDiv"),
+                btn: ['提交', '取消'],
+                btn1: function(index) {
+                	// TODO
+                }
+        	});
         },
         del: function() {
         	var goodsIds = getSelectedRows();
@@ -451,6 +459,9 @@ var vm = new Vue({
         },
         resetGoodsTag: function() {
         	this.goodsTag = cloneJsonObj(goodsTag_entity);
+        },
+        resetBatchEditParam: function() {
+        	// TODO
         },
         loadGoodsCategorys: function() { // 加载所有商品分类列表
         	var _self = this;
