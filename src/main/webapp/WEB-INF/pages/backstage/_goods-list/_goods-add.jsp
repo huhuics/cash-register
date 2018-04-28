@@ -171,7 +171,7 @@
                 <div class="input-group">
                     <span class="input-group-addon">标签</span>
                     <input type="text" class="form-control" readonly v-model="goods.goodsTag">
-                    <span class="input-group-btn"><button class="btn btn-primary" type="button" @click="_editGoodsTag">选择</button></span>
+                    <span class="input-group-btn"><button class="btn btn-primary" type="button" @click="_editGoodsTag('addOrEdit')">选择</button></span>
                 </div>
             </div>
         </div>

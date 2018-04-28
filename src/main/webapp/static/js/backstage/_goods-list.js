@@ -58,6 +58,12 @@ var vm = new Vue({
     		}
             return ret;
     	},
+    	batchEditParam_royaltyType() {
+    		return this.batchEditParam.royaltyType;
+    	},
+    	batchEditParam_isVipPrice() {
+    		return this.batchEditParam.isVipPrice;
+    	},
     	
     },
     watch: {
@@ -93,8 +99,41 @@ var vm = new Vue({
     		this.goods.averageImportPrice = this.goods.lastImportPrice;
     	},
     	select_goods_tags: function() { // 选择标签变化时更新商品标签
-    		this.goods.goodsTag = this.select_goods_tags.toString();
-    	}
+    		switch(this.select_goods_tags_usefor) {
+    		case 'addOrEdit':
+    			this.goods.goodsTag = this.select_goods_tags.toString();
+    			break;
+    		case 'batchAdd':
+    			this.batchEditParam.goodsTagAdd = this.select_goods_tags.toString();
+    			break;
+    		case 'batchRemove':
+    			this.batchEditParam.goodsTagRemove = this.select_goods_tags.toString();
+    			break;
+    		default:
+    			layer.alert('参数异常！选择标签将不会生效');
+    		}
+    	},
+    	batchEditParam_royaltyType: function() { // 批量编辑提成方式
+    		if (this.batchEditParam.royaltyType==3){
+    			$("#batchEditRoyaltyValueInput").removeAttr("readonly");
+    			$("#batchEditRoyaltyValueSpan").text("固定金额");
+    		} else if (this.batchEditParam.royaltyType==4 || this.batchEditParam.royaltyType==5){
+    			$("#batchEditRoyaltyValueInput").removeAttr("readonly");
+    			$("#batchEditRoyaltyValueSpan").text("百分比");
+    		} else {
+    			this.batchEditParam.royaltyValue = 0;
+    			$("#batchEditRoyaltyValueInput").attr("readonly","true");
+    			$("#batchEditRoyaltyValueSpan").text("无相关值");
+    		}
+    	},
+    	batchEditParam_isVipPrice: function() { // 批量编辑会员优惠
+    		if(this.batchEditParam.isVipPrice!='no') {
+    			this.batchEditParam.vipPricePercent = null;
+        		$("#batchEditVipPricePercentInput").attr("readonly","true");
+    		} else {
+    			$("#batchEditVipPricePercentInput").removeAttr("readonly");
+    		}
+    	},
     },
     methods: {
         search: function() {
@@ -125,37 +164,38 @@ var vm = new Vue({
         },
         add: function() {
         	this.resetGoods();
+        	var _self = this;
             layer.open({
                 type: 1, skin: 'layui-layer-lan', title: "新增商品", area: '650px', shadeClose: false,
                 content: jQuery("#goodsAddDiv"),
                 btn: ['提交', '取消'],
                 btn1: function(index) {
-                	if(!vm.switches.colorSize) { // 未选择颜色尺码
+                	if(!_self.switches.colorSize) { // 未选择颜色尺码
                 		$.ajax({
                             url: basePath + "/admin/goods/addGoodsInfo",
-                            data: vm.goods,
+                            data: _self.goods,
                             success: function(result) {
                                 if (result.code == "00") {
                                     layer.alert('添加成功');
                                     layer.close(index);
-                                    vm.resetGoods();
-                                    vm.select_goods_colors = [];
-                                    vm.select_goods_sizes = [];
+                                    _self.resetGoods();
+                                    _self.select_goods_colors = [];
+                                    _self.select_goods_sizes = [];
                                 } else {
                                     layer.alert(result.msg);
                                 }
-                                vm.reloadPage();
+                                _self.reloadPage();
                             }
                         });
                 	} else { // 选择颜色尺码
                 		var num_success = 0;
                 		var num_failed = 0;
                 		var err_msg = '';
-                		var css = vm.color_size_stock;
+                		var css = _self.color_size_stock;
                 		for(var i=0; i<css.length; i++) {
-                			vm.goods.goodsColor = css[i].color;
-                			vm.goods.goodsSize = css[i].size;
-                			vm.goods.goodsStock = css[i].stock;
+                			_self.goods.goodsColor = css[i].color;
+                			_self.goods.goodsSize = css[i].size;
+                			_self.goods.goodsStock = css[i].stock;
                 			$.ajax({
                 				async: false,
                                 url: basePath + "/admin/goods/addGoodsInfo",
@@ -171,7 +211,7 @@ var vm = new Vue({
                                 }
                             });
                 		}
-                		vm.reloadPage();
+                		_self.reloadPage();
                 		layer.close(index);
                 		layer.alert(num_success+'个商品创建成功,'+num_failed+'个商品创建失败.'+err_msg);
                 	}
@@ -230,12 +270,27 @@ var vm = new Vue({
                 return;
             }
         	this.resetBatchEditParam();
+        	this.batchEditParam.targetIds = goodsIds.toString();
+        	var _self = this;
         	layer.open({
-                type: 1, skin: 'layui-layer-lan', title: "批量编辑商品", area: '1000px', shadeClose: false,
+                type: 1, skin: 'layui-layer-lan', title: "批量编辑"+goodsIds.length+"个商品", area: '600px', shadeClose: false,
                 content: jQuery("#goodsbatchEditDiv"),
                 btn: ['提交', '取消'],
                 btn1: function(index) {
-                	// TODO
+                	console.log(JSON.stringify(_self.batchEditParam)); // TODO
+                	$.ajax({
+                        url: basePath + "/admin/goods/batchUpdate",
+                        data: _self.batchEditParam,
+                        success: function(result) {
+                            if (result.code == "00") {
+                                layer.alert('批量编辑成功');
+                                layer.close(index);
+                                _self.reloadPage();
+                            } else {
+                                layer.alert(result.msg);
+                            }
+                        }
+                    });
                 }
         	});
         },
@@ -251,7 +306,7 @@ var vm = new Vue({
                     success: function(result) {
                         if (result.code == "00") {
                             layer.alert('删除成功');
-                            vm.reload();
+                            vm.reloadPage();
                         } else {
                             layer.alert(result.msg);
                         }
@@ -291,7 +346,10 @@ var vm = new Vue({
         _editGoodsColorSize: function() { layerOpen_skinlan_nobtn("编辑颜色尺码",'650px',"#goodsColorSizeDiv"); },
         _editGoodsUnit: function() { layerOpen_skinlan_nobtn("选择单位",'350px',"#goodsUnitDiv"); },
         _editGoodsBrand: function() { layerOpen_skinlan_nobtn("选择品牌",'350px',"#goodsBrandDiv"); },
-        _editGoodsTag: function() { layerOpen_skinlan_nobtn("选择标签",'350px',"#goodsTagDiv"); },
+        _editGoodsTag: function(usefor) {
+        	this.select_goods_tags_usefor = usefor;
+        	layerOpen_skinlan_nobtn("选择标签",'350px',"#goodsTagDiv"); 
+        },
         _editGoodsSupplier: function() { layerOpen_skinlan_nobtn("选择供货商",'350px',"#goodsSupplierDiv"); },
         _editGoodsCategory: function() {
         	layer.alert('暂不支持分类管理，请手动输入分类');
@@ -461,7 +519,7 @@ var vm = new Vue({
         	this.goodsTag = cloneJsonObj(goodsTag_entity);
         },
         resetBatchEditParam: function() {
-        	// TODO
+        	this.batchEditParam = cloneJsonObj(vue_batchEditParam);
         },
         loadGoodsCategorys: function() { // 加载所有商品分类列表
         	var _self = this;

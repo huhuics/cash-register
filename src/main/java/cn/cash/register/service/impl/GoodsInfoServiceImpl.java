@@ -190,14 +190,12 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
-    public void batchUpdate(List<Long> goodsIds, String newValue, String filedEnumCode) {
+    public void batchUpdate(List<Long> goodsIds, String newValue, UpdateFieldEnum filedEnum) {
         if (CollectionUtils.isEmpty(goodsIds)) {
             return;
         }
 
         LogUtil.info(logger, "收到批量操作请求,ids.size={0}", goodsIds.size());
-
-        UpdateFieldEnum filedEnum = UpdateFieldEnum.valueOf(filedEnumCode);
 
         List<GoodsInfo> goodsInfos = new ArrayList<>(goodsIds.size());
 
