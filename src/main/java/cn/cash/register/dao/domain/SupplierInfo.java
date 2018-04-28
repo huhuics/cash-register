@@ -2,6 +2,8 @@ package cn.cash.register.dao.domain;
 
 import java.util.Date;
 
+import cn.cash.register.util.AssertUtil;
+
 public class SupplierInfo extends BaseDomain {
     /**  */
     private static final long serialVersionUID = 7651373595491664603L;
@@ -33,6 +35,12 @@ public class SupplierInfo extends BaseDomain {
     private Date              gmtUpdate;
 
     private Date              gmtCreate;
+
+    public void validate() {
+        AssertUtil.assertNotBlank(supplierCode, "供货商编号不能为空");
+        AssertUtil.assertNotBlank(supplierName, "供货商名称不能为空");
+        AssertUtil.assertNotNull(status, "供货商状态不能为空");
+    }
 
     public Long getId() {
         return id;

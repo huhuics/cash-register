@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.cash.register.dao.domain.GoodsSize;
 import cn.cash.register.service.GoodsSizeService;
+import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -37,6 +38,7 @@ public class GoodsSizeController {
     @ResponseBody
     @RequestMapping(value = "/addGoodsSize")
     public ResultSet addGoodsSize(String sizeName) {
+        AssertUtil.assertNotBlank(sizeName, "商品尺寸不能为空");
         Long id = sizeService.addSize(sizeName);
         return ResultSet.success().put("id", id);
     }

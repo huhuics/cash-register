@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.cash.register.dao.domain.GoodsColor;
 import cn.cash.register.service.GoodsColorService;
+import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -37,6 +38,7 @@ public class GoodsColorController {
     @ResponseBody
     @RequestMapping(value = "/addGoodsColor")
     public ResultSet addGoodsColor(String colorName) {
+        AssertUtil.assertNotBlank(colorName, "商品颜色不能为空");
         Long id = colorService.addColor(colorName);
         return ResultSet.success().put("id", id);
     }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.cash.register.dao.domain.GoodsTag;
 import cn.cash.register.service.GoodsTagService;
+import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -37,6 +38,7 @@ public class GoodsTagController {
     @ResponseBody
     @RequestMapping(value = "/addGoodsTag")
     public ResultSet addGoodsTag(String tagName) {
+        AssertUtil.assertNotBlank(tagName, "商品标签不能为空");
         Long id = tagService.add(tagName);
         return ResultSet.success().put("id", id);
     }
@@ -61,6 +63,8 @@ public class GoodsTagController {
     @ResponseBody
     @RequestMapping(value = "/updateGoodsTag")
     public ResultSet updateGoodsTag(GoodsTag tag) {
+        AssertUtil.assertNotNull(tag.getId());
+        AssertUtil.assertNotBlank(tag.getTagName(), "商品标签不能为空");
         int result = tagService.update(tag);
         return ResultSet.success().put("result", result);
     }
@@ -73,6 +77,7 @@ public class GoodsTagController {
     @ResponseBody
     @RequestMapping(value = "/queryGoodsTagById")
     public ResultSet queryGoodsTagById(Long id) {
+        AssertUtil.assertNotNull(id, "商品标签id不能为空");
         GoodsTag tag = tagService.queryById(id);
         return ResultSet.success().put("tag", tag);
     }

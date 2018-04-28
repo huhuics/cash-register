@@ -28,5 +28,8 @@ public class Constants {
     /** 商店名 */
     public static final String SHOP_NAME                   = "SHOP_NAME";
 
+    /** Excel保存路径 */
+    public static final String EXCEL_PATH                  = "EXCEL_PATH";
+
     /*********************************end***********************************/
 }

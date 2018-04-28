@@ -18,6 +18,7 @@ import com.github.pagehelper.PageInfo;
 import cn.cash.register.common.request.SupplierQueryRequest;
 import cn.cash.register.dao.domain.SupplierInfo;
 import cn.cash.register.service.SupplierService;
+import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -48,6 +49,7 @@ public class SupplierController {
     @ResponseBody
     @RequestMapping(value = "/addSupplierInfo")
     public ResultSet addSupplierInfo(SupplierInfo supplier) {
+        supplier.validate();
         Long result = supplierService.add(supplier);
         return ResultSet.success().put("result", result);
     }
@@ -70,6 +72,7 @@ public class SupplierController {
     @ResponseBody
     @RequestMapping(value = "/updateSupplierInfo")
     public ResultSet updateSupplierInfo(SupplierInfo supplier) {
+        AssertUtil.assertNotNull(supplier.getId());
         int result = supplierService.update(supplier);
         return ResultSet.success().put("result", result);
     }

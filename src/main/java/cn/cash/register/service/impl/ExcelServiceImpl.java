@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import cn.cash.register.common.Constants;
 import cn.cash.register.service.ExcelService;
+import cn.cash.register.service.SystemParameterService;
 import cn.cash.register.util.AssertUtil;
 
 /**
@@ -32,7 +35,10 @@ import cn.cash.register.util.AssertUtil;
 @Service
 public class ExcelServiceImpl implements ExcelService {
 
-    private static final String PATH = "F:\\";
+    @Resource
+    private SystemParameterService paramService;
+
+    private String                 PATH = paramService.getByCode(Constants.EXCEL_PATH).getParamValue();
 
     @Override
     public String write(String fileName, List<String> titles, List<?> contents) {

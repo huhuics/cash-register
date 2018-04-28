@@ -4,6 +4,8 @@
  */
 package cn.cash.register.common.request;
 
+import cn.cash.register.util.AssertUtil;
+
 /**
  * 商品进货请求类
  * @author HuHui
@@ -48,7 +50,10 @@ public class InTrafficRequest extends BaseRequest {
 
     @Override
     public void validate() {
-
+        AssertUtil.assertNotNull(status, "状态不能为空");
+        AssertUtil.assertNotBlank(goodsName, "商品名不能为空");
+        AssertUtil.assertNotBlank(barCode, "条码不能为空");
+        AssertUtil.assertNotNull(goodsStock, "商品库存不能为空");
     }
 
     public Long getGoodsId() {
