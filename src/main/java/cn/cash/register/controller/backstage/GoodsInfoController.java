@@ -22,6 +22,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.GoodsBatchEditRequest;
+import cn.cash.register.common.request.GoodsInfoInportRequest;
 import cn.cash.register.common.request.GoodsInfoQueryRequest;
 import cn.cash.register.common.request.GoodsInfoRequest;
 import cn.cash.register.dao.domain.GoodsImage;
@@ -185,7 +186,13 @@ public class GoodsInfoController {
         if (StringUtils.isNotBlank(request.getIsVipPrice())) {
             Boolean bool = transferStringToBoolean(request.getIsVipPrice());
             if (null != bool) {
-                //TODO goodsInfoService.batchUpdate(goodsIds, bool.toString(), UpdateFieldEnum.);
+                if (bool) {//会员价
+                    if (StringUtils.isNotBlank(request.getVipPricePercent())) {
+                        goodsInfoService.batchUpdate(goodsIds, request.getVipPricePercent(), UpdateFieldEnum.vipPrice);
+                    }
+                } else {//会员折扣
+                    goodsInfoService.batchUpdate(goodsIds, bool.toString(), UpdateFieldEnum.isVipDiscount);
+                }
             }
         }
         // 状态
@@ -214,13 +221,6 @@ public class GoodsInfoController {
             Boolean bool = transferStringToBoolean(request.getIsBooked());
             if (null != bool) {
                 goodsInfoService.batchUpdate(goodsIds, bool.toString(), UpdateFieldEnum.isBooked);
-            }
-        }
-        // 是否称重
-        if (StringUtils.isNotBlank(request.getIsWeigh())) {
-            Boolean bool = transferStringToBoolean(request.getIsWeigh());
-            if (null != bool) {
-                //TODO goodsInfoService.batchUpdate(goodsIds, bool.toString(), UpdateFieldEnum.isWeigh);
             }
         }
         // 是否时价
@@ -275,12 +275,37 @@ public class GoodsInfoController {
         goodsInfoService.updateGoodsImage(goodsInfoId, goodsImage);
     }
 
+    /**
+     * 生成字符串的拼音首字母
+     * @param goodsName
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/genePinyinShort")
     public ResultSet genePinyinShort(String goodsName) {
         AssertUtil.assertNotBlank(goodsName, "商品名称不能为空");
         String pinyin = PinyinUtil.getPinyinHeadLowerChar(goodsName);
         return ResultSet.success().put("pinyin", pinyin);
+    }
+
+    /**
+     * 导出商品数据为Excel文件
+     */
+    @ResponseBody
+    @RequestMapping(value = "/export")
+    public ResultSet export(GoodsInfoQueryRequest request) {
+        String excelFilePath = goodsInfoService.export(request);
+        return ResultSet.success().put("excelFilePath", excelFilePath);
+    }
+
+    /**
+     * 将Excel中的商品数据导入到数据库
+     */
+    @ResponseBody
+    @RequestMapping(value = "/inport")
+    public ResultSet inport(GoodsInfoInportRequest request) {
+        goodsInfoService.inport(request);
+        return ResultSet.success();
     }
 
     private void validateAddRequest(GoodsInfoRequest request) {
