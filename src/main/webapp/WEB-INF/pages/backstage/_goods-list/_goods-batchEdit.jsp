@@ -216,7 +216,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <div class="col-xs-4">
             	<div class="input-group">
                     <span class="label label-warning">是否称重</span>
@@ -236,7 +236,7 @@
                     </span>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="form-group">
             <div class="col-xs-4">
             	<div class="input-group">
