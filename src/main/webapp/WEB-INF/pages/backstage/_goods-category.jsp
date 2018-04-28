@@ -15,6 +15,21 @@
         <ul id="categoryTree" class="ztree"></ul>
     </div>
     
+    <!-- 添加分类 -->
+	<div id="goodsCategoryAddDiv" style="display: none;">
+	    <form class="form-horizontal layerForm">
+	        <div class="form-group">
+	            <div class="col-xs-12">
+	            	<div class="input-group">
+	                    <span class="input-group-addon">分类名</span>
+	                    <input type="text" class="form-control" id="goodsCategoryAddInput">
+	                </div>
+	            </div>
+	        </div>
+	    </form>
+	</div>
+	<!-- /添加分类 -->
+    
     <script src="${ctx}/static/js/backstage/_goods-category.js"></script>
     
 </body>

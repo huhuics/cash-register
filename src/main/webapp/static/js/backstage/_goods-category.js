@@ -25,86 +25,85 @@ var setting = {
     }
 };
 
-
-var log, className = "dark";
-
+/**
+ * 拖拽前
+ */
 function beforeDrag(treeId, treeNodes) {
-    return false;
+    return false; // 不允许拖拽
 }
 
+/**
+ * 编辑前
+ */
 function beforeEditName(treeId, treeNode) {
-    className = (className === "dark" ? "" : "dark");
-    showLog("[ " + getTime() + " beforeEditName ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
     var zTree = $.fn.zTree.getZTreeObj("categoryTree");
     zTree.selectNode(treeNode);
-    setTimeout(function() {
-        if (confirm("进入节点 -- " + treeNode.name + " 的编辑状态吗？")) {
-            setTimeout(function() {
-                zTree.editName(treeNode);
-            }, 0);
-        }
-    }, 0);
+    zTree.editName(treeNode);
     return false;
 }
 
+/**
+ * 删除前
+ */
 function beforeRemove(treeId, treeNode) {
-    className = (className === "dark" ? "" : "dark");
-    showLog("[ " + getTime() + " beforeRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
     var zTree = $.fn.zTree.getZTreeObj("categoryTree");
     zTree.selectNode(treeNode);
-    return confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
+    return true;
 }
 
+/**
+ * 删除
+ */
 function onRemove(e, treeId, treeNode) {
-    showLog("[ " + getTime() + " onRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+	$.ajax({
+        url: basePath + "/admin/goods/deleteGoodsCategory",
+        data: { 'id': treeNode.id },
+        success: function(result) {
+            if (result.code == "00") {
+                layer.alert('删除成功');
+            } else {
+                layer.alert(result.msg);
+            }
+        }
+    });
     refreshTree();
 }
 
+/**
+ * 编辑前
+ */
 function beforeRename(treeId, treeNode, newName, isCancel) {
-    className = (className === "dark" ? "" : "dark");
-    showLog((isCancel ? "<span style='color:red'>" : "") + "[ " + getTime() + " beforeRename ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name + (isCancel ? "</span>" : ""));
     if (newName.length == 0) {
-        setTimeout(function() {
-            var zTree = $.fn.zTree.getZTreeObj("categoryTree");
-            zTree.cancelEditName();
-            alert("节点名称不能为空.");
-        }, 0);
+        var zTree = $.fn.zTree.getZTreeObj("categoryTree");
+        zTree.cancelEditName();
+        layer.alert("节点名称不能为空.");
         return false;
     }
     return true;
 }
 
+/**
+ * 编辑
+ */
 function onRename(e, treeId, treeNode, isCancel) {
-    showLog((isCancel ? "<span style='color:red'>" : "") + "[ " + getTime() + " onRename ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name + (isCancel ? "</span>" : ""));
+	$.ajax({
+        url: basePath + "/admin/goods/updateGoodsCategory",
+        data: { 'id': treeNode.id, 'categoryName': treeNode.name },
+        success: function(result) {
+            if (result.code == "00") {
+                layer.alert('编辑成功');
+            } else {
+                layer.alert(result.msg);
+            }
+        }
+    });
+    refreshTree();
 }
 
 function showRemoveBtn(treeId, treeNode) {
-    return treeNode.parentId != 0;
+    return treeNode.parentId != 0; // 根目录不显示删除按钮
 }
 
-function showRenameBtn(treeId, treeNode) {
-    return !treeNode.isLastNode;
-}
-
-function showLog(str) {
-    if (!log) log = $("#log");
-    log.append("<li class='" + className + "'>" + str + "</li>");
-    if (log.children("li").length > 8) {
-        log.get(0).removeChild(log.children("li")[0]);
-    }
-}
-
-function getTime() {
-    var now = new Date(),
-        h = now.getHours(),
-        m = now.getMinutes(),
-        s = now.getSeconds(),
-        ms = now.getMilliseconds();
-    return (h + ":" + m + ":" + s + " " + ms);
-}
-
-var newCount = 1;
-// 
 function addHoverDom(treeId, treeNode) {
     var sObj = $("#" + treeNode.tId + "_span");
     if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
@@ -114,7 +113,32 @@ function addHoverDom(treeId, treeNode) {
     var btn = $("#addBtn_" + treeNode.tId);
     if (btn) btn.bind("click", function() {
         var zTree = $.fn.zTree.getZTreeObj("categoryTree");
-        zTree.addNodes(treeNode, { id: (100 + newCount), pId: treeNode.id, name: "new node" + (newCount++) });
+        var parentId = treeNode.id;
+        layer.open({
+        	type: 1, skin: 'layui-layer-lan', title: "添加分类", area: '350px', shadeClose: false,
+            content: jQuery("#goodsCategoryAddDiv"),
+            btn: ['提交', '取消'],
+            btn1: function(index) {
+            	var categoryName = $("#goodsCategoryAddInput").val();
+            	if(categoryName.length == 0) {
+            		layer.alert('输入分类为空');
+            		return;
+            	}
+                $.ajax({
+                    url: basePath + "/admin/goods/addGoodsCategory",
+                    data: {'categoryName':categoryName,'parentId':parentId},
+                    success: function(result) {
+                        if (result.code == "00") {
+                            layer.alert('添加成功');
+                            layer.close(index);
+                            refreshTree();
+                        } else {
+                            layer.alert(result.msg);
+                        }
+                    }
+                });
+            }
+        });
         return false;
     });
 };
@@ -123,20 +147,16 @@ function removeHoverDom(treeId, treeNode) {
     $("#addBtn_" + treeNode.tId).unbind().remove();
 };
 
-function selectAll() {
-    var zTree = $.fn.zTree.getZTreeObj("categoryTree");
-    zTree.setting.edit.editNameSelectAll = $("#selectAll").attr("checked");
-}
-
 function refreshTree() {
     $.ajax({
         url: basePath + "/admin/goods/getGoodsCategoryTree",
-        data: { 'categoryId': 0 },
+        data: { 'parentCategoryId': 0 },
         success: function(result) {
             if (result.code == "00") {
                 goodsCategoryNodes = result.tree;
                 $.fn.zTree.init($("#categoryTree"), setting, goodsCategoryNodes);
-                $("#selectAll").bind("click", selectAll);
+                var zTree = $.fn.zTree.getZTreeObj("categoryTree");
+                zTree.expandAll(true);
             } else {
                 layer.alert(result.msg);
             }
@@ -144,10 +164,6 @@ function refreshTree() {
     });
 }
 
-function addCategory() {
-	
-}
 $(document).ready(function() {
     refreshTree();
-
 });
