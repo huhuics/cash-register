@@ -55,6 +55,15 @@ public enum RoyaltyTypeEnum {
         return null;
     }
 
+    public static RoyaltyTypeEnum getByDesc(String desc) {
+        for (RoyaltyTypeEnum eachValue : RoyaltyTypeEnum.values()) {
+            if (StringUtils.equals(desc, eachValue.getDesc())) {
+                return eachValue;
+            }
+        }
+        return null;
+    }
+
     public String getCode() {
         return code;
     }

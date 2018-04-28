@@ -5,9 +5,12 @@
 package cn.cash.register.service.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -37,8 +40,6 @@ public class ExcelServiceImpl implements ExcelService {
 
     @Resource
     private SystemParameterService paramService;
-
-    private String                 PATH = paramService.getByCode(Constants.EXCEL_PATH).getParamValue();
 
     @Override
     public String write(String fileName, List<String> titles, List<?> contents) {
@@ -86,13 +87,12 @@ public class ExcelServiceImpl implements ExcelService {
         FileOutputStream out = null;
         File file = null;
         try {
-            file = new File(PATH + fileName);
+            file = new File(fileName);
             out = new FileOutputStream(file);
             book.write(out);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-
             try {
                 out.close();
                 book.close();
@@ -103,9 +103,54 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     @Override
-    public <T> List<T> read(String filePath, Class<?> T) {
-        // TODO Auto-generated method stub
-        return null;
+    public <T> List<T> read(String filePath, Class<T> clazz) {
+        AssertUtil.assertNotBlank(filePath, "文件路径不能为空");
+        File file = new File(filePath);
+        AssertUtil.assertTrue(file.isFile(), "文件不存在");
+
+        List<T> list = new ArrayList<>();
+        HSSFWorkbook book = null;
+        InputStream inStream = null;
+        try {
+            inStream = new FileInputStream(file);
+            book = new HSSFWorkbook(inStream);
+            HSSFSheet sheet = book.getSheetAt(0);//只能取第一个sheet
+            if (sheet == null) {
+                return null;
+            }
+
+            //遍历所有行,跳过标题行
+            for (int i = 1; i < sheet.getLastRowNum(); i++) {
+                HSSFRow row = sheet.getRow(i);
+                if (row == null) {
+                    continue;
+                }
+
+                T object = clazz.newInstance();
+
+                //遍历所有列
+                for (int j = 0; j < row.getLastCellNum(); j++) {
+                    HSSFCell cell = row.getCell(j);
+                    if (cell == null) {
+                        continue;
+                    }
+                    String strCellValue = cell.getStringCellValue();
+                    FieldUtils.writeField(clazz.getDeclaredFields()[j], object, strCellValue, true);
+                }
+
+                list.add(object);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                inStream.close();
+                book.close();
+            } catch (IOException e) {
+            }
+        }
+
+        return list;
     }
 
 }

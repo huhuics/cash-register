@@ -7,6 +7,10 @@ package cn.cash.register.test.util;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.junit.Test;
 
+import com.alibaba.fastjson.JSON;
+
+import cn.cash.register.dao.domain.RoyaltyType;
+
 /**
  * 
  * @author HuHui
@@ -23,6 +27,14 @@ public class ConvertUtilTest {
         for (Long id : ids) {
             System.out.println(id);
         }
+    }
+
+    @Test
+    public void test() {
+        RoyaltyType type = new RoyaltyType();
+        type.setType("0");
+        type.setValue("0");
+        System.out.println(JSON.toJSON(type));
     }
 
 }
