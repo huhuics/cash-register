@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 
+import cn.cash.register.common.request.GoodsInfoInportRequest;
 import cn.cash.register.common.request.GoodsInfoQueryRequest;
 import cn.cash.register.service.GoodsInfoService;
 import cn.cash.register.test.BaseTest;
@@ -25,7 +26,18 @@ public class GoodsInfoServiceTest extends BaseTest {
     @Test
     public void testExport() {
         GoodsInfoQueryRequest request = new GoodsInfoQueryRequest();
-        goodsInfoService.export(request);
+        String filePath = goodsInfoService.export(request);
+        System.out.println(filePath);
+    }
+
+    @Test
+    public void testInport() {
+        String filePath = "F:\\WorkSpace\\eclipse-oxygen2\\cash-register\\商品资料.xls";
+
+        GoodsInfoInportRequest request = new GoodsInfoInportRequest();
+        request.setFileFullPath(filePath);
+
+        goodsInfoService.inport(request);
     }
 
 }

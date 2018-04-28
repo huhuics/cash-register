@@ -15,7 +15,7 @@ public interface ExcelService {
 
     /**
      * 写Excel文件
-     * @param fileName 生成的excel文件名字
+     * @param fileName 文件保存路径+生成的excel文件名字
      * @param titles   excel文件标题
      * @param contents 内容
      * @return         生成的excel路径
@@ -25,9 +25,9 @@ public interface ExcelService {
     /**
      * 读Excel文件内容
      * @param filePath excel文件路径
-     * @param T        文件内容对应的实体对象
+     * @param clazz    文件内容对应的类型
      * @return         内容集合
      */
-    <T> List<T> read(String filePath, Class<?> T);
+    <T> List<T> read(String filePath, Class<T> clazz);
 
 }

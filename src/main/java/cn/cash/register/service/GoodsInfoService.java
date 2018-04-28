@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.request.GoodsInfoInportRequest;
 import cn.cash.register.common.request.GoodsInfoQueryRequest;
 import cn.cash.register.common.request.GoodsInfoRequest;
 import cn.cash.register.dao.domain.GoodsImage;
@@ -86,15 +87,15 @@ public interface GoodsInfoService {
 
     /**
      * 导出商品数据为Excel文件
-     * @param request  导出请求
+     * @param request  查询请求
      * @return         Excel文件路径
      */
     String export(GoodsInfoQueryRequest request);
 
     /**
      * 将Excel中的商品数据导入到数据库
-     * @param fileFullPath  文件路径
+     * @param request  导入请求类
      */
-    void inport(String fileFullPath);
+    void inport(GoodsInfoInportRequest request);
 
 }

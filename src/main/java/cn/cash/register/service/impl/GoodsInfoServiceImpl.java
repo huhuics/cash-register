@@ -26,6 +26,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.Constants;
+import cn.cash.register.common.request.GoodsInfoInportRequest;
 import cn.cash.register.common.request.GoodsInfoQueryRequest;
 import cn.cash.register.common.request.GoodsInfoRequest;
 import cn.cash.register.dao.GoodsImageMapper;
@@ -252,8 +253,89 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
-    public void inport(String fileFullPath) {
-        // TODO Auto-generated method stub
+    public void inport(GoodsInfoInportRequest request) {
+        LogUtil.info(logger, "收到商品信息数据导入请求");
+        List<GoodsInfoExcel> goodsInfoExcels = excelService.read(request.getFileFullPath(), GoodsInfoExcel.class);
+        List<GoodsInfo> goodsInfos = convertToGoodsInfo(goodsInfoExcels);
+
+        txTemplate.execute(new TransactionCallbackWithoutResult() {
+            @Override
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                for (GoodsInfo info : goodsInfos) {
+                    goodsInfoMapper.insertSelective(info);
+                }
+            }
+        });
+    }
+
+    private List<GoodsInfo> convertToGoodsInfo(List<GoodsInfoExcel> excels) {
+        List<GoodsInfo> infos = new ArrayList<>();
+        for (GoodsInfoExcel excel : excels) {
+            GoodsInfo info = new GoodsInfo();
+
+            info.setGoodsName(excel.getGoodsName());
+            info.setBarCode(excel.getBarCode());
+            info.setProductNumber(excel.getProductNumber());
+            info.setPinyinCode(excel.getPinyinCode());
+            info.setCategoryName(excel.getCategoryName());
+            if (StringUtils.isNotBlank(excel.getGoodsStatus())) {
+                info.setGoodsStatus(StringUtils.equals(excel.getGoodsStatus(), "启用") ? true : false);
+            }
+            info.setGoodsBrand(excel.getGoodsBrand());
+            info.setGoodsColor(excel.getGoodsColor());
+            info.setGoodsSize(excel.getGoodsSize());
+            info.setGoodsTag(excel.getGoodsTag());
+            if (StringUtils.isNotBlank(excel.getGoodsStock())) {
+                info.setGoodsStock(Integer.parseInt(excel.getGoodsStock()));
+            }
+            info.setQuantityUnit(excel.getQuantityUnit());
+            if (StringUtils.isNotBlank(excel.getStockUpperLimit())) {
+                info.setStockUpperLimit(Integer.parseInt(excel.getStockUpperLimit()));
+            }
+            if (StringUtils.isNotBlank(excel.getStockLowerLimit())) {
+                info.setStockLowerLimit(Integer.parseInt(excel.getStockLowerLimit()));
+            }
+
+            if (StringUtils.isNotBlank(excel.getAverageImportPrice())) {
+                info.setLastImportPrice(new Money(excel.getAverageImportPrice()));
+                info.setAverageImportPrice(new Money(excel.getAverageImportPrice()));
+            }
+            if (StringUtils.isNotBlank(excel.getSalesPrice())) {
+                info.setSalesPrice(new Money(excel.getSalesPrice()));
+            }
+            if (StringUtils.isNotBlank(excel.getTradePrice())) {
+                info.setTradePrice(new Money(excel.getTradePrice()));
+            }
+            if (StringUtils.isNotBlank(excel.getVipPrice())) {
+                info.setVipPrice(new Money(excel.getVipPrice()));
+            }
+
+            if (StringUtils.isNotBlank(excel.getIsVipDiscount())) {
+                info.setIsVipDiscount(StringUtils.equals(excel.getIsVipDiscount(), "是") ? true : false);
+            }
+
+            info.setSupplierName(excel.getSupplierName());
+            info.setProductionDate(excel.getProductionDate());
+
+            if (StringUtils.isNotBlank(excel.getIsIntegral())) {
+                info.setIsIntegral(StringUtils.equals(excel.getIsIntegral(), "是") ? true : false);
+            }
+
+            if (StringUtils.isNotBlank(excel.getRoyaltyType())) {
+                RoyaltyTypeEnum royaltyType = RoyaltyTypeEnum.getByDesc(excel.getRoyaltyType());
+                info.setRoyaltyType(JSON.toJSONString(royaltyType));
+            }
+
+            info.setIsBooked(StringUtils.equals(excel.getIsBooked(), "是") ? true : false);
+            info.setIsGift(StringUtils.equals(excel.getIsGift(), "是") ? true : false);
+            info.setIsFixedPrice(StringUtils.equals(excel.getIsFixedPrice(), "是") ? true : false);
+            info.setIsTimeingPrice(StringUtils.equals(excel.getIsTimeingPrice(), "是") ? true : false);
+            info.setRemark(excel.getRemark());
+
+            infos.add(info);
+        }
+
+        return infos;
     }
 
     private List<GoodsInfoExcel> convertToExcelDO(List<GoodsInfo> infos) {
@@ -266,7 +348,7 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
             excel.setProductNumber(info.getProductNumber());
             excel.setPinyinCode(info.getPinyinCode());
             excel.setCategoryName(info.getCategoryName());
-            excel.setGoodsStatus(info.getGoodsStatus() ? "启动" : "停用");
+            excel.setGoodsStatus(info.getGoodsStatus() ? "启用" : "停用");
             excel.setGoodsBrand(info.getGoodsBrand());
             excel.setGoodsColor(info.getGoodsColor());
             excel.setGoodsSize(info.getGoodsSize());
