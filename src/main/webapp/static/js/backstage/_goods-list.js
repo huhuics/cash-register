@@ -302,7 +302,7 @@ var vm = new Vue({
         	confirm("确定删除这" + goodsIds.length + "个商品吗?", function() {
                 $.ajax({
                     url: basePath + "/admin/goods/deleteGoodsInfo",
-                    data: { 'ids': goodsIds + '' },
+                    data: { 'idStr': goodsIds + '' },
                     success: function(result) {
                         if (result.code == "00") {
                             layer.alert('删除成功');
