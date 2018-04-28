@@ -528,7 +528,6 @@ var vm = new Vue({
         loadGoodsCategorys: function() { // 加载所有商品分类列表
         	var _self = this;
             $.ajax({
-                async: false,
                 url: basePath + "/admin/goods/getGoodsCategoryList",
                 data:  { 'parentCategoryId': 0 },
                 success: function(result) {
@@ -544,7 +543,6 @@ var vm = new Vue({
         	var _self = this;
         	$.ajax({
         		type: "GET",
-        		async: false,
         		url: basePath + "/admin/goods/queryAllGoodsBrand",
         		success: function(result) {
         			if (result.code == "00") {
@@ -559,7 +557,6 @@ var vm = new Vue({
         	var _self = this;
         	$.ajax({
         		type: "GET",
-        		async: false,
         		url: basePath + "/admin/supplier/queryAllSupplierNames",
         		success: function(result) {
         			if (result.code == "00") {
@@ -574,7 +571,6 @@ var vm = new Vue({
         	var _self = this;
         	$.ajax({
         		type: "GET",
-        		async: false,
         		url: basePath + "/admin/goods/queryAllGoodsTag",
         		success: function(result) {
         			if (result.code == "00") {
@@ -589,7 +585,6 @@ var vm = new Vue({
         	var _self = this;
         	$.ajax({
         		type: "GET",
-        		async: false,
         		url: basePath + "/admin/goods/queryAllGoodsUnit",
         		success: function(result) {
         			if (result.code == "00") {
@@ -604,7 +599,6 @@ var vm = new Vue({
         	var _self = this;
         	$.ajax({
         		type: "GET",
-        		async: false,
         		url: basePath + "/admin/goods/queryAllGoodsColor",
         		success: function(result) {
         			if (result.code == "00") {
@@ -619,7 +613,6 @@ var vm = new Vue({
         	var _self = this;
         	$.ajax({
         		type: "GET",
-        		async: false,
         		url: basePath + "/admin/goods/queryAllGoodsSize",
         		success: function(result) {
         			if (result.code == "00") {
