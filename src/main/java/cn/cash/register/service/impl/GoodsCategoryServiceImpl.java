@@ -52,7 +52,7 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 
         category.setGmtCreate(new Date());
 
-        long id = goodsCategoryMapper.insertWithKey(category);
+        long id = goodsCategoryMapper.insertSelective(category);
 
         return id;
     }

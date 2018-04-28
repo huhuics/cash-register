@@ -12,8 +12,10 @@ import javax.annotation.Resource;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -29,13 +31,17 @@ import cn.cash.register.common.request.GoodsInfoQueryRequest;
 import cn.cash.register.common.request.GoodsInfoRequest;
 import cn.cash.register.dao.GoodsImageMapper;
 import cn.cash.register.dao.GoodsInfoMapper;
+import cn.cash.register.dao.domain.GoodsCategory;
 import cn.cash.register.dao.domain.GoodsImage;
 import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.enums.StockFlowTypeEnum;
 import cn.cash.register.enums.UpdateFieldEnum;
 import cn.cash.register.excel.domain.GoodsInfoExcel;
 import cn.cash.register.service.ExcelService;
+import cn.cash.register.service.GoodsBrandService;
+import cn.cash.register.service.GoodsCategoryService;
 import cn.cash.register.service.GoodsInfoService;
+import cn.cash.register.service.GoodsQuantityUnitService;
 import cn.cash.register.service.GoodsStockService;
 import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.ConvertUtil;
@@ -51,24 +57,33 @@ import cn.cash.register.util.TitleUtil;
 @Service
 public class GoodsInfoServiceImpl implements GoodsInfoService {
 
-    private static final Logger logger = LoggerFactory.getLogger(GoodsInfoServiceImpl.class);
+    private static final Logger      logger = LoggerFactory.getLogger(GoodsInfoServiceImpl.class);
 
     @Resource
-    private GoodsInfoMapper     goodsInfoMapper;
+    private GoodsInfoMapper          goodsInfoMapper;
 
     @Resource
-    private TransactionTemplate txTemplate;
+    private TransactionTemplate      txTemplate;
 
     @Resource
-    private GoodsImageMapper    goodsImageMapper;
+    private GoodsImageMapper         goodsImageMapper;
 
     @Resource
-    private GoodsStockService   stockService;
+    private GoodsStockService        stockService;
 
     @Resource
-    private ExcelService        excelService;
+    private ExcelService             excelService;
 
-    private List<String>        titles = TitleUtil.getGoodsInfoTitle();
+    @Resource
+    private GoodsCategoryService     categoryService;
+
+    @Resource
+    private GoodsQuantityUnitService unitService;
+
+    @Resource
+    private GoodsBrandService        brandService;
+
+    private List<String>             titles = TitleUtil.getGoodsInfoTitle();
 
     @Override
     public Long add(GoodsInfoRequest request) {
@@ -264,7 +279,37 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 for (GoodsInfo info : goodsInfos) {
-                    goodsInfoMapper.insertSelective(info);
+                    try {
+                        goodsInfoMapper.insertSelective(info);
+                    } catch (DuplicateKeyException e) {
+                        if (request.getIsExistUpdate()) { //已存在的商品更新
+                            goodsInfoMapper.updateByBarCodeSelective(info);
+                        }
+                    }
+
+                    if (request.getIsAutoCreateCategory() && StringUtils.isNotBlank(info.getCategoryName())) {
+                        GoodsCategory category = new GoodsCategory();
+                        category.setCategoryName(info.getCategoryName());
+                        category.setParentId(1L);
+                        try {
+                            categoryService.add(category);
+                        } catch (DuplicateKeyException e) { //ignore
+                        }
+                    }
+
+                    if (request.getIsAutoCreateUnit() && StringUtils.isNotBlank(info.getQuantityUnit())) {
+                        try {
+                            unitService.add(info.getQuantityUnit());
+                        } catch (DuplicateKeyException e) { //ignore
+                        }
+                    }
+
+                    if (request.getIsAutoCreateBrand() && StringUtils.isNotBlank(info.getGoodsBrand())) {
+                        try {
+                            brandService.addBrand(info.getGoodsBrand());
+                        } catch (DuplicateKeyException e) { //ignore
+                        }
+                    }
                 }
             }
         });

@@ -28,4 +28,6 @@ public interface GoodsInfoMapper {
     List<GoodsInfo> search(String keyword);
 
     List<GoodsInfo> queryByStock(StockWarningQueryRequest request);
+
+    int updateByBarCodeSelective(GoodsInfo info);
 }
