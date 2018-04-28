@@ -10,20 +10,27 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.request.GoodsBatchEditRequest;
 import cn.cash.register.common.request.GoodsInfoQueryRequest;
 import cn.cash.register.common.request.GoodsInfoRequest;
 import cn.cash.register.dao.domain.GoodsImage;
 import cn.cash.register.dao.domain.GoodsInfo;
+import cn.cash.register.dao.domain.RoyaltyType;
 import cn.cash.register.enums.UpdateFieldEnum;
 import cn.cash.register.service.GoodsInfoService;
 import cn.cash.register.util.AssertUtil;
+import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.NumUtil;
 import cn.cash.register.util.PinyinUtil;
 import cn.cash.register.util.ResultSet;
@@ -37,10 +44,12 @@ import cn.cash.register.util.ResultSet;
 @RequestMapping("/admin/goods")
 public class GoodsInfoController {
 
+    private static final Logger logger = LoggerFactory.getLogger(GoodsInfoController.class);
+
     @Resource
     private GoodsInfoService    goodsInfoService;
 
-    private static final String SEP = ",";
+    private static final String SEP    = ",";
 
     /**
      * 跳转到商品资料页
@@ -126,18 +135,110 @@ public class GoodsInfoController {
 
     /**
      * 批量修改操作
-     * @param goodsIds   商品id集合,使用半角逗号隔开
-     * @param newValue   被修改字段的新的值
-     * @param filedEnum  被修改的字段枚举{@link UpdateFieldEnum},只有枚举中的字段才支持批量修改
+     * @param request
      */
     @ResponseBody
     @RequestMapping(value = "/batchUpdate")
-    public void batchUpdate(String goodsIdStr, String newValue, String filedEnumCode) {
-        AssertUtil.assertNotBlank(goodsIdStr, "商品id不能为空");
-        AssertUtil.assertNotBlank(newValue, "商品新值不能为空");
-        String[] idArray = goodsIdStr.split(SEP);
+    public ResultSet batchUpdate(GoodsBatchEditRequest request) {
+        LogUtil.info(logger, "[Controller]接收到批量编辑请求,request={0}", request);
+        request.validate();
+
+        String[] idArray = request.getTargetIds().split(SEP);
         Long[] ids = (Long[]) ConvertUtils.convert(idArray, Long.class);
-        goodsInfoService.batchUpdate(Arrays.asList(ids), newValue, filedEnumCode);
+        List<Long> goodsIds = Arrays.asList(ids);
+
+        // 提成方式
+        if (StringUtils.isNotBlank(request.getRoyaltyType())) {
+            RoyaltyType royaltyType = new RoyaltyType();
+            royaltyType.setType(request.getRoyaltyType());
+            royaltyType.setValue(request.getRoyaltyValue());
+            goodsInfoService.batchUpdate(goodsIds, JSON.toJSONString(royaltyType), UpdateFieldEnum.royaltyType);
+        }
+        // 分类
+        if (StringUtils.isNotBlank(request.getCategoryName())) {
+            goodsInfoService.batchUpdate(goodsIds, request.getCategoryName(), UpdateFieldEnum.categoryName);
+        }
+        // 添加标签
+        if (StringUtils.isNotBlank(request.getGoodsTagAdd())) {
+            goodsInfoService.batchUpdate(goodsIds, request.getGoodsTagAdd(), UpdateFieldEnum.goodsTag);
+        }
+        // 移除标签
+        if (StringUtils.isNotBlank(request.getGoodsTagRemove())) {
+            goodsInfoService.batchUpdate(goodsIds, request.getGoodsTagRemove(), UpdateFieldEnum.goodsTag);
+        }
+        // 品牌
+        if (StringUtils.isNotBlank(request.getGoodsBrand())) {
+            goodsInfoService.batchUpdate(goodsIds, request.getGoodsBrand(), UpdateFieldEnum.goodsBrand);
+        }
+        // 供货商 
+        if (StringUtils.isNotBlank(request.getSupplierName())) {
+            goodsInfoService.batchUpdate(goodsIds, request.getSupplierName(), UpdateFieldEnum.supplierName);
+        }
+        // 是否积分
+        if (StringUtils.isNotBlank(request.getIsIntegral())) {
+            Boolean bool = transferStringToBoolean(request.getIsIntegral());
+            if (null != bool) {
+                goodsInfoService.batchUpdate(goodsIds, bool.toString(), UpdateFieldEnum.isIntegral);
+            }
+        }
+        // 优惠情况
+        if (StringUtils.isNotBlank(request.getIsVipPrice())) {
+            Boolean bool = transferStringToBoolean(request.getIsVipPrice());
+            if (null != bool) {
+                //TODO goodsInfoService.batchUpdate(goodsIds, bool.toString(), UpdateFieldEnum.);
+            }
+        }
+        // 状态
+        if (StringUtils.isNotBlank(request.getGoodsStatus())) {
+            Boolean bool = transferStringToBoolean(request.getGoodsStatus());
+            if (null != bool) {
+                goodsInfoService.batchUpdate(goodsIds, bool.toString(), UpdateFieldEnum.goodsStatus);
+            }
+        }
+        // 是否赠品
+        if (StringUtils.isNotBlank(request.getIsGift())) {
+            Boolean bool = transferStringToBoolean(request.getIsGift());
+            if (null != bool) {
+                goodsInfoService.batchUpdate(goodsIds, bool.toString(), UpdateFieldEnum.isGift);
+            }
+        }
+        // 是否隐藏
+        if (StringUtils.isNotBlank(request.getIsHidden())) {
+            Boolean bool = transferStringToBoolean(request.getIsHidden());
+            if (null != bool) {
+                goodsInfoService.batchUpdate(goodsIds, bool.toString(), UpdateFieldEnum.isHidden);
+            }
+        }
+        // 能否预约 
+        if (StringUtils.isNotBlank(request.getIsBooked())) {
+            Boolean bool = transferStringToBoolean(request.getIsBooked());
+            if (null != bool) {
+                goodsInfoService.batchUpdate(goodsIds, bool.toString(), UpdateFieldEnum.isBooked);
+            }
+        }
+        // 是否称重
+        if (StringUtils.isNotBlank(request.getIsWeigh())) {
+            Boolean bool = transferStringToBoolean(request.getIsWeigh());
+            if (null != bool) {
+                //TODO goodsInfoService.batchUpdate(goodsIds, bool.toString(), UpdateFieldEnum.isWeigh);
+            }
+        }
+        // 是否时价
+        if (StringUtils.isNotBlank(request.getIsTimeingPrice())) {
+            Boolean bool = transferStringToBoolean(request.getIsTimeingPrice());
+            if (null != bool) {
+                goodsInfoService.batchUpdate(goodsIds, bool.toString(), UpdateFieldEnum.isTimeingPrice);
+            }
+        }
+        // 是否固价
+        if (StringUtils.isNotBlank(request.getIsFixedPrice())) {
+            Boolean bool = transferStringToBoolean(request.getIsFixedPrice());
+            if (null != bool) {
+                goodsInfoService.batchUpdate(goodsIds, bool.toString(), UpdateFieldEnum.isFixedPrice);
+            }
+        }
+
+        return ResultSet.success();
     }
 
     /**
@@ -191,6 +292,16 @@ public class GoodsInfoController {
         AssertUtil.assertNotBlank(request.getLastImportPrice(), "进货价不能为空");
         AssertUtil.assertNotBlank(request.getAverageImportPrice(), "评价进货价不能为空");
         AssertUtil.assertNotBlank(request.getSalesPrice(), "销售价不能为空");
+    }
+
+    private Boolean transferStringToBoolean(String yesOrNo) {
+        if (StringUtils.equals(yesOrNo, "yes")) {
+            return true;
+        }
+        if (StringUtils.equals(yesOrNo, "no")) {
+            return false;
+        }
+        return null;
     }
 
 }
