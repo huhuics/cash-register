@@ -11,9 +11,9 @@
                 </div>
             </div>
             <div class="col-xs-8">
-            	<select class="form-control" v-model="batchEditParam.categoryName">
+            	<select class="form-control" v-model="batchEditParam.categoryName" data-live-search="true">
                     <option value="">选择商品分类</option>
-                    <option v-for="category in goods_categorys" :value="category.name">{{category.name}}</option>
+                    <option v-for="category in goods_categorys" :value="category.name">{{category.prefix+category.name}}</option>
                 </select>
             </div>
         </div>

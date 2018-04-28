@@ -85,15 +85,28 @@ public class GoodsCategoryController {
 
     /**
      * 获取商品种类树
-     * @param categoryId 当查询整棵树时填1,即根节点id
+     * @param parentCategoryId 当查询整棵树时填0,即所有首层节点的父id
      * @return json数组
      */
     @ResponseBody
     @RequestMapping(value = "/goods/getGoodsCategoryTree")
-    public ResultSet getGoodsCategoryTree(Long categoryId) {
-        LogUtil.info(logger, "收到查询商品种类树请求,categoryId={0}", categoryId);
-        JSONArray tree = categoryService.getTree(categoryId);
+    public ResultSet getGoodsCategoryTree(Long parentCategoryId) {
+        LogUtil.info(logger, "收到查询商品种类树请求,parentCategoryId={0}", parentCategoryId);
+        JSONArray tree = categoryService.getTree(parentCategoryId);
         return ResultSet.success().put("tree", tree);
+    }
+
+    /**
+     * 获取商品种类列表
+     * @param parentCategoryId 当查询整个列表时填0,即所有首层节点的父id
+     * @return json数组
+     */
+    @ResponseBody
+    @RequestMapping(value = "/goods/getGoodsCategoryList")
+    public ResultSet getGoodsCategoryList(Long parentCategoryId) {
+        LogUtil.info(logger, "收到查询商品种类列表请求,parentCategoryId={0}", parentCategoryId);
+        JSONArray list = categoryService.getList(parentCategoryId);
+        return ResultSet.success().put("list", list);
     }
 
 }

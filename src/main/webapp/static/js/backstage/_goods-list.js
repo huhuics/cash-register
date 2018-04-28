@@ -165,6 +165,7 @@ var vm = new Vue({
         add: function() {
         	this.select_goods_tags_usefor = 'addOrEdit';
         	this.resetGoods();
+        	this.goods.categoryName = '';
         	this.goods.royaltyType = '{type:"0",value:"0"}';
         	var _self = this;
             layer.open({
@@ -528,11 +529,11 @@ var vm = new Vue({
         	var _self = this;
             $.ajax({
                 async: false,
-                url: basePath + "/admin/goods/getGoodsCategoryTree",
-                data: { 'categoryId': 1 },
+                url: basePath + "/admin/goods/getGoodsCategoryList",
+                data:  { 'parentCategoryId': 0 },
                 success: function(result) {
                     if (result.code == "00") {
-                    	_self.goods_categorys = result.tree;
+                    	_self.goods_categorys = result.list;
                     } else {
                         layer.alert("加载商品分类列表出错" + result.msg);
                     }
