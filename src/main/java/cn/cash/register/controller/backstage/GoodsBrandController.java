@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.cash.register.dao.domain.GoodsBrand;
 import cn.cash.register.service.GoodsBrandService;
+import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -37,6 +38,7 @@ public class GoodsBrandController {
     @ResponseBody
     @RequestMapping(value = "/addGoodsBrand")
     public ResultSet addGoodsBrand(String brandName) {
+        AssertUtil.assertNotBlank(brandName, "品牌名称不能为空");
         Long id = brandService.addBrand(brandName);
         return ResultSet.success().put("id", id);
     }
@@ -61,6 +63,7 @@ public class GoodsBrandController {
     @ResponseBody
     @RequestMapping(value = "/updateGoodsBrand")
     public ResultSet updateGoodsBrand(GoodsBrand brand) {
+        AssertUtil.assertNotBlank(brand.getBrandName(), "品牌名称不能为空");
         int result = brandService.update(brand);
         return ResultSet.success().put("result", result);
     }

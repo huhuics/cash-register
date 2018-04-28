@@ -38,6 +38,7 @@ public class GoodsTrafficController {
     @ResponseBody
     @RequestMapping(value = "/addInTraffic")
     public ResultSet addInTraffic(InTrafficRequest request) {
+        request.validate();
         Long id = trafficService.addInTraffic(request);
         return ResultSet.success().put("id", id);
     }
@@ -49,6 +50,7 @@ public class GoodsTrafficController {
     @ResponseBody
     @RequestMapping(value = "/addOutTraffic")
     public ResultSet addOutTraffic(OutTrafficRequest request) {
+        request.validate();
         Long id = trafficService.addOutTraffic(request);
         return ResultSet.success().put("id", id);
     }

@@ -18,6 +18,7 @@ import cn.cash.register.common.request.GoodsLoseInfoQueryRequest;
 import cn.cash.register.dao.domain.GoodsLoseInfo;
 import cn.cash.register.dao.domain.GoodsLoseReason;
 import cn.cash.register.service.GoodsLoseService;
+import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -39,6 +40,7 @@ public class GoodsLoseController {
     @ResponseBody
     @RequestMapping("/addLoseReason")
     public ResultSet addLoseReason(String reason) {
+        AssertUtil.assertNotBlank(reason, "报损原因不能为空");
         Long id = loseService.addLoseReason(reason);
         return ResultSet.success().put("id", id);
     }
@@ -59,6 +61,8 @@ public class GoodsLoseController {
     @ResponseBody
     @RequestMapping("/updateLoseReason")
     public ResultSet updateLoseReason(GoodsLoseReason reason) {
+        AssertUtil.assertNotNull(reason.getId(), "id不能为空");
+        AssertUtil.assertNotBlank(reason.getReason(), "报损原因不能为空");
         int result = loseService.updateLoseReason(reason);
         return ResultSet.success().put("result", result);
     }
@@ -80,6 +84,7 @@ public class GoodsLoseController {
     @ResponseBody
     @RequestMapping("/addLoseInfo")
     public ResultSet addLoseInfo(GoodsLoseInfoAddRequest request) {
+        AssertUtil.assertNotBlank(request.getLoseItems(), "报损商品不能为空");
         Long id = loseService.addLoseInfo(request);
         return ResultSet.success().put("id", id);
     }

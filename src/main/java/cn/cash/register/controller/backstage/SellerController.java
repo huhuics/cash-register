@@ -63,11 +63,11 @@ public class SellerController {
     @RequestMapping(value = "/addOrUpdate")
     @ResponseBody
     public ResultSet addOrUpdate(SellerInfo sellerInfo) {
-        LogUtil.info(logger, "[Controller]收到#添加或更新收银员#请求,sellerInfo={0}", sellerInfo);
-
+        LogUtil.info(logger, "[Controller]收到#添加或更新收银员#请求");
         // 根据ID是否为空判断是新增还是编辑
         if (sellerInfo.getId() == null) {
             LogUtil.info(logger, "[Controller]#添加收银员#,sellerInfo={0}", sellerInfo);
+            sellerInfo.validate();
             sellerInfoService.addSeller(sellerInfo);
         } else {
             LogUtil.info(logger, "[Controller]#修改收银员#,sellerInfo={0}", sellerInfo);
@@ -99,7 +99,7 @@ public class SellerController {
      */
     @RequestMapping(value = "/delById", method = RequestMethod.POST)
     @ResponseBody
-    public ResultSet delById(long id) {
+    public ResultSet delById(Long id) {
         LogUtil.info(logger, "[Controller]收到#根据ID删除收银员信息#请求,id={0}", id);
 
         sellerInfoService.delete(id);
@@ -114,6 +114,9 @@ public class SellerController {
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResultSet login(String sellerNo, String password) {
+
+        AssertUtil.assertNotBlank(sellerNo, "收银员编号不能为空");
+        AssertUtil.assertNotBlank(password, "密码不能为空");
 
         SellerInfo seller = sellerInfoService.queryBySellerNo(sellerNo);
 

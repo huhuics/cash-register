@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.cash.register.dao.domain.GoodsQuantityUnit;
 import cn.cash.register.service.GoodsQuantityUnitService;
+import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -37,6 +38,7 @@ public class GoodsUnitController {
     @ResponseBody
     @RequestMapping(value = "/addGoodsUnit")
     public ResultSet addGoodsUnit(String unitName) {
+        AssertUtil.assertNotBlank(unitName, "商品单位名称不能为空");
         Long id = unitService.add(unitName);
         return ResultSet.success().put("id", id);
     }
@@ -61,6 +63,8 @@ public class GoodsUnitController {
     @ResponseBody
     @RequestMapping(value = "/updateGoodsUnit")
     public ResultSet updateGoodsUnit(GoodsQuantityUnit unit) {
+        AssertUtil.assertNotNull(unit.getId(), "id不能为空");
+        AssertUtil.assertNotBlank(unit.getUnitName(), "商品单位名称不能为空");
         int result = unitService.update(unit);
         return ResultSet.success().put("result", result);
     }

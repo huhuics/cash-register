@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSONArray;
 
 import cn.cash.register.dao.domain.GoodsCategory;
 import cn.cash.register.service.GoodsCategoryService;
+import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
@@ -41,6 +42,7 @@ public class GoodsCategoryController {
     @ResponseBody
     @RequestMapping(value = "/addGoodsCategory")
     public ResultSet addGoodsCategory(GoodsCategory category) {
+        AssertUtil.assertNotBlank(category.getCategoryName(), "商品种类名称不能为空");
         Long id = categoryService.add(category);
         return ResultSet.success().put("id", id);
     }
@@ -66,6 +68,8 @@ public class GoodsCategoryController {
     @ResponseBody
     @RequestMapping(value = "/updateGoodsCategory")
     public ResultSet updateGoodsCategory(GoodsCategory category) {
+        AssertUtil.assertNotNull(category.getId(), "商品id不能为空");
+        AssertUtil.assertNotBlank(category.getCategoryName(), "商品种类名称不能为空");
         int result = categoryService.update(category);
         return ResultSet.success().put("result", result);
     }

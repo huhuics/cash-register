@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.cash.register.dao.domain.MemberInfo;
 import cn.cash.register.service.MemberService;
+import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -36,6 +37,7 @@ public class MemberController {
     @ResponseBody
     @RequestMapping(value = "/searchMemberInfo")
     public ResultSet searchMemberInfo(String keyword) {
+        AssertUtil.assertNotBlank(keyword, "关键字不能为空");
         List<MemberInfo> memberInfos = memberService.search(keyword);
         return ResultSet.success().put("memberInfos", memberInfos);
     }

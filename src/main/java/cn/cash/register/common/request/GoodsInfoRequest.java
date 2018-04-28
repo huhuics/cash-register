@@ -69,7 +69,7 @@ public class GoodsInfoRequest extends BaseRequest {
 
     private Boolean           isIntegral;
 
-    private RoyaltyType     royaltyType;
+    private RoyaltyType       royaltyType;
 
     private Boolean           isBooked;
 
@@ -91,7 +91,6 @@ public class GoodsInfoRequest extends BaseRequest {
 
     @Override
     public void validate() {
-        // TODO Auto-generated method stub
 
     }
 

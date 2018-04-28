@@ -66,6 +66,7 @@ public class GoodsInfoController {
     @ResponseBody
     @RequestMapping(value = "/addGoodsInfo")
     public ResultSet addGoodsInfo(GoodsInfoRequest request) {
+        validateAddRequest(request);
         Long id = goodsInfoService.add(request);
         return ResultSet.success().put("id", id);
     }
@@ -77,6 +78,7 @@ public class GoodsInfoController {
     @ResponseBody
     @RequestMapping(value = "/updateGoodsInfo")
     public ResultSet updateGoodsInfo(GoodsInfoRequest request) {
+        AssertUtil.assertNotNull(request.getId(), "商品id不能为空");
         int result = goodsInfoService.update(request);
         return ResultSet.success().put("result", result);
     }
@@ -104,6 +106,7 @@ public class GoodsInfoController {
     @ResponseBody
     @RequestMapping(value = "/queryGoodsInfoById")
     public ResultSet queryGoodsInfoById(Long goodsInfoId) {
+        AssertUtil.assertNotNull(goodsInfoId, "商品id不能为空");
         GoodsInfo goodsInfo = goodsInfoService.queryById(goodsInfoId);
         return ResultSet.success().put("goodsInfo", goodsInfo);
     }
@@ -116,6 +119,7 @@ public class GoodsInfoController {
     @ResponseBody
     @RequestMapping(value = "/searchGoodsInfo")
     public ResultSet searchGoodsInfo(String keyword) {
+        AssertUtil.assertNotBlank(keyword, "查询关键字不能为空");
         List<GoodsInfo> goodsInfos = goodsInfoService.search(keyword);
         return ResultSet.success().put("goodsInfos", goodsInfos);
     }
@@ -130,6 +134,7 @@ public class GoodsInfoController {
     @RequestMapping(value = "/batchUpdate")
     public void batchUpdate(String goodsIdStr, String newValue, String filedEnumCode) {
         AssertUtil.assertNotBlank(goodsIdStr, "商品id不能为空");
+        AssertUtil.assertNotBlank(newValue, "商品新值不能为空");
         String[] idArray = goodsIdStr.split(SEP);
         Long[] ids = (Long[]) ConvertUtils.convert(idArray, Long.class);
         goodsInfoService.batchUpdate(Arrays.asList(ids), newValue, filedEnumCode);
@@ -152,6 +157,7 @@ public class GoodsInfoController {
     @ResponseBody
     @RequestMapping(value = "/getGoodsImage")
     public ResultSet getGoodsImage(Long goodsImageId) {
+        AssertUtil.assertNotNull(goodsImageId, "商品图片id不能为空");
         GoodsImage image = goodsInfoService.queryGoodsImage(goodsImageId);
         return ResultSet.success().put("image", image);
     }
@@ -164,14 +170,27 @@ public class GoodsInfoController {
     @ResponseBody
     @RequestMapping(value = "/updateGoodsImage")
     public void updateGoodsImage(Long goodsInfoId, byte[] goodsImage) {
+        AssertUtil.assertNotNull(goodsInfoId, "商品id不能为空");
         goodsInfoService.updateGoodsImage(goodsInfoId, goodsImage);
     }
 
     @ResponseBody
     @RequestMapping(value = "/genePinyinShort")
     public ResultSet genePinyinShort(String goodsName) {
+        AssertUtil.assertNotBlank(goodsName, "商品名称不能为空");
         String pinyin = PinyinUtil.getPinyinHeadLowerChar(goodsName);
         return ResultSet.success().put("pinyin", pinyin);
+    }
+
+    private void validateAddRequest(GoodsInfoRequest request) {
+        AssertUtil.assertNotBlank(request.getGoodsName(), "商品名称不能为空");
+        AssertUtil.assertNotBlank(request.getBarCode(), "商品条码不能为空");
+        AssertUtil.assertNotBlank(request.getProductNumber(), "商品货号不能为空");
+        AssertUtil.assertNotBlank(request.getCategoryName(), "商品分类不能为空");
+        AssertUtil.assertNotNull(request.getGoodsStock(), "商品库存不能为空");
+        AssertUtil.assertNotBlank(request.getLastImportPrice(), "进货价不能为空");
+        AssertUtil.assertNotBlank(request.getAverageImportPrice(), "评价进货价不能为空");
+        AssertUtil.assertNotBlank(request.getSalesPrice(), "销售价不能为空");
     }
 
 }
