@@ -101,6 +101,7 @@ public class GoodsInfoController {
     @ResponseBody
     @RequestMapping(value = "/deleteGoodsInfo")
     public ResultSet deleteGoodsInfo(String idStr) {
+        LogUtil.info(logger, "收到删除请求,idStr", idStr);
         AssertUtil.assertNotBlank(idStr, "商品id不能为空");
         String[] idArray = idStr.split(SEP);
         Long[] ids = (Long[]) ConvertUtils.convert(idArray, Long.class);
