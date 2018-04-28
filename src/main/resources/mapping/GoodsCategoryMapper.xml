@@ -39,7 +39,7 @@
 		#{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
 	</insert>
 	<insert id="insertSelective"
-		parameterType="cn.cash.register.dao.domain.GoodsCategory">
+		parameterType="cn.cash.register.dao.domain.GoodsCategory" useGeneratedKeys="true" keyProperty="id">
 		insert into goods_category
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -108,21 +108,6 @@
 		#{gmtCreate,jdbcType=TIMESTAMP}
 		where id = #{id,jdbcType=BIGINT}
 	</update>
-
-	<insert id="insertWithKey"
-		parameterType="cn.cash.register.dao.domain.GoodsCategory"
-		useGeneratedKeys="true" keyProperty="id">
-		insert into goods_category (id,
-		category_name, parent_id,
-		key, level, gmt_update,
-		gmt_create)
-		values
-		(#{id,jdbcType=BIGINT}, #{categoryName,jdbcType=VARCHAR},
-		#{parentId,jdbcType=BIGINT},
-		#{key,jdbcType=VARCHAR},
-		#{level,jdbcType=INTEGER}, #{gmtUpdate,jdbcType=TIMESTAMP},
-		#{gmtCreate,jdbcType=TIMESTAMP})
-	</insert>
 
 	<delete id="deleteChildren" parameterType="java.lang.Long">
 		delete from

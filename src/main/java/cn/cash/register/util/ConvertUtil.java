@@ -188,7 +188,7 @@ public class ConvertUtil {
         info.setProductionDate(request.getProductionDate());
         info.setQualityGuaranteePeriod(request.getQualityGuaranteePeriod());
         info.setIsIntegral(request.getIsIntegral());
-        info.setRoyaltyType(JSON.toJSONString(request.getRoyaltyType()));
+        info.setRoyaltyType(request.getRoyaltyType());
         info.setIsBooked(request.getIsBooked());
         info.setIsGift(request.getIsGift());
         info.setIsWeigh(request.getIsWeigh());
