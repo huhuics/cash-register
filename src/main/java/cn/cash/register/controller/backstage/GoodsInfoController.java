@@ -147,11 +147,8 @@ public class GoodsInfoController {
         Long[] ids = (Long[]) ConvertUtils.convert(idArray, Long.class);
         List<Long> goodsIds = Arrays.asList(ids);
 
-        String newValue;
-
         // 提成方式
-        newValue = request.getRoyaltyType();
-        if (StringUtils.isNotBlank(newValue)) {
+        if (StringUtils.isNotBlank(request.getRoyaltyType())) {
             RoyaltyType royaltyType = new RoyaltyType();
             royaltyType.setType(request.getRoyaltyType());
             royaltyType.setValue(request.getRoyaltyValue());
