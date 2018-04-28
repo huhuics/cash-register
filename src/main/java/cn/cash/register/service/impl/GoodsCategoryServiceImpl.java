@@ -102,7 +102,7 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
     @Override
     public JSONArray getTree(Long categoryId) {
 
-        AssertUtil.assertTrue(categoryId > 0L, "id必须大约0");
+        //        AssertUtil.assertTrue(categoryId > 0L, "id必须大约0");
 
         //1.查询当前节点的所有子节点
         List<GoodsCategory> children = goodsCategoryMapper.selectByParentId(categoryId);
@@ -113,7 +113,7 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
         for (GoodsCategory child : children) {
             JSONObject jsonObj = new JSONObject();
             jsonObj.put("id", child.getId());
-            jsonObj.put("categoryName", child.getCategoryName());
+            jsonObj.put("name", child.getCategoryName());
             jsonObj.put("parentId", child.getParentId());
 
             //递归调用
