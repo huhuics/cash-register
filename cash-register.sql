@@ -25,12 +25,13 @@ CREATE TABLE `goods_brand` (
   `brand_name` varchar(128) NOT NULL COMMENT '品牌名称',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UQ_NAME` (`brand_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_brand` */
 
-insert  into `goods_brand`(`id`,`brand_name`,`gmt_update`,`gmt_create`) values (1,'优衣库','2018-04-26 15:19:54','2018-04-26 15:19:39'),(2,'安踏','2018-04-26 21:24:42','2018-04-26 21:24:26');
+insert  into `goods_brand`(`id`,`brand_name`,`gmt_update`,`gmt_create`) values (2,'安踏','2018-04-26 21:24:42','2018-04-26 21:24:26'),(3,'优衣库','2018-04-28 18:59:53','2018-04-28 18:59:26');
 
 /*Table structure for table `goods_category` */
 
@@ -42,7 +43,8 @@ CREATE TABLE `goods_category` (
   `parent_id` bigint(20) NOT NULL COMMENT '父节点id',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UQ_NAME_ID` (`category_name`,`parent_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_category` */
@@ -59,11 +61,11 @@ CREATE TABLE `goods_color` (
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_color` */
 
-insert  into `goods_color`(`id`,`color`,`gmt_update`,`gmt_create`) values (1,'红色','2018-04-19 10:23:23','2018-04-19 10:23:23'),(6,'黑色','2018-04-26 20:05:15','2018-04-26 20:04:59');
+insert  into `goods_color`(`id`,`color`,`gmt_update`,`gmt_create`) values (7,'白色','2018-04-28 18:58:08','2018-04-28 18:57:41'),(8,'红色','2018-04-28 18:58:11','2018-04-28 18:57:45'),(10,'蓝色','2018-04-28 18:58:21','2018-04-28 18:57:55');
 
 /*Table structure for table `goods_image` */
 
@@ -121,15 +123,13 @@ CREATE TABLE `goods_info` (
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`),
-  KEY `IDX_BAR_CODE` (`bar_code`),
+  UNIQUE KEY `IDX_BAR_CODE` (`bar_code`),
   KEY `IDX_PINYIN_CODE` (`pinyin_code`),
   KEY `IDX_GOODS_NAME` (`goods_name`),
   KEY `IDX_GOODS_TAG` (`goods_tag`)
 ) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_info` */
-
-insert  into `goods_info`(`id`,`goods_image_id`,`goods_name`,`bar_code`,`product_number`,`pinyin_code`,`category_name`,`goods_status`,`goods_brand`,`goods_color`,`goods_size`,`goods_tag`,`goods_stock`,`quantity_unit`,`stock_upper_limit`,`stock_lower_limit`,`last_import_price`,`average_import_price`,`sales_price`,`trade_price`,`vip_price`,`is_vip_discount`,`supplier_name`,`production_date`,`quality_guarantee_period`,`is_integral`,`royalty_type`,`is_booked`,`is_gift`,`is_weigh`,`is_fixed_price`,`is_timeing_price`,`is_hidden`,`remark`,`gmt_update`,`gmt_create`) values (42,NULL,'测试','20180425211249395','20180425211249395','cs','测试',1,NULL,NULL,NULL,NULL,10,NULL,1000,0,5000,5000,10000,7000,NULL,1,NULL,'2018-04-25',NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,'备注','2018-04-28 14:51:13','0000-00-00 00:00:00'),(43,NULL,'cs','20180425225119244','20180425225119244','cs','cs',1,NULL,NULL,NULL,NULL,15,NULL,0,10,1000,1000,1000,1000,NULL,1,NULL,'2018-04-25',NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,NULL,'2018-04-28 14:51:13','0000-00-00 00:00:00'),(44,NULL,'中文','20180426154741060','20180426154741060','ss','中文',1,'优衣库',NULL,NULL,'tag1',100,'条',10,0,5000,5000,10000,5000,NULL,1,'优衣库','2018-04-26',NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,NULL,'2018-04-28 14:51:13','0000-00-00 00:00:00'),(45,NULL,'1','20180426160319770','20180426160319770',NULL,'1',0,NULL,NULL,NULL,NULL,1,'条',NULL,NULL,100,100,100,100,NULL,1,NULL,NULL,NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,NULL,'2018-04-28 14:51:14','0000-00-00 00:00:00'),(46,NULL,'中文测试','20180426160938522','20180426160938522',NULL,'中文测试',1,'优衣库',NULL,NULL,'tag1,中文测试',1,'条',1,1,100,100,100,100,NULL,1,'优衣库','1',NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,'中文测试','2018-04-28 14:51:14','0000-00-00 00:00:00'),(47,NULL,'优衣库无褶长裤','20180426210840915','20180426210840915','yykwzzk','长裤',1,'优衣库','红色','S',NULL,15,'条',NULL,NULL,12000,12000,15000,13000,NULL,1,'优衣库','2018-04-26',NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,NULL,'2018-04-28 14:51:14','0000-00-00 00:00:00'),(48,NULL,'优衣库无褶长裤','20180426210840915','20180426210840915','yykwzzk','长裤',1,'优衣库','红色','XS',NULL,10,'条',NULL,NULL,12000,12000,15000,13000,NULL,1,'优衣库','2018-04-26',NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,NULL,'2018-04-28 14:51:14','0000-00-00 00:00:00'),(49,NULL,'优衣库无褶长裤','20180426210840915','20180426210840915','yykwzzk','长裤',1,'优衣库','黑色','XS',NULL,20,'条',NULL,NULL,12000,12000,15000,13000,NULL,1,'优衣库','2018-04-26',NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,NULL,'2018-04-28 14:51:14','0000-00-00 00:00:00'),(50,NULL,'优衣库无褶长裤','20180426210840915','20180426210840915','yykwzzk','长裤',1,'优衣库','黑色','S',NULL,0,'条',NULL,NULL,12000,12000,15000,13000,NULL,1,'优衣库','2018-04-26',NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,NULL,'2018-04-28 14:51:14','0000-00-00 00:00:00'),(51,NULL,'优衣库无褶短袖','20180426211032113','20180426211032113','yykwzzk','长裤',1,'优衣库','红色','S',NULL,15,'件',NULL,NULL,12000,12000,15000,13000,NULL,1,'优衣库','2018-04-26',NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,NULL,'2018-04-28 14:51:14','0000-00-00 00:00:00'),(52,NULL,'优衣库无褶短袖','20180426211032113','20180426211032113','yykwzzk','长裤',1,'优衣库','黑色','S',NULL,0,'件',NULL,NULL,12000,12000,15000,13000,NULL,1,'优衣库','2018-04-26',NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,NULL,'2018-04-28 14:51:14','0000-00-00 00:00:00'),(53,NULL,'优衣库无褶短袖','20180426211032113','20180426211032113','yykwzzk','长裤',1,'优衣库','黑色','XS',NULL,20,'件',NULL,NULL,12000,12000,15000,13000,NULL,1,'优衣库','2018-04-26',NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,NULL,'2018-04-28 14:51:14','0000-00-00 00:00:00'),(54,NULL,'优衣库无褶短袖','20180426211032113','20180426211032113','yykwzzk','长裤',1,'优衣库','红色','XS',NULL,10,'件',NULL,NULL,12000,12000,15000,13000,NULL,1,'优衣库','2018-04-26',NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,NULL,'2018-04-28 14:51:14','0000-00-00 00:00:00'),(55,NULL,'优衣库长袖','20180426211455354','20180426211455354',NULL,'上衣',1,NULL,'红色','XS',NULL,5,NULL,NULL,NULL,16000,16000,18000,NULL,NULL,1,NULL,NULL,NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,NULL,'2018-04-28 14:51:14','0000-00-00 00:00:00'),(56,NULL,'优衣库长袖','20180426211455354','20180426211455354',NULL,'上衣',1,NULL,'红色','S',NULL,5,NULL,NULL,NULL,16000,16000,18000,NULL,NULL,1,NULL,NULL,NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,NULL,'2018-04-28 14:51:14','0000-00-00 00:00:00'),(57,NULL,'优衣库长袖','20180426211455354','20180426211455354',NULL,'上衣',1,NULL,'黑色','XS',NULL,5,NULL,NULL,NULL,16000,16000,18000,NULL,NULL,1,NULL,NULL,NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,NULL,'2018-04-28 14:51:14','0000-00-00 00:00:00'),(58,NULL,'优衣库长袖','20180426211455354','20180426211455354',NULL,'上衣',1,NULL,'黑色','S',NULL,5,NULL,NULL,NULL,16000,16000,18000,NULL,NULL,1,NULL,NULL,NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,NULL,'2018-04-28 14:51:14','0000-00-00 00:00:00'),(59,NULL,'安踏运动鞋','20180426212317569','20180426212317569','atydx','鞋',1,'安踏','红色','XS','新鞋,运动',10,'双',NULL,NULL,10000,10000,20000,15000,NULL,1,'优衣库',NULL,NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,'备注','2018-04-28 14:51:14','0000-00-00 00:00:00'),(60,NULL,'安踏运动鞋','20180426212317569','20180426212317569','atydx','鞋',1,'安踏','红色','S','新鞋,运动',20,'双',NULL,NULL,10000,10000,20000,15000,NULL,1,'优衣库',NULL,NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,'备注','2018-04-28 14:51:14','0000-00-00 00:00:00'),(61,NULL,'安踏运动鞋','20180426212317569','20180426212317569','atydx','鞋',1,'安踏','黑色','XS','新鞋,运动',30,'双',NULL,NULL,10000,10000,20000,15000,NULL,1,'优衣库',NULL,NULL,0,'{\"type\":\"0\",\"value\":\"0\"}',0,0,0,0,0,0,'备注','2018-04-28 14:51:14','0000-00-00 00:00:00');
 
 /*Table structure for table `goods_lose_info` */
 
@@ -173,12 +173,13 @@ CREATE TABLE `goods_quantity_unit` (
   `unit_name` varchar(32) NOT NULL COMMENT '单位名称',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UQ_NAME` (`unit_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_quantity_unit` */
 
-insert  into `goods_quantity_unit`(`id`,`unit_name`,`gmt_update`,`gmt_create`) values (5,'件','2018-04-26 20:17:43','2018-04-26 20:15:58'),(6,'条','2018-04-26 21:09:50','2018-04-26 21:09:34'),(7,'双','2018-04-26 21:24:35','2018-04-26 21:24:19');
+insert  into `goods_quantity_unit`(`id`,`unit_name`,`gmt_update`,`gmt_create`) values (7,'双','2018-04-26 21:24:35','2018-04-26 21:24:19'),(8,'件','2018-04-28 18:59:34','2018-04-28 18:59:08');
 
 /*Table structure for table `goods_size` */
 
@@ -190,11 +191,11 @@ CREATE TABLE `goods_size` (
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_size` */
 
-insert  into `goods_size`(`id`,`size_name`,`gmt_update`,`gmt_create`) values (1,'XS','2018-04-26 14:28:35','2018-04-26 14:28:20'),(3,'S','2018-04-26 20:05:21','2018-04-26 20:05:06');
+insert  into `goods_size`(`id`,`size_name`,`gmt_update`,`gmt_create`) values (1,'XS','2018-04-26 14:28:35','2018-04-26 14:28:20'),(3,'S','2018-04-26 20:05:21','2018-04-26 20:05:06'),(4,'M','2018-04-28 18:58:27','2018-04-28 18:58:00'),(5,'L','2018-04-28 18:58:30','2018-04-28 18:58:04');
 
 /*Table structure for table `goods_stock_flow` */
 
