@@ -19,4 +19,6 @@ public interface SellerInfoMapper {
     int updateByPrimaryKey(SellerInfo record);
 
     List<SellerInfo> list(SellerInfoQueryRequest request);
+
+    SellerInfo selectBySellerNo(String sellerNo);
 }

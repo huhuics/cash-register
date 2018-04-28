@@ -83,4 +83,17 @@ public interface GoodsInfoService {
      */
     void batchUpdate(List<Long> goodsIds, String newValue, String filedEnumCode);
 
+    /**
+     * 导出商品数据为Excel文件
+     * @param request  导出请求
+     * @return         Excel文件路径
+     */
+    String export(GoodsInfoQueryRequest request);
+
+    /**
+     * 将Excel中的商品数据导入到数据库
+     * @param fileFullPath  文件路径
+     */
+    void inport(String fileFullPath);
+
 }

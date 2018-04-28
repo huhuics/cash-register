@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.cash.register.common.CashRegisterConstants;
+import cn.cash.register.common.Constants;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
@@ -55,7 +55,7 @@ public class CommonController {
     @ResponseBody
     public ResultSet login(String loginName, String loginPassword, HttpSession session) {
         LogUtil.info(logger, "[Controller]收到#管理员登录#请求,loginName={0},loginPassword={1}", loginName, loginPassword);
-        session.removeAttribute(CashRegisterConstants.LOGIN_FLAG);// 移除当前可能有的登录用户
+        session.removeAttribute(Constants.LOGIN_FLAG);// 移除当前可能有的登录用户
         // TODO 调用service校验登录名和密码
         // need：校验是否通过标志boolean，管理员用户实体对象
 

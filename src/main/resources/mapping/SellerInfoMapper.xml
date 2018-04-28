@@ -183,7 +183,7 @@
     		and seller_no = #{sellerNo,jdbcType=VARCHAR}
     	</if>
     	<if test="name != null and name !=''">
-    		and name like #{name,jdbcType=VARCHAR}"%"
+    		and name like concat(#{name,jdbcType=VARCHAR},'%')
     	</if>
     	<if test="phone != null and phone !=''">
     		and phone = #{phone,jdbcType=VARCHAR}
@@ -191,6 +191,13 @@
     	<if test="status != null">
     		and status = #{status,jdbcType=BIT}
     	</if>
+  </select>
+  
+  <select id="selectBySellerNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from seller_info
+    where seller_no = #{sellerNo,jdbcType=VARCHAR}
   </select>
   
 </mapper>

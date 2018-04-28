@@ -127,7 +127,7 @@
 	<delete id="deleteChildren" parameterType="java.lang.Long">
 		delete from
 		goods_category
-		where key like '%#{parentId,jdbcType=BIGINT}%'
+		where key like concat('%',#{parentId,jdbcType=BIGINT},'%')
 	</delete>
 	
 	<select id="selectByParentId" parameterType="java.lang.Long"

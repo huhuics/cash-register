@@ -25,19 +25,25 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.Constants;
 import cn.cash.register.common.request.GoodsInfoQueryRequest;
 import cn.cash.register.common.request.GoodsInfoRequest;
 import cn.cash.register.dao.GoodsImageMapper;
 import cn.cash.register.dao.GoodsInfoMapper;
 import cn.cash.register.dao.domain.GoodsImage;
 import cn.cash.register.dao.domain.GoodsInfo;
+import cn.cash.register.dao.domain.RoyaltyType;
+import cn.cash.register.enums.RoyaltyTypeEnum;
 import cn.cash.register.enums.StockFlowTypeEnum;
 import cn.cash.register.enums.UpdateFieldEnum;
+import cn.cash.register.excel.domain.GoodsInfoExcel;
+import cn.cash.register.service.ExcelService;
 import cn.cash.register.service.GoodsInfoService;
 import cn.cash.register.service.GoodsStockService;
 import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.Money;
+import cn.cash.register.util.TitleUtil;
 
 /**
  * 商品信息服务接口实现类
@@ -60,6 +66,11 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
 
     @Resource
     private GoodsStockService   stockService;
+
+    @Resource
+    private ExcelService        excelService;
+
+    private List<String>        titles = TitleUtil.getGoodsInfoTitle();
 
     @Override
     public Long add(GoodsInfoRequest request) {
@@ -232,6 +243,74 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
             goodsInfoMapper.updateByPrimaryKey(item);
         }
 
+    }
+
+    @Override
+    public String export(GoodsInfoQueryRequest request) {
+        LogUtil.info(logger, "收到商品信息数据导出请求");
+        List<GoodsInfo> list = goodsInfoMapper.list(request);
+        List<GoodsInfoExcel> excelDOs = convertToExcelDO(list);
+        return excelService.write(Constants.GOODS_INFO_EXPORT_FILE_NAME, titles, excelDOs);
+    }
+
+    @Override
+    public void inport(String fileFullPath) {
+        // TODO Auto-generated method stub
+    }
+
+    private List<GoodsInfoExcel> convertToExcelDO(List<GoodsInfo> infos) {
+        List<GoodsInfoExcel> excels = new ArrayList<GoodsInfoExcel>();
+        for (GoodsInfo info : infos) {
+            GoodsInfoExcel excel = new GoodsInfoExcel();
+
+            excel.setGoodsName(info.getGoodsName());
+            excel.setBarCode(info.getBarCode());
+            excel.setProductNumber(info.getProductNumber());
+            excel.setPinyinCode(info.getPinyinCode());
+            excel.setCategoryName(info.getCategoryName());
+            excel.setGoodsStatus(info.getGoodsStatus() ? "启动" : "停用");
+            excel.setGoodsBrand(info.getGoodsBrand());
+            excel.setGoodsColor(info.getGoodsColor());
+            excel.setGoodsSize(info.getGoodsSize());
+            excel.setGoodsTag(info.getGoodsTag());
+            excel.setGoodsStock(info.getGoodsStock() + "");
+            excel.setQuantityUnit(info.getQuantityUnit());
+            excel.setStockUpperLimit(info.getStockUpperLimit() + "");
+            excel.setStockLowerLimit(info.getStockLowerLimit() + "");
+
+            if (info.getAverageImportPrice() != null) {
+                excel.setAverageImportPrice(info.getAverageImportPrice().getAmount().doubleValue() + "");
+            }
+            if (info.getSalesPrice() != null) {
+                excel.setSalesPrice(info.getSalesPrice().getAmount().doubleValue() + "");
+            }
+            if (info.getTradePrice() != null) {
+                excel.setTradePrice(info.getTradePrice().getAmount().doubleValue() + "");
+            }
+            if (info.getVipPrice() != null) {
+                excel.setVipPrice(info.getVipPrice().getAmount().doubleValue() + "");
+            }
+
+            excel.setIsVipDiscount(info.getIsVipDiscount() ? "是" : "否");
+            excel.setSupplierName(info.getSupplierName());
+            excel.setProductionDate(info.getProductionDate());
+            excel.setIsIntegral(info.getIsIntegral() ? "是" : "否");
+
+            if (StringUtils.isNotBlank(info.getRoyaltyType())) {
+                RoyaltyType royaltyType = JSON.parseObject(info.getRoyaltyType(), RoyaltyType.class);
+                RoyaltyTypeEnum byCode = RoyaltyTypeEnum.getByCode(royaltyType.getType());
+                excel.setRoyaltyType(byCode.getDesc());
+            }
+
+            excel.setIsBooked(info.getIsBooked() ? "是" : "否");
+            excel.setIsGift(info.getIsGift() ? "是" : "否");
+            excel.setIsFixedPrice(info.getIsFixedPrice() ? "是" : "否");
+            excel.setIsTimeingPrice(info.getIsTimeingPrice() ? "是" : "否");
+            excel.setRemark(info.getRemark());
+
+            excels.add(excel);
+        }
+        return excels;
     }
 
     private GoodsInfo convert(GoodsInfoRequest request) {

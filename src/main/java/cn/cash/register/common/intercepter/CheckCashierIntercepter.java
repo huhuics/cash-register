@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import cn.cash.register.common.CashRegisterConstants;
+import cn.cash.register.common.Constants;
 
 /**
  * 收银员登录拦截器
@@ -19,7 +19,7 @@ public class CheckCashierIntercepter extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        Object obj = request.getSession().getAttribute(CashRegisterConstants.LOGIN_FLAG); // 从session中获取用户信息
+        Object obj = request.getSession().getAttribute(Constants.LOGIN_FLAG); // 从session中获取用户信息
         // TODO 51 配置拦截器逻辑
         return true;
 
