@@ -100,12 +100,12 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
     }
 
     @Override
-    public JSONArray getTree(Long categoryId) {
+    public JSONArray getTree(Long parentCategoryId) {
 
-        AssertUtil.assertTrue(categoryId > 0L, "id必须大约0");
+        //        AssertUtil.assertTrue(categoryId > 0L, "id必须大约0");
 
         //1.查询当前节点的所有子节点
-        List<GoodsCategory> children = goodsCategoryMapper.selectByParentId(categoryId);
+        List<GoodsCategory> children = goodsCategoryMapper.selectByParentId(parentCategoryId);
 
         JSONArray childTree = new JSONArray();
 
@@ -113,7 +113,7 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
         for (GoodsCategory child : children) {
             JSONObject jsonObj = new JSONObject();
             jsonObj.put("id", child.getId());
-            jsonObj.put("categoryName", child.getCategoryName());
+            jsonObj.put("name", child.getCategoryName());
             jsonObj.put("parentId", child.getParentId());
 
             //递归调用
@@ -126,6 +126,32 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
         }
 
         return childTree;
+    }
+
+    @Override
+    public JSONArray getList(Long parentCategoryId) {
+        JSONArray childList = new JSONArray();
+        _getList(childList, parentCategoryId, "", "————");
+        return childList;
+    }
+
+    private void _getList(JSONArray childList, Long parentCategoryId, String prefix, String prefixIncrement) {
+        //1.查询当前parentId为parentCategoryId的所有节点
+        List<GoodsCategory> children = goodsCategoryMapper.selectByParentId(parentCategoryId);
+
+        //2.遍历子节点
+        for (GoodsCategory child : children) {
+            JSONObject jsonObj = new JSONObject();
+            jsonObj.put("id", child.getId());
+            jsonObj.put("name", child.getCategoryName());
+            jsonObj.put("prefix", prefix);
+
+            childList.add(jsonObj);
+
+            //递归调用
+            _getList(childList, child.getId(), prefix + prefixIncrement, prefixIncrement);
+
+        }
     }
 
 }

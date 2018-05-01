@@ -22,6 +22,12 @@ public class GoodsCategoryServiceTest extends BaseTest {
     }
 
     @Test
+    public void testGetList() {
+        JSONArray list = categoryService.getList(0L);
+        LogUtil.info(logger, "{0}", list);
+    }
+
+    @Test
     public void testDelete() {
         categoryService.delete(5L);
     }

@@ -37,9 +37,16 @@ public interface GoodsCategoryService {
 
     /**
      * 获取商品种类树
-     * @param categoryId 当查询整棵树时填1,即根节点id
+     * @param parentCategoryId 当查询整棵树时填0,即所有首层节点的父id
      * @return json数组
      */
-    JSONArray getTree(Long categoryId);
+    JSONArray getTree(Long parentCategoryId);
+    
+    /**
+     * 获取商品种类列表
+     * @param parentCategoryId 当查询整个列表时填0,即所有首层节点的父id
+     * @return json数组
+     */
+    JSONArray getList(Long parentCategoryId);
 
 }

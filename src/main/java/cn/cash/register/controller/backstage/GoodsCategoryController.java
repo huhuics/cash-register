@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,7 +27,7 @@ import cn.cash.register.util.ResultSet;
  * @version $Id: GoodsCategoryController.java, v 0.1 2018年4月25日 下午9:17:01 HuHui Exp $
  */
 @Controller
-@RequestMapping("/admin/goods")
+@RequestMapping("/admin")
 public class GoodsCategoryController {
 
     private static final Logger  logger = LoggerFactory.getLogger(GoodsCategoryController.class);
@@ -35,12 +36,20 @@ public class GoodsCategoryController {
     private GoodsCategoryService categoryService;
 
     /**
+     * 跳转到商品分类页
+     */
+    @GetMapping(value = "/goods-category")
+    public String list() {
+        return "backstage/_goods-category";
+    }
+
+    /**
      * 增加商品种类
      * @param category 需填充categoryName和parentId两个字段
      * @return 主键id
      */
     @ResponseBody
-    @RequestMapping(value = "/addGoodsCategory")
+    @RequestMapping(value = "/goods/addGoodsCategory")
     public ResultSet addGoodsCategory(GoodsCategory category) {
         AssertUtil.assertNotBlank(category.getCategoryName(), "商品种类名称不能为空");
         Long id = categoryService.add(category);
@@ -54,7 +63,7 @@ public class GoodsCategoryController {
      * @return   1:删除成功,0:删除失败
      */
     @ResponseBody
-    @RequestMapping(value = "/deleteGoodsCategory")
+    @RequestMapping(value = "/goods/deleteGoodsCategory")
     public ResultSet deleteGoodsCategory(Long id) {
         categoryService.delete(id);
         return ResultSet.success().put("result", 1);
@@ -66,7 +75,7 @@ public class GoodsCategoryController {
      * @return          1:修改成功,0:修改失败
      */
     @ResponseBody
-    @RequestMapping(value = "/updateGoodsCategory")
+    @RequestMapping(value = "/goods/updateGoodsCategory")
     public ResultSet updateGoodsCategory(GoodsCategory category) {
         AssertUtil.assertNotNull(category.getId(), "商品id不能为空");
         AssertUtil.assertNotBlank(category.getCategoryName(), "商品种类名称不能为空");
@@ -76,15 +85,28 @@ public class GoodsCategoryController {
 
     /**
      * 获取商品种类树
-     * @param categoryId 当查询整棵树时填1,即根节点id
+     * @param parentCategoryId 当查询整棵树时填0,即所有首层节点的父id
      * @return json数组
      */
     @ResponseBody
-    @RequestMapping(value = "/getGoodsCategoryTree")
-    public ResultSet getGoodsCategoryTree(Long categoryId) {
-        LogUtil.info(logger, "收到查询商品种类树请求,categoryId={0}", categoryId);
-        JSONArray tree = categoryService.getTree(categoryId);
+    @RequestMapping(value = "/goods/getGoodsCategoryTree")
+    public ResultSet getGoodsCategoryTree(Long parentCategoryId) {
+        LogUtil.info(logger, "收到查询商品种类树请求,parentCategoryId={0}", parentCategoryId);
+        JSONArray tree = categoryService.getTree(parentCategoryId);
         return ResultSet.success().put("tree", tree);
+    }
+
+    /**
+     * 获取商品种类列表
+     * @param parentCategoryId 当查询整个列表时填0,即所有首层节点的父id
+     * @return json数组
+     */
+    @ResponseBody
+    @RequestMapping(value = "/goods/getGoodsCategoryList")
+    public ResultSet getGoodsCategoryList(Long parentCategoryId) {
+        LogUtil.info(logger, "收到查询商品种类列表请求,parentCategoryId={0}", parentCategoryId);
+        JSONArray list = categoryService.getList(parentCategoryId);
+        return ResultSet.success().put("list", list);
     }
 
 }

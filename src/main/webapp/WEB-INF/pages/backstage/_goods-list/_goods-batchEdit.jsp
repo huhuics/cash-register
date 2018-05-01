@@ -11,9 +11,9 @@
                 </div>
             </div>
             <div class="col-xs-8">
-            	<select class="form-control" v-model="batchEditParam.categoryName">
+            	<select class="form-control" v-model="batchEditParam.categoryName" data-live-search="true">
                     <option value="">选择商品分类</option>
-                    <option v-for="category in goods_categorys" :value="category.name">{{category.name}}</option>
+                    <option v-for="category in goods_categorys" :value="category.name">{{category.prefix+category.name}}</option>
                 </select>
             </div>
         </div>
@@ -216,7 +216,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <div class="col-xs-4">
             	<div class="input-group">
                     <span class="label label-warning">是否称重</span>
@@ -236,7 +236,7 @@
                     </span>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="form-group">
             <div class="col-xs-4">
             	<div class="input-group">

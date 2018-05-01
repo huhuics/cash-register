@@ -163,7 +163,10 @@ var vm = new Vue({
             }).trigger("reloadGrid");
         },
         add: function() {
+        	this.select_goods_tags_usefor = 'addOrEdit';
         	this.resetGoods();
+        	this.goods.categoryName = '';
+        	this.goods.royaltyType = '{type:"0",value:"0"}';
         	var _self = this;
             layer.open({
                 type: 1, skin: 'layui-layer-lan', title: "新增商品", area: '650px', shadeClose: false,
@@ -223,17 +226,19 @@ var vm = new Vue({
         	if (isBlank(goodsId)) {
                 return;
             }
+        	this.select_goods_tags_usefor = 'addOrEdit';
         	this.resetGoods();
+        	var _self = this;
         	$.ajax({
                 url: basePath + "/admin/goods/queryGoodsInfoById",
                 data: { 'goodsInfoId': goodsId },
                 success: function(result) {
                     if (result.code == "00") {
-                        vm.goods = result.goodsInfo;
-                        vm.goods.salesPrice = result.goodsInfo.salesPrice.amount;
-                        vm.goods.lastImportPrice = result.goodsInfo.lastImportPrice.amount;
-                        vm.goods.vipPrice = result.goodsInfo.vipPrice==null?null:result.goodsInfo.vipPrice.amount;
-                        vm.goods.tradePrice = result.goodsInfo.tradePrice.amount;
+                    	_self.goods = result.goodsInfo;
+                    	_self.goods.salesPrice = result.goodsInfo.salesPrice.amount;
+                    	_self.goods.lastImportPrice = result.goodsInfo.lastImportPrice==null?null:result.goodsInfo.lastImportPrice.amount;
+                    	_self.goods.vipPrice = result.goodsInfo.vipPrice==null?null:result.goodsInfo.vipPrice.amount;
+                    	_self.goods.tradePrice = result.goodsInfo.tradePrice==null?null:result.goodsInfo.tradePrice.amount;
                         if(!isBlank(vm.goods.goodsTag)) {
                         	vm.select_goods_tags = vm.goods.goodsTag.split(',');
                         }
@@ -277,7 +282,6 @@ var vm = new Vue({
                 content: jQuery("#goodsbatchEditDiv"),
                 btn: ['提交', '取消'],
                 btn1: function(index) {
-                	console.log(JSON.stringify(_self.batchEditParam)); // TODO
                 	$.ajax({
                         url: basePath + "/admin/goods/batchUpdate",
                         data: _self.batchEditParam,
@@ -302,7 +306,7 @@ var vm = new Vue({
         	confirm("确定删除这" + goodsIds.length + "个商品吗?", function() {
                 $.ajax({
                     url: basePath + "/admin/goods/deleteGoodsInfo",
-                    data: { 'ids': goodsIds + '' },
+                    data: { 'idStr': goodsIds + '' },
                     success: function(result) {
                         if (result.code == "00") {
                             layer.alert('删除成功');
@@ -524,12 +528,11 @@ var vm = new Vue({
         loadGoodsCategorys: function() { // 加载所有商品分类列表
         	var _self = this;
             $.ajax({
-                async: false,
-                url: basePath + "/admin/goods/getGoodsCategoryTree",
-                data: { 'categoryId': 1 },
+                url: basePath + "/admin/goods/getGoodsCategoryList",
+                data:  { 'parentCategoryId': 0 },
                 success: function(result) {
                     if (result.code == "00") {
-                    	_self.goods_categorys = result.tree;
+                    	_self.goods_categorys = result.list;
                     } else {
                         layer.alert("加载商品分类列表出错" + result.msg);
                     }
@@ -540,7 +543,6 @@ var vm = new Vue({
         	var _self = this;
         	$.ajax({
         		type: "GET",
-        		async: false,
         		url: basePath + "/admin/goods/queryAllGoodsBrand",
         		success: function(result) {
         			if (result.code == "00") {
@@ -555,7 +557,6 @@ var vm = new Vue({
         	var _self = this;
         	$.ajax({
         		type: "GET",
-        		async: false,
         		url: basePath + "/admin/supplier/queryAllSupplierNames",
         		success: function(result) {
         			if (result.code == "00") {
@@ -570,7 +571,6 @@ var vm = new Vue({
         	var _self = this;
         	$.ajax({
         		type: "GET",
-        		async: false,
         		url: basePath + "/admin/goods/queryAllGoodsTag",
         		success: function(result) {
         			if (result.code == "00") {
@@ -585,7 +585,6 @@ var vm = new Vue({
         	var _self = this;
         	$.ajax({
         		type: "GET",
-        		async: false,
         		url: basePath + "/admin/goods/queryAllGoodsUnit",
         		success: function(result) {
         			if (result.code == "00") {
@@ -600,7 +599,6 @@ var vm = new Vue({
         	var _self = this;
         	$.ajax({
         		type: "GET",
-        		async: false,
         		url: basePath + "/admin/goods/queryAllGoodsColor",
         		success: function(result) {
         			if (result.code == "00") {
@@ -615,7 +613,6 @@ var vm = new Vue({
         	var _self = this;
         	$.ajax({
         		type: "GET",
-        		async: false,
         		url: basePath + "/admin/goods/queryAllGoodsSize",
         		success: function(result) {
         			if (result.code == "00") {

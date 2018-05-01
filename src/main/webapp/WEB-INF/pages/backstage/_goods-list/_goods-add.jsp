@@ -44,11 +44,10 @@
                 </div>
             </div>
             <div class="col-xs-5">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;分类</span>
-                    <input type="text" class="form-control" v-model="goods.categoryName">
-                    <span class="input-group-btn"><button class="btn btn-primary" type="button" @click="_editGoodsCategory">选择</button></span>
-                </div>
+            	<select class="form-control" v-model="goods.categoryName">
+                    <option value="">选择商品分类</option>
+                    <option v-for="category in goods_categorys" :value="category.name">{{category.prefix+category.name}}</option>
+                </select>
             </div>
         </div>
         <div class="form-group">

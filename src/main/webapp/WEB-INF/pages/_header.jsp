@@ -11,7 +11,10 @@
 <link rel="stylesheet" href="${ctx}/static/plugins/bootstrap-select/css/bootstrap-select.min.css">
 <link rel="stylesheet" href="${ctx}/static/plugins/adminlte/css/font-awesome.min.css">
 <link rel="stylesheet" href="${ctx}/static/plugins/jqgrid/ui.jqgrid-bootstrap.css">
+<link rel="stylesheet" href="${ctx}/static/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
 <link rel="stylesheet" href="${ctx}/static/css/main.css">
+
+	
 
 <script src="${ctx}/static/plugins/jquery/jquery-3.2.1.min.js"></script>
 <script src="${ctx}/static/plugins/layer/layer.js"></script>
@@ -21,4 +24,7 @@
 <script src="${ctx}/static/js/vue.min.js"></script>
 <script src="${ctx}/static/plugins/jqgrid/grid.locale-cn.js"></script>
 <script src="${ctx}/static/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="${ctx}/static/plugins/ztree/js/jquery.ztree.core.js"></script>
+<script src="${ctx}/static/plugins/ztree/js/jquery.ztree.excheck.js"></script>
+<script src="${ctx}/static/plugins/ztree/js/jquery.ztree.exedit.js"></script>
 <script src="${ctx}/static/js/common.js"></script>
