@@ -4,11 +4,15 @@
  */
 package cn.cash.register.test.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.beanutils.ConvertUtils;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSON;
 
+import cn.cash.register.dao.domain.GoodsItem;
 import cn.cash.register.dao.domain.RoyaltyType;
 
 /**
@@ -35,6 +39,33 @@ public class ConvertUtilTest {
         type.setType("0");
         type.setValue("0");
         System.out.println(JSON.toJSON(type));
+    }
+
+    @Test
+    public void testJson() {
+        GoodsItem item1 = new GoodsItem();
+        item1.setGoodsName("优衣库男t恤");
+        item1.setTotalActualAmount("100.00");
+        item1.setGoodsCount(2);
+        item1.setGoodsId(2L);
+
+        GoodsItem item2 = new GoodsItem();
+        item2.setGoodsName("JackJonse风衣");
+        item2.setTotalActualAmount("500.00");
+        item2.setGoodsCount(1);
+
+        ArrayList<GoodsItem> items = new ArrayList<>();
+        items.add(item1);
+        items.add(item2);
+
+        String itemsJsonStr = JSON.toJSONString(items);
+
+        System.out.println(itemsJsonStr);
+
+        List<GoodsItem> parseRet = JSON.parseArray(itemsJsonStr, GoodsItem.class);
+        for (GoodsItem item : parseRet) {
+            System.out.println(item);
+        }
     }
 
 }

@@ -6,7 +6,7 @@ package cn.cash.register.common.request;
 
 import java.util.List;
 
-import org.apache.commons.collections4.CollectionUtils;
+import com.alibaba.fastjson.JSON;
 
 import cn.cash.register.dao.domain.GoodsItem;
 import cn.cash.register.util.AssertUtil;
@@ -22,11 +22,15 @@ public class CancelRequest extends BaseRequest {
     /**  */
     private static final long serialVersionUID = -5069321570062921043L;
 
+    private List<GoodsItem>   goodsItems;
+
+    /***********************Controller填充以下参数***************************/
+
     private String            tradeNo;
 
-    private long              memberId;
+    private Long              memberId;
 
-    private List<GoodsItem>   goodsItems;
+    private String            goodsItemsJSONStr;
 
     private Long              totalActualAmount;
 
@@ -34,7 +38,9 @@ public class CancelRequest extends BaseRequest {
     public void validate() {
         AssertUtil.assertNotBlank(tradeNo, "交易编号不能为空");
         AssertUtil.assertNotNull(totalActualAmount, "实收总金额不能为空");
-        AssertUtil.assertTrue(CollectionUtils.isNotEmpty(goodsItems), "收银商品不能为空");
+        AssertUtil.assertNotBlank(goodsItemsJSONStr, "收银商品不能为空");
+
+        goodsItems = JSON.parseArray(goodsItemsJSONStr, GoodsItem.class);
     }
 
     public String getTradeNo() {
@@ -45,11 +51,11 @@ public class CancelRequest extends BaseRequest {
         this.tradeNo = tradeNo;
     }
 
-    public long getMemberId() {
+    public Long getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(long memberId) {
+    public void setMemberId(Long memberId) {
         this.memberId = memberId;
     }
 
@@ -71,6 +77,14 @@ public class CancelRequest extends BaseRequest {
 
     public void setTotalActualAmount(Long totalActualAmount) {
         this.totalActualAmount = totalActualAmount;
+    }
+
+    public String getGoodsItemsJSONStr() {
+        return goodsItemsJSONStr;
+    }
+
+    public void setGoodsItemsJSONStr(String goodsItemsJSONStr) {
+        this.goodsItemsJSONStr = goodsItemsJSONStr;
     }
 
 }

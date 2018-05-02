@@ -5,8 +5,9 @@
 package cn.cash.register.common.request;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import org.apache.commons.collections4.CollectionUtils;
+import com.alibaba.fastjson.JSON;
 
 import cn.cash.register.dao.domain.GoodsItem;
 import cn.cash.register.dao.domain.PayChenal;
@@ -20,25 +21,39 @@ import cn.cash.register.util.AssertUtil;
 public class TradeRequest extends BaseRequest {
 
     /**  */
-    private static final long    serialVersionUID = -7864023113538102948L;
+    private static final long serialVersionUID = -7864023113538102948L;
 
-    private ArrayList<GoodsItem> goodsItems;
+    private List<GoodsItem>   goodsItems;
 
-    private ArrayList<PayChenal> payChenals;
+    private List<PayChenal>   payChenals;
 
-    private Long                 memberId;
+    /***********************Controller填充以下参数***************************/
 
-    private String               memberName;
+    private String            goodsItemsJSONStr;
 
-    private String               sellerNo;
+    private String            payChenalsJSONStr;
 
-    private String               shopperNo;
+    private Long              memberId;
+
+    private String            memberName;
+
+    private String            sellerNo;
+
+    private String            shopperNo;
 
     @Override
     public void validate() {
         AssertUtil.assertNotBlank(sellerNo, "收银员编号不能为空");
-        AssertUtil.assertTrue(CollectionUtils.isNotEmpty(goodsItems), "收银商品不能为空");
-        AssertUtil.assertTrue(CollectionUtils.isNotEmpty(payChenals), "支付方式不能为空");
+        AssertUtil.assertNotBlank(goodsItemsJSONStr, "收银商品不能为空");
+        AssertUtil.assertNotBlank(payChenalsJSONStr, "支付方式不能为空");
+
+        convert();
+    }
+
+    private void convert() {
+        //参数转化
+        goodsItems = JSON.parseArray(goodsItemsJSONStr, GoodsItem.class);
+        payChenals = JSON.parseArray(payChenalsJSONStr, PayChenal.class);
     }
 
     public String getSellerNo() {
@@ -73,7 +88,7 @@ public class TradeRequest extends BaseRequest {
         this.memberId = memberId;
     }
 
-    public ArrayList<GoodsItem> getGoodsItems() {
+    public List<GoodsItem> getGoodsItems() {
         return goodsItems;
     }
 
@@ -81,12 +96,28 @@ public class TradeRequest extends BaseRequest {
         this.goodsItems = goodsItems;
     }
 
-    public ArrayList<PayChenal> getPayChenals() {
+    public List<PayChenal> getPayChenals() {
         return payChenals;
     }
 
     public void setPayChenals(ArrayList<PayChenal> payChenals) {
         this.payChenals = payChenals;
+    }
+
+    public String getGoodsItemsJSONStr() {
+        return goodsItemsJSONStr;
+    }
+
+    public void setGoodsItemsJSONStr(String goodsItemsJSONStr) {
+        this.goodsItemsJSONStr = goodsItemsJSONStr;
+    }
+
+    public String getPayChenalsJSONStr() {
+        return payChenalsJSONStr;
+    }
+
+    public void setPayChenalsJSONStr(String payChenalsJSONStr) {
+        this.payChenalsJSONStr = payChenalsJSONStr;
     }
 
 }
