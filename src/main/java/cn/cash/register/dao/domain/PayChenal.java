@@ -4,6 +4,8 @@
  */
 package cn.cash.register.dao.domain;
 
+import cn.cash.register.enums.PayChenalEnum;
+
 /**
  * 收银时从前台传到后台的支付/退款方式
  * @author HuHui
@@ -14,7 +16,7 @@ public class PayChenal extends BaseDomain {
     /**  */
     private static final long serialVersionUID = 4401972139057180239L;
 
-    /** 支付/退款方式 */
+    /** 支付/退款方式 {@link PayChenalEnum} */
     private String            chenal;
 
     /** 金额,单位:元 */

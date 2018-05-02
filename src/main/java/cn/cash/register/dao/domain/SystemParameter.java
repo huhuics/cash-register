@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class SystemParameter extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = -7459068000426791148L;
+    private static final long serialVersionUID = 6102479864242168651L;
 
     private Long              id;
 
@@ -12,7 +12,7 @@ public class SystemParameter extends BaseDomain {
 
     private String            paramValue;
 
-    private String            exampleValue;
+    private String            description;
 
     private Date              gmtUpdate;
 
@@ -42,12 +42,12 @@ public class SystemParameter extends BaseDomain {
         this.paramValue = paramValue == null ? null : paramValue.trim();
     }
 
-    public String getExampleValue() {
-        return exampleValue;
+    public String getDescription() {
+        return description;
     }
 
-    public void setExampleValue(String exampleValue) {
-        this.exampleValue = exampleValue == null ? null : exampleValue.trim();
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 
     public Date getGmtUpdate() {

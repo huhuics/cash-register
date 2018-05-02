@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import cn.cash.register.dao.SellerInfoMapper;
 import cn.cash.register.dao.domain.SellerInfo;
 import cn.cash.register.service.SellerInfoService;
 import cn.cash.register.service.SystemParameterService;
+import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.LogUtil;
 
 /**
@@ -88,6 +90,16 @@ public class SellerInfoServiceImpl implements SellerInfoService {
     @Override
     public SellerInfo queryBySellerNo(String sellerNo) {
         SellerInfo seller = sellerInfoMapper.selectBySellerNo(sellerNo);
+        return seller;
+    }
+
+    @Override
+    public SellerInfo login(String sellerNo, String password) {
+        SellerInfo seller = queryBySellerNo(sellerNo);
+
+        AssertUtil.assertNotNull(seller, "收银员不存在");
+        AssertUtil.assertTrue(seller.getStatus(), "收银员被禁用");
+        AssertUtil.assertTrue(StringUtils.equals(password, seller.getPassword()), "用户名或密码错误");
 
         return seller;
     }

@@ -41,11 +41,14 @@ public class TradeRequest extends BaseRequest {
 
     private String            shopperNo;
 
+    private Long              exchangeJobId;
+
     @Override
     public void validate() {
         AssertUtil.assertNotBlank(sellerNo, "收银员编号不能为空");
         AssertUtil.assertNotBlank(goodsItemsJSONStr, "收银商品不能为空");
         AssertUtil.assertNotBlank(payChenalsJSONStr, "支付方式不能为空");
+        AssertUtil.assertNotNull(exchangeJobId, "交接班id不能为空");
 
         convert();
     }
@@ -118,6 +121,22 @@ public class TradeRequest extends BaseRequest {
 
     public void setPayChenalsJSONStr(String payChenalsJSONStr) {
         this.payChenalsJSONStr = payChenalsJSONStr;
+    }
+
+    public Long getExchangeJobId() {
+        return exchangeJobId;
+    }
+
+    public void setExchangeJobId(Long exchangeJobId) {
+        this.exchangeJobId = exchangeJobId;
+    }
+
+    public void setGoodsItems(List<GoodsItem> goodsItems) {
+        this.goodsItems = goodsItems;
+    }
+
+    public void setPayChenals(List<PayChenal> payChenals) {
+        this.payChenals = payChenals;
     }
 
 }

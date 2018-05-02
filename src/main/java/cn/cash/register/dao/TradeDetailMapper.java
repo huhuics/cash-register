@@ -2,6 +2,7 @@ package cn.cash.register.dao;
 
 import java.util.List;
 
+import cn.cash.register.common.request.ExchangeJobTradeDetailRequest;
 import cn.cash.register.common.request.TradeDetailQueryRequest;
 import cn.cash.register.dao.domain.TradeDetail;
 
@@ -21,4 +22,6 @@ public interface TradeDetailMapper {
     List<TradeDetail> list(TradeDetailQueryRequest request);
 
     void deleteByTradeNo(String tradeNo);
+
+    List<TradeDetail> selectExchangeJobTradeDetails(ExchangeJobTradeDetailRequest request);
 }
