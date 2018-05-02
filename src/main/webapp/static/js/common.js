@@ -43,9 +43,15 @@ window.confirm = function(msg, callback) {
         });
 }
 
-function layerOpen_skinlan_nobtn(title, area, id) {
+function layerOpen_skinlan_0btn(title, area, id) {
 	layer.open({
 		type: 1, skin: 'layui-layer-lan', title: title, area: area, shadeClose: false,
+		content: jQuery(id)
+	});
+}
+function layerOpen_skinlan_1btn(title, area, id) {
+	layer.open({
+		type: 1, skin: 'layui-layer-lan', title: title, area: area, shadeClose: false, btn: ['确定'],
 		content: jQuery(id)
 	});
 }

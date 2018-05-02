@@ -356,15 +356,15 @@ var vm = new Vue({
         		}
         	});
         },
-        _editGoodsStock: function() { layerOpen_skinlan_nobtn("编辑库存",'650px',"#goodsStockDiv"); },
-        _editGoodsColorSize: function() { layerOpen_skinlan_nobtn("编辑颜色尺码",'650px',"#goodsColorSizeDiv"); },
-        _editGoodsUnit: function() { layerOpen_skinlan_nobtn("选择单位",'350px',"#goodsUnitDiv"); },
-        _editGoodsBrand: function() { layerOpen_skinlan_nobtn("选择品牌",'350px',"#goodsBrandDiv"); },
+        _editGoodsStock: function() { layerOpen_skinlan_1btn("编辑库存",'650px',"#goodsStockDiv"); },
+        _editGoodsColorSize: function() { layerOpen_skinlan_1btn("编辑颜色尺码",'650px',"#goodsColorSizeDiv"); },
+        _editGoodsUnit: function() { layerOpen_skinlan_1btn("选择单位",'350px',"#goodsUnitDiv"); },
+        _editGoodsBrand: function() { layerOpen_skinlan_1btn("选择品牌",'350px',"#goodsBrandDiv"); },
         _editGoodsTag: function(usefor) {
         	this.select_goods_tags_usefor = usefor;
-        	layerOpen_skinlan_nobtn("选择标签",'350px',"#goodsTagDiv"); 
+        	layerOpen_skinlan_1btn("选择标签",'350px',"#goodsTagDiv"); 
         },
-        _editGoodsSupplier: function() { layerOpen_skinlan_nobtn("选择供货商",'350px',"#goodsSupplierDiv"); },
+        _editGoodsSupplier: function() { layerOpen_skinlan_1btn("选择供货商",'350px',"#goodsSupplierDiv"); },
         _editGoodsCategory: function() {
         	layer.alert('暂不支持分类管理，请手动输入分类');
         },
