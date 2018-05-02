@@ -234,6 +234,7 @@ public class TradeServiceImpl implements TradeService {
         tradeDetail.setGoodsDetail(JSON.toJSONString(request.getGoodsItems()));
         tradeDetail.setPayChenal(JSON.toJSONString(request.getPayChenals()));
         tradeDetail.setIsExchangeJob(false);
+        tradeDetail.setExchangeJobId(request.getExchangeJobId());
         tradeDetail.setGmtCreate(new Date());
 
         tradeDetailMapper.insertSelective(tradeDetail);

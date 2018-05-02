@@ -2,7 +2,6 @@ package cn.cash.register.controller.backstage;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,6 @@ import com.github.pagehelper.PageInfo;
 import cn.cash.register.common.request.SellerInfoQueryRequest;
 import cn.cash.register.dao.domain.SellerInfo;
 import cn.cash.register.service.SellerInfoService;
-import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
@@ -105,26 +103,6 @@ public class SellerController {
         sellerInfoService.delete(id);
 
         return ResultSet.success();
-    }
-
-    /**
-     * 收银员登录
-     * @return 收银员信息
-     */
-    @ResponseBody
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResultSet login(String sellerNo, String password) {
-
-        AssertUtil.assertNotBlank(sellerNo, "收银员编号不能为空");
-        AssertUtil.assertNotBlank(password, "密码不能为空");
-
-        SellerInfo seller = sellerInfoService.queryBySellerNo(sellerNo);
-
-        AssertUtil.assertNotNull(seller, "收银员不存在");
-        AssertUtil.assertTrue(seller.getStatus(), "收银员被禁用");
-        AssertUtil.assertTrue(StringUtils.equals(password, seller.getPassword()), "用户名或密码错误");
-
-        return ResultSet.success().put("seller", seller);
     }
 
 }

@@ -113,9 +113,19 @@
 			<columnOverride column="profit_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
 		
+		<table tableName="system_parameter" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		
 		-->
 		
-		<table tableName="system_parameter" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+		<table tableName="exchange_job_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<columnOverride column="checkout_total_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="cash_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="unionpay_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="alipay_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="wcpay_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="petty_cash_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="paid_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
 		 
     </context>  

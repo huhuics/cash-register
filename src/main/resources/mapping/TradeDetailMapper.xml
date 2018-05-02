@@ -275,4 +275,14 @@
     where trade_no = #{tradeNo,jdbcType=VARCHAR}
   </delete>
   
+  <select id="selectExchangeJobTradeDetails" parameterType="cn.cash.register.common.request.ExchangeJobTradeDetailRequest" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from trade_detail
+    where gmt_create &gt;= #{startTime,jdbcType=TIMESTAMP}
+	AND is_exchange_job = false
+	AND exchange_job_id = #{exchangeJobId,jdbcType=BIGINT}
+	AND seller_no = #{sellerNo,jdbcType=VARCHAR}
+  </select>
+  
 </mapper>

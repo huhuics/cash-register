@@ -47,4 +47,9 @@ public interface SellerInfoService {
      */
     SellerInfo queryBySellerNo(String sellerNo);
 
+    /**
+     * 收银员或管理员登录
+     */
+    SellerInfo login(String sellerNo, String password);
+
 }
