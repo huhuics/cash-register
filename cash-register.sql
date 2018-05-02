@@ -16,6 +16,30 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`cash-register` /*!40100 DEFAULT CHARACT
 
 USE `cash-register`;
 
+/*Table structure for table `exchange_job_detail` */
+
+DROP TABLE IF EXISTS `exchange_job_detail`;
+
+CREATE TABLE `exchange_job_detail` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `start_time` timestamp NULL DEFAULT NULL COMMENT '开始时间',
+  `end_time` timestamp NULL DEFAULT NULL COMMENT '结束时间',
+  `seller_no` varchar(32) NOT NULL COMMENT '收银员编号',
+  `checkout_total_amount` int(11) DEFAULT NULL COMMENT '收银总额，单位：分',
+  `cash_amount` int(11) DEFAULT NULL COMMENT '现金支付总额，单位：分',
+  `unionpay_amount` int(11) DEFAULT NULL COMMENT '银联支付，单位：分',
+  `alipay_amount` int(11) DEFAULT NULL COMMENT '支付宝支付金额，单位：分',
+  `wcpay_amount` int(11) DEFAULT NULL COMMENT '微信支付金额，单位：分',
+  `petty_cash_amount` int(11) DEFAULT NULL COMMENT '备用金',
+  `paid_amount` int(11) DEFAULT NULL COMMENT '备用，实缴金额',
+  `isFinished` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已完成交接班，1：完成，0：未完成',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `exchange_job_detail` */
+
 /*Table structure for table `goods_brand` */
 
 DROP TABLE IF EXISTS `goods_brand`;
@@ -131,7 +155,7 @@ CREATE TABLE `goods_info` (
 
 /*Data for the table `goods_info` */
 
-insert  into `goods_info`(`id`,`goods_image_id`,`goods_name`,`bar_code`,`product_number`,`pinyin_code`,`category_name`,`goods_status`,`goods_brand`,`goods_color`,`goods_size`,`goods_tag`,`goods_stock`,`quantity_unit`,`stock_upper_limit`,`stock_lower_limit`,`last_import_price`,`average_import_price`,`sales_price`,`trade_price`,`vip_price`,`is_vip_discount`,`supplier_name`,`production_date`,`quality_guarantee_period`,`is_integral`,`royalty_type`,`is_booked`,`is_gift`,`is_weigh`,`is_fixed_price`,`is_timeing_price`,`is_hidden`,`remark`,`gmt_update`,`gmt_create`) values (62,NULL,'JackJonse','20180502112525345','20180502112525345','jackjonse','a',1,'','白色','XS','',10,'',NULL,NULL,20000,20000,10000,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 11:26:27','2018-05-02 11:25:59'),(70,NULL,'dfgdfg','20180502140348557-001','20180502140348557','','a',1,'','白色','XS','',10,'',NULL,NULL,18000,18000,20000,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 14:04:47','2018-05-02 14:04:18'),(71,NULL,'dfgdfg','20180502140348557-002','20180502140348557','','a',1,'','红色','XS','',20,'',NULL,NULL,18000,18000,20000,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 14:04:47','2018-05-02 14:04:18'),(72,NULL,'cs','20180502140448353-001','20180502140448353','','a',1,'','白色','XS','',0,'',NULL,NULL,3400,3400,32300,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 14:05:44','2018-05-02 14:05:16'),(73,NULL,'cs','20180502140448353-002','20180502140448353','','a',1,'','红色','XS','',0,'',NULL,NULL,3400,3400,32300,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 14:05:44','2018-05-02 14:05:16');
+insert  into `goods_info`(`id`,`goods_image_id`,`goods_name`,`bar_code`,`product_number`,`pinyin_code`,`category_name`,`goods_status`,`goods_brand`,`goods_color`,`goods_size`,`goods_tag`,`goods_stock`,`quantity_unit`,`stock_upper_limit`,`stock_lower_limit`,`last_import_price`,`average_import_price`,`sales_price`,`trade_price`,`vip_price`,`is_vip_discount`,`supplier_name`,`production_date`,`quality_guarantee_period`,`is_integral`,`royalty_type`,`is_booked`,`is_gift`,`is_weigh`,`is_fixed_price`,`is_timeing_price`,`is_hidden`,`remark`,`gmt_update`,`gmt_create`) values (62,NULL,'JackJonse','20180502112525345','20180502112525345','jackjonse','a',1,'','白色','XS','',10,'',NULL,NULL,20000,20000,10000,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 11:26:27','2018-05-02 11:25:59'),(70,NULL,'dfgdfg','20180502140348557-001','20180502140348557','','a',1,'','白色','XS','',10,'',NULL,NULL,18000,18000,20000,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 14:04:47','2018-05-02 14:04:18'),(71,NULL,'dfgdfg','20180502140348557-002','20180502140348557','','a',1,'','红色','XS','',20,'',NULL,NULL,18000,18000,23387,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 21:16:08','2018-05-02 21:15:39'),(72,NULL,'cs','20180502140448353-001','20180502140448353','','a',1,'','白色','XS','',0,'',NULL,NULL,3400,3400,32300,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 14:05:44','2018-05-02 14:05:16'),(73,NULL,'cs','20180502140448353-002','20180502140448353','','a',1,'','红色','XS','',0,'',NULL,NULL,3400,3400,32300,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 14:05:44','2018-05-02 14:05:16');
 
 /*Table structure for table `goods_lose_info` */
 
@@ -436,17 +460,17 @@ DROP TABLE IF EXISTS `system_parameter`;
 CREATE TABLE `system_parameter` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
   `param_code` varchar(64) NOT NULL COMMENT '参数代码',
-  `param_value` varchar(64) NOT NULL COMMENT '参数值',
+  `param_value` varchar(128) DEFAULT NULL COMMENT '参数值',
   `description` varchar(128) DEFAULT NULL COMMENT '参数描述',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UQ_PARAM_CODE` (`param_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `system_parameter` */
 
-insert  into `system_parameter`(`id`,`param_code`,`param_value`,`description`,`gmt_update`,`gmt_create`) values (1,'SHOP_NAME','小熊维尼的糖果店','商店名称','2018-05-02 17:25:40','2018-04-23 21:44:25');
+insert  into `system_parameter`(`id`,`param_code`,`param_value`,`description`,`gmt_update`,`gmt_create`) values (1,'SHOP_NAME','小熊维尼的糖果店','商店名称','2018-05-02 17:25:40','2018-04-23 21:44:25'),(3,'PETTY_AMOUNT','false','备用金开关，true为启用,false为不启用','2018-05-02 17:32:17','2018-05-02 17:31:34');
 
 /*Table structure for table `trade_detail` */
 
@@ -466,7 +490,7 @@ CREATE TABLE `trade_detail` (
   `seller_no` varchar(32) NOT NULL COMMENT '收银员编号',
   `shopper_no` varchar(64) DEFAULT NULL COMMENT '导购员编号',
   `goods_detail` varchar(2048) DEFAULT NULL COMMENT 'JSON格式，商品明细。包含商品名称、商品条码、颜色、尺寸、数量、原价、实收、利润、导购员字段',
-  `pay_chenal` varchar(256) NOT NULL COMMENT 'JSON格式，支付方式及该方式对应的金额。金额单位：分有可能是混合支付',
+  `pay_chenal` varchar(256) NOT NULL COMMENT 'JSON格式，支付方式及该方式对应的金额。金额单位：元。有可能是混合支付',
   `is_exchange_job` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否交接班。1：已交接。0：未交接',
   `exchange_job_id` bigint(20) DEFAULT NULL COMMENT '交接班序号，对应交接班表主键id',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改日期',
