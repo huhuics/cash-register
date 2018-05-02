@@ -20,6 +20,12 @@ public class GoodsItem extends BaseDomain {
 
     private Integer           goodsDiscount;
 
+    private String            barCode;                                 //未使用，只为方便前台传值
+    private String            salesPrice;                              //未使用，只为方便前台传值
+    private String            isVipDiscount;                           //未使用，只为方便前台传值
+    private String            vipPrice;                                //未使用，只为方便前台传值
+    private String            priceTotal;                              //未使用，只为方便前台传值
+
     /***********收银时以下字段为正;退款/反结账时以下字段为负************/
 
     private String            totalAmount;
@@ -76,6 +82,46 @@ public class GoodsItem extends BaseDomain {
 
     public void setTotalActualAmount(String totalActualAmount) {
         this.totalActualAmount = totalActualAmount;
+    }
+
+    public String getBarCode() {
+        return barCode;
+    }
+
+    public void setBarCode(String barCode) {
+        this.barCode = barCode;
+    }
+
+    public String getSalesPrice() {
+        return salesPrice;
+    }
+
+    public void setSalesPrice(String salesPrice) {
+        this.salesPrice = salesPrice;
+    }
+
+    public String getIsVipDiscount() {
+        return isVipDiscount;
+    }
+
+    public void setIsVipDiscount(String isVipDiscount) {
+        this.isVipDiscount = isVipDiscount;
+    }
+
+    public String getVipPrice() {
+        return vipPrice;
+    }
+
+    public void setVipPrice(String vipPrice) {
+        this.vipPrice = vipPrice;
+    }
+
+    public String getPriceTotal() {
+        return priceTotal;
+    }
+
+    public void setPriceTotal(String priceTotal) {
+        this.priceTotal = priceTotal;
     }
 
 }

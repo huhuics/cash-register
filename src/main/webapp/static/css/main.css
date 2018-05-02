@@ -123,17 +123,3 @@ form.layerForm {
 	font-size: 12px;
 	font-family: "Microsoft YaHei";
 } /*修改表格内容字体*/
-
-
-/* ---cashRegister.jsp */
-div.summaryDiv {
-	position: relative;
-	width: 100%;
-	height: 60px;
-	line-height: 60px;
-	padding-left: 20px;
-	padding-right: 20px;
-	/* background-color: #CCC; */
-}
-
-/* cashRegister.jsp--- */
