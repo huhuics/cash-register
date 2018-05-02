@@ -22,13 +22,14 @@
                 <div class="form-group col-xs-2">
                     <input type="text" class="form-control" v-model="q.phone" @keyup.enter="query" placeholder="电话">
                 </div>
-                <div class="form-group col-xs-1">
+                <div class="form-group col-xs-2">
                     <select class="form-control" v-model="q.status">
+                        <option value="">全部状态</option>
                         <option value="true">启用</option>
                         <option value="false">禁用</option>
                     </select>
                 </div>
-                <div class="form-group col-xs-2 pull-right">
+                <div class="form-group col-xs-4">
                     <a class="btn btn-default" @click="search"><i class="fa fa-search"></i>&nbsp;搜索</a>
                     <a class="btn btn-default" @click="resetSearch"><i class="fa fa-undo"></i>&nbsp;刷新</a>
                 </div>
@@ -50,81 +51,97 @@
         <div id="sellerDiv" style="display: none;">
             <form class="form-horizontal layerForm">
                 <div class="form-group">
-                    <label class="col-xs-3 control-label">*编号</label>
-                    <div class="col-xs-7">
-                        <input type="text" class="form-control" v-model="seller.sellerNo">
+                    <div class="col-xs-12">
+                    	<div class="input-group">
+		                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;编号</span>
+		                    <input type="text" class="form-control" v-model="seller.sellerNo">
+		                </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label">*姓名</label>
-                    <div class="col-xs-7">
-                        <input type="text" class="form-control" v-model="seller.name">
+                	<div class="col-xs-12">
+                    	<div class="input-group">
+		                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;姓名</span>
+		                    <input type="text" class="form-control" v-model="seller.name">
+		                </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label">*密码</label>
-                    <div class="col-xs-7">
-                        <input type="password" class="form-control" v-model="seller.password">
+                	<div class="col-xs-12">
+                    	<div class="input-group">
+		                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;密码</span>
+		                    <input type="password" class="form-control" v-model="seller.password">
+		                </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label">电话</label>
-                    <div class="col-xs-7">
-                        <input type="password" class="form-control" v-model="seller.phone">
+                	<div class="col-xs-12">
+                    	<div class="input-group">
+		                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;电话</span>
+		                    <input type="text" class="form-control" v-model="seller.phone">
+		                </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label">角色</label>
-                    <div class="col-xs-7">
-                        <label class="radio-inline">
-                            <input type="radio" v-model="seller.role" value="seller"> 收银员
-                        </label>
-                    </div>
+                	<div class="col-xs-12">
+		            	<div class="input-group">
+		                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;角色</span>
+		                    <span class="input-group-addon">
+		                    	<input type="radio" v-model="seller.role" value="seller"> 收银员
+		                    </span>
+		                </div>
+		            </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label">是否启用</label>
-                    <div class="col-xs-7">
-                        <label class="radio-inline">
-                            <input type="radio" v-model="seller.status" value="true"> 启用
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" v-model="seller.status" value="false"> 禁用
-                        </label>
-                    </div>
+                	<div class="col-xs-12">
+		            	<div class="input-group">
+		                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;状态</span>
+		                    <span class="input-group-addon">
+		                    	<input type="radio" v-model="seller.status" value="true">启用
+		                    </span>
+		                    <span class="input-group-addon">
+		                    	<input type="radio" v-model="seller.status" value="false">禁用
+		                    </span>
+		                </div>
+		            </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label">收银端权限</label>
-                    <div class="col-xs-7">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" v-model="seller.cashPermission" value="option1"> 权限1
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" v-model="seller.cashPermission" value="option2"> 权限2
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" v-model="seller.cashPermission" value="option3"> 权限3
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" v-model="seller.cashPermission" value="option4"> 权限4
-                        </label>
-                    </div>
+                	<div class="col-xs-12">
+		            	<div class="input-group">
+		                    <span class="input-group-addon">收银端权限</span>
+		                    <span class="input-group-addon">
+		                    	<input type="checkbox" v-model="seller.cashPermission" value="option1"> 权限1
+		                    </span>
+		                    <span class="input-group-addon">
+		                    	<input type="checkbox" v-model="seller.cashPermission" value="option2"> 权限2
+		                    </span>
+		                    <span class="input-group-addon">
+		                    	<input type="checkbox" v-model="seller.cashPermission" value="option3"> 权限3
+		                    </span>
+		                    <span class="input-group-addon">
+		                    	<input type="checkbox" v-model="seller.cashPermission" value="option4"> 权限4
+		                    </span>
+		                </div>
+		            </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label">后台权限</label>
-                    <div class="col-xs-7">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" v-model="seller.backgroundPermission" value="option1"> 权限1
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" v-model="seller.backgroundPermission" value="option2"> 权限2
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" v-model="seller.backgroundPermission" value="option3"> 权限3
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" v-model="seller.backgroundPermission" value="option4"> 权限4
-                        </label>
-                    </div>
+                	<div class="col-xs-12">
+		            	<div class="input-group">
+		                    <span class="input-group-addon">后台权限</span>
+		                    <span class="input-group-addon">
+		                    	<input type="checkbox" v-model="seller.backgroundPermission" value="option1"> 权限1
+		                    </span>
+		                    <span class="input-group-addon">
+		                    	<input type="checkbox" v-model="seller.backgroundPermission" value="option2"> 权限2
+		                    </span>
+		                    <span class="input-group-addon">
+		                    	<input type="checkbox" v-model="seller.backgroundPermission" value="option3"> 权限3
+		                    </span>
+		                    <span class="input-group-addon">
+		                    	<input type="checkbox" v-model="seller.backgroundPermission" value="option4"> 权限4
+		                    </span>
+		                </div>
+		            </div>
                 </div>
             </form>
         </div>

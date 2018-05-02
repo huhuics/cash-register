@@ -62,23 +62,23 @@ $(function() {
                     width: 80,
                     formatter: function(value, options, row) {
                         if (value == '1') {
-                            return '启用';
+                            return '<span class="label label-success">启用</span>';
                         }
                         if (value == '0') {
-                            return '禁用';
+                            return '<span class="label label-danger">禁用</span>';
                         }
                         return '未知状态:' + value;
                     }
                 }
             ],
             viewrecords: true,
-            height: "500",
+            height: "auto",
             width: "100%",
-            shrinkToFit: true,
             rowNum: 10,
             rowList: [10, 30, 50],
             rownumbers: true,
             rownumWidth: 45,
+            shrinkToFit: true,
             autowidth: true,
             multiselect: true,
             sortname: "gmt_Update",
@@ -105,7 +105,7 @@ var vm = new Vue({
             sellerNo: null,
             name: null,
             phone: null,
-            status: true
+            status: ''
         },
         seller: {
             id: null,
@@ -128,7 +128,7 @@ var vm = new Vue({
             vm.q.sellerNo = null;
             vm.q.name = null;
             vm.q.phone = null;
-            vm.q.status = true;
+            vm.q.status = '';
             vm.reload();
         },
         add: function() {
@@ -141,13 +141,12 @@ var vm = new Vue({
                 type: 1,
                 skin: 'layui-layer-lan',
                 title: "新增收银员",
-                area: '600px',
+                area: '500px',
                 shadeClose: false,
                 content: jQuery("#sellerDiv"),
                 btn: ['提交', '取消'],
                 btn1: function(index) {
                     $.ajax({
-                        type: "POST",
                         url: basePath + "/admin/seller/addOrUpdate",
                         data: {
                             'sellerNo': vm.seller.sellerNo,
@@ -201,7 +200,7 @@ var vm = new Vue({
                             type: 1,
                             skin: 'layui-layer-lan',
                             title: "编辑收银员",
-                            area: '600px',
+                            area: '500px',
                             shadeClose: false,
                             content: jQuery("#sellerDiv"),
                             btn: ['提交', '取消'],
