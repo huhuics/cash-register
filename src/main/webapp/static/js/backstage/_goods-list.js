@@ -195,14 +195,16 @@ var vm = new Vue({
                 		var num_failed = 0;
                 		var err_msg = '';
                 		var css = _self.color_size_stock;
+                		var barCodePrefix = _self.goods.barCode + '-';
                 		for(var i=0; i<css.length; i++) {
+                			_self.goods.barCode = barCodePrefix + PrefixInteger(i+1,3);
                 			_self.goods.goodsColor = css[i].color;
                 			_self.goods.goodsSize = css[i].size;
                 			_self.goods.goodsStock = css[i].stock;
                 			$.ajax({
                 				async: false,
                                 url: basePath + "/admin/goods/addGoodsInfo",
-                                data: vm.goods,
+                                data: _self.goods,
                                 success: function(result) {
                                     if (result.code == "00") {
                                     	num_success++;

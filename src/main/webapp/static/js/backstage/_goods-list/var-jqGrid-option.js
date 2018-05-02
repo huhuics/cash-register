@@ -19,7 +19,7 @@ var option = {
         label: '条码',
         name: 'barCode',
         index: 'bar_Code',
-        width: 150
+        width: 160
     }, {
         label: '货号',
         name: 'productNumber',

@@ -118,3 +118,13 @@ function isBlank(value) {
 function cloneJsonObj(obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
+
+/** 
+ * 数字前面补0
+ * @param num 数字
+ * @param length 总长度
+ * @returns
+ */
+function PrefixInteger(num, length) {
+    return (Array(length).join(0) + num).slice(-length);
+}
