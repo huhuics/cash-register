@@ -173,7 +173,7 @@ var vm = new Vue({
                 content: jQuery("#goodsAddDiv"),
                 btn: ['提交', '取消'],
                 btn1: function(index) {
-                	if(isBlank(_self.goodsName)||isBlank(_self.barCode)||isBlank(_self.productNumber)||isBlank(_self.categoryName)||isBlank(_self.salesPrice)||isBlank(_self.lastImportPrice)){
+                	if(isBlank(_self.goods.goodsName)||isBlank(_self.goods.barCode)||isBlank(_self.goods.productNumber)||isBlank(_self.goods.categoryName)||isBlank(_self.goods.salesPrice)||isBlank(_self.goods.lastImportPrice)){
                 		layer.alert("必填项为空！");
                 		return;
                 	}
@@ -253,7 +253,7 @@ var vm = new Vue({
                             content: jQuery("#goodsAddDiv"),
                             btn: ['提交', '取消'],
                             btn1: function(index) {
-                            	if(isBlank(_self.goodsName)||isBlank(_self.barCode)||isBlank(_self.productNumber)||isBlank(_self.categoryName)||isBlank(_self.salesPrice)||isBlank(_self.lastImportPrice)){
+                            	if(isBlank(_self.goods.goodsName)||isBlank(_self.goods.barCode)||isBlank(_self.goods.productNumber)||isBlank(_self.goods.categoryName)||isBlank(_self.goods.salesPrice)||isBlank(_self.goods.lastImportPrice)){
                             		layer.alert("必填项为空！");
                             		return;
                             	}
