@@ -173,6 +173,10 @@ var vm = new Vue({
                 content: jQuery("#goodsAddDiv"),
                 btn: ['提交', '取消'],
                 btn1: function(index) {
+                	if(isBlank(_self.goodsName)||isBlank(_self.barCode)||isBlank(_self.productNumber)||isBlank(_self.categoryName)||isBlank(_self.salesPrice)||isBlank(_self.lastImportPrice)){
+                		layer.alert("必填项为空！");
+                		return;
+                	}
                 	if(!_self.switches.colorSize) { // 未选择颜色尺码
                 		$.ajax({
                             url: basePath + "/admin/goods/addGoodsInfo",
@@ -242,16 +246,20 @@ var vm = new Vue({
                     	_self.goods.vipPrice = result.goodsInfo.vipPrice==null?null:result.goodsInfo.vipPrice.amount;
                     	_self.goods.tradePrice = result.goodsInfo.tradePrice==null?null:result.goodsInfo.tradePrice.amount;
                         if(!isBlank(vm.goods.goodsTag)) {
-                        	vm.select_goods_tags = vm.goods.goodsTag.split(',');
+                        	_self.select_goods_tags = _self.goods.goodsTag.split(',');
                         }
                         layer.open({
                         	type: 1, skin: 'layui-layer-lan', title: "编辑商品", area: '650px', shadeClose: false,
                             content: jQuery("#goodsAddDiv"),
                             btn: ['提交', '取消'],
                             btn1: function(index) {
+                            	if(isBlank(_self.goodsName)||isBlank(_self.barCode)||isBlank(_self.productNumber)||isBlank(_self.categoryName)||isBlank(_self.salesPrice)||isBlank(_self.lastImportPrice)){
+                            		layer.alert("必填项为空！");
+                            		return;
+                            	}
                                 $.ajax({
                                     url: basePath + "/admin/goods/updateGoodsInfo",
-                                    data: vm.goods,
+                                    data: _self.goods,
                                     success: function(result) {
                                         if (result.code == "00") {
                                             layer.alert('操作成功');
@@ -259,7 +267,7 @@ var vm = new Vue({
                                         } else {
                                             layer.alert(result.msg);
                                         }
-                                        vm.reloadPage();
+                                        _self.reloadPage();
                                     }
                                 });
                             }
