@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cash.register.dao.ExchangeJobDetailMapper">
+  <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.ExchangeJobDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="seller_no" jdbcType="VARCHAR" property="sellerNo" />
+    <result column="checkout_total_amount" jdbcType="INTEGER" property="checkoutTotalAmount" />
+    <result column="cash_amount" jdbcType="INTEGER" property="cashAmount" />
+    <result column="unionpay_amount" jdbcType="INTEGER" property="unionpayAmount" />
+    <result column="alipay_amount" jdbcType="INTEGER" property="alipayAmount" />
+    <result column="wcpay_amount" jdbcType="INTEGER" property="wcpayAmount" />
+    <result column="petty_cash_amount" jdbcType="INTEGER" property="pettyCashAmount" />
+    <result column="paid_amount" jdbcType="INTEGER" property="paidAmount" />
+    <result column="isFinished" jdbcType="BIT" property="isfinished" />
+    <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, start_time, end_time, seller_no, checkout_total_amount, cash_amount, unionpay_amount, 
+    alipay_amount, wcpay_amount, petty_cash_amount, paid_amount, isFinished, gmt_update, 
+    gmt_create
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from exchange_job_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from exchange_job_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.cash.register.dao.domain.ExchangeJobDetail">
+    insert into exchange_job_detail (id, start_time, end_time, 
+      seller_no, checkout_total_amount, cash_amount, 
+      unionpay_amount, alipay_amount, wcpay_amount, 
+      petty_cash_amount, paid_amount, isFinished, 
+      gmt_update, gmt_create)
+    values (#{id,jdbcType=BIGINT}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{sellerNo,jdbcType=VARCHAR}, #{checkoutTotalAmount,jdbcType=INTEGER}, #{cashAmount,jdbcType=INTEGER}, 
+      #{unionpayAmount,jdbcType=INTEGER}, #{alipayAmount,jdbcType=INTEGER}, #{wcpayAmount,jdbcType=INTEGER}, 
+      #{pettyCashAmount,jdbcType=INTEGER}, #{paidAmount,jdbcType=INTEGER}, #{isfinished,jdbcType=BIT}, 
+      #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.ExchangeJobDetail" useGeneratedKeys="true" keyProperty="id">
+    insert into exchange_job_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="sellerNo != null">
+        seller_no,
+      </if>
+      <if test="checkoutTotalAmount != null">
+        checkout_total_amount,
+      </if>
+      <if test="cashAmount != null">
+        cash_amount,
+      </if>
+      <if test="unionpayAmount != null">
+        unionpay_amount,
+      </if>
+      <if test="alipayAmount != null">
+        alipay_amount,
+      </if>
+      <if test="wcpayAmount != null">
+        wcpay_amount,
+      </if>
+      <if test="pettyCashAmount != null">
+        petty_cash_amount,
+      </if>
+      <if test="paidAmount != null">
+        paid_amount,
+      </if>
+      <if test="isfinished != null">
+        isFinished,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sellerNo != null">
+        #{sellerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="checkoutTotalAmount != null">
+        #{checkoutTotalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="cashAmount != null">
+        #{cashAmount,jdbcType=INTEGER},
+      </if>
+      <if test="unionpayAmount != null">
+        #{unionpayAmount,jdbcType=INTEGER},
+      </if>
+      <if test="alipayAmount != null">
+        #{alipayAmount,jdbcType=INTEGER},
+      </if>
+      <if test="wcpayAmount != null">
+        #{wcpayAmount,jdbcType=INTEGER},
+      </if>
+      <if test="pettyCashAmount != null">
+        #{pettyCashAmount,jdbcType=INTEGER},
+      </if>
+      <if test="paidAmount != null">
+        #{paidAmount,jdbcType=INTEGER},
+      </if>
+      <if test="isfinished != null">
+        #{isfinished,jdbcType=BIT},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.ExchangeJobDetail">
+    update exchange_job_detail
+    <set>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sellerNo != null">
+        seller_no = #{sellerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="checkoutTotalAmount != null">
+        checkout_total_amount = #{checkoutTotalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="cashAmount != null">
+        cash_amount = #{cashAmount,jdbcType=INTEGER},
+      </if>
+      <if test="unionpayAmount != null">
+        unionpay_amount = #{unionpayAmount,jdbcType=INTEGER},
+      </if>
+      <if test="alipayAmount != null">
+        alipay_amount = #{alipayAmount,jdbcType=INTEGER},
+      </if>
+      <if test="wcpayAmount != null">
+        wcpay_amount = #{wcpayAmount,jdbcType=INTEGER},
+      </if>
+      <if test="pettyCashAmount != null">
+        petty_cash_amount = #{pettyCashAmount,jdbcType=INTEGER},
+      </if>
+      <if test="paidAmount != null">
+        paid_amount = #{paidAmount,jdbcType=INTEGER},
+      </if>
+      <if test="isfinished != null">
+        isFinished = #{isfinished,jdbcType=BIT},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.ExchangeJobDetail">
+    update exchange_job_detail
+    set start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      seller_no = #{sellerNo,jdbcType=VARCHAR},
+      checkout_total_amount = #{checkoutTotalAmount,jdbcType=INTEGER},
+      cash_amount = #{cashAmount,jdbcType=INTEGER},
+      unionpay_amount = #{unionpayAmount,jdbcType=INTEGER},
+      alipay_amount = #{alipayAmount,jdbcType=INTEGER},
+      wcpay_amount = #{wcpayAmount,jdbcType=INTEGER},
+      petty_cash_amount = #{pettyCashAmount,jdbcType=INTEGER},
+      paid_amount = #{paidAmount,jdbcType=INTEGER},
+      isFinished = #{isfinished,jdbcType=BIT},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectUnfinished" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from exchange_job_detail
+    where seller_no = #{sellerNo,jdbcType=VARCHAR}
+    and isFinished = false
+  </select>
+  
+  <select id="list" parameterType="cn.cash.register.common.request.ExchangeJobQueryRequest" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from exchange_job_detail
+    where
+    	gmt_create &lt;= to_date(#{gmtCreateUp},'yyyy-MM-dd HH:mm:ss')
+  		and
+  		gmt_create &gt;= to_date(#{gmtCreateDown},'yyyy-MM-dd HH:mm:ss')
+  </select>
+  
+</mapper>
