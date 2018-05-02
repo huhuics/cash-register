@@ -5,12 +5,12 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="param_code" jdbcType="VARCHAR" property="paramCode" />
     <result column="param_value" jdbcType="VARCHAR" property="paramValue" />
-    <result column="example_value" jdbcType="VARCHAR" property="exampleValue" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, param_code, param_value, example_value, gmt_update, gmt_create
+    id, param_code, param_value, description, gmt_update, gmt_create
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -24,10 +24,10 @@
   </delete>
   <insert id="insert" parameterType="cn.cash.register.dao.domain.SystemParameter">
     insert into system_parameter (id, param_code, param_value, 
-      example_value, gmt_update, gmt_create
+      description, gmt_update, gmt_create
       )
     values (#{id,jdbcType=BIGINT}, #{paramCode,jdbcType=VARCHAR}, #{paramValue,jdbcType=VARCHAR}, 
-      #{exampleValue,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}
+      #{description,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.SystemParameter" useGeneratedKeys="true" keyProperty="id">
@@ -42,8 +42,8 @@
       <if test="paramValue != null">
         param_value,
       </if>
-      <if test="exampleValue != null">
-        example_value,
+      <if test="description != null">
+        description,
       </if>
       <if test="gmtUpdate != null">
         gmt_update,
@@ -62,8 +62,8 @@
       <if test="paramValue != null">
         #{paramValue,jdbcType=VARCHAR},
       </if>
-      <if test="exampleValue != null">
-        #{exampleValue,jdbcType=VARCHAR},
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
       </if>
       <if test="gmtUpdate != null">
         #{gmtUpdate,jdbcType=TIMESTAMP},
@@ -82,8 +82,8 @@
       <if test="paramValue != null">
         param_value = #{paramValue,jdbcType=VARCHAR},
       </if>
-      <if test="exampleValue != null">
-        example_value = #{exampleValue,jdbcType=VARCHAR},
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
       </if>
       <if test="gmtUpdate != null">
         gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
@@ -98,7 +98,7 @@
     update system_parameter
     set param_code = #{paramCode,jdbcType=VARCHAR},
       param_value = #{paramValue,jdbcType=VARCHAR},
-      example_value = #{exampleValue,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
       gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
@@ -110,4 +110,5 @@
     from system_parameter
     where param_code = #{paramCode,jdbcType=VARCHAR}
   </select>
+  
 </mapper>

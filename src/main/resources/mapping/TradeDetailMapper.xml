@@ -17,13 +17,14 @@
     <result column="goods_detail" jdbcType="VARCHAR" property="goodsDetail" />
     <result column="pay_chenal" jdbcType="VARCHAR" property="payChenal" />
     <result column="is_exchange_job" jdbcType="BIT" property="isExchangeJob" />
+    <result column="exchange_job_id" jdbcType="BIGINT" property="exchangeJobId" />
     <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
   <sql id="Base_Column_List">
     id, trade_no, trade_time, trade_type, member_name, goods_count, total_amount, goods_discount, 
     total_actual_amount, profit_amount, seller_no, shopper_no, goods_detail, pay_chenal, 
-    is_exchange_job, gmt_update, gmt_create
+    is_exchange_job, exchange_job_id, gmt_update, gmt_create
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -41,13 +42,15 @@
       total_amount, goods_discount, total_actual_amount, 
       profit_amount, seller_no, shopper_no, 
       goods_detail, pay_chenal, is_exchange_job, 
-      gmt_update, gmt_create)
+      exchange_job_id, gmt_update, gmt_create
+      )
     values (#{id,jdbcType=BIGINT}, #{tradeNo,jdbcType=VARCHAR}, #{tradeTime,jdbcType=TIMESTAMP}, 
       #{tradeType,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, #{goodsCount,jdbcType=INTEGER}, 
       #{totalAmount,jdbcType=INTEGER}, #{goodsDiscount,jdbcType=INTEGER}, #{totalActualAmount,jdbcType=INTEGER}, 
       #{profitAmount,jdbcType=INTEGER}, #{sellerNo,jdbcType=VARCHAR}, #{shopperNo,jdbcType=VARCHAR}, 
       #{goodsDetail,jdbcType=VARCHAR}, #{payChenal,jdbcType=VARCHAR}, #{isExchangeJob,jdbcType=BIT}, 
-      #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
+      #{exchangeJobId,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.TradeDetail">
     insert into trade_detail
@@ -96,6 +99,9 @@
       </if>
       <if test="isExchangeJob != null">
         is_exchange_job,
+      </if>
+      <if test="exchangeJobId != null">
+        exchange_job_id,
       </if>
       <if test="gmtUpdate != null">
         gmt_update,
@@ -150,6 +156,9 @@
       <if test="isExchangeJob != null">
         #{isExchangeJob,jdbcType=BIT},
       </if>
+      <if test="exchangeJobId != null">
+        #{exchangeJobId,jdbcType=BIGINT},
+      </if>
       <if test="gmtUpdate != null">
         #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
@@ -203,6 +212,9 @@
       <if test="isExchangeJob != null">
         is_exchange_job = #{isExchangeJob,jdbcType=BIT},
       </if>
+      <if test="exchangeJobId != null">
+        exchange_job_id = #{exchangeJobId,jdbcType=BIGINT},
+      </if>
       <if test="gmtUpdate != null">
         gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
@@ -228,6 +240,7 @@
       goods_detail = #{goodsDetail,jdbcType=VARCHAR},
       pay_chenal = #{payChenal,jdbcType=VARCHAR},
       is_exchange_job = #{isExchangeJob,jdbcType=BIT},
+      exchange_job_id = #{exchangeJobId,jdbcType=BIGINT},
       gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

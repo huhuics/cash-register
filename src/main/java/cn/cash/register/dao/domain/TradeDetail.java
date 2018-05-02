@@ -6,7 +6,7 @@ import cn.cash.register.util.Money;
 
 public class TradeDetail extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = 4762764775503457325L;
+    private static final long serialVersionUID = -6300820513255393435L;
 
     private Long              id;
 
@@ -37,6 +37,8 @@ public class TradeDetail extends BaseDomain {
     private String            payChenal;
 
     private Boolean           isExchangeJob;
+
+    private Long              exchangeJobId;
 
     private Date              gmtUpdate;
 
@@ -169,6 +171,14 @@ public class TradeDetail extends BaseDomain {
 
     public void setIsExchangeJob(Boolean isExchangeJob) {
         this.isExchangeJob = isExchangeJob;
+    }
+
+    public Long getExchangeJobId() {
+        return exchangeJobId;
+    }
+
+    public void setExchangeJobId(Long exchangeJobId) {
+        this.exchangeJobId = exchangeJobId;
     }
 
     public Date getGmtUpdate() {
