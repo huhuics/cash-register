@@ -328,12 +328,30 @@
     where trade_no = #{tradeNo,jdbcType=VARCHAR}
   </delete>
   
-  <select id="selectBySellerAchievement" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.SellerAchievementQueryRequest">
+  <select id="selectSellerAchievement" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.AchievementQueryRequest">
   	select 
     <include refid="Base_Column_List" />
   	from trade_goods_detail where 1=1
-  	<if test="sellerNo != null and sellerNo !=''">
-  		and seller_no = #{sellerNo,jdbcType=VARCHAR}
+  	<if test="bizNo != null and bizNo !=''">
+  		and seller_no = #{bizNo,jdbcType=VARCHAR}
+    </if>
+  	<if test="categoryName != null and categoryName !=''">
+  		and category_name = #{categoryName,jdbcType=VARCHAR}
+    </if>
+    <if test="tradeTimeUp != null">
+    	and 
+  		trade_time &lt;= to_date(#{tradeTimeUp},'yyyy-MM-dd HH:mm:ss')
+  		and
+  		trade_time &gt;= to_date(#{tradeTimeDown},'yyyy-MM-dd HH:mm:ss')
+    </if>
+   </select>
+   
+   <select id="selectShopperAchievement" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.AchievementQueryRequest">
+  	select 
+    <include refid="Base_Column_List" />
+  	from trade_goods_detail where 1=1
+  	<if test="bizNo != null and bizNo !=''">
+  		and shopper_no = #{bizNo,jdbcType=VARCHAR}
     </if>
   	<if test="categoryName != null and categoryName !=''">
   		and category_name = #{categoryName,jdbcType=VARCHAR}

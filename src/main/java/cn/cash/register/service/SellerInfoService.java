@@ -6,7 +6,7 @@ package cn.cash.register.service;
 
 import com.github.pagehelper.PageInfo;
 
-import cn.cash.register.common.request.SellerAchievementQueryRequest;
+import cn.cash.register.common.request.AchievementQueryRequest;
 import cn.cash.register.common.request.SellerInfoQueryRequest;
 import cn.cash.register.dao.domain.SellerInfo;
 import cn.cash.register.dao.domain.TradeGoodsDetail;
@@ -57,6 +57,6 @@ public interface SellerInfoService {
     /**
      * 查询收银员业绩
      */
-    PageInfo<TradeGoodsDetail> queryAchievement(SellerAchievementQueryRequest request);
+    PageInfo<TradeGoodsDetail> queryAchievement(AchievementQueryRequest request);
 
 }

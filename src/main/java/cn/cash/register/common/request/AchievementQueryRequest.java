@@ -7,16 +7,21 @@ package cn.cash.register.common.request;
 import cn.cash.register.util.AssertUtil;
 
 /**
- * 收银员业绩查询
+ * 收银员/导购员业绩查询
  * @author HuHui
  * @version $Id: SellerAchievementQueryRequest.java, v 0.1 2018年5月3日 上午10:24:57 HuHui Exp $
  */
-public class SellerAchievementQueryRequest extends BaseRequest {
+public class AchievementQueryRequest extends BasePageRequest {
 
     /**  */
     private static final long serialVersionUID = 519519037698009022L;
 
-    private String            sellerNo;
+    /**
+     * 收银员编号sellerNo
+     * 或
+     * 导购员编号shopperNo
+     */
+    private String            bizNo;
 
     private String            categoryName;
 
@@ -30,12 +35,12 @@ public class SellerAchievementQueryRequest extends BaseRequest {
         AssertUtil.assertNotBlank(tradeTimeDown, "查询时间不能为空");
     }
 
-    public String getSellerNo() {
-        return sellerNo;
+    public String getBizNo() {
+        return bizNo;
     }
 
-    public void setSellerNo(String sellerNo) {
-        this.sellerNo = sellerNo;
+    public void setBizNo(String bizNo) {
+        this.bizNo = bizNo;
     }
 
     public String getCategoryName() {

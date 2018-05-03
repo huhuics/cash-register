@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 
-import cn.cash.register.common.request.SellerAchievementQueryRequest;
+import cn.cash.register.common.request.AchievementQueryRequest;
 import cn.cash.register.common.request.SellerInfoQueryRequest;
 import cn.cash.register.dao.domain.SellerInfo;
 import cn.cash.register.dao.domain.TradeGoodsDetail;
@@ -112,7 +112,7 @@ public class SellerController {
      */
     @ResponseBody
     @RequestMapping
-    public ResultSet querySellerAchievement(SellerAchievementQueryRequest request) {
+    public ResultSet querySellerAchievement(AchievementQueryRequest request) {
         PageInfo<TradeGoodsDetail> ret = sellerInfoService.queryAchievement(request);
         return ResultSet.success().put("ret", ret);
     }

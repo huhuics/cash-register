@@ -18,7 +18,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.Constants;
-import cn.cash.register.common.request.SellerAchievementQueryRequest;
+import cn.cash.register.common.request.AchievementQueryRequest;
 import cn.cash.register.common.request.SellerInfoQueryRequest;
 import cn.cash.register.dao.SellerInfoMapper;
 import cn.cash.register.dao.TradeGoodsDetailMapper;
@@ -111,9 +111,12 @@ public class SellerInfoServiceImpl implements SellerInfoService {
     }
 
     @Override
-    public PageInfo<TradeGoodsDetail> queryAchievement(SellerAchievementQueryRequest request) {
+    public PageInfo<TradeGoodsDetail> queryAchievement(AchievementQueryRequest request) {
         request.validate();
-        List<TradeGoodsDetail> list = tradeGoodsDetailMapper.selectBySellerAchievement(request);
+        PageHelper.startPage(request.getPageNum(), request.getPageSize());
+        PageHelper.orderBy(request.getSidx() + " " + request.getOrder());
+
+        List<TradeGoodsDetail> list = tradeGoodsDetailMapper.selectSellerAchievement(request);
         return new PageInfo<TradeGoodsDetail>(list);
     }
 

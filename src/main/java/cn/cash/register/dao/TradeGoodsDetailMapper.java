@@ -2,7 +2,7 @@ package cn.cash.register.dao;
 
 import java.util.List;
 
-import cn.cash.register.common.request.SellerAchievementQueryRequest;
+import cn.cash.register.common.request.AchievementQueryRequest;
 import cn.cash.register.common.request.TradeGoodsDetailQueryRequest;
 import cn.cash.register.dao.domain.TradeGoodsDetail;
 
@@ -23,6 +23,8 @@ public interface TradeGoodsDetailMapper {
 
     void deleteByTradeNo(String tradeNo);
 
-    List<TradeGoodsDetail> selectBySellerAchievement(SellerAchievementQueryRequest request);
+    List<TradeGoodsDetail> selectSellerAchievement(AchievementQueryRequest request);
+
+    List<TradeGoodsDetail> selectShopperAchievement(AchievementQueryRequest request);
 
 }
