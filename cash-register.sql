@@ -155,7 +155,7 @@ CREATE TABLE `goods_info` (
 
 /*Data for the table `goods_info` */
 
-insert  into `goods_info`(`id`,`goods_image_id`,`goods_name`,`bar_code`,`product_number`,`pinyin_code`,`category_name`,`goods_status`,`goods_brand`,`goods_color`,`goods_size`,`goods_tag`,`goods_stock`,`quantity_unit`,`stock_upper_limit`,`stock_lower_limit`,`last_import_price`,`average_import_price`,`sales_price`,`trade_price`,`vip_price`,`is_vip_discount`,`supplier_name`,`production_date`,`quality_guarantee_period`,`is_integral`,`royalty_type`,`is_booked`,`is_gift`,`is_weigh`,`is_fixed_price`,`is_timeing_price`,`is_hidden`,`remark`,`gmt_update`,`gmt_create`) values (62,NULL,'JackJonse','20180502112525345','20180502112525345','jackjonse','a',1,'','白色','XS','',10,'',NULL,NULL,20000,20000,10000,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 11:26:27','2018-05-02 11:25:59'),(70,NULL,'dfgdfg','20180502140348557-001','20180502140348557','','a',1,'','白色','XS','',10,'',NULL,NULL,18000,18000,20000,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 14:04:47','2018-05-02 14:04:18'),(71,NULL,'dfgdfg','20180502140348557-002','20180502140348557','','a',1,'','红色','XS','',20,'',NULL,NULL,18000,18000,23387,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 21:16:08','2018-05-02 21:15:39'),(72,NULL,'cs','20180502140448353-001','20180502140448353','','a',1,'','白色','XS','',0,'',NULL,NULL,3400,3400,32300,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 14:05:44','2018-05-02 14:05:16'),(73,NULL,'cs','20180502140448353-002','20180502140448353','','a',1,'','红色','XS','',0,'',NULL,NULL,3400,3400,32300,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 14:05:44','2018-05-02 14:05:16');
+insert  into `goods_info`(`id`,`goods_image_id`,`goods_name`,`bar_code`,`product_number`,`pinyin_code`,`category_name`,`goods_status`,`goods_brand`,`goods_color`,`goods_size`,`goods_tag`,`goods_stock`,`quantity_unit`,`stock_upper_limit`,`stock_lower_limit`,`last_import_price`,`average_import_price`,`sales_price`,`trade_price`,`vip_price`,`is_vip_discount`,`supplier_name`,`production_date`,`quality_guarantee_period`,`is_integral`,`royalty_type`,`is_booked`,`is_gift`,`is_weigh`,`is_fixed_price`,`is_timeing_price`,`is_hidden`,`remark`,`gmt_update`,`gmt_create`) values (62,NULL,'JackJonse','20180502112525345','20180502112525345','jackjonse','a',1,'','白色','XS','',9,'',NULL,NULL,20000,20000,10000,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-03 14:42:20','2018-05-02 11:25:59'),(70,NULL,'dfgdfg','20180502140348557-001','20180502140348557','','a',1,'','白色','XS','',10,'',NULL,NULL,18000,18000,20000,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 14:04:47','2018-05-02 14:04:18'),(71,NULL,'dfgdfg','20180502140348557-002','20180502140348557','','a',1,'','红色','XS','',20,'',NULL,NULL,18000,18000,23387,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 21:16:08','2018-05-02 21:15:39'),(72,NULL,'cs','20180502140448353-001','20180502140448353','','a',1,'','白色','XS','',0,'',NULL,NULL,3400,3400,32300,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 14:05:44','2018-05-02 14:05:16'),(73,NULL,'cs','20180502140448353-002','20180502140448353','','a',1,'','红色','XS','',0,'',NULL,NULL,3400,3400,32300,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 14:05:44','2018-05-02 14:05:16');
 
 /*Table structure for table `goods_lose_info` */
 
@@ -418,6 +418,7 @@ CREATE TABLE `shopper_info` (
   `recharge_percentage` double DEFAULT NULL COMMENT '充值提成。如5.3%则填5.3',
   `shopping_card_percentage` double DEFAULT NULL COMMENT '购物卡提成。如5.3%则填5.3',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态.1：启用。0：停用',
+  `royalty_type` varchar(128) DEFAULT NULL COMMENT '提成方式',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`),
@@ -497,9 +498,11 @@ CREATE TABLE `trade_detail` (
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建日期',
   PRIMARY KEY (`id`),
   UNIQUE KEY `INX_TRADE_NO` (`trade_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `trade_detail` */
+
+insert  into `trade_detail`(`id`,`trade_no`,`trade_time`,`trade_type`,`member_name`,`goods_count`,`total_amount`,`goods_discount`,`total_actual_amount`,`profit_amount`,`seller_no`,`shopper_no`,`goods_detail`,`pay_chenal`,`is_exchange_job`,`exchange_job_id`,`gmt_update`,`gmt_create`) values (1,'20180503144148820','2018-05-03 14:41:49','sales',NULL,1,10000,100,10000,10000,'123',NULL,'[{\"barCode\":\"20180502112525345\",\"goodsCount\":1,\"goodsDiscount\":100,\"goodsId\":62,\"goodsName\":\"JackJonse\",\"isVipDiscount\":\"true\",\"priceTotal\":\"100\",\"totalActualAmount\":\"100\",\"totalAmount\":\"100\"}]','[{\"amount\":\"\",\"chenal\":\"\"}]',0,456,'2018-05-03 14:42:20','2018-05-03 14:41:49');
 
 /*Table structure for table `trade_goods_detail` */
 
@@ -519,6 +522,8 @@ CREATE TABLE `trade_goods_detail` (
   `goods_count` int(11) DEFAULT NULL COMMENT '商品数量，退款为负',
   `goods_tag` varchar(128) DEFAULT NULL COMMENT '商品标签，半角逗号分隔开',
   `category_name` varchar(128) DEFAULT NULL COMMENT '商品分类名称',
+  `seller_no` varchar(32) DEFAULT NULL COMMENT '收银员编号',
+  `shopper_no` varchar(64) DEFAULT NULL COMMENT '导购员编号',
   `supplier_name` varchar(128) DEFAULT NULL COMMENT '供货商名称',
   `total_amount` int(11) NOT NULL COMMENT '商品原价，单位：分。退款为负',
   `goods_discount` int(100) NOT NULL COMMENT '商品折扣，如9.8折就填98.默认100即不打折',
@@ -529,10 +534,13 @@ CREATE TABLE `trade_goods_detail` (
   PRIMARY KEY (`id`),
   KEY `IDX_TRADE_NO` (`trade_no`),
   KEY `IDX_BAR_CODE` (`bar_code`),
-  KEY `IDX_GOODS_TAG` (`goods_tag`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `IDX_GOODS_TAG` (`goods_tag`),
+  KEY `IDX_SELLER_NO` (`seller_no`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `trade_goods_detail` */
+
+insert  into `trade_goods_detail`(`id`,`trade_no`,`trade_time`,`trade_type`,`goods_name`,`goods_brand`,`bar_code`,`product_number`,`goods_color`,`goods_size`,`goods_count`,`goods_tag`,`category_name`,`seller_no`,`shopper_no`,`supplier_name`,`total_amount`,`goods_discount`,`total_actual_amount`,`profit_amount`,`gmt_update`,`gmt_create`) values (1,'20180503144148820','2018-05-03 14:41:49','sales','JackJonse','','20180502112525345','20180502112525345','白色','XS',1,'','a',NULL,NULL,'',10000,100,10000,10000,'2018-05-03 14:42:20','2018-05-03 14:41:49');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

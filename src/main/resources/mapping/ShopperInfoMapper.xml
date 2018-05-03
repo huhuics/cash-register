@@ -10,12 +10,13 @@
     <result column="recharge_percentage" jdbcType="DOUBLE" property="rechargePercentage" />
     <result column="shopping_card_percentage" jdbcType="DOUBLE" property="shoppingCardPercentage" />
     <result column="status" jdbcType="BIT" property="status" />
+    <result column="royalty_type" jdbcType="VARCHAR" property="royaltyType" />
     <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
   <sql id="Base_Column_List">
     id, shopper_no, name, phone, sales_percentage, recharge_percentage, shopping_card_percentage, 
-    status, gmt_update, gmt_create
+    status, royalty_type, gmt_update, gmt_create
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -30,14 +31,14 @@
   <insert id="insert" parameterType="cn.cash.register.dao.domain.ShopperInfo">
     insert into shopper_info (id, shopper_no, name, 
       phone, sales_percentage, recharge_percentage, 
-      shopping_card_percentage, status, gmt_update, 
-      gmt_create)
+      shopping_card_percentage, status, royalty_type, 
+      gmt_update, gmt_create)
     values (#{id,jdbcType=BIGINT}, #{shopperNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{salesPercentage,jdbcType=DOUBLE}, #{rechargePercentage,jdbcType=DOUBLE}, 
-      #{shoppingCardPercentage,jdbcType=DOUBLE}, #{status,jdbcType=BIT}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
-      #{gmtCreate,jdbcType=TIMESTAMP})
+      #{shoppingCardPercentage,jdbcType=DOUBLE}, #{status,jdbcType=BIT}, #{royaltyType,jdbcType=VARCHAR}, 
+      #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.ShopperInfo">
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.ShopperInfo" useGeneratedKeys="true" keyProperty="id">
     insert into shopper_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -63,6 +64,9 @@
       </if>
       <if test="status != null">
         status,
+      </if>
+      <if test="royaltyType != null">
+        royalty_type,
       </if>
       <if test="gmtUpdate != null">
         gmt_update,
@@ -96,6 +100,9 @@
       <if test="status != null">
         #{status,jdbcType=BIT},
       </if>
+      <if test="royaltyType != null">
+        #{royaltyType,jdbcType=VARCHAR},
+      </if>
       <if test="gmtUpdate != null">
         #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
@@ -128,6 +135,9 @@
       <if test="status != null">
         status = #{status,jdbcType=BIT},
       </if>
+      <if test="royaltyType != null">
+        royalty_type = #{royaltyType,jdbcType=VARCHAR},
+      </if>
       <if test="gmtUpdate != null">
         gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
@@ -146,8 +156,25 @@
       recharge_percentage = #{rechargePercentage,jdbcType=DOUBLE},
       shopping_card_percentage = #{shoppingCardPercentage,jdbcType=DOUBLE},
       status = #{status,jdbcType=BIT},
+      royalty_type = #{royaltyType,jdbcType=VARCHAR},
       gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="list" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.ShopperInfoQueryRequest">
+  		select 
+    	<include refid="Base_Column_List" />
+    	from shopper_info where 1=1
+    	<if test="status != null">
+    		and status = #{status,jdbcType=BIT}
+    	</if>
+    	<if test="shopperNo != null and shopperNo !=''">
+    		and shopper_no = #{shopperNo,jdbcType=VARCHAR}
+    	</if>
+    	<if test="name != null and name !=''">
+    		and name = #{name,jdbcType=VARCHAR}
+    	</if>
+  </select>
+  
 </mapper>

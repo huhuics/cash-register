@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ShopperInfo extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = -182647821301618018L;
+    private static final long serialVersionUID = 3357586211030492779L;
 
     private Long              id;
 
@@ -21,6 +21,8 @@ public class ShopperInfo extends BaseDomain {
     private Double            shoppingCardPercentage;
 
     private Boolean           status;
+
+    private String            royaltyType;
 
     private Date              gmtUpdate;
 
@@ -88,6 +90,14 @@ public class ShopperInfo extends BaseDomain {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public String getRoyaltyType() {
+        return royaltyType;
+    }
+
+    public void setRoyaltyType(String royaltyType) {
+        this.royaltyType = royaltyType == null ? null : royaltyType.trim();
     }
 
     public Date getGmtUpdate() {

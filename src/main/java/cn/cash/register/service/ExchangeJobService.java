@@ -28,9 +28,9 @@ public interface ExchangeJobService {
 
     /**
      * 交接班
-     * @param id 交接班记录主键id
+     * @param exchangeJobId 交接班记录主键id
      */
-    boolean exchangeJob(Long id);
+    boolean exchangeJob(Long exchangeJobId);
 
     /**
      * 查询交接班记录

@@ -6,7 +6,7 @@ import cn.cash.register.util.Money;
 
 public class TradeGoodsDetail extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = -5495936401343730269L;
+    private static final long serialVersionUID = -4885224337636823161L;
 
     private Long              id;
 
@@ -33,6 +33,10 @@ public class TradeGoodsDetail extends BaseDomain {
     private String            goodsTag;
 
     private String            categoryName;
+
+    private String            sellerNo;
+
+    private String            shopperNo;
 
     private String            supplierName;
 
@@ -150,6 +154,22 @@ public class TradeGoodsDetail extends BaseDomain {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName == null ? null : categoryName.trim();
+    }
+
+    public String getSellerNo() {
+        return sellerNo;
+    }
+
+    public void setSellerNo(String sellerNo) {
+        this.sellerNo = sellerNo == null ? null : sellerNo.trim();
+    }
+
+    public String getShopperNo() {
+        return shopperNo;
+    }
+
+    public void setShopperNo(String shopperNo) {
+        this.shopperNo = shopperNo == null ? null : shopperNo.trim();
     }
 
     public String getSupplierName() {

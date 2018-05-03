@@ -198,6 +198,8 @@ public class TradeServiceImpl implements TradeService {
 
             }
 
+            tradeGoodsDetail.setSellerNo(request.getSellerNo());
+            tradeGoodsDetail.setShopperNo(request.getShopperNo());
             tradeGoodsDetail.setTotalAmount(new Money(item.getTotalAmount()));
             tradeGoodsDetail.setGoodsDiscount(item.getGoodsDiscount());
             tradeGoodsDetail.setTotalActualAmount(new Money(item.getTotalActualAmount()));
