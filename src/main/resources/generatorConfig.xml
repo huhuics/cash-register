@@ -54,9 +54,6 @@
 		<table tableName="seller_permission_info" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 		</table>
 		
-		<table tableName="shopper_info" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-		</table>
-		
 		<table tableName="system_parameter" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 		</table>
 		
@@ -67,12 +64,6 @@
 		</table>
 		
 		<table tableName="member_info" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-		</table>
-		
-		<table tableName="trade_goods_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-			<columnOverride column="total_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-			<columnOverride column="total_actual_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-			<columnOverride column="profit_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
 		
 		<table tableName="goods_tag" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
@@ -116,8 +107,6 @@
 		<table tableName="system_parameter" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 		</table>
 		
-		-->
-		
 		<table tableName="exchange_job_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 			<columnOverride column="checkout_total_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="cash_amount" javaType="cn.cash.register.util.Money"></columnOverride>
@@ -126,6 +115,17 @@
 			<columnOverride column="wcpay_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="petty_cash_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="paid_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+		</table>
+		
+		<table tableName="trade_goods_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<columnOverride column="total_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="total_actual_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="profit_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+		</table>
+		
+		-->
+		
+		<table tableName="shopper_info" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 		</table>
 		 
     </context>  

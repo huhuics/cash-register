@@ -18,9 +18,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.Constants;
+import cn.cash.register.common.request.AchievementQueryRequest;
 import cn.cash.register.common.request.SellerInfoQueryRequest;
 import cn.cash.register.dao.SellerInfoMapper;
+import cn.cash.register.dao.TradeGoodsDetailMapper;
 import cn.cash.register.dao.domain.SellerInfo;
+import cn.cash.register.dao.domain.TradeGoodsDetail;
 import cn.cash.register.service.SellerInfoService;
 import cn.cash.register.service.SystemParameterService;
 import cn.cash.register.util.AssertUtil;
@@ -41,6 +44,9 @@ public class SellerInfoServiceImpl implements SellerInfoService {
 
     @Resource
     private SystemParameterService parameterService;
+
+    @Resource
+    private TradeGoodsDetailMapper tradeGoodsDetailMapper;
 
     @Override
     public Long addSeller(SellerInfo sellerInfo) {
@@ -102,6 +108,16 @@ public class SellerInfoServiceImpl implements SellerInfoService {
         AssertUtil.assertTrue(StringUtils.equals(password, seller.getPassword()), "用户名或密码错误");
 
         return seller;
+    }
+
+    @Override
+    public PageInfo<TradeGoodsDetail> queryAchievement(AchievementQueryRequest request) {
+        request.validate();
+        PageHelper.startPage(request.getPageNum(), request.getPageSize());
+        PageHelper.orderBy(request.getSidx() + " " + request.getOrder());
+
+        List<TradeGoodsDetail> list = tradeGoodsDetailMapper.selectSellerAchievement(request);
+        return new PageInfo<TradeGoodsDetail>(list);
     }
 
 }

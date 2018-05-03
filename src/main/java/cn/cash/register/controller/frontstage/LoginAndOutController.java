@@ -20,11 +20,11 @@ import cn.cash.register.util.ResultSet;
 /**
  * 登录登出Controller
  * @author HuHui
- * @version $Id: LoginController.java, v 0.1 2018年5月2日 下午9:09:14 HuHui Exp $
+ * @version $Id: LoginAndOutController.java, v 0.1 2018年5月2日 下午9:09:14 HuHui Exp $
  */
 @Controller
 @RequestMapping("/cashier/loginAndOut")
-public class LoginController {
+public class LoginAndOutController {
 
     @Resource
     private SellerInfoService  sellerInfoService;
@@ -55,11 +55,19 @@ public class LoginController {
     @ResponseBody
     @RequestMapping(value = "/createUnFinishedExchangeJob", method = RequestMethod.POST)
     public ResultSet createUnFinishedExchangeJob(String sellerNo, String password) {
-
         //创建
         Long id = exchangeJobService.create(sellerNo);
-
         return ResultSet.success().put("id", id);
+    }
+
+    /**
+     * 交接班接口
+     */
+    @ResponseBody
+    @RequestMapping(value = "exchangeJob", method = RequestMethod.POST)
+    public ResultSet exchangeJob(Long exchangeJobId) {
+        boolean ret = exchangeJobService.exchangeJob(exchangeJobId);
+        return ResultSet.success().put("ret", ret);
     }
 
 }
