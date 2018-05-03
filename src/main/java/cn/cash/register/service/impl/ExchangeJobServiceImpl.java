@@ -72,15 +72,15 @@ public class ExchangeJobServiceImpl implements ExchangeJobService {
     }
 
     @Override
-    public boolean exchangeJob(Long id) {
-        ExchangeJobDetail unfinishedJob = exchangeJobDetailMapper.selectByPrimaryKey(id);
+    public boolean exchangeJob(Long exchangeJobId) {
+        ExchangeJobDetail unfinishedJob = exchangeJobDetailMapper.selectByPrimaryKey(exchangeJobId);
         if (unfinishedJob == null) {
             LogUtil.info(logger, "收银员已完成交接班,不需重复交接");
             return true;
         }
 
         //查询需要交接班的交易详情
-        ExchangeJobTradeDetailRequest request = new ExchangeJobTradeDetailRequest(unfinishedJob.getStartTime(), id, unfinishedJob.getSellerNo());
+        ExchangeJobTradeDetailRequest request = new ExchangeJobTradeDetailRequest(unfinishedJob.getStartTime(), exchangeJobId, unfinishedJob.getSellerNo());
         List<TradeDetail> tradeDetails = tradeDetailMapper.selectExchangeJobTradeDetails(request);
 
         Money checkoutTotalAmount = new Money();

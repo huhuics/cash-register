@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.request.SellerAchievementQueryRequest;
 import cn.cash.register.common.request.SellerInfoQueryRequest;
 import cn.cash.register.dao.domain.SellerInfo;
+import cn.cash.register.dao.domain.TradeGoodsDetail;
 import cn.cash.register.service.SellerInfoService;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
@@ -103,6 +105,16 @@ public class SellerController {
         sellerInfoService.delete(id);
 
         return ResultSet.success();
+    }
+
+    /**
+     * 查询收银员业绩
+     */
+    @ResponseBody
+    @RequestMapping
+    public ResultSet querySellerAchievement(SellerAchievementQueryRequest request) {
+        PageInfo<TradeGoodsDetail> ret = sellerInfoService.queryAchievement(request);
+        return ResultSet.success().put("ret", ret);
     }
 
 }

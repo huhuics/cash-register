@@ -6,8 +6,10 @@ package cn.cash.register.service;
 
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.request.SellerAchievementQueryRequest;
 import cn.cash.register.common.request.SellerInfoQueryRequest;
 import cn.cash.register.dao.domain.SellerInfo;
+import cn.cash.register.dao.domain.TradeGoodsDetail;
 
 /**
  * 收银员信息服务接口
@@ -51,5 +53,10 @@ public interface SellerInfoService {
      * 收银员或管理员登录
      */
     SellerInfo login(String sellerNo, String password);
+
+    /**
+     * 查询收银员业绩
+     */
+    PageInfo<TradeGoodsDetail> queryAchievement(SellerAchievementQueryRequest request);
 
 }

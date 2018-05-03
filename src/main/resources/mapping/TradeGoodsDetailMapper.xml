@@ -15,6 +15,8 @@
     <result column="goods_count" jdbcType="INTEGER" property="goodsCount" />
     <result column="goods_tag" jdbcType="VARCHAR" property="goodsTag" />
     <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="seller_no" jdbcType="VARCHAR" property="sellerNo" />
+    <result column="shopper_no" jdbcType="VARCHAR" property="shopperNo" />
     <result column="supplier_name" jdbcType="VARCHAR" property="supplierName" />
     <result column="total_amount" jdbcType="INTEGER" property="totalAmount" />
     <result column="goods_discount" jdbcType="INTEGER" property="goodsDiscount" />
@@ -25,8 +27,9 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, trade_no, trade_time, trade_type, goods_name, goods_brand, bar_code, product_number, 
-    goods_color, goods_size, goods_count, goods_tag, category_name, supplier_name, total_amount, 
-    goods_discount, total_actual_amount, profit_amount, gmt_update, gmt_create
+    goods_color, goods_size, goods_count, goods_tag, category_name, seller_no, shopper_no, 
+    supplier_name, total_amount, goods_discount, total_actual_amount, profit_amount, 
+    gmt_update, gmt_create
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -43,16 +46,18 @@
       trade_type, goods_name, goods_brand, 
       bar_code, product_number, goods_color, 
       goods_size, goods_count, goods_tag, 
-      category_name, supplier_name, total_amount, 
-      goods_discount, total_actual_amount, profit_amount, 
-      gmt_update, gmt_create)
+      category_name, seller_no, shopper_no, 
+      supplier_name, total_amount, goods_discount, 
+      total_actual_amount, profit_amount, gmt_update, 
+      gmt_create)
     values (#{id,jdbcType=BIGINT}, #{tradeNo,jdbcType=VARCHAR}, #{tradeTime,jdbcType=TIMESTAMP}, 
       #{tradeType,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{goodsBrand,jdbcType=VARCHAR}, 
       #{barCode,jdbcType=VARCHAR}, #{productNumber,jdbcType=VARCHAR}, #{goodsColor,jdbcType=VARCHAR}, 
       #{goodsSize,jdbcType=VARCHAR}, #{goodsCount,jdbcType=INTEGER}, #{goodsTag,jdbcType=VARCHAR}, 
-      #{categoryName,jdbcType=VARCHAR}, #{supplierName,jdbcType=VARCHAR}, #{totalAmount,jdbcType=INTEGER}, 
-      #{goodsDiscount,jdbcType=INTEGER}, #{totalActualAmount,jdbcType=INTEGER}, #{profitAmount,jdbcType=INTEGER}, 
-      #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
+      #{categoryName,jdbcType=VARCHAR}, #{sellerNo,jdbcType=VARCHAR}, #{shopperNo,jdbcType=VARCHAR}, 
+      #{supplierName,jdbcType=VARCHAR}, #{totalAmount,jdbcType=INTEGER}, #{goodsDiscount,jdbcType=INTEGER}, 
+      #{totalActualAmount,jdbcType=INTEGER}, #{profitAmount,jdbcType=INTEGER}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
+      #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.TradeGoodsDetail">
     insert into trade_goods_detail
@@ -95,6 +100,12 @@
       </if>
       <if test="categoryName != null">
         category_name,
+      </if>
+      <if test="sellerNo != null">
+        seller_no,
+      </if>
+      <if test="shopperNo != null">
+        shopper_no,
       </if>
       <if test="supplierName != null">
         supplier_name,
@@ -158,6 +169,12 @@
       <if test="categoryName != null">
         #{categoryName,jdbcType=VARCHAR},
       </if>
+      <if test="sellerNo != null">
+        #{sellerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopperNo != null">
+        #{shopperNo,jdbcType=VARCHAR},
+      </if>
       <if test="supplierName != null">
         #{supplierName,jdbcType=VARCHAR},
       </if>
@@ -220,6 +237,12 @@
       <if test="categoryName != null">
         category_name = #{categoryName,jdbcType=VARCHAR},
       </if>
+      <if test="sellerNo != null">
+        seller_no = #{sellerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopperNo != null">
+        shopper_no = #{shopperNo,jdbcType=VARCHAR},
+      </if>
       <if test="supplierName != null">
         supplier_name = #{supplierName,jdbcType=VARCHAR},
       </if>
@@ -258,6 +281,8 @@
       goods_count = #{goodsCount,jdbcType=INTEGER},
       goods_tag = #{goodsTag,jdbcType=VARCHAR},
       category_name = #{categoryName,jdbcType=VARCHAR},
+      seller_no = #{sellerNo,jdbcType=VARCHAR},
+      shopper_no = #{shopperNo,jdbcType=VARCHAR},
       supplier_name = #{supplierName,jdbcType=VARCHAR},
       total_amount = #{totalAmount,jdbcType=INTEGER},
       goods_discount = #{goodsDiscount,jdbcType=INTEGER},
@@ -302,5 +327,23 @@
     delete from trade_goods_detail
     where trade_no = #{tradeNo,jdbcType=VARCHAR}
   </delete>
+  
+  <select id="selectBySellerAchievement" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.SellerAchievementQueryRequest">
+  	select 
+    <include refid="Base_Column_List" />
+  	from trade_goods_detail where 1=1
+  	<if test="sellerNo != null and sellerNo !=''">
+  		and seller_no = #{sellerNo,jdbcType=VARCHAR}
+    </if>
+  	<if test="categoryName != null and categoryName !=''">
+  		and category_name = #{categoryName,jdbcType=VARCHAR}
+    </if>
+    <if test="tradeTimeUp != null">
+    	and 
+  		trade_time &lt;= to_date(#{tradeTimeUp},'yyyy-MM-dd HH:mm:ss')
+  		and
+  		trade_time &gt;= to_date(#{tradeTimeDown},'yyyy-MM-dd HH:mm:ss')
+    </if>
+   </select>
   
 </mapper>

@@ -519,6 +519,8 @@ CREATE TABLE `trade_goods_detail` (
   `goods_count` int(11) DEFAULT NULL COMMENT '商品数量，退款为负',
   `goods_tag` varchar(128) DEFAULT NULL COMMENT '商品标签，半角逗号分隔开',
   `category_name` varchar(128) DEFAULT NULL COMMENT '商品分类名称',
+  `seller_no` varchar(32) DEFAULT NULL COMMENT '收银员编号',
+  `shopper_no` varchar(64) DEFAULT NULL COMMENT '导购员编号',
   `supplier_name` varchar(128) DEFAULT NULL COMMENT '供货商名称',
   `total_amount` int(11) NOT NULL COMMENT '商品原价，单位：分。退款为负',
   `goods_discount` int(100) NOT NULL COMMENT '商品折扣，如9.8折就填98.默认100即不打折',
@@ -529,7 +531,8 @@ CREATE TABLE `trade_goods_detail` (
   PRIMARY KEY (`id`),
   KEY `IDX_TRADE_NO` (`trade_no`),
   KEY `IDX_BAR_CODE` (`bar_code`),
-  KEY `IDX_GOODS_TAG` (`goods_tag`)
+  KEY `IDX_GOODS_TAG` (`goods_tag`),
+  KEY `IDX_SELLER_NO` (`seller_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `trade_goods_detail` */
