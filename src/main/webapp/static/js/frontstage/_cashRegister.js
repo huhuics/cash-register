@@ -22,11 +22,14 @@ var vip_info = {
 var vm = new Vue({
     el: '#cashRegisterDiv',
     data: {
-        goods_list: [], // 购买商品清单.goods_item的数组
+        goods_list: [], // 购买商品清单，goods_item的数组
         goods_item: cloneJsonObj(goods_item),
         goods_keyword: null,
+        keyword_search_goods_list: [], // 搜索商品清单
+        select_goods_id_list: [], // 选择要加入的商品列表
         price_without_barcode: null,
         vip_keyword: null,
+        keyword_search_vip_list: [], // 搜索会员清单
         vip_info: cloneJsonObj(vip_info),
         summary_count: 0,
         summary_price: 0,
@@ -47,18 +50,53 @@ var vm = new Vue({
                             layer.alert("没有找到相关商品");
                             return;
                         } else if (result.size == 1) { // 查到唯一商品，直接加入
-                            _self.reset_goods_item();
                             _self.transferGoodsToItem(result.goods);
                             _self.addItemToGoodsList(1);
                             return;
                         } else if (result.size > 1) { // 查到多个商品，选择加入
-                            // TODO
+                            layer.open({
+                            	type: 1, skin: 'layui-layer-lan', title: "搜索并选择商品", area: '800px', shadeClose: false,
+                                content: jQuery("#goodsSelectDiv"),
+                                btn: ['加入', '取消'],
+                                btn1: function(index) {
+                                	var _goodsList = _self.keyword_search_goods_list;
+                                	for(_id in _self.select_goods_id_list) {
+                                		for(var i=0;i<_goodsList.length;i++) {
+                                			if(_goodsList[i].id==_id){
+                                				_self.transferGoodsToItem(_goodsList[i]);
+                                				_self.addItemToGoodsList(1);
+                                				break;
+                                			}
+                                		}
+                                	}
+                                	layer.close(index);
+                                }
+                            });
                         }
                     } else {
                         layer.alert(result.msg);
                     }
                 }
             });
+        },
+        searchGoodsInBox: function() { // 根据关键字查找商品列表显示在待加入界面
+        	this.select_goods_id_list = [];
+        	if (isBlank(this.goods_keyword)) {
+        		this.keyword_search_goods_list = [];
+        		return;
+        	}
+        	var _self = this;
+        	$.ajax({
+        		url: basePath + "/cashier/trade/searchGoodsInfo",
+        		data: { 'keyword': _self.goods_keyword },
+        		success: function(result) {
+        			if (result.code == "00") {
+        				_self.keyword_search_goods_list = result.goodsInfos;
+        			} else {
+        				layer.alert(result.msg);
+        			}
+        		}
+        	});
         },
         transferGoodsToItem: function(goods) { // 将goods转换为item,对除count与priceTotal以外的值赋值
             this.reset_goods_item(); // 重置

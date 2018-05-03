@@ -64,13 +64,17 @@ public class TradeController {
     @RequestMapping(value = "/searchGoodsInfo")
     public ResultSet searchGoodsInfo(String keyword) {
         AssertUtil.assertNotBlank(keyword, "查询关键字不能为空");
+
         List<GoodsInfo> goodsInfos = goodsInfoService.search(keyword);
+
+        ResultSet resultSet = ResultSet.success().put("goodsInfos", goodsInfos);
+
         if (CollectionUtils.isEmpty(goodsInfos)) {
-            return ResultSet.success().put("size", 0);
+            return resultSet.put("size", 0);
         } else if (goodsInfos.size() == 1) {
-            return ResultSet.success().put("size", 1).put("goods", goodsInfos.get(0));
+            return resultSet.put("size", 1).put("goods", goodsInfos.get(0));
         } else {
-            return ResultSet.success().put("size", goodsInfos.size()).put("goodsInfos", goodsInfos);
+            return resultSet.put("size", goodsInfos.size());
         }
     }
 
@@ -83,13 +87,17 @@ public class TradeController {
     @RequestMapping(value = "/searchMemberInfo")
     public ResultSet searchMemberInfo(String keyword) {
         AssertUtil.assertNotBlank(keyword, "关键字不能为空");
+
         List<MemberInfo> memberInfos = memberService.search(keyword);
+
+        ResultSet resultSet = ResultSet.success().put("memberInfos", memberInfos);
+
         if (CollectionUtils.isEmpty(memberInfos)) {
-            return ResultSet.success().put("size", 0);
+            return resultSet.put("size", 0);
         } else if (memberInfos.size() == 1) {
-            return ResultSet.success().put("size", 1).put("member", memberInfos.get(0));
+            return resultSet.put("size", 1).put("member", memberInfos.get(0));
         } else {
-            return ResultSet.success().put("size", memberInfos.size()).put("memberInfos", memberInfos);
+            return resultSet.put("size", memberInfos.size());
         }
     }
 
