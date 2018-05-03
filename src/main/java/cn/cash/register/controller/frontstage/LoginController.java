@@ -5,12 +5,14 @@
 package cn.cash.register.controller.frontstage;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.cash.register.common.Constants;
 import cn.cash.register.dao.domain.SellerInfo;
 import cn.cash.register.service.ExchangeJobService;
 import cn.cash.register.service.SellerInfoService;
@@ -38,28 +40,22 @@ public class LoginController {
      */
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResultSet login(String sellerNo, String password) {
+    public ResultSet login(String sellerNo, String password, HttpSession session) {
 
         AssertUtil.assertNotBlank(sellerNo, "收银员编号不能为空");
         AssertUtil.assertNotBlank(password, "密码不能为空");
 
         SellerInfo seller = sellerInfoService.login(sellerNo, password);
 
-        return ResultSet.success().put("seller", seller);
-    }
+        session.removeAttribute(Constants.LOGIN_FLAG);
+        session.removeAttribute(Constants.CURRENT_JOB_ID);
 
-    /**
-     * 创建未完成的交接班记录
-     * 收银员成功登录以后调用此接口
-     */
-    @ResponseBody
-    @RequestMapping(value = "/createUnFinishedExchangeJob", method = RequestMethod.POST)
-    public ResultSet createUnFinishedExchangeJob(String sellerNo, String password) {
-
-        //创建
+        //创建未完成的交接班记录
         Long id = exchangeJobService.create(sellerNo);
+        session.setAttribute(Constants.LOGIN_FLAG, seller);
+        session.setAttribute(Constants.CURRENT_JOB_ID, id);
 
-        return ResultSet.success().put("id", id);
+        return ResultSet.success().put("seller", seller);
     }
 
 }
