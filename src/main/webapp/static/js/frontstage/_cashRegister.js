@@ -181,12 +181,9 @@ var vm = new Vue({
             var _self = this;
             $.ajax({
                 url: basePath + "/cashier/trade/checkout",
-                data: {
-                    'goodsItems': _self.goods_list,
-                    'payChenals': {
-                        'chenal': '',
-                        'amount': ''
-                    }
+                data:  {
+                	  goodsItemsJSONStr: JSON.stringify(_self.goods_list),
+                	  payChenalsJSONStr: "[{chenal: '',amount: ''}]",
                 },
                 success: function(result) {
                     if (result.code == "00") {

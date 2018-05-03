@@ -7,26 +7,32 @@ package cn.cash.register.controller.frontstage;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.Constants;
 import cn.cash.register.common.request.CancelRequest;
 import cn.cash.register.common.request.TradeDetailQueryRequest;
 import cn.cash.register.common.request.TradeGoodsDetailQueryRequest;
 import cn.cash.register.common.request.TradeRequest;
 import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.dao.domain.MemberInfo;
+import cn.cash.register.dao.domain.SellerInfo;
 import cn.cash.register.dao.domain.TradeDetail;
 import cn.cash.register.dao.domain.TradeGoodsDetail;
 import cn.cash.register.service.GoodsInfoService;
 import cn.cash.register.service.MemberService;
 import cn.cash.register.service.TradeService;
 import cn.cash.register.util.AssertUtil;
+import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -38,14 +44,16 @@ import cn.cash.register.util.ResultSet;
 @RequestMapping("/cashier/trade")
 public class TradeController {
 
-    @Resource
-    private TradeService     tradeService;
+    private static final Logger logger = LoggerFactory.getLogger(TradeController.class);
 
     @Resource
-    private GoodsInfoService goodsInfoService;
+    private TradeService        tradeService;
 
     @Resource
-    private MemberService    memberService;
+    private GoodsInfoService    goodsInfoService;
+
+    @Resource
+    private MemberService       memberService;
 
     /**
      * 根据关键字搜索并添加商品
@@ -90,7 +98,14 @@ public class TradeController {
      */
     @ResponseBody
     @RequestMapping(value = "/checkout")
-    public ResultSet checkout(TradeRequest request) {
+    public ResultSet checkout(TradeRequest request, HttpSession session) {
+        LogUtil.info(logger, "[Controller]接收到收银请求,request={0}", request);
+
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG);
+        Long exchangeJobId = (Long) session.getAttribute(Constants.CURRENT_JOB_ID);
+        request.setSellerNo(seller.getSellerNo());
+        request.setExchangeJobId(exchangeJobId);
+
         boolean ret = tradeService.checkout(request);
         return ResultSet.success().put("ret", ret);
     }
