@@ -37,6 +37,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#"><i class="fa fa-cny"></i>&nbsp;收银</a></li>
+					<li><a href="#"><i class="fa fa-cog"></i>&nbsp;新增商品</a></li>
 					<li><a href="#"><i class="fa fa-cog"></i>&nbsp;新增会员</a></li>
 					<li><a href="#"><i class="fa fa-cog"></i>&nbsp;销售单据</a></li>
 					<li><a href="#"><i class="fa fa-cog"></i>&nbsp;商品编辑</a></li>

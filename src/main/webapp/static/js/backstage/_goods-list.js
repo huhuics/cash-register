@@ -173,6 +173,10 @@ var vm = new Vue({
                 content: jQuery("#goodsAddDiv"),
                 btn: ['提交', '取消'],
                 btn1: function(index) {
+                	if(isBlank(_self.goods.goodsName)||isBlank(_self.goods.barCode)||isBlank(_self.goods.productNumber)||isBlank(_self.goods.categoryName)||isBlank(_self.goods.salesPrice)||isBlank(_self.goods.lastImportPrice)){
+                		layer.alert("必填项为空！");
+                		return;
+                	}
                 	if(!_self.switches.colorSize) { // 未选择颜色尺码
                 		$.ajax({
                             url: basePath + "/admin/goods/addGoodsInfo",
@@ -195,14 +199,16 @@ var vm = new Vue({
                 		var num_failed = 0;
                 		var err_msg = '';
                 		var css = _self.color_size_stock;
+                		var barCodePrefix = _self.goods.barCode + '-';
                 		for(var i=0; i<css.length; i++) {
+                			_self.goods.barCode = barCodePrefix + PrefixInteger(i+1,3);
                 			_self.goods.goodsColor = css[i].color;
                 			_self.goods.goodsSize = css[i].size;
                 			_self.goods.goodsStock = css[i].stock;
                 			$.ajax({
                 				async: false,
                                 url: basePath + "/admin/goods/addGoodsInfo",
-                                data: vm.goods,
+                                data: _self.goods,
                                 success: function(result) {
                                     if (result.code == "00") {
                                     	num_success++;
@@ -240,16 +246,20 @@ var vm = new Vue({
                     	_self.goods.vipPrice = result.goodsInfo.vipPrice==null?null:result.goodsInfo.vipPrice.amount;
                     	_self.goods.tradePrice = result.goodsInfo.tradePrice==null?null:result.goodsInfo.tradePrice.amount;
                         if(!isBlank(vm.goods.goodsTag)) {
-                        	vm.select_goods_tags = vm.goods.goodsTag.split(',');
+                        	_self.select_goods_tags = _self.goods.goodsTag.split(',');
                         }
                         layer.open({
                         	type: 1, skin: 'layui-layer-lan', title: "编辑商品", area: '650px', shadeClose: false,
                             content: jQuery("#goodsAddDiv"),
                             btn: ['提交', '取消'],
                             btn1: function(index) {
+                            	if(isBlank(_self.goods.goodsName)||isBlank(_self.goods.barCode)||isBlank(_self.goods.productNumber)||isBlank(_self.goods.categoryName)||isBlank(_self.goods.salesPrice)||isBlank(_self.goods.lastImportPrice)){
+                            		layer.alert("必填项为空！");
+                            		return;
+                            	}
                                 $.ajax({
                                     url: basePath + "/admin/goods/updateGoodsInfo",
-                                    data: vm.goods,
+                                    data: _self.goods,
                                     success: function(result) {
                                         if (result.code == "00") {
                                             layer.alert('操作成功');
@@ -257,7 +267,7 @@ var vm = new Vue({
                                         } else {
                                             layer.alert(result.msg);
                                         }
-                                        vm.reloadPage();
+                                        _self.reloadPage();
                                     }
                                 });
                             }
@@ -346,15 +356,15 @@ var vm = new Vue({
         		}
         	});
         },
-        _editGoodsStock: function() { layerOpen_skinlan_nobtn("编辑库存",'650px',"#goodsStockDiv"); },
-        _editGoodsColorSize: function() { layerOpen_skinlan_nobtn("编辑颜色尺码",'650px',"#goodsColorSizeDiv"); },
-        _editGoodsUnit: function() { layerOpen_skinlan_nobtn("选择单位",'350px',"#goodsUnitDiv"); },
-        _editGoodsBrand: function() { layerOpen_skinlan_nobtn("选择品牌",'350px',"#goodsBrandDiv"); },
+        _editGoodsStock: function() { layerOpen_skinlan_1btn("编辑库存",'650px',"#goodsStockDiv"); },
+        _editGoodsColorSize: function() { layerOpen_skinlan_1btn("编辑颜色尺码",'650px',"#goodsColorSizeDiv"); },
+        _editGoodsUnit: function() { layerOpen_skinlan_1btn("选择单位",'350px',"#goodsUnitDiv"); },
+        _editGoodsBrand: function() { layerOpen_skinlan_1btn("选择品牌",'350px',"#goodsBrandDiv"); },
         _editGoodsTag: function(usefor) {
         	this.select_goods_tags_usefor = usefor;
-        	layerOpen_skinlan_nobtn("选择标签",'350px',"#goodsTagDiv"); 
+        	layerOpen_skinlan_1btn("选择标签",'350px',"#goodsTagDiv"); 
         },
-        _editGoodsSupplier: function() { layerOpen_skinlan_nobtn("选择供货商",'350px',"#goodsSupplierDiv"); },
+        _editGoodsSupplier: function() { layerOpen_skinlan_1btn("选择供货商",'350px',"#goodsSupplierDiv"); },
         _editGoodsCategory: function() {
         	layer.alert('暂不支持分类管理，请手动输入分类');
         },

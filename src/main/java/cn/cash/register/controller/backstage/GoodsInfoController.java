@@ -123,19 +123,6 @@ public class GoodsInfoController {
     }
 
     /**
-     * 根据关键字搜索商品
-     * @param keyword 条码/拼音码/商品名
-     * @return  商品信息列表
-     */
-    @ResponseBody
-    @RequestMapping(value = "/searchGoodsInfo")
-    public ResultSet searchGoodsInfo(String keyword) {
-        AssertUtil.assertNotBlank(keyword, "查询关键字不能为空");
-        List<GoodsInfo> goodsInfos = goodsInfoService.search(keyword);
-        return ResultSet.success().put("goodsInfos", goodsInfos);
-    }
-
-    /**
      * 批量修改操作
      * @param request
      */
