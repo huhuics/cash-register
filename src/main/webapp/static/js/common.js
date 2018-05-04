@@ -125,6 +125,15 @@ function cloneJsonObj(obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
 
+//控制台打印日志
+function __log(msg, obj) {
+	var str = msg;
+	if(!isBlank(obj)){
+		str += ',obj: [' + JSON.stringify(obj) + ']';
+	}
+	console.log(str);
+}
+
 /** 
  * 数字前面补0
  * @param num 数字

@@ -7,19 +7,16 @@
         <div class="form-group">
             <div class="col-xs-12">
             	<div class="input-group">
-                    <span class="input-group-addon">搜索商品</span>
-                    <span class="input-group-addon">
-                    	<input type="text" v-model="goods_keyword" placeholder="按条码/拼音码/品名搜索">
-                    </span>
+                    <input class="form-control" type="text" v-model="goods_keyword" placeholder="按条码/拼音码/品名搜索">
                     <span class="input-group-btn">
-                    	<button class="btn btn-default" type="button" @click="searchGoodsInBox"><i class="fa fa-search"></i>&nbsp;确定</button>
+                    	<button class="btn btn-default" type="button" @click="searchGoodsInBox"><i class="fa fa-search"></i>&nbsp;搜索</button>
                     </span>
                 </div>
             </div>
         </div>
         <div class="form-group">
         	<div class="col-xs-12">
-        		<table>
+        		<table class="table table-condensed" style="font-family: 'Microsoft YaHei';">
         			<thead>
         				<th></th>
         				<th>商品条码</th>
@@ -31,7 +28,7 @@
         			</thead>
         			<tbody>
         				<tr v-for="goods in keyword_search_goods_list">
-        					<td><input type="checkbox" v-model="select_goods_id_list" value="goods.id"></td>
+        					<td><input type="checkbox" v-model="select_goods_id_list" :value="goods.id"></td>
         					<td>{{goods.barCode}}</td>
         					<td>{{goods.goodsName}}</td>
         					<td>{{goods.salesPrice.amount}}</td>

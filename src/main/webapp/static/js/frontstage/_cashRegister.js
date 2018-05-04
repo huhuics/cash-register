@@ -2,7 +2,7 @@ var goods_item = { // 商品元素
     goodsId: null,
     barCode: null,
     goodsName: null,
-    totalAmount: null, // 商品原价，对应字段salesPrice，根据辉哥的命名而改名
+    totalAmount: null, // 商品原价，对应字段salesPrice，根据辉哥的命名
     isVipDiscount: null,
     vipPrice: null,
     //--- 以上为商品表中对应数据
@@ -19,6 +19,25 @@ var vip_info = {
     discount: null
 };
 
+var payChenals = {
+    payChenal_cash: {
+        chenal: 'cash',
+        amount: 0
+    },
+    payChenal_unionpay: {
+        chenal: 'unionpay',
+        amount: 0
+    },
+    payChenal_alipay: {
+        chenal: 'alipay',
+        amount: 0
+    },
+    payChenal_wcpay: {
+        chenal: 'wcpay',
+        amount: 0
+    }
+}
+
 var vm = new Vue({
     el: '#cashRegisterDiv',
     data: {
@@ -30,9 +49,29 @@ var vm = new Vue({
         price_without_barcode: null,
         vip_keyword: null,
         keyword_search_vip_list: [], // 搜索会员清单
+        select_vip_id: null, // 选择的会员id
         vip_info: cloneJsonObj(vip_info),
         summary_count: 0,
         summary_price: 0,
+        payChenals: cloneJsonObj(payChenals),
+    },
+    computed: {
+        change() {
+            var amountSelected = 0;
+            if (this.payChenals.payChenal_cash.amount > 0) {
+                amountSelected += 1 * this.payChenals.payChenal_cash.amount;
+            }
+            if (this.payChenals.payChenal_unionpay.amount > 0) {
+                amountSelected += 1 * this.payChenals.payChenal_unionpay.amount;
+            }
+            if (this.payChenals.payChenal_alipay.amount > 0) {
+                amountSelected += 1 * this.payChenals.payChenal_alipay.amount;
+            }
+            if (this.payChenals.payChenal_wcpay.amount > 0) {
+                amountSelected += 1 * this.payChenals.payChenal_wcpay.amount;
+            }
+            return amountSelected * 1 - this.summary_price * 1;
+        },
     },
     methods: {
         searchGoods: function() { // 根据关键字查找商品加入清单
@@ -50,26 +89,32 @@ var vm = new Vue({
                             layer.alert("没有找到相关商品");
                             return;
                         } else if (result.size == 1) { // 查到唯一商品，直接加入
-                            _self.transferGoodsToItem(result.goods);
+                            _self.transferGoodsToItem(result.goodsInfos[0]);
                             _self.addItemToGoodsList(1);
                             return;
                         } else if (result.size > 1) { // 查到多个商品，选择加入
+                            _self.keyword_search_goods_list = result.goodsInfos;
                             layer.open({
-                            	type: 1, skin: 'layui-layer-lan', title: "搜索并选择商品", area: '800px', shadeClose: false,
+                                type: 1,
+                                skin: 'layui-layer-lan',
+                                title: "搜索并选择商品",
+                                area: '800px',
+                                shadeClose: false,
                                 content: jQuery("#goodsSelectDiv"),
                                 btn: ['加入', '取消'],
                                 btn1: function(index) {
-                                	var _goodsList = _self.keyword_search_goods_list;
-                                	for(_id in _self.select_goods_id_list) {
-                                		for(var i=0;i<_goodsList.length;i++) {
-                                			if(_goodsList[i].id==_id){
-                                				_self.transferGoodsToItem(_goodsList[i]);
-                                				_self.addItemToGoodsList(1);
-                                				break;
-                                			}
-                                		}
-                                	}
-                                	layer.close(index);
+                                    var _goodsList = _self.keyword_search_goods_list;
+                                    for (var i = 0; i < _self.select_goods_id_list.length; i++) {
+                                        _id = _self.select_goods_id_list[i];
+                                        for (var j = 0; j < _goodsList.length; j++) {
+                                            if (_goodsList[j].id == _id) {
+                                                _self.transferGoodsToItem(_goodsList[j]);
+                                                _self.addItemToGoodsList(1);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    layer.close(index);
                                 }
                             });
                         }
@@ -80,23 +125,23 @@ var vm = new Vue({
             });
         },
         searchGoodsInBox: function() { // 根据关键字查找商品列表显示在待加入界面
-        	this.select_goods_id_list = [];
-        	if (isBlank(this.goods_keyword)) {
-        		this.keyword_search_goods_list = [];
-        		return;
-        	}
-        	var _self = this;
-        	$.ajax({
-        		url: basePath + "/cashier/trade/searchGoodsInfo",
-        		data: { 'keyword': _self.goods_keyword },
-        		success: function(result) {
-        			if (result.code == "00") {
-        				_self.keyword_search_goods_list = result.goodsInfos;
-        			} else {
-        				layer.alert(result.msg);
-        			}
-        		}
-        	});
+            this.select_goods_id_list = [];
+            if (isBlank(this.goods_keyword)) {
+                this.keyword_search_goods_list = [];
+                return;
+            }
+            var _self = this;
+            $.ajax({
+                url: basePath + "/cashier/trade/searchGoodsInfo",
+                data: { 'keyword': _self.goods_keyword },
+                success: function(result) {
+                    if (result.code == "00") {
+                        _self.keyword_search_goods_list = result.goodsInfos;
+                    } else {
+                        layer.alert(result.msg);
+                    }
+                }
+            });
         },
         transferGoodsToItem: function(goods) { // 将goods转换为item,对除count与priceTotal以外的值赋值
             this.reset_goods_item(); // 重置
@@ -193,13 +238,56 @@ var vm = new Vue({
                             layer.alert("没有找到相关会员");
                             return;
                         } else if (result.size == 1) { // 查到唯一会员
-                            _self.reset_vip_info();
-                            _self.transferMemberInfoToVipInfo(result.member);
+                            _self.transferMemberInfoToVipInfo(result.memberInfos[0]);
                             _self._afterVipInfoChange();
                             return;
                         } else if (result.size > 1) { // 查到多个会员，选择加入
-                            // TODO
+                            _self.keyword_search_vip_list = result.memberInfos;
+                            layer.open({
+                                type: 1,
+                                skin: 'layui-layer-lan',
+                                title: "搜索并选择会员",
+                                area: '800px',
+                                shadeClose: false,
+                                content: jQuery("#vipSelectDiv"),
+                                btn: ['确认', '取消'],
+                                btn1: function(index) {
+                                    if (isBlank(_self.select_vip_id)) {
+                                        layer.alert("未选择会员信息！");
+                                        return;
+                                    }
+                                    var _memberList = _self.keyword_search_vip_list;
+                                    for (var j = 0; j < _memberList.length; j++) {
+                                        if (_memberList[j].id == _self.select_vip_id) {
+                                            _self.transferMemberInfoToVipInfo(_memberList[j]);
+                                            _self._afterVipInfoChange();
+                                            layer.close(index);
+                                            return;
+                                        }
+                                    }
+                                    layer.alert("系统错误");
+                                }
+                            });
                         }
+                    } else {
+                        layer.alert(result.msg);
+                    }
+                }
+            });
+        },
+        searchVipInfoInBox: function() {
+            this.select_vip_id = null;
+            if (isBlank(this.vip_keyword)) {
+                this.keyword_search_vip_list = [];
+                return;
+            }
+            var _self = this;
+            $.ajax({
+                url: basePath + "/cashier/trade/searchMemberInfo",
+                data: { 'keyword': _self.vip_keyword },
+                success: function(result) {
+                    if (result.code == "00") {
+                        this.keyword_search_vip_list = result.memberInfos;
                     } else {
                         layer.alert(result.msg);
                     }
@@ -210,18 +298,36 @@ var vm = new Vue({
             // TODO
         },
         transferMemberInfoToVipInfo: function(member) {
+            this.reset_vip_info();
             this.vip_info.id = member.id;
             this.vip_info.name = member.memberName;
             this.vip_info.score = member.memberIntegral;
             this.vip_info.discount = member.memberDiscount;
         },
+        toCheckout: function() { // 去收款
+            var _self = this;
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-lan',
+                title: "收款",
+                area: '800px',
+                shadeClose: false,
+                content: jQuery("#checkoutDiv"),
+                btn: ['取消'],
+            });
+        },
         checkout: function() { // 收款
+            var _msg = this.checkPayChenals();
+            if (!isBlank(_msg)) {
+                layer.alert(_msg);
+                return;
+            }
             var _self = this;
             $.ajax({
                 url: basePath + "/cashier/trade/checkout",
-                data:  {
-                	  goodsItemsJSONStr: JSON.stringify(_self.goods_list),
-                	  payChenalsJSONStr: "[{chenal: '',amount: ''}]",
+                data: {
+                    goodsItemsJSONStr: JSON.stringify(_self.goods_list),
+                    payChenalsJSONStr: _self.payChenalsStr(),
                 },
                 success: function(result) {
                     if (result.code == "00") {
@@ -232,6 +338,50 @@ var vm = new Vue({
                     }
                 }
             });
+        },
+        checkPayChenals: function() {
+            var countSelected = 0;
+            var amountSelected = 0;
+            if (this.payChenals.payChenal_cash.amount > 0) {
+                countSelected++;
+                amountSelected += 1 * this.payChenals.payChenal_cash.amount;
+            }
+            if (this.payChenals.payChenal_unionpay.amount > 0) {
+                countSelected++;
+                amountSelected += 1 * this.payChenals.payChenal_unionpay.amount;
+            }
+            if (this.payChenals.payChenal_alipay.amount > 0) {
+                countSelected++;
+                amountSelected += 1 * this.payChenals.payChenal_alipay.amount;
+            }
+            if (this.payChenals.payChenal_wcpay.amount > 0) {
+                countSelected++;
+                amountSelected += 1 * this.payChenals.payChenal_wcpay.amount;
+            }
+            if (countSelected > 2) {
+                return '付款通道不能多于2个';
+            }
+            if (amountSelected < this.goods_item.priceTotal) {
+                return '付款金额不足';
+            }
+            return null;
+        },
+        payChenalsStr: function() {
+            var str = '[';
+            if (this.payChenals.payChenal_cash.amount > 0) {
+                str += '{chenal: "cash",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
+            }
+            if (this.payChenals.payChenal_unionpay.amount > 0) {
+                str += '{chenal: "cash",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
+            }
+            if (this.payChenals.payChenal_alipay.amount > 0) {
+                str += '{chenal: "cash",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
+            }
+            if (this.payChenals.payChenal_wcpay.amount > 0) {
+                str += '{chenal: "cash",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
+            }
+            str += ']'
+            return str;
         },
         reset_goods_item: function() {
             this.goods_item = cloneJsonObj(goods_item);
