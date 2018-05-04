@@ -14,6 +14,11 @@ public class Constants {
     public static final String LOGIN_FLAG                  = "user";
 
     /**
+     * 登录以后保存的当前交接班id
+     */
+    public static final String CURRENT_JOB_ID              = "current_job_id";
+
+    /**
      * 商品资料导出文件名
      */
     public static final String GOODS_INFO_EXPORT_FILE_NAME = "商品资料.xls";

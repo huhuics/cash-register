@@ -97,6 +97,8 @@
 				</tbody>
 			</table>
 		</div>
+		
+		<%@ include file="./_cashRegister/_goods-select.jsp"%>
 
 	</div>
 
