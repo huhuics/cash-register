@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Cash Register Index</title>
+<title>收银端</title>
 <link rel="stylesheet"
 	href="${ctx}/static/plugins/bootstrap/css/bootstrap.css">
 <link rel="stylesheet"
