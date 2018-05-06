@@ -458,6 +458,13 @@ var vm = new Vue({
             this.vip_info = cloneJsonObj(vip_info);
             this.summary_count = 0;
             this.summary_price = 0;
+            this.focus();
+        },
+        focus: function() { // 设置页面焦点
+        	$(".toFocus").focus();
         }
+    },
+    mounted: function() {
+    	this.focus();
     }
 });
