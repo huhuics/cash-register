@@ -46,7 +46,8 @@ var vm = new Vue({
         goods_keyword: null,
         keyword_search_goods_list: [], // 搜索商品清单
         select_goods_id_list: [], // 选择要加入的商品列表
-        price_without_barcode: null,
+        price_without_barcode: null, // 无码商品价格
+        noBarcodeIdNum: 1, // 无码商品id序列
         vip_keyword: null,
         keyword_search_vip_list: [], // 搜索会员清单
         select_vip_id: null, // 选择的会员id
@@ -76,7 +77,7 @@ var vm = new Vue({
     methods: {
         searchGoods: function() { // 根据关键字查找商品加入清单
             if (isBlank(this.goods_keyword)) {
-                layer.alert("请输入：条码/拼音码/品名");
+                layer.msg("请输入：条码/拼音码/品名");
                 return;
             }
             var _self = this;
@@ -86,7 +87,7 @@ var vm = new Vue({
                 success: function(result) {
                     if (result.code == "00") {
                         if (result.size == 0) {
-                            layer.alert("没有找到相关商品");
+                            layer.msg("没有找到相关商品");
                             return;
                         } else if (result.size == 1) { // 查到唯一商品，直接加入
                             _self.transferGoodsToItem(result.goodsInfos[0]);
@@ -143,6 +144,33 @@ var vm = new Vue({
                 }
             });
         },
+        addNoBarcodeItem: function() {
+            if (isBlank(this.price_without_barcode)) {
+                layer.msg('请输入价格');
+                return;
+            }
+            this.createNoBarcodeItem();
+            this.addItemToGoodsList(1);
+
+        },
+        createNoBarcodeItem: function() { // 创建无码收银商品
+            this.reset_goods_item(); // 重置
+
+            this.goods_item.goodsId = 'nobarcode-' + this.noBarcodeIdNum++;
+            this.goods_item.barCode = null;
+            this.goods_item.goodsName = '无码商品';
+            this.goods_item.totalAmount = this.price_without_barcode;
+            this.goods_item.isVipDiscount = true;
+            this.goods_item.vipPrice = null;
+
+            if (isBlank(this.vip_info.discount)) { // 没有录入会员信息，原价
+                this.goods_item.totalActualAmount = this.goods_item.totalAmount;
+                this.goods_item.goodsDiscount = 100;
+            } else {
+                this.goods_item.totalActualAmount = (this.goods_item.totalAmount * this.vip_info.discount / 100).toFixed(2);
+                this.goods_item.goodsDiscount = this.vip_info.discount;
+            }
+        },
         transferGoodsToItem: function(goods) { // 将goods转换为item,对除count与priceTotal以外的值赋值
             this.reset_goods_item(); // 重置
 
@@ -187,9 +215,9 @@ var vm = new Vue({
         },
         editItemDiscountById: function(id, goodsDiscount) { // 修改折扣
             for (var i = 0; i < this.goods_list.length; i++) {
-                if (this.goods_list[i].goodsId == this.goods_item.goodsId) {
+                if (this.goods_list[i].goodsId == id) {
                     this.goods_list[i].goodsDiscount = goodsDiscount;
-                    this.goods_list[i].totalActualAmount = (this.goods_list[i].salesPrice * this.goods_list[i].goodsDiscount / 100).toFixed(2);
+                    this.goods_list[i].totalActualAmount = (this.goods_list[i].totalAmount * this.goods_list[i].goodsDiscount / 100).toFixed(2);
                     this.summary();
                     return;
                 }
@@ -202,9 +230,9 @@ var vm = new Vue({
         },
         editItemPriceById: function(id, totalActualAmount) { // 修改实际价格
             for (var i = 0; i < this.goods_list.length; i++) {
-                if (this.goods_list[i].goodsId == this.goods_item.goodsId) {
+                if (this.goods_list[i].goodsId == id) {
                     this.goods_list[i].totalActualAmount = totalActualAmount;
-                    this.goods_list[i].goodsDiscount = (this.goods_list[i].totalActualAmount / this.goods_list[i].salesPrice * 100).toFixed(2);
+                    this.goods_list[i].goodsDiscount = (this.goods_list[i].totalActualAmount / this.goods_list[i].totalAmount * 100).toFixed(2);
                     this.summary();
                     return;
                 }
@@ -213,7 +241,7 @@ var vm = new Vue({
         },
         deleteItemById: function(id) { // 删除item
             for (var i = 0; i < this.goods_list.length; i++) {
-                if (this.goods_list[i].goodsId == this.goods_item.goodsId) {
+                if (this.goods_list[i].goodsId == id) {
                     this.goods_list.splice(i, 1);
                     this.summary();
                     return;
@@ -225,7 +253,7 @@ var vm = new Vue({
             if (isBlank(this.vip_keyword)) {
                 this.reset_vip_info();
                 this._afterVipInfoChange();
-                layer.alert("会员信息已清除");
+                layer.msg("会员信息已清除");
                 return;
             }
             var _self = this;
@@ -235,7 +263,7 @@ var vm = new Vue({
                 success: function(result) {
                     if (result.code == "00") {
                         if (result.size == 0) {
-                            layer.alert("没有找到相关会员");
+                            layer.msg("没有找到相关会员");
                             return;
                         } else if (result.size == 1) { // 查到唯一会员
                             _self.transferMemberInfoToVipInfo(result.memberInfos[0]);
@@ -253,7 +281,7 @@ var vm = new Vue({
                                 btn: ['确认', '取消'],
                                 btn1: function(index) {
                                     if (isBlank(_self.select_vip_id)) {
-                                        layer.alert("未选择会员信息！");
+                                        layer.msg("未选择会员信息！");
                                         return;
                                     }
                                     var _memberList = _self.keyword_search_vip_list;
@@ -262,6 +290,7 @@ var vm = new Vue({
                                             _self.transferMemberInfoToVipInfo(_memberList[j]);
                                             _self._afterVipInfoChange();
                                             layer.close(index);
+                                            _self.select_vip_id = null;
                                             return;
                                         }
                                     }
@@ -295,7 +324,28 @@ var vm = new Vue({
             });
         },
         _afterVipInfoChange: function() { // 会员信息变化后的处理
-            // TODO
+            if (isBlank(this.vip_info.discount)) { // 会员信息被清空时
+                for (var i = 0; i < this.goods_list.length; i++) {
+                    var _item = this.goods_list[i];
+                    _item.goodsDiscount = 100;
+                    _item.totalActualAmount = _item.totalAmount;
+                }
+            } else { // 会员信息被添加时
+                for (var i = 0; i < this.goods_list.length; i++) {
+                    __log('this.goods_list:', this.goods_list)
+                    __log('this.goods_list[i]', this.goods_list[i])
+                    var _item = this.goods_list[i];
+                    if (!_item.isVipDiscount) { // 商品不参与折扣，会员价
+                        _item.totalActualAmount = this.goods_item.vipPrice.toFixed(2);
+                        _item.goodsDiscount = (_item.totalActualAmount / _item.totalAmount * 100).toFixed(2);
+                    } else {
+                        _item.totalActualAmount = (_item.totalAmount * this.vip_info.discount / 100).toFixed(2);
+                        _item.goodsDiscount = this.vip_info.discount;
+                    }
+                }
+            }
+            this.summary();
+
         },
         transferMemberInfoToVipInfo: function(member) {
             this.reset_vip_info();
@@ -313,31 +363,55 @@ var vm = new Vue({
                 area: '800px',
                 shadeClose: false,
                 content: jQuery("#checkoutDiv"),
-                btn: ['取消'],
-            });
-        },
-        checkout: function() { // 收款
-            var _msg = this.checkPayChenals();
-            if (!isBlank(_msg)) {
-                layer.alert(_msg);
-                return;
-            }
-            var _self = this;
-            $.ajax({
-                url: basePath + "/cashier/trade/checkout",
-                data: {
-                    goodsItemsJSONStr: JSON.stringify(_self.goods_list),
-                    payChenalsJSONStr: _self.payChenalsStr(),
-                },
-                success: function(result) {
-                    if (result.code == "00") {
-                        layer.alert("收款成功！");
-                        _self.reload();
-                    } else {
-                        layer.alert(result.msg);
+                btn: ['确定', '取消'],
+                btn1: function(index) {
+                	var _msg = _self.checkPayChenals();
+                    if (!isBlank(_msg)) {
+                        layer.msg(_msg);
+                        return;
                     }
+                    $.ajax({
+                        url: basePath + "/cashier/trade/checkout",
+                        data: {
+                            goodsItemsJSONStr: JSON.stringify(_self.goods_list),
+                            payChenalsJSONStr: _self.payChenalsStr(),
+                        },
+                        success: function(result) {
+                            if (result.code == "00") {
+                                layer.msg("收款成功！");
+                                layer.close(index);
+                                _self.reload();
+                            } else {
+                                layer.alert(result.msg);
+                            }
+                        }
+                    });
                 }
             });
+        },
+        checkout_all_cash: function() {
+        	this.payChenals.payChenal_cash.amount = this.summary_price;
+        	this.payChenals.payChenal_unionpay.amount = 0;
+        	this.payChenals.payChenal_alipay.amount = 0;
+        	this.payChenals.payChenal_wcpay.amount = 0;
+        },
+        checkout_all_alipay: function() {
+        	this.payChenals.payChenal_cash.amount = 0;
+        	this.payChenals.payChenal_unionpay.amount = 0;
+        	this.payChenals.payChenal_alipay.amount = this.summary_price;
+        	this.payChenals.payChenal_wcpay.amount = 0;
+        },
+        checkout_all_unionpay: function() {
+        	this.payChenals.payChenal_cash.amount = 0;
+        	this.payChenals.payChenal_unionpay.amount = this.summary_price;
+        	this.payChenals.payChenal_alipay.amount = 0;
+        	this.payChenals.payChenal_wcpay.amount = 0;
+        },
+        checkout_all_wcpay: function() {
+        	this.payChenals.payChenal_cash.amount = 0;
+        	this.payChenals.payChenal_unionpay.amount = 0;
+        	this.payChenals.payChenal_alipay.amount = 0;
+        	this.payChenals.payChenal_wcpay.amount = this.summary_price;
         },
         checkPayChenals: function() {
             var countSelected = 0;
@@ -409,6 +483,13 @@ var vm = new Vue({
             this.vip_info = cloneJsonObj(vip_info);
             this.summary_count = 0;
             this.summary_price = 0;
+            this.focus();
+        },
+        focus: function() { // 设置页面焦点
+        	$(".toFocus").focus();
         }
+    },
+    mounted: function() {
+    	this.focus();
     }
 });
