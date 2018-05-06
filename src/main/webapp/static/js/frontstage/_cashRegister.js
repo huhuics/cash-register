@@ -215,9 +215,9 @@ var vm = new Vue({
         },
         editItemDiscountById: function(id, goodsDiscount) { // 修改折扣
             for (var i = 0; i < this.goods_list.length; i++) {
-                if (this.goods_list[i].goodsId == this.goods_item.goodsId) {
+                if (this.goods_list[i].goodsId == id) {
                     this.goods_list[i].goodsDiscount = goodsDiscount;
-                    this.goods_list[i].totalActualAmount = (this.goods_list[i].salesPrice * this.goods_list[i].goodsDiscount / 100).toFixed(2);
+                    this.goods_list[i].totalActualAmount = (this.goods_list[i].totalAmount * this.goods_list[i].goodsDiscount / 100).toFixed(2);
                     this.summary();
                     return;
                 }
@@ -230,9 +230,9 @@ var vm = new Vue({
         },
         editItemPriceById: function(id, totalActualAmount) { // 修改实际价格
             for (var i = 0; i < this.goods_list.length; i++) {
-                if (this.goods_list[i].goodsId == this.goods_item.goodsId) {
+                if (this.goods_list[i].goodsId == id) {
                     this.goods_list[i].totalActualAmount = totalActualAmount;
-                    this.goods_list[i].goodsDiscount = (this.goods_list[i].totalActualAmount / this.goods_list[i].salesPrice * 100).toFixed(2);
+                    this.goods_list[i].goodsDiscount = (this.goods_list[i].totalActualAmount / this.goods_list[i].totalAmount * 100).toFixed(2);
                     this.summary();
                     return;
                 }
