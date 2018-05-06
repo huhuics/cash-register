@@ -72,7 +72,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" v-model="price_without_barcode" placeholder="输入价格无码收银">
                                         <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">确定</button>
+                                    <button class="btn btn-default" type="button" @click="addNoBarcodeItem">确定</button>
                                 </span>
                                     </div>
                                 </div>

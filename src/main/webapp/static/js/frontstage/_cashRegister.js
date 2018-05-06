@@ -46,7 +46,8 @@ var vm = new Vue({
         goods_keyword: null,
         keyword_search_goods_list: [], // 搜索商品清单
         select_goods_id_list: [], // 选择要加入的商品列表
-        price_without_barcode: null,
+        price_without_barcode: null, // 无码商品价格
+        noBarcodeIdNum: 1, // 无码商品id序列
         vip_keyword: null,
         keyword_search_vip_list: [], // 搜索会员清单
         select_vip_id: null, // 选择的会员id
@@ -142,6 +143,33 @@ var vm = new Vue({
                     }
                 }
             });
+        },
+        addNoBarcodeItem: function() {
+        	if(isBlank(this.price_without_barcode)) {
+        		layer.alert('请输入价格');
+        		return;
+        	}
+        	this.createNoBarcodeItem();
+        	this.addItemToGoodsList(1);
+        	
+        },
+        createNoBarcodeItem: function() { // 创建无码收银商品
+        	this.reset_goods_item(); // 重置
+        	
+        	this.goods_item.goodsId = 'nobarcode-' + this.noBarcodeIdNum++;
+            this.goods_item.barCode = null;
+            this.goods_item.goodsName = '无码商品';
+            this.goods_item.totalAmount = this.price_without_barcode;
+            this.goods_item.isVipDiscount = true;
+            this.goods_item.vipPrice = null;
+            
+            if (isBlank(this.vip_info.discount)) { // 没有录入会员信息，原价
+                this.goods_item.totalActualAmount = this.goods_item.totalAmount;
+                this.goods_item.goodsDiscount = 100;
+            } else {
+                this.goods_item.totalActualAmount = (this.goods_item.totalAmount * this.vip_info.discount / 100).toFixed(2);
+                this.goods_item.goodsDiscount = this.vip_info.discount;
+            }
         },
         transferGoodsToItem: function(goods) { // 将goods转换为item,对除count与priceTotal以外的值赋值
             this.reset_goods_item(); // 重置
