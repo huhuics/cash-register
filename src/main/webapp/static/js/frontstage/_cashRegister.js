@@ -145,24 +145,24 @@ var vm = new Vue({
             });
         },
         addNoBarcodeItem: function() {
-        	if(isBlank(this.price_without_barcode)) {
-        		layer.alert('请输入价格');
-        		return;
-        	}
-        	this.createNoBarcodeItem();
-        	this.addItemToGoodsList(1);
-        	
+            if (isBlank(this.price_without_barcode)) {
+                layer.alert('请输入价格');
+                return;
+            }
+            this.createNoBarcodeItem();
+            this.addItemToGoodsList(1);
+
         },
         createNoBarcodeItem: function() { // 创建无码收银商品
-        	this.reset_goods_item(); // 重置
-        	
-        	this.goods_item.goodsId = 'nobarcode-' + this.noBarcodeIdNum++;
+            this.reset_goods_item(); // 重置
+
+            this.goods_item.goodsId = 'nobarcode-' + this.noBarcodeIdNum++;
             this.goods_item.barCode = null;
             this.goods_item.goodsName = '无码商品';
             this.goods_item.totalAmount = this.price_without_barcode;
             this.goods_item.isVipDiscount = true;
             this.goods_item.vipPrice = null;
-            
+
             if (isBlank(this.vip_info.discount)) { // 没有录入会员信息，原价
                 this.goods_item.totalActualAmount = this.goods_item.totalAmount;
                 this.goods_item.goodsDiscount = 100;
@@ -323,7 +323,28 @@ var vm = new Vue({
             });
         },
         _afterVipInfoChange: function() { // 会员信息变化后的处理
-            // TODO
+            if (isBlank(this.vip_info.discount)) { // 会员信息被清空时
+                for (var i = 0; i < this.goods_list.length; i++) {
+                    var _item = this.goods_list[i];
+                    _item.goodsDiscount = 100;
+                    _item.totalActualAmount = _item.totalAmount;
+                }
+            } else { // 会员信息被添加时
+                for (var i = 0; i < this.goods_list.length; i++) {
+                    __log('this.goods_list:', this.goods_list)
+                    __log('this.goods_list[i]', this.goods_list[i])
+                    var _item = this.goods_list[i];
+                    if (!_item.isVipDiscount) { // 商品不参与折扣，会员价
+                        _item.totalActualAmount = this.goods_item.vipPrice.toFixed(2);
+                        _item.goodsDiscount = (_item.totalActualAmount / _item.totalAmount * 100).toFixed(2);
+                    } else {
+                        _item.totalActualAmount = (_item.totalAmount * this.vip_info.discount / 100).toFixed(2);
+                        _item.goodsDiscount = this.vip_info.discount;
+                    }
+                }
+            }
+            this.summary();
+
         },
         transferMemberInfoToVipInfo: function(member) {
             this.reset_vip_info();
