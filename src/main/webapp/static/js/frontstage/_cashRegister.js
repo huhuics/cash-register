@@ -241,7 +241,7 @@ var vm = new Vue({
         },
         deleteItemById: function(id) { // 删除item
             for (var i = 0; i < this.goods_list.length; i++) {
-                if (this.goods_list[i].goodsId == this.goods_item.goodsId) {
+                if (this.goods_list[i].goodsId == id) {
                     this.goods_list.splice(i, 1);
                     this.summary();
                     return;
