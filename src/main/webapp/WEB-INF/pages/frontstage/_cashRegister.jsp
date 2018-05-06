@@ -30,13 +30,13 @@
                         <td>{{item.goodsName}}</td>
                         <td>{{item.totalAmount}}</td>
                         <td>
-                            <input class="form-control" type="text" v-model="item.goodsDiscount" @keyup.enter="editItemDiscountById(item.goodsId,item.goodsDiscount)">
+                            <input class="form-control" type="text" v-model="item.goodsDiscount" @blur="editItemDiscountById(item.goodsId,item.goodsDiscount)" @keyup.enter="editItemDiscountById(item.goodsId,item.goodsDiscount)">
                         </td>
                         <td>
-                            <input class="form-control" type="text" v-model="item.totalActualAmount" @keyup.enter="editItemPriceById(item.goodsId,item.totalActualAmount)">
+                            <input class="form-control" type="text" v-model="item.totalActualAmount" @blur="editItemPriceById(item.goodsId,item.totalActualAmount)" @keyup.enter="editItemPriceById(item.goodsId,item.totalActualAmount)">
                         </td>
                         <td>
-                            <input class="form-control" type="text" v-model="item.goodsCount" @keyup.enter="editItemCountById(item.goodsId,item.goodsCount)">
+                            <input class="form-control" type="text" v-model="item.goodsCount" @blur="editItemCountById(item.goodsId,item.goodsCount)" @keyup.enter="editItemCountById(item.goodsId,item.goodsCount)">
                         </td>
                         <td>{{item.priceTotal}}</td>
                         <td>
@@ -91,13 +91,13 @@
                                 <div class="col-xs-12 div-height-5"></div>
                                 <div class="col-xs-12">
                                     <button class="btn btn-info" type="button">
-                                        姓名 <span class="badge">{{vip_info.name}}</span>
+                                        姓名 <span class="badge">{{vip_info.name}}&nbsp;</span>
                                     </button>
                                     <button class="btn btn-info" type="button">
-                                        会员折扣 <span class="badge">{{vip_info.discount}}%</span>
+                                        折扣 <span class="badge">{{vip_info.discount}}%</span>
                                     </button>
                                     <button class="btn btn-info" type="button">
-                                        积分 <span class="badge">{{vip_info.score}}</span>
+                                        积分 <span class="badge">{{vip_info.score}}&nbsp;</span>
                                     </button>
                                 </div>
                             </div>
