@@ -77,7 +77,7 @@ var vm = new Vue({
     methods: {
         searchGoods: function() { // 根据关键字查找商品加入清单
             if (isBlank(this.goods_keyword)) {
-                layer.alert("请输入：条码/拼音码/品名");
+                layer.msg("请输入：条码/拼音码/品名");
                 return;
             }
             var _self = this;
@@ -87,7 +87,7 @@ var vm = new Vue({
                 success: function(result) {
                     if (result.code == "00") {
                         if (result.size == 0) {
-                            layer.alert("没有找到相关商品");
+                            layer.msg("没有找到相关商品");
                             return;
                         } else if (result.size == 1) { // 查到唯一商品，直接加入
                             _self.transferGoodsToItem(result.goodsInfos[0]);
@@ -146,7 +146,7 @@ var vm = new Vue({
         },
         addNoBarcodeItem: function() {
             if (isBlank(this.price_without_barcode)) {
-                layer.alert('请输入价格');
+                layer.msg('请输入价格');
                 return;
             }
             this.createNoBarcodeItem();
@@ -253,7 +253,7 @@ var vm = new Vue({
             if (isBlank(this.vip_keyword)) {
                 this.reset_vip_info();
                 this._afterVipInfoChange();
-                layer.alert("会员信息已清除");
+                layer.msg("会员信息已清除");
                 return;
             }
             var _self = this;
@@ -263,7 +263,7 @@ var vm = new Vue({
                 success: function(result) {
                     if (result.code == "00") {
                         if (result.size == 0) {
-                            layer.alert("没有找到相关会员");
+                            layer.msg("没有找到相关会员");
                             return;
                         } else if (result.size == 1) { // 查到唯一会员
                             _self.transferMemberInfoToVipInfo(result.memberInfos[0]);
@@ -281,7 +281,7 @@ var vm = new Vue({
                                 btn: ['确认', '取消'],
                                 btn1: function(index) {
                                     if (isBlank(_self.select_vip_id)) {
-                                        layer.alert("未选择会员信息！");
+                                        layer.msg("未选择会员信息！");
                                         return;
                                     }
                                     var _memberList = _self.keyword_search_vip_list;
@@ -290,6 +290,7 @@ var vm = new Vue({
                                             _self.transferMemberInfoToVipInfo(_memberList[j]);
                                             _self._afterVipInfoChange();
                                             layer.close(index);
+                                            _self.select_vip_id = null;
                                             return;
                                         }
                                     }
@@ -368,7 +369,7 @@ var vm = new Vue({
         checkout: function() { // 收款
             var _msg = this.checkPayChenals();
             if (!isBlank(_msg)) {
-                layer.alert(_msg);
+                layer.msg(_msg);
                 return;
             }
             var _self = this;
@@ -380,7 +381,7 @@ var vm = new Vue({
                 },
                 success: function(result) {
                     if (result.code == "00") {
-                        layer.alert("收款成功！");
+                        layer.msg("收款成功！");
                         _self.reload();
                     } else {
                         layer.alert(result.msg);
