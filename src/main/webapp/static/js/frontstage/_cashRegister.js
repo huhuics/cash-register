@@ -389,6 +389,30 @@ var vm = new Vue({
                 }
             });
         },
+        checkout_all_cash: function() {
+        	this.payChenals.payChenal_cash.amount = this.summary_price;
+        	this.payChenals.payChenal_unionpay.amount = 0;
+        	this.payChenals.payChenal_alipay.amount = 0;
+        	this.payChenals.payChenal_wcpay.amount = 0;
+        },
+        checkout_all_alipay: function() {
+        	this.payChenals.payChenal_cash.amount = 0;
+        	this.payChenals.payChenal_unionpay.amount = 0;
+        	this.payChenals.payChenal_alipay.amount = this.summary_price;
+        	this.payChenals.payChenal_wcpay.amount = 0;
+        },
+        checkout_all_unionpay: function() {
+        	this.payChenals.payChenal_cash.amount = 0;
+        	this.payChenals.payChenal_unionpay.amount = this.summary_price;
+        	this.payChenals.payChenal_alipay.amount = 0;
+        	this.payChenals.payChenal_wcpay.amount = 0;
+        },
+        checkout_all_wcpay: function() {
+        	this.payChenals.payChenal_cash.amount = 0;
+        	this.payChenals.payChenal_unionpay.amount = 0;
+        	this.payChenals.payChenal_alipay.amount = 0;
+        	this.payChenals.payChenal_wcpay.amount = this.summary_price;
+        },
         checkPayChenals: function() {
             var countSelected = 0;
             var amountSelected = 0;
