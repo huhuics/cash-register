@@ -58,11 +58,6 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-xs-12">
-            	<button type="button" class="btn btn-danger btn-lg btn-block" @click="checkout">确定</button>
-            </div>
-        </div>
     </form>
 </div>
 <!-- /收银信息 -->

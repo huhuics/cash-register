@@ -363,29 +363,29 @@ var vm = new Vue({
                 area: '800px',
                 shadeClose: false,
                 content: jQuery("#checkoutDiv"),
-                btn: ['取消'],
-            });
-        },
-        checkout: function() { // 收款
-            var _msg = this.checkPayChenals();
-            if (!isBlank(_msg)) {
-                layer.msg(_msg);
-                return;
-            }
-            var _self = this;
-            $.ajax({
-                url: basePath + "/cashier/trade/checkout",
-                data: {
-                    goodsItemsJSONStr: JSON.stringify(_self.goods_list),
-                    payChenalsJSONStr: _self.payChenalsStr(),
-                },
-                success: function(result) {
-                    if (result.code == "00") {
-                        layer.msg("收款成功！");
-                        _self.reload();
-                    } else {
-                        layer.alert(result.msg);
+                btn: ['确定', '取消'],
+                btn1: function(index) {
+                	var _msg = _self.checkPayChenals();
+                    if (!isBlank(_msg)) {
+                        layer.msg(_msg);
+                        return;
                     }
+                    $.ajax({
+                        url: basePath + "/cashier/trade/checkout",
+                        data: {
+                            goodsItemsJSONStr: JSON.stringify(_self.goods_list),
+                            payChenalsJSONStr: _self.payChenalsStr(),
+                        },
+                        success: function(result) {
+                            if (result.code == "00") {
+                                layer.msg("收款成功！");
+                                layer.close(index);
+                                _self.reload();
+                            } else {
+                                layer.alert(result.msg);
+                            }
+                        }
+                    });
                 }
             });
         },
