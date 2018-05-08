@@ -40,12 +40,12 @@ public class MemberController {
     @Resource
     private MemberService       memberService;
 
+    /****************************会员信息相关接口****************************/
+
     @GetMapping
     public String list() {
         return "backstage/_member-list";
     }
-
-    /****************************会员信息相关接口****************************/
 
     /**
      * 会员列表
@@ -70,10 +70,10 @@ public class MemberController {
         LogUtil.info(logger, "[Controller]收到#添加或更新会员#请求");
         // 根据ID是否为空判断是新增还是编辑
         if (memberInfo.getId() == null) {
-            LogUtil.info(logger, "[Controller]#添加会员#,sellerInfo={0}", memberInfo);
+            LogUtil.info(logger, "[Controller]#添加会员#,memberInfo={0}", memberInfo);
             memberService.addMember(memberInfo);
         } else {
-            LogUtil.info(logger, "[Controller]#修改会员#,sellerInfo={0}", memberInfo);
+            LogUtil.info(logger, "[Controller]#修改会员#,memberInfo={0}", memberInfo);
             memberService.updateMember(memberInfo);
         }
 
@@ -94,7 +94,7 @@ public class MemberController {
     }
 
     /**
-     * 根据ID删除收银员
+     * 根据ID删除会员
      */
     @ResponseBody
     @RequestMapping(value = "/delById", method = RequestMethod.POST)
@@ -120,33 +120,42 @@ public class MemberController {
 
     /****************************会员等级相关接口****************************/
 
+    @GetMapping("/rank")
+    public String rankList() {
+        return "backstage/_member-rank-list";
+    }
+
+    /**
+     * 分页查询会员等级信息
+     * TODO
+     */
+    @GetMapping("/rank/list")
+    public String queryRankList() {
+        return "";
+    }
+
     /**
      * 增加会员等级信息
      */
     @ResponseBody
-    @RequestMapping(value = "/addMemRank", method = RequestMethod.POST)
+    @RequestMapping(value = "/rank/addOrUpdate", method = RequestMethod.POST)
     public ResultSet addMemRank(MemberRank rank) {
-        Long id = memberService.addMemRank(rank);
-        return ResultSet.success().put("id", id);
+        // 根据ID是否为空判断是新增还是编辑
+        if (rank.getId() == null) {
+            memberService.addMemRank(rank);
+        } else {
+            memberService.updateMemRank(rank);
+        }
+        return ResultSet.success();
     }
 
     /**
      * 删除会员等级信息
      */
     @ResponseBody
-    @RequestMapping(value = "/deleteMemRank", method = RequestMethod.POST)
+    @RequestMapping(value = "/rank/delete", method = RequestMethod.POST)
     public ResultSet deleteMemRank(Long id) {
         int ret = memberService.deleteMemRank(id);
-        return ResultSet.success().put("ret", ret);
-    }
-
-    /**
-     * 修改会员等级信息
-     */
-    @ResponseBody
-    @RequestMapping(value = "/updateMemRank", method = RequestMethod.POST)
-    public ResultSet updateMemRank(MemberRank rank) {
-        int ret = memberService.updateMemRank(rank);
         return ResultSet.success().put("ret", ret);
     }
 
@@ -154,7 +163,7 @@ public class MemberController {
      * 根据id查询会员等级
      */
     @ResponseBody
-    @RequestMapping(value = "/queryMemRank", method = RequestMethod.POST)
+    @RequestMapping(value = "/rank/getById", method = RequestMethod.POST)
     public ResultSet queryMemRank(Long id) {
         MemberRank memberRank = memberService.queryMemRank(id);
         return ResultSet.success().put("memberRank", memberRank);
@@ -164,7 +173,7 @@ public class MemberController {
      * 查询所有会员等级
      */
     @ResponseBody
-    @GetMapping(value = "/queryAllMemRank")
+    @GetMapping(value = "/rank/queryAll")
     public ResultSet queryAllMemRank() {
         List<MemberRank> memberRanks = memberService.queryAll();
         return ResultSet.success().put("memberRanks", memberRanks);
