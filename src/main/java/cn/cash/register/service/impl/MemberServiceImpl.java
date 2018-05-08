@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -92,8 +93,16 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public void updateIntegral(Long memberId, String moneyStr) {
+        if (!NumberUtils.isDigits(moneyStr)) {
+            return;
+        }
+        updateIntegral(memberId, new Money(moneyStr));
+    }
+
+    @Override
     public void updateIntegral(Long memberId, Money money) {
-        LogUtil.info(logger, "收到修改会员积分请求,memberId={0},money={1}", memberId, money.getCent());
+        LogUtil.info(logger, "收到修改会员积分请求,memberId={0},money={1}", memberId, money);
 
         if (memberId == null) {
             return;

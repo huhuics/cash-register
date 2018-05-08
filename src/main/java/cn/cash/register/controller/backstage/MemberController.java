@@ -4,12 +4,27 @@
  */
 package cn.cash.register.controller.backstage;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageInfo;
+
+import cn.cash.register.common.request.MemberInfoQueryRequest;
+import cn.cash.register.dao.domain.MemberInfo;
+import cn.cash.register.dao.domain.MemberIntegral;
+import cn.cash.register.dao.domain.MemberRank;
 import cn.cash.register.service.MemberService;
+import cn.cash.register.util.LogUtil;
+import cn.cash.register.util.ResultSet;
 
 /**
  * 会员功能相关Controller
@@ -20,7 +35,161 @@ import cn.cash.register.service.MemberService;
 @RequestMapping("/admin/member")
 public class MemberController {
 
+    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+
     @Resource
-    private MemberService memberService;
+    private MemberService       memberService;
+
+    @GetMapping
+    public String list() {
+        return "backstage/_member-list";
+    }
+
+    /****************************会员信息相关接口****************************/
+
+    /**
+     * 会员列表
+     */
+    @ResponseBody
+    @RequestMapping(value = "/list")
+    public ResultSet queryList(MemberInfoQueryRequest request) {
+        LogUtil.info(logger, "[Controller]收到#会员列表查询#请求,request={0}", request);
+
+        PageInfo<MemberInfo> pageInfo = memberService.queryList(request);
+
+        LogUtil.info(logger, "[Controller]#会员列表查询#请求处理,pageInfo={0}", pageInfo);
+        return ResultSet.success().put("page", pageInfo);
+    }
+
+    /**
+     * 添加或更新会员
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addOrUpdate")
+    public ResultSet addOrUpdate(MemberInfo memberInfo) {
+        LogUtil.info(logger, "[Controller]收到#添加或更新会员#请求");
+        // 根据ID是否为空判断是新增还是编辑
+        if (memberInfo.getId() == null) {
+            LogUtil.info(logger, "[Controller]#添加会员#,sellerInfo={0}", memberInfo);
+            memberService.addMember(memberInfo);
+        } else {
+            LogUtil.info(logger, "[Controller]#修改会员#,sellerInfo={0}", memberInfo);
+            memberService.updateMember(memberInfo);
+        }
+
+        return ResultSet.success();
+    }
+
+    /**
+     * 根据ID获取会员信息
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getById", method = RequestMethod.GET)
+    public ResultSet getById(long id) {
+        LogUtil.info(logger, "[Controller]收到#根据ID获取会员信息#请求,id={0}", id);
+
+        MemberInfo memberInfo = memberService.queryMember(id);
+
+        return ResultSet.success().put("memberInfo", memberInfo);
+    }
+
+    /**
+     * 根据ID删除收银员
+     */
+    @ResponseBody
+    @RequestMapping(value = "/delById", method = RequestMethod.POST)
+    public ResultSet delById(Long id) {
+        LogUtil.info(logger, "[Controller]收到#根据ID删除会员信息#请求,id={0}", id);
+
+        memberService.deleteMember(id);
+
+        return ResultSet.success();
+    }
+
+    /**
+     * 修改会员积分值
+     * @param moneyStr 变动金额,单位:元
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateIntegral", method = RequestMethod.POST)
+    public ResultSet updateIntegral(Long memberId, String moneyStr) {
+        LogUtil.info(logger, "[Controller]收到#会员积分变动#请求,id={0},moneyStr={1}", memberId, moneyStr);
+        memberService.updateIntegral(memberId, moneyStr);
+        return ResultSet.success();
+    }
+
+    /****************************会员等级相关接口****************************/
+
+    /**
+     * 增加会员等级信息
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addMemRank", method = RequestMethod.POST)
+    public ResultSet addMemRank(MemberRank rank) {
+        Long id = memberService.addMemRank(rank);
+        return ResultSet.success().put("id", id);
+    }
+
+    /**
+     * 删除会员等级信息
+     */
+    @ResponseBody
+    @RequestMapping(value = "/deleteMemRank", method = RequestMethod.POST)
+    public ResultSet deleteMemRank(Long id) {
+        int ret = memberService.deleteMemRank(id);
+        return ResultSet.success().put("ret", ret);
+    }
+
+    /**
+     * 修改会员等级信息
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateMemRank", method = RequestMethod.POST)
+    public ResultSet updateMemRank(MemberRank rank) {
+        int ret = memberService.updateMemRank(rank);
+        return ResultSet.success().put("ret", ret);
+    }
+
+    /**
+     * 根据id查询会员等级
+     */
+    @ResponseBody
+    @RequestMapping(value = "/queryMemRank", method = RequestMethod.POST)
+    public ResultSet queryMemRank(Long id) {
+        MemberRank memberRank = memberService.queryMemRank(id);
+        return ResultSet.success().put("memberRank", memberRank);
+    }
+
+    /**
+     * 查询所有会员等级
+     */
+    @ResponseBody
+    @GetMapping(value = "/queryAllMemRank")
+    public ResultSet queryAllMemRank() {
+        List<MemberRank> memberRanks = memberService.queryAll();
+        return ResultSet.success().put("memberRanks", memberRanks);
+    }
+
+    /****************************会员积分方式相关接口****************************/
+
+    /**
+     * 查询会员积分策略（策略只有一条记录）
+     */
+    @ResponseBody
+    @GetMapping(value = "/queryMemIntegral")
+    public ResultSet queryMemIntegral() {
+        MemberIntegral memberIntegral = memberService.queryMemIntegral();
+        return ResultSet.success().put("memberIntegral", memberIntegral);
+    }
+
+    /**
+     * 修改会员积分策略
+     */
+    @ResponseBody
+    @GetMapping(value = "/updateMemIntegral")
+    public ResultSet updateMemIntegral(MemberIntegral integral) {
+        int ret = memberService.updateMemIntegral(integral);
+        return ResultSet.success().put("ret", ret);
+    }
 
 }
