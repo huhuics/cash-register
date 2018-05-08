@@ -59,6 +59,11 @@ public interface MemberService {
     /**
      * 修改会员积分值
      */
+    void updateIntegral(Long memberId, String moneyStr);
+
+    /**
+     * 修改会员积分值
+     */
     void updateIntegral(Long memberId, Money money);
 
     /****************************会员等级相关接口****************************/
