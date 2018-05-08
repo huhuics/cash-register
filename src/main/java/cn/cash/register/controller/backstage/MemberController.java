@@ -4,14 +4,13 @@
  */
 package cn.cash.register.controller.backstage;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.MemberInfoQueryRequest;
+import cn.cash.register.common.request.MemberRankQueryRequest;
 import cn.cash.register.dao.domain.MemberInfo;
 import cn.cash.register.dao.domain.MemberIntegral;
 import cn.cash.register.dao.domain.MemberRank;
@@ -127,11 +127,11 @@ public class MemberController {
 
     /**
      * 分页查询会员等级信息
-     * TODO
      */
-    @GetMapping("/rank/list")
-    public String queryRankList() {
-        return "";
+    @PostMapping("/rank/list")
+    public ResultSet queryRankList(MemberRankQueryRequest request) {
+        PageInfo<MemberRank> memberRanks = memberService.listRank(request);
+        return ResultSet.success().put("memberRanks", memberRanks);
     }
 
     /**
@@ -167,16 +167,6 @@ public class MemberController {
     public ResultSet queryMemRank(Long id) {
         MemberRank memberRank = memberService.queryMemRank(id);
         return ResultSet.success().put("memberRank", memberRank);
-    }
-
-    /**
-     * 查询所有会员等级
-     */
-    @ResponseBody
-    @GetMapping(value = "/rank/queryAll")
-    public ResultSet queryAllMemRank() {
-        List<MemberRank> memberRanks = memberService.queryAll();
-        return ResultSet.success().put("memberRanks", memberRanks);
     }
 
     /****************************会员积分方式相关接口****************************/

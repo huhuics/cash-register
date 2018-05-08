@@ -18,6 +18,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.MemberInfoQueryRequest;
+import cn.cash.register.common.request.MemberRankQueryRequest;
 import cn.cash.register.dao.MemberInfoMapper;
 import cn.cash.register.dao.MemberIntegralMapper;
 import cn.cash.register.dao.MemberRankMapper;
@@ -172,10 +173,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<MemberRank> queryAll() {
+    public PageInfo<MemberRank> listRank(MemberRankQueryRequest request) {
         LogUtil.info(logger, "收到查询所有会员等级请求");
-
-        return rankMapper.listAll();
+        PageHelper.startPage(request.getPageNum(), request.getPageSize());
+        PageHelper.orderBy(request.getSidx() + " " + request.getOrder());
+        return new PageInfo<MemberRank>(rankMapper.listAll());
     }
 
     /****************************会员积分方式相关接口****************************/

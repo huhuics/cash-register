@@ -9,6 +9,7 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.MemberInfoQueryRequest;
+import cn.cash.register.common.request.MemberRankQueryRequest;
 import cn.cash.register.dao.domain.MemberInfo;
 import cn.cash.register.dao.domain.MemberIntegral;
 import cn.cash.register.dao.domain.MemberRank;
@@ -92,7 +93,7 @@ public interface MemberService {
     /**
      * 查询所有会员等级
      */
-    List<MemberRank> queryAll();
+    PageInfo<MemberRank> listRank(MemberRankQueryRequest request);
 
     /****************************会员积分方式相关接口****************************/
 
