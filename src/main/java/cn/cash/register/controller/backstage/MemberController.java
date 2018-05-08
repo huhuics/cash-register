@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -130,15 +129,17 @@ public class MemberController {
     /**
      * 分页查询会员等级信息
      */
-    @PostMapping("/rank/list")
+    @ResponseBody
+    @RequestMapping("/rank/list")
     public ResultSet queryRankList(MemberRankQueryRequest request) {
         PageInfo<MemberRank> memberRanks = memberService.listRank(request);
-        return ResultSet.success().put("memberRanks", memberRanks);
+        return ResultSet.success().put("page", memberRanks);
     }
 
     /**
      * 查询所有会员等级信息
      */
+    @ResponseBody
     @GetMapping("/rank/listAll")
     public ResultSet queryAllRankList() {
         List<MemberRank> memberRanks = memberService.listAllRank();

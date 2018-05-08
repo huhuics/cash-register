@@ -43,7 +43,7 @@
 					    <a href="#dashboard" @click="menuClick"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
 					</li>
                     <li class="treeview"><a href="#"> <i
-					class="fa fa-dashboard"></i> <span>销售</span> <span
+					class="fa fa-circle-o"></i> <span>销售</span> <span
 					class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
 				</span>
@@ -58,7 +58,7 @@
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>营业报表</a></li>
                         </ul>
                     </li>
-                    <li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
+                    <li class="treeview"><a href="#"> <i class="fa fa-circle-o"></i>
 					<span>库存</span> <span class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
 				</span>
@@ -71,7 +71,7 @@
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>商品报损</a></li>
                         </ul>
                     </li>
-                    <li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
+                    <li class="treeview"><a href="#"> <i class="fa fa-circle-o"></i>
 					<span>营销</span> <span class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
 				</span>
@@ -81,7 +81,7 @@
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>充值赠送活动设置</a></li>
                         </ul>
                     </li>
-                    <li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
+                    <li class="treeview"><a href="#"> <i class="fa fa-circle-o"></i>
 					<span>货流</span> <span class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
 				</span>
@@ -108,8 +108,8 @@
 				</span>
 			</a>
                         <ul class="treeview-menu">
-                            <li><a href="#" @click="menuClick"><i class="fa fa-user-circle"></i>会员资料</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员等级</a></li>
+                            <li><a href="#member" @click="menuClick"><i class="fa fa-user-circle"></i>会员资料</a></li>
+                            <li><a href="#member/rank" @click="menuClick"><i class="fa fa-signal"></i>会员等级</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员制度</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员卡报表</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员分析</a></li>
@@ -123,12 +123,12 @@
                         <ul class="treeview-menu">
                             <li><a href="#seller" @click="menuClick"><i class="fa fa-user"></i>收银员资料</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>收银员业绩</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>导购员资料</a></li>
+                            <li><a href="#shopper" @click="menuClick"><i class="fa fa-user-o"></i>导购员资料</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>导购员业绩</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>导购明细</a></li>
                         </ul>
                     </li>
-                    <li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
+                    <li class="treeview"><a href="#"> <i class="fa fa-circle-o"></i>
 					<span>设置</span> <span class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
 				</span>
@@ -140,7 +140,7 @@
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>操作日志</a></li>
                         </ul>
                     </li>
-                    <li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i>
+                    <li class="treeview"><a href="#"> <i class="fa fa-circle-o"></i>
 					<span>其它</span> <span class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
 				</span>

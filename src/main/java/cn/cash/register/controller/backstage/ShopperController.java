@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,10 +18,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.AchievementQueryRequest;
+import cn.cash.register.common.request.SellerInfoQueryRequest;
 import cn.cash.register.common.request.ShopperInfoQueryRequest;
+import cn.cash.register.dao.domain.SellerInfo;
 import cn.cash.register.dao.domain.ShopperInfo;
 import cn.cash.register.dao.domain.TradeGoodsDetail;
 import cn.cash.register.service.ShopperInfoService;
+import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -31,41 +36,58 @@ import cn.cash.register.util.ResultSet;
 @RequestMapping("/admin/shopper")
 public class ShopperController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ShopperController.class);
+
     @Resource
-    private ShopperInfoService shopperInfoService;
+    private ShopperInfoService  shopperInfoService;
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String list() {
+        return "backstage/_shopper-list";
+    }
 
     /**
-     * 增加导购员
+     * 导购员列表
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/list")
+    @ResponseBody
+    public ResultSet queryList(SellerInfoQueryRequest request) {
+        LogUtil.info(logger, "[Controller]收到#导购员列表查询#请求,request={0}", request);
+
+        PageInfo<SellerInfo> pageInfo = null; // TODO
+
+        LogUtil.info(logger, "[Controller]#导购员列表查询#请求处理,pageInfo={0}", pageInfo);
+        return ResultSet.success().put("page", pageInfo);
+    }
+
+    /**
+     * 增加或更新导购员
      */
     @ResponseBody
-    @RequestMapping(value = "add", method = RequestMethod.POST)
+    @RequestMapping(value = "addOrUpdate", method = RequestMethod.POST)
     public ResultSet add(ShopperInfo info) {
-        Long id = shopperInfoService.add(info);
-        return ResultSet.success().put("id", id);
+        if (info.getId() == null) {
+            shopperInfoService.add(info);
+        } else {
+            shopperInfoService.update(info);
+        }
+        return ResultSet.success();
     }
 
     /**
      * 删除导购员
      */
     @ResponseBody
-    @RequestMapping(value = "delete", method = RequestMethod.POST)
-    public ResultSet delete(Long id) {
+    @RequestMapping(value = "deleteById", method = RequestMethod.POST)
+    public ResultSet deleteById(Long id) {
         int ret = shopperInfoService.delete(id);
         return ResultSet.success().put("ret", ret);
     }
 
     /**
-     * 修改导购员
-     */
-    @ResponseBody
-    @RequestMapping(value = "update", method = RequestMethod.POST)
-    public ResultSet update(ShopperInfo info) {
-        int ret = shopperInfoService.update(info);
-        return ResultSet.success().put("ret", ret);
-    }
-
-    /**
-     * 修改导购员
+     * 根据Id查询导购员
      */
     @ResponseBody
     @RequestMapping(value = "queryById", method = RequestMethod.POST)
