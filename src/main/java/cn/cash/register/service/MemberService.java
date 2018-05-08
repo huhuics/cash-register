@@ -91,9 +91,15 @@ public interface MemberService {
     MemberRank queryMemRank(Long id);
 
     /**
-     * 查询所有会员等级
+     * 翻页查询会员等级
      */
     PageInfo<MemberRank> listRank(MemberRankQueryRequest request);
+
+    /**
+     * 查询所有会员等级
+     * @return
+     */
+    List<MemberRank> listAllRank();
 
     /****************************会员积分方式相关接口****************************/
 

@@ -174,10 +174,16 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public PageInfo<MemberRank> listRank(MemberRankQueryRequest request) {
-        LogUtil.info(logger, "收到查询所有会员等级请求");
+        LogUtil.info(logger, "收到翻页查询会员等级请求");
         PageHelper.startPage(request.getPageNum(), request.getPageSize());
         PageHelper.orderBy(request.getSidx() + " " + request.getOrder());
         return new PageInfo<MemberRank>(rankMapper.listAll());
+    }
+
+    @Override
+    public List<MemberRank> listAllRank() {
+        LogUtil.info(logger, "收到查询所有会员等级请求");
+        return rankMapper.listAll();
     }
 
     /****************************会员积分方式相关接口****************************/

@@ -4,6 +4,8 @@
  */
 package cn.cash.register.controller.backstage;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -131,6 +133,15 @@ public class MemberController {
     @PostMapping("/rank/list")
     public ResultSet queryRankList(MemberRankQueryRequest request) {
         PageInfo<MemberRank> memberRanks = memberService.listRank(request);
+        return ResultSet.success().put("memberRanks", memberRanks);
+    }
+
+    /**
+     * 查询所有会员等级信息
+     */
+    @GetMapping("/rank/listAll")
+    public ResultSet queryAllRankList() {
+        List<MemberRank> memberRanks = memberService.listAllRank();
         return ResultSet.success().put("memberRanks", memberRanks);
     }
 
