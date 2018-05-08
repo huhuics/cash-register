@@ -123,7 +123,7 @@
                         <ul class="treeview-menu">
                             <li><a href="#seller" @click="menuClick"><i class="fa fa-user"></i>收银员资料</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>收银员业绩</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>导购员资料</a></li>
+                            <li><a href="#shopper" @click="menuClick"><i class="fa fa-user-o"></i>导购员资料</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>导购员业绩</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>导购明细</a></li>
                         </ul>
