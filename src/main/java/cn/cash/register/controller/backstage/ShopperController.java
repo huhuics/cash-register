@@ -97,12 +97,22 @@ public class ShopperController {
     }
 
     /**
-     * 根据条件查询导购员资料
+     * 根据条件查询所有导购员资料
      */
     @ResponseBody
-    @RequestMapping(value = "query", method = RequestMethod.POST)
-    public ResultSet query(ShopperInfoQueryRequest request) {
-        List<ShopperInfo> infos = shopperInfoService.query(request);
+    @RequestMapping(value = "queryAll", method = RequestMethod.POST)
+    public ResultSet queryAll(ShopperInfoQueryRequest request) {
+        List<ShopperInfo> infos = shopperInfoService.queryAll(request);
+        return ResultSet.success().put("infos", infos);
+    }
+
+    /**
+     * 根据条件翻页查询导购员资料
+     */
+    @ResponseBody
+    @RequestMapping(value = "queryPage", method = RequestMethod.POST)
+    public ResultSet queryPage(ShopperInfoQueryRequest request) {
+        PageInfo<ShopperInfo> infos = shopperInfoService.queryPage(request);
         return ResultSet.success().put("infos", infos);
     }
 

@@ -58,8 +58,16 @@ public class ShopperInfoServiceImpl implements ShopperInfoService {
     }
 
     @Override
-    public List<ShopperInfo> query(ShopperInfoQueryRequest request) {
+    public List<ShopperInfo> queryAll(ShopperInfoQueryRequest request) {
         return shopperInfoMapper.list(request);
+    }
+
+    @Override
+    public PageInfo<ShopperInfo> queryPage(ShopperInfoQueryRequest request) {
+        PageHelper.startPage(request.getPageNum(), request.getPageSize());
+        PageHelper.orderBy(request.getSidx() + " " + request.getOrder());
+        List<ShopperInfo> list = shopperInfoMapper.list(request);
+        return new PageInfo<>(list);
     }
 
     @Override
