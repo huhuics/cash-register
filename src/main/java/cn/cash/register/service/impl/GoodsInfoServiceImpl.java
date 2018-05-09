@@ -161,6 +161,12 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
+    public List<GoodsInfo> queryAll() {
+        LogUtil.info(logger, "收到查询所有商品请求");
+        return goodsInfoMapper.listAll();
+    }
+
+    @Override
     public void updateGoodsImage(Long goodsInfoId, byte[] goodsImage) {
 
         LogUtil.info(logger, "收到商品图片改变请求,goodsInfoId={0}", goodsInfoId);

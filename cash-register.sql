@@ -85,7 +85,7 @@ CREATE TABLE `goods_color` (
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_color` */
 
@@ -155,7 +155,7 @@ CREATE TABLE `goods_info` (
 
 /*Data for the table `goods_info` */
 
-insert  into `goods_info`(`id`,`goods_image_id`,`goods_name`,`bar_code`,`product_number`,`pinyin_code`,`category_name`,`goods_status`,`goods_brand`,`goods_color`,`goods_size`,`goods_tag`,`goods_stock`,`quantity_unit`,`stock_upper_limit`,`stock_lower_limit`,`last_import_price`,`average_import_price`,`sales_price`,`trade_price`,`vip_price`,`is_vip_discount`,`supplier_name`,`production_date`,`quality_guarantee_period`,`is_integral`,`royalty_type`,`is_booked`,`is_gift`,`is_weigh`,`is_fixed_price`,`is_timeing_price`,`is_hidden`,`remark`,`gmt_update`,`gmt_create`) values (62,NULL,'JackJonse','20180502112525345','20180502112525345','jackjonse','a',1,'','白色','XS','',9,'',NULL,NULL,20000,20000,10000,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-03 14:42:20','2018-05-02 11:25:59'),(70,NULL,'dfgdfg','20180502140348557-001','20180502140348557','','a',1,'','白色','XS','',10,'',NULL,NULL,18000,18000,20000,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 14:04:47','2018-05-02 14:04:18'),(71,NULL,'dfgdfg','20180502140348557-002','20180502140348557','','a',1,'','红色','XS','',20,'',NULL,NULL,18000,18000,23387,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 21:16:08','2018-05-02 21:15:39'),(72,NULL,'cs','20180502140448353-001','20180502140448353','','a',1,'','白色','XS','',0,'',NULL,NULL,3400,3400,32300,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 14:05:44','2018-05-02 14:05:16'),(73,NULL,'cs','20180502140448353-002','20180502140448353','','a',1,'','红色','XS','',0,'',NULL,NULL,3400,3400,32300,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-02 14:05:44','2018-05-02 14:05:16');
+insert  into `goods_info`(`id`,`goods_image_id`,`goods_name`,`bar_code`,`product_number`,`pinyin_code`,`category_name`,`goods_status`,`goods_brand`,`goods_color`,`goods_size`,`goods_tag`,`goods_stock`,`quantity_unit`,`stock_upper_limit`,`stock_lower_limit`,`last_import_price`,`average_import_price`,`sales_price`,`trade_price`,`vip_price`,`is_vip_discount`,`supplier_name`,`production_date`,`quality_guarantee_period`,`is_integral`,`royalty_type`,`is_booked`,`is_gift`,`is_weigh`,`is_fixed_price`,`is_timeing_price`,`is_hidden`,`remark`,`gmt_update`,`gmt_create`) values (62,NULL,'JackJonse','20180502112525345','20180502112525345','jackjonse','a',1,'','白色','XS','',9,'',NULL,NULL,20000,20000,10000,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-03 14:42:20','2018-05-02 11:25:59'),(70,NULL,'dfgdfg','20180502140348557-001','20180502140348557','','a',1,'','白色','XS','',7,'',NULL,NULL,18000,18000,20000,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-07 16:27:55','2018-05-02 14:04:18'),(71,NULL,'dfgdfg','20180502140348557-002','20180502140348557','','a',1,'','红色','XS','',15,'',NULL,NULL,18000,18000,23387,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-07 16:31:41','2018-05-02 21:15:39'),(72,NULL,'cs','20180502140448353-001','20180502140448353','','a',1,'','白色','XS','',0,'',NULL,NULL,3400,3400,32300,NULL,32300,0,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-04 15:49:27','2018-05-02 14:05:16'),(73,NULL,'cs','20180502140448353-002','20180502140448353','','a',1,'','红色','XS','',0,'',NULL,NULL,3400,3400,32300,NULL,32300,0,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-04 15:49:30','2018-05-02 14:05:16');
 
 /*Table structure for table `goods_lose_info` */
 
@@ -222,6 +222,45 @@ CREATE TABLE `goods_size` (
 /*Data for the table `goods_size` */
 
 insert  into `goods_size`(`id`,`size_name`,`gmt_update`,`gmt_create`) values (1,'XS','2018-04-26 14:28:35','2018-04-26 14:28:20'),(3,'S','2018-04-26 20:05:21','2018-04-26 20:05:06'),(4,'M','2018-04-28 18:58:27','2018-04-28 18:58:00'),(5,'L','2018-04-28 18:58:30','2018-04-28 18:58:04');
+
+/*Table structure for table `goods_stock_check` */
+
+DROP TABLE IF EXISTS `goods_stock_check`;
+
+CREATE TABLE `goods_stock_check` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `check_date` timestamp NULL DEFAULT NULL COMMENT '盘点时间',
+  `seller_no` varchar(32) NOT NULL COMMENT '盘点人，即收银员编号',
+  `remark` varchar(512) DEFAULT NULL COMMENT '备注',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='盘点表';
+
+/*Data for the table `goods_stock_check` */
+
+/*Table structure for table `goods_stock_check_detail` */
+
+DROP TABLE IF EXISTS `goods_stock_check_detail`;
+
+CREATE TABLE `goods_stock_check_detail` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `check_id` bigint(20) NOT NULL COMMENT '外键，关联goods_stock_check主键',
+  `goods_name` varchar(128) NOT NULL COMMENT '商品名称',
+  `bar_code` varchar(128) NOT NULL COMMENT '商品条码',
+  `goods_color` varchar(64) DEFAULT NULL COMMENT '商品颜色',
+  `goods_size` varchar(64) DEFAULT NULL COMMENT '商品尺寸',
+  `product_number` varchar(128) NOT NULL COMMENT '货号',
+  `primary_goods_stock` int(11) NOT NULL COMMENT '原库存',
+  `checked_goods_stock` int(11) NOT NULL COMMENT '盘点库存',
+  `stock_diff` int(11) NOT NULL COMMENT '库存差异=盘点库存-原库存。可能为负',
+  `profit_loss_amount` int(11) DEFAULT NULL COMMENT '盈亏金额=库存差异*加权平均进货价，单位：分。可能为负',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `goods_stock_check_detail` */
 
 /*Table structure for table `goods_stock_flow` */
 
@@ -322,9 +361,11 @@ CREATE TABLE `member_info` (
   KEY `IDX_MEMBER_NO` (`member_no`),
   KEY `IDX_PHONE` (`phone`),
   KEY `IDX_MEMBER_NAME` (`member_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `member_info` */
+
+insert  into `member_info`(`id`,`status`,`member_no`,`member_name`,`member_rank`,`member_discount`,`member_integral`,`phone`,`password`,`birthday`,`is_on_credit`,`qq_no`,`email`,`address`,`shopper_name`,`remark`,`gmt_update`,`gmt_create`) values (1,1,'12345678','51','1',85,99,'15812345678','12345678','',0,NULL,NULL,NULL,NULL,NULL,'2018-05-04 15:45:27','2018-05-04 15:38:02'),(2,1,'12345679','52','1',85,99,'15812345679','12345678','',0,'','','','','','2018-05-04 15:45:27','2018-05-04 15:38:02'),(3,1,'1','1','',1,1,'1','','',0,'','','','','','2018-05-08 19:21:02','2018-05-08 19:20:21'),(4,1,'2','2','',2567,2,'2','2','2',0,'2','2','2','','2','2018-05-08 19:30:01','2018-05-08 19:20:37');
 
 /*Table structure for table `member_integral` */
 
@@ -360,7 +401,7 @@ CREATE TABLE `member_rank` (
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员等级表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='会员等级表';
 
 /*Data for the table `member_rank` */
 
@@ -423,9 +464,11 @@ CREATE TABLE `shopper_info` (
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `UQ_SHOPPER_NO` (`shopper_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shopper_info` */
+
+insert  into `shopper_info`(`id`,`shopper_no`,`name`,`phone`,`sales_percentage`,`recharge_percentage`,`shopping_card_percentage`,`status`,`royalty_type`,`gmt_update`,`gmt_create`) values (1,'123','123','213',23,23,23,1,'','2018-05-08 20:13:08','2018-05-08 20:12:26');
 
 /*Table structure for table `supplier_info` */
 
@@ -498,11 +541,11 @@ CREATE TABLE `trade_detail` (
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建日期',
   PRIMARY KEY (`id`),
   UNIQUE KEY `INX_TRADE_NO` (`trade_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `trade_detail` */
 
-insert  into `trade_detail`(`id`,`trade_no`,`trade_time`,`trade_type`,`member_name`,`goods_count`,`total_amount`,`goods_discount`,`total_actual_amount`,`profit_amount`,`seller_no`,`shopper_no`,`goods_detail`,`pay_chenal`,`is_exchange_job`,`exchange_job_id`,`gmt_update`,`gmt_create`) values (1,'20180503144148820','2018-05-03 14:41:49','sales',NULL,1,10000,100,10000,10000,'123',NULL,'[{\"barCode\":\"20180502112525345\",\"goodsCount\":1,\"goodsDiscount\":100,\"goodsId\":62,\"goodsName\":\"JackJonse\",\"isVipDiscount\":\"true\",\"priceTotal\":\"100\",\"totalActualAmount\":\"100\",\"totalAmount\":\"100\"}]','[{\"amount\":\"\",\"chenal\":\"\"}]',0,456,'2018-05-03 14:42:20','2018-05-03 14:41:49');
+insert  into `trade_detail`(`id`,`trade_no`,`trade_time`,`trade_type`,`member_name`,`goods_count`,`total_amount`,`goods_discount`,`total_actual_amount`,`profit_amount`,`seller_no`,`shopper_no`,`goods_detail`,`pay_chenal`,`is_exchange_job`,`exchange_job_id`,`gmt_update`,`gmt_create`) values (1,'20180503144148820','2018-05-03 14:41:49','sales',NULL,1,10000,100,10000,10000,'123',NULL,'[{\"barCode\":\"20180502112525345\",\"goodsCount\":1,\"goodsDiscount\":100,\"goodsId\":62,\"goodsName\":\"JackJonse\",\"isVipDiscount\":\"true\",\"priceTotal\":\"100\",\"totalActualAmount\":\"100\",\"totalAmount\":\"100\"}]','[{\"amount\":\"\",\"chenal\":\"\"}]',0,456,'2018-05-03 14:42:20','2018-05-03 14:41:49'),(2,'20180503151132894','2018-05-03 15:11:33','sales',NULL,0,0,100,0,0,'123',NULL,'[]','[{\"amount\":\"\",\"chenal\":\"\"}]',0,456,'2018-05-03 15:12:04','2018-05-03 15:11:33'),(3,'20180504164947090','2018-05-04 16:49:47','sales',NULL,1,20000,100,20000,20000,'1001',NULL,'[{\"barCode\":\"20180502140348557-001\",\"goodsCount\":1,\"goodsDiscount\":100,\"goodsId\":70,\"goodsName\":\"dfgdfg\",\"isVipDiscount\":\"true\",\"priceTotal\":\"200\",\"totalActualAmount\":\"200\",\"totalAmount\":\"200\"}]','[{\"amount\":\"985\",\"chenal\":\"cash\"}]',0,1,'2018-05-04 16:50:19','2018-05-04 16:49:47'),(4,'20180504170643437','2018-05-04 17:06:43','sales',NULL,2,43387,100,43387,43387,'1001',NULL,'[{\"barCode\":\"20180502140348557-001\",\"goodsCount\":1,\"goodsDiscount\":100,\"goodsId\":70,\"goodsName\":\"dfgdfg\",\"isVipDiscount\":\"true\",\"priceTotal\":\"200\",\"totalActualAmount\":\"200\",\"totalAmount\":\"200\"},{\"barCode\":\"20180502140348557-002\",\"goodsCount\":1,\"goodsDiscount\":100,\"goodsId\":71,\"goodsName\":\"dfgdfg\",\"isVipDiscount\":\"true\",\"priceTotal\":\"233.87\",\"totalActualAmount\":\"233.87\",\"totalAmount\":\"233.87\"}]','[]',0,1,'2018-05-04 17:07:16','2018-05-04 17:06:43'),(5,'20180504171347486','2018-05-04 17:13:47','sales',NULL,3,23387,100,23387,23387,'1001',NULL,'[{\"barCode\":\"20180502140348557-002\",\"goodsCount\":3,\"goodsDiscount\":100,\"goodsId\":71,\"goodsName\":\"dfgdfg\",\"isVipDiscount\":\"true\",\"priceTotal\":\"701.61\",\"totalActualAmount\":\"233.87\",\"totalAmount\":\"233.87\"}]','[{\"amount\":\"300\",\"chenal\":\"cash\"},{\"amount\":\"300\",\"chenal\":\"cash\"}]',0,1,'2018-05-04 17:14:20','2018-05-04 17:13:48'),(6,'20180507162715727','2018-05-07 16:27:16','sales',NULL,1,20000,85,17000,14450,'1001',NULL,'[{\"barCode\":\"20180502140348557-001\",\"goodsCount\":1,\"goodsDiscount\":85,\"goodsId\":70,\"goodsName\":\"dfgdfg\",\"isVipDiscount\":\"true\",\"priceTotal\":\"170\",\"totalActualAmount\":\"170.00\",\"totalAmount\":\"200\"}]','[{\"amount\":\"170\",\"chenal\":\"cash\"}]',0,1,'2018-05-07 16:27:55','2018-05-07 16:27:16'),(7,'20180507163101361','2018-05-07 16:31:01','sales',NULL,2,55687,85,52179,49197,'1001',NULL,'[{\"barCode\":\"20180502140448353-001\",\"goodsCount\":1,\"goodsDiscount\":100,\"goodsId\":72,\"goodsName\":\"cs\",\"isVipDiscount\":\"false\",\"priceTotal\":\"323\",\"totalActualAmount\":\"323\",\"totalAmount\":\"323\",\"vipPrice\":\"{\\\"amount\\\":323,\\\"centFactor\\\":100,\\\"cent\\\":32300,\\\"currency\\\":\\\"CNY\\\",\\\"currencyCode\\\":\\\"CNY\\\"}\"},{\"barCode\":\"20180502140348557-002\",\"goodsCount\":1,\"goodsDiscount\":85,\"goodsId\":71,\"goodsName\":\"dfgdfg\",\"isVipDiscount\":\"true\",\"priceTotal\":\"198.79\",\"totalActualAmount\":\"198.79\",\"totalAmount\":\"233.87\"}]','[{\"amount\":\"0\",\"chenal\":\"cash\"},{\"amount\":\"0\",\"chenal\":\"cash\"}]',0,1,'2018-05-07 16:31:41','2018-05-07 16:31:01');
 
 /*Table structure for table `trade_goods_detail` */
 
@@ -536,11 +579,11 @@ CREATE TABLE `trade_goods_detail` (
   KEY `IDX_BAR_CODE` (`bar_code`),
   KEY `IDX_GOODS_TAG` (`goods_tag`),
   KEY `IDX_SELLER_NO` (`seller_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `trade_goods_detail` */
 
-insert  into `trade_goods_detail`(`id`,`trade_no`,`trade_time`,`trade_type`,`goods_name`,`goods_brand`,`bar_code`,`product_number`,`goods_color`,`goods_size`,`goods_count`,`goods_tag`,`category_name`,`seller_no`,`shopper_no`,`supplier_name`,`total_amount`,`goods_discount`,`total_actual_amount`,`profit_amount`,`gmt_update`,`gmt_create`) values (1,'20180503144148820','2018-05-03 14:41:49','sales','JackJonse','','20180502112525345','20180502112525345','白色','XS',1,'','a',NULL,NULL,'',10000,100,10000,10000,'2018-05-03 14:42:20','2018-05-03 14:41:49');
+insert  into `trade_goods_detail`(`id`,`trade_no`,`trade_time`,`trade_type`,`goods_name`,`goods_brand`,`bar_code`,`product_number`,`goods_color`,`goods_size`,`goods_count`,`goods_tag`,`category_name`,`seller_no`,`shopper_no`,`supplier_name`,`total_amount`,`goods_discount`,`total_actual_amount`,`profit_amount`,`gmt_update`,`gmt_create`) values (1,'20180503144148820','2018-05-03 14:41:49','sales','JackJonse','','20180502112525345','20180502112525345','白色','XS',1,'','a',NULL,NULL,'',10000,100,10000,10000,'2018-05-03 14:42:20','2018-05-03 14:41:49'),(2,'20180504164947090','2018-05-04 16:49:47','sales','dfgdfg','','20180502140348557-001','20180502140348557','白色','XS',1,'','a','1001',NULL,'',20000,100,20000,20000,'2018-05-04 16:50:19','2018-05-04 16:49:47'),(3,'20180504170643437','2018-05-04 17:06:43','sales','dfgdfg','','20180502140348557-001','20180502140348557','白色','XS',1,'','a','1001',NULL,'',20000,100,20000,20000,'2018-05-04 17:07:16','2018-05-04 17:06:43'),(4,'20180504170643437','2018-05-04 17:06:43','sales','dfgdfg','','20180502140348557-002','20180502140348557','红色','XS',1,'','a','1001',NULL,'',23387,100,23387,23387,'2018-05-04 17:07:16','2018-05-04 17:06:43'),(5,'20180504171347486','2018-05-04 17:13:47','sales','dfgdfg','','20180502140348557-002','20180502140348557','红色','XS',3,'','a','1001',NULL,'',23387,100,23387,23387,'2018-05-04 17:14:20','2018-05-04 17:13:47'),(6,'20180507162715727','2018-05-07 16:27:16','sales','dfgdfg','','20180502140348557-001','20180502140348557','白色','XS',1,'','a','1001',NULL,'',20000,85,17000,14450,'2018-05-07 16:27:55','2018-05-07 16:27:16'),(7,'20180507163101361','2018-05-07 16:31:01','sales','cs','','20180502140448353-001','20180502140448353','白色','XS',1,'','a','1001',NULL,'',32300,100,32300,32300,'2018-05-07 16:31:41','2018-05-07 16:31:01'),(8,'20180507163101361','2018-05-07 16:31:01','sales','dfgdfg','','20180502140348557-002','20180502140348557','红色','XS',1,'','a','1001',NULL,'',23387,85,19879,16897,'2018-05-07 16:31:41','2018-05-07 16:31:01');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
