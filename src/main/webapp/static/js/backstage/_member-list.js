@@ -12,7 +12,15 @@ $(function() {
             { label: '电话', name: 'phone', index: 'phone', width: 80 },
             { label: '密码', name: 'password', index: 'password', sortable: false, width: 80 },
             { label: '生日', name: 'birthday', index: 'birthday', width: 80 },
-            { label: '允许赊账', name: 'isOnCredit', index: 'is_On_Credit', width: 80 },
+            { label: '允许赊账', name: 'isOnCredit', index: 'is_On_Credit', width: 80,
+            	formatter: function(value, options, row) {
+                    if (value) {
+                        return '<span class="label label-success">允许</span>';
+                    } else {
+                    	return '<span class="label label-info">不允许</span>';
+                    }
+                }
+            },
             { label: 'QQ', name: 'qqNo', index: 'qq_No', width: 80 },
             { label: '邮箱', name: 'email', index: 'email', width: 80 },
             { label: '地址', name: 'address', index: 'address', width: 80 },
@@ -53,7 +61,7 @@ var entity_member_info = {
 	memberName: null,
 	memberRank: '',
 	memberDiscount: null,
-	memberIntegral: null,
+	memberIntegral: 0, // 积分默认为0
 	phone: null,
 	password: null,
 	birthday: null,

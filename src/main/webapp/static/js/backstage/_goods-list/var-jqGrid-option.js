@@ -47,8 +47,8 @@ var option = {
         width: 60
     }, {
         label: '进货价',
-        name: 'importPrice.amount',
-        index: 'import_Price',
+        name: 'averageImportPrice.amount',
+        index: 'average_Import_Price',
         width: 80,
         formatter: "number",
         formatoptions: {
