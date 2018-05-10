@@ -6,7 +6,7 @@ import cn.cash.register.util.Money;
 
 public class ExchangeJobDetail extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = -7313808521249701362L;
+    private static final long serialVersionUID = -915828387207934164L;
 
     private Long              id;
 
@@ -19,6 +19,8 @@ public class ExchangeJobDetail extends BaseDomain {
     private Money             checkoutTotalAmount;
 
     private Money             cashAmount;
+
+    private Money             balanceAmount;
 
     private Money             unionpayAmount;
 
@@ -91,6 +93,14 @@ public class ExchangeJobDetail extends BaseDomain {
 
     public void setCashAmount(Money cashAmount) {
         this.cashAmount = cashAmount;
+    }
+
+    public Money getBalanceAmount() {
+        return balanceAmount;
+    }
+
+    public void setBalanceAmount(Money balanceAmount) {
+        this.balanceAmount = balanceAmount;
     }
 
     public Money getUnionpayAmount() {

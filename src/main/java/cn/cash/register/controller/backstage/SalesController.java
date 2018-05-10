@@ -9,8 +9,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.cash.register.common.request.ExchangeJobQueryRequest;
@@ -31,7 +31,7 @@ public class SalesController {
     private ExchangeJobService exchangeJobService;
 
     @ResponseBody
-    @RequestMapping(value = "/queryExchangeJobs", method = RequestMethod.POST)
+    @PostMapping(value = "/queryExchangeJobs")
     public ResultSet queryExchangeJobs(ExchangeJobQueryRequest request) {
         List<ExchangeJobDetail> exchangeJobs = exchangeJobService.query(request);
         return ResultSet.success().put("exchangeJobs", exchangeJobs);

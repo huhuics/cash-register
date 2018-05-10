@@ -105,16 +105,6 @@
 		<table tableName="system_parameter" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 		</table>
 		
-		<table tableName="exchange_job_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-			<columnOverride column="checkout_total_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-			<columnOverride column="cash_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-			<columnOverride column="unionpay_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-			<columnOverride column="alipay_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-			<columnOverride column="wcpay_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-			<columnOverride column="petty_cash_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-			<columnOverride column="paid_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-		</table>
-		
 		<table tableName="trade_goods_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 			<columnOverride column="total_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="total_actual_amount" javaType="cn.cash.register.util.Money"></columnOverride>
@@ -135,12 +125,23 @@
 			<columnOverride column="account_balance" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
 		
-		-->
-		
 		<table tableName="member_recharge_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 			<columnOverride column="recharge_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="donation_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="total_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+		</table>
+		
+		-->
+		
+		<table tableName="exchange_job_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<columnOverride column="checkout_total_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="cash_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="unionpay_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="alipay_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="wcpay_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="petty_cash_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="paid_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="balance_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
 		 
     </context>  

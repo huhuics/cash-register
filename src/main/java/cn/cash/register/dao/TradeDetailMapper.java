@@ -3,6 +3,7 @@ package cn.cash.register.dao;
 import java.util.List;
 
 import cn.cash.register.common.request.ExchangeJobTradeDetailRequest;
+import cn.cash.register.common.request.SalesBasicFactsQueryRequest;
 import cn.cash.register.common.request.TradeDetailQueryRequest;
 import cn.cash.register.dao.domain.TradeDetail;
 
@@ -24,4 +25,6 @@ public interface TradeDetailMapper {
     void deleteByTradeNo(String tradeNo);
 
     List<TradeDetail> selectExchangeJobTradeDetails(ExchangeJobTradeDetailRequest request);
+
+    List<TradeDetail> queryByTradeTime(SalesBasicFactsQueryRequest request);
 }

@@ -1,5 +1,8 @@
 package cn.cash.register.dao;
 
+import java.util.List;
+
+import cn.cash.register.common.request.SalesBasicFactsQueryRequest;
 import cn.cash.register.dao.domain.MemberRechargeDetail;
 
 public interface MemberRechargeDetailMapper {
@@ -14,4 +17,6 @@ public interface MemberRechargeDetailMapper {
     int updateByPrimaryKeySelective(MemberRechargeDetail record);
 
     int updateByPrimaryKey(MemberRechargeDetail record);
+
+    List<MemberRechargeDetail> queryByTime(SalesBasicFactsQueryRequest request);
 }

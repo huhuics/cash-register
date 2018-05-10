@@ -126,4 +126,14 @@
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="queryByTime" parameterType="cn.cash.register.common.request.SalesBasicFactsQueryRequest" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from member_recharge_detail
+    where gmt_create &lt;= to_date(#{timeUp},'yyyy-MM-dd HH:mm:ss')
+  		and
+  		gmt_create &gt;= to_date(#{timeDown},'yyyy-MM-dd HH:mm:ss')
+  </select>
+  
 </mapper>

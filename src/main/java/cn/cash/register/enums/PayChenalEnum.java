@@ -12,6 +12,7 @@ package cn.cash.register.enums;
 public enum PayChenalEnum {
 
                            cash, //现金
+                           balance, //用户余额,即储值卡
                            unionpay, //银联
                            alipay, //支付宝
                            wcpay;//微信支付

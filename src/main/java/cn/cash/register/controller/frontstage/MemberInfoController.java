@@ -18,11 +18,11 @@ import cn.cash.register.util.ResultSet;
 /**
  * 前台收银会员Controller
  * @author HuHui
- * @version $Id: MemberController.java, v 0.1 2018年5月10日 下午7:18:20 HuHui Exp $
+ * @version $Id: MemberInfoController.java, v 0.1 2018年5月10日 下午7:18:20 HuHui Exp $
  */
 @Controller
 @RequestMapping(value = "/cashier/member")
-public class MemberController {
+public class MemberInfoController {
 
     @Resource
     private MemberService memberService;
