@@ -9,16 +9,21 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.MemberInfoQueryRequest;
 import cn.cash.register.common.request.MemberRankQueryRequest;
+import cn.cash.register.common.request.MemberRechargeRequest;
 import cn.cash.register.dao.MemberInfoMapper;
 import cn.cash.register.dao.MemberIntegralMapper;
 import cn.cash.register.dao.MemberRankMapper;
@@ -26,6 +31,7 @@ import cn.cash.register.dao.domain.MemberInfo;
 import cn.cash.register.dao.domain.MemberIntegral;
 import cn.cash.register.dao.domain.MemberRank;
 import cn.cash.register.service.MemberService;
+import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.Money;
 
@@ -47,6 +53,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Resource
     private MemberIntegralMapper integralMapper;
+
+    @Resource
+    private TransactionTemplate  txTemplate;
 
     /****************************会员信息相关接口****************************/
 
@@ -143,6 +152,34 @@ public class MemberServiceImpl implements MemberService {
         } catch (Exception e) {
             LogUtil.error(e, logger, "修改会员积分异常");
         }
+    }
+
+    @Override
+    public boolean recharge(MemberRechargeRequest request) {
+        LogUtil.info(logger, "收到会员充值请求");
+        AssertUtil.assertNotNull(request, "充值请求不能为空");
+        request.validate();
+
+        return txTemplate.execute(new TransactionCallback<Boolean>() {
+            @Override
+            public Boolean doInTransaction(TransactionStatus status) {
+                MemberInfo memberInfo = infoMapper.selectByNo(request.getMemberNo());
+                if (memberInfo == null) {
+                    return false;
+                }
+
+                Money rechargeAmount = new Money(request.getRechargeAmount());
+                if (StringUtils.isNotBlank(request.getDonationAmount())) {
+                    rechargeAmount.addTo(new Money(request.getDonationAmount()));
+                }
+
+                rechargeAmount.addTo(memberInfo.getAccountBalance());
+
+                memberInfo.setAccountBalance(rechargeAmount);
+
+                return infoMapper.updateByPrimaryKeySelective(memberInfo) > 0;
+            }
+        });
     }
 
     /****************************会员等级相关接口****************************/

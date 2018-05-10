@@ -2,9 +2,11 @@ package cn.cash.register.dao.domain;
 
 import java.util.Date;
 
+import cn.cash.register.util.Money;
+
 public class MemberInfo extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = 6245782188179824717L;
+    private static final long serialVersionUID = 7437361677449856715L;
 
     private Long              id;
 
@@ -33,6 +35,8 @@ public class MemberInfo extends BaseDomain {
     private String            email;
 
     private String            address;
+
+    private Money             accountBalance;
 
     private String            shopperName;
 
@@ -152,6 +156,14 @@ public class MemberInfo extends BaseDomain {
 
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
+    }
+
+    public Money getAccountBalance() {
+        return accountBalance;
+    }
+
+    public void setAccountBalance(Money accountBalance) {
+        this.accountBalance = accountBalance;
     }
 
     public String getShopperName() {

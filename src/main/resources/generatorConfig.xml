@@ -64,9 +64,6 @@
 		<table tableName="member_integral" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 		</table>
 		
-		<table tableName="member_info" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-		</table>
-		
 		<table tableName="goods_tag" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 		</table>
 		
@@ -127,8 +124,6 @@
 		<table tableName="shopper_info" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 		</table>
 		
-	-->
-		
 		<table tableName="goods_stock_check" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 		</table>
 		
@@ -136,6 +131,11 @@
 			<columnOverride column="profit_loss_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
 		
+		-->
+		
+		<table tableName="member_info" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<columnOverride column="account_balance" javaType="cn.cash.register.util.Money"></columnOverride>
+		</table>
 		 
     </context>  
 </generatorConfiguration>

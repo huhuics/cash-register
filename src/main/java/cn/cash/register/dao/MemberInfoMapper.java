@@ -21,4 +21,6 @@ public interface MemberInfoMapper {
     List<MemberInfo> list(MemberInfoQueryRequest request);
 
     List<MemberInfo> search(String keyword);
+
+    MemberInfo selectByNo(String memberNo);
 }
