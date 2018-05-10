@@ -27,9 +27,11 @@ import cn.cash.register.common.request.MemberRechargeRequest;
 import cn.cash.register.dao.MemberInfoMapper;
 import cn.cash.register.dao.MemberIntegralMapper;
 import cn.cash.register.dao.MemberRankMapper;
+import cn.cash.register.dao.MemberRechargeDetailMapper;
 import cn.cash.register.dao.domain.MemberInfo;
 import cn.cash.register.dao.domain.MemberIntegral;
 import cn.cash.register.dao.domain.MemberRank;
+import cn.cash.register.dao.domain.MemberRechargeDetail;
 import cn.cash.register.service.MemberService;
 import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.LogUtil;
@@ -43,19 +45,22 @@ import cn.cash.register.util.Money;
 @Service
 public class MemberServiceImpl implements MemberService {
 
-    private static final Logger  logger = LoggerFactory.getLogger(MemberServiceImpl.class);
+    private static final Logger        logger = LoggerFactory.getLogger(MemberServiceImpl.class);
 
     @Resource
-    private MemberInfoMapper     infoMapper;
+    private MemberInfoMapper           infoMapper;
 
     @Resource
-    private MemberRankMapper     rankMapper;
+    private MemberRankMapper           rankMapper;
 
     @Resource
-    private MemberIntegralMapper integralMapper;
+    private MemberIntegralMapper       integralMapper;
 
     @Resource
-    private TransactionTemplate  txTemplate;
+    private MemberRechargeDetailMapper rechargeDetailMapper;
+
+    @Resource
+    private TransactionTemplate        txTemplate;
 
     /****************************会员信息相关接口****************************/
 
@@ -168,16 +173,30 @@ public class MemberServiceImpl implements MemberService {
                     return false;
                 }
 
-                Money rechargeAmount = new Money(request.getRechargeAmount());
+                Money rechargeTotalAmount = new Money(request.getRechargeAmount());
                 if (StringUtils.isNotBlank(request.getDonationAmount())) {
-                    rechargeAmount.addTo(new Money(request.getDonationAmount()));
+                    rechargeTotalAmount.addTo(new Money(request.getDonationAmount()));
                 }
 
-                rechargeAmount.addTo(memberInfo.getAccountBalance());
+                Money newBalance = memberInfo.getAccountBalance().addTo(rechargeTotalAmount);
 
-                memberInfo.setAccountBalance(rechargeAmount);
+                memberInfo.setAccountBalance(newBalance);
+                memberInfo.setShopperName(request.getShopperName());
 
-                return infoMapper.updateByPrimaryKeySelective(memberInfo) > 0;
+                infoMapper.updateByPrimaryKeySelective(memberInfo);
+
+                //创建充值记录
+                MemberRechargeDetail rechargeDetail = new MemberRechargeDetail();
+                rechargeDetail.setGmtCreate(new Date());
+                rechargeDetail.setSellerNo(request.getSellerNo());
+                rechargeDetail.setShopperNo(request.getShopperNo());
+                rechargeDetail.setRechargeAmount(new Money(request.getRechargeAmount()));
+                rechargeDetail.setDonationAmount(new Money(request.getDonationAmount()));
+                rechargeDetail.setTotalAmount(rechargeTotalAmount);
+
+                rechargeDetailMapper.insertSelective(rechargeDetail);
+
+                return true;
             }
         });
     }

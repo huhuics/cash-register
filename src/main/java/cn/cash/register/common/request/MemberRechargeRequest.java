@@ -21,6 +21,10 @@ public class MemberRechargeRequest extends BaseRequest {
 
     private String            memberNo;
 
+    private String            sellerNo;
+
+    private String            shopperNo;
+
     private String            shopperName;
 
     /**
@@ -35,6 +39,7 @@ public class MemberRechargeRequest extends BaseRequest {
 
     @Override
     public void validate() {
+        AssertUtil.assertNotBlank(sellerNo, "收银员编号不能为空");
         AssertUtil.assertNotBlank(memberNo, "会员号不能为空");
         AssertUtil.assertTrue(NumberUtils.isDigits(rechargeAmount), "充值金额错误");
         if (StringUtils.isNotBlank(donationAmount)) {
@@ -72,6 +77,22 @@ public class MemberRechargeRequest extends BaseRequest {
 
     public void setDonationAmount(String donationAmount) {
         this.donationAmount = donationAmount;
+    }
+
+    public String getSellerNo() {
+        return sellerNo;
+    }
+
+    public void setSellerNo(String sellerNo) {
+        this.sellerNo = sellerNo;
+    }
+
+    public String getShopperNo() {
+        return shopperNo;
+    }
+
+    public void setShopperNo(String shopperNo) {
+        this.shopperNo = shopperNo;
     }
 
 }

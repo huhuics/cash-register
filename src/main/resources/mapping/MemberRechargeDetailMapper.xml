@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cash.register.dao.MemberRechargeDetailMapper">
+  <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.MemberRechargeDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="seller_no" jdbcType="VARCHAR" property="sellerNo" />
+    <result column="shopper_no" jdbcType="VARCHAR" property="shopperNo" />
+    <result column="recharge_amount" jdbcType="INTEGER" property="rechargeAmount" />
+    <result column="donation_amount" jdbcType="INTEGER" property="donationAmount" />
+    <result column="total_amount" jdbcType="INTEGER" property="totalAmount" />
+    <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, seller_no, shopper_no, recharge_amount, donation_amount, total_amount, gmt_update, 
+    gmt_create
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from member_recharge_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from member_recharge_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.cash.register.dao.domain.MemberRechargeDetail">
+    insert into member_recharge_detail (id, seller_no, shopper_no, 
+      recharge_amount, donation_amount, total_amount, 
+      gmt_update, gmt_create)
+    values (#{id,jdbcType=BIGINT}, #{sellerNo,jdbcType=VARCHAR}, #{shopperNo,jdbcType=VARCHAR}, 
+      #{rechargeAmount,jdbcType=INTEGER}, #{donationAmount,jdbcType=INTEGER}, #{totalAmount,jdbcType=INTEGER}, 
+      #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.MemberRechargeDetail">
+    insert into member_recharge_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sellerNo != null">
+        seller_no,
+      </if>
+      <if test="shopperNo != null">
+        shopper_no,
+      </if>
+      <if test="rechargeAmount != null">
+        recharge_amount,
+      </if>
+      <if test="donationAmount != null">
+        donation_amount,
+      </if>
+      <if test="totalAmount != null">
+        total_amount,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sellerNo != null">
+        #{sellerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopperNo != null">
+        #{shopperNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeAmount != null">
+        #{rechargeAmount,jdbcType=INTEGER},
+      </if>
+      <if test="donationAmount != null">
+        #{donationAmount,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null">
+        #{totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.MemberRechargeDetail">
+    update member_recharge_detail
+    <set>
+      <if test="sellerNo != null">
+        seller_no = #{sellerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopperNo != null">
+        shopper_no = #{shopperNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeAmount != null">
+        recharge_amount = #{rechargeAmount,jdbcType=INTEGER},
+      </if>
+      <if test="donationAmount != null">
+        donation_amount = #{donationAmount,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null">
+        total_amount = #{totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.MemberRechargeDetail">
+    update member_recharge_detail
+    set seller_no = #{sellerNo,jdbcType=VARCHAR},
+      shopper_no = #{shopperNo,jdbcType=VARCHAR},
+      recharge_amount = #{rechargeAmount,jdbcType=INTEGER},
+      donation_amount = #{donationAmount,jdbcType=INTEGER},
+      total_amount = #{totalAmount,jdbcType=INTEGER},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

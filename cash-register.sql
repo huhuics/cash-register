@@ -51,11 +51,11 @@ CREATE TABLE `goods_brand` (
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UQ_NAME` (`brand_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_brand` */
 
-insert  into `goods_brand`(`id`,`brand_name`,`gmt_update`,`gmt_create`) values (2,'安踏','2018-04-26 21:24:42','2018-04-26 21:24:26'),(3,'优衣库','2018-04-28 18:59:53','2018-04-28 18:59:26');
+insert  into `goods_brand`(`id`,`brand_name`,`gmt_update`,`gmt_create`) values (3,'优衣库','2018-04-28 18:59:53','2018-04-28 18:59:26'),(4,'Nike','2018-05-10 14:43:42','2018-05-10 14:42:52'),(5,'Adidas','2018-05-10 14:43:46','2018-05-10 14:42:56');
 
 /*Table structure for table `goods_category` */
 
@@ -69,11 +69,11 @@ CREATE TABLE `goods_category` (
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UQ_NAME_ID` (`category_name`,`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_category` */
 
-insert  into `goods_category`(`id`,`category_name`,`parent_id`,`gmt_update`,`gmt_create`) values (1,'root',0,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(2,'a',1,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(3,'b',1,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(4,'c',1,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(6,'e',2,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(7,'f',2,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(8,'x',3,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(9,'y',3,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(10,'z',3,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(11,'g',7,'2018-05-02 11:30:06','2018-05-02 11:29:38'),(12,'h',11,'2018-05-02 11:30:20','2018-05-02 11:29:52'),(13,'i',12,'2018-05-02 11:30:41','2018-05-02 11:30:13');
+insert  into `goods_category`(`id`,`category_name`,`parent_id`,`gmt_update`,`gmt_create`) values (1,'root',0,'2018-04-18 11:42:14','2018-04-18 11:42:14'),(14,'男士上衣',1,'2018-05-10 14:38:18','2018-05-10 14:37:28'),(15,'男士裤子',1,'2018-05-10 14:39:53','2018-05-10 14:39:03'),(16,'女士上衣',1,'2018-05-10 14:40:02','2018-05-10 14:39:12'),(17,'男士衬衫',14,'2018-05-10 14:40:13','2018-05-10 14:39:23'),(18,'男士T恤',14,'2018-05-10 14:40:22','2018-05-10 14:39:32'),(19,'男士西裤',15,'2018-05-10 14:40:30','2018-05-10 14:39:40'),(20,'男士休闲裤',15,'2018-05-10 14:40:38','2018-05-10 14:39:48'),(21,'女士运动上衣',16,'2018-05-10 14:50:30','2018-05-10 14:49:40'),(22,'男鞋',1,'2018-05-10 15:17:05','2018-05-10 15:16:15'),(24,'男运动鞋',22,'2018-05-10 15:17:37','2018-05-10 15:16:47'),(46,'b',44,'2018-05-10 19:02:34','2018-05-10 19:01:47');
 
 /*Table structure for table `goods_color` */
 
@@ -85,11 +85,11 @@ CREATE TABLE `goods_color` (
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_color` */
 
-insert  into `goods_color`(`id`,`color`,`gmt_update`,`gmt_create`) values (7,'白色','2018-04-28 18:58:08','2018-04-28 18:57:41'),(8,'红色','2018-04-28 18:58:11','2018-04-28 18:57:45'),(10,'蓝色','2018-04-28 18:58:21','2018-04-28 18:57:55');
+insert  into `goods_color`(`id`,`color`,`gmt_update`,`gmt_create`) values (12,'红色','2018-05-10 14:42:05','2018-05-10 14:41:15'),(13,'黄色','2018-05-10 14:42:10','2018-05-10 14:41:20'),(14,'蓝色','2018-05-10 14:42:13','2018-05-10 14:41:23'),(15,'花色','2018-05-10 14:42:16','2018-05-10 14:41:26');
 
 /*Table structure for table `goods_image` */
 
@@ -151,11 +151,11 @@ CREATE TABLE `goods_info` (
   KEY `IDX_PINYIN_CODE` (`pinyin_code`),
   KEY `IDX_GOODS_NAME` (`goods_name`),
   KEY `IDX_GOODS_TAG` (`goods_tag`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_info` */
 
-insert  into `goods_info`(`id`,`goods_image_id`,`goods_name`,`bar_code`,`product_number`,`pinyin_code`,`category_name`,`goods_status`,`goods_brand`,`goods_color`,`goods_size`,`goods_tag`,`goods_stock`,`quantity_unit`,`stock_upper_limit`,`stock_lower_limit`,`last_import_price`,`average_import_price`,`sales_price`,`trade_price`,`vip_price`,`is_vip_discount`,`supplier_name`,`production_date`,`quality_guarantee_period`,`is_integral`,`royalty_type`,`is_booked`,`is_gift`,`is_weigh`,`is_fixed_price`,`is_timeing_price`,`is_hidden`,`remark`,`gmt_update`,`gmt_create`) values (62,NULL,'JackJonse','20180502112525345','20180502112525345','jackjonse','a',1,'','白色','XS','',9,'',NULL,NULL,20000,20000,10000,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-03 14:42:20','2018-05-02 11:25:59'),(70,NULL,'dfgdfg','20180502140348557-001','20180502140348557','','a',1,'','白色','XS','',7,'',NULL,NULL,18000,18000,20000,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-07 16:27:55','2018-05-02 14:04:18'),(71,NULL,'dfgdfg','20180502140348557-002','20180502140348557','','a',1,'','红色','XS','',15,'',NULL,NULL,18000,18000,23387,NULL,NULL,1,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-07 16:31:41','2018-05-02 21:15:39'),(72,NULL,'cs','20180502140448353-001','20180502140448353','','a',1,'','白色','XS','',0,'',NULL,NULL,3400,3400,32300,NULL,32300,0,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-04 15:49:27','2018-05-02 14:05:16'),(73,NULL,'cs','20180502140448353-002','20180502140448353','','a',1,'','红色','XS','',0,'',NULL,NULL,3400,3400,32300,NULL,32300,0,'','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-04 15:49:30','2018-05-02 14:05:16');
+insert  into `goods_info`(`id`,`goods_image_id`,`goods_name`,`bar_code`,`product_number`,`pinyin_code`,`category_name`,`goods_status`,`goods_brand`,`goods_color`,`goods_size`,`goods_tag`,`goods_stock`,`quantity_unit`,`stock_upper_limit`,`stock_lower_limit`,`last_import_price`,`average_import_price`,`sales_price`,`trade_price`,`vip_price`,`is_vip_discount`,`supplier_name`,`production_date`,`quality_guarantee_period`,`is_integral`,`royalty_type`,`is_booked`,`is_gift`,`is_weigh`,`is_fixed_price`,`is_timeing_price`,`is_hidden`,`remark`,`gmt_update`,`gmt_create`) values (74,NULL,'优衣库男士衬衫','20180510144017883-001','20180510144017883','yyknscs','男士衬衫',1,'优衣库','红色','S','新衣服',160,'件',200,10,6000,6000,10000,8000,NULL,1,'优衣库','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 14:48:34','2018-05-10 14:47:44'),(75,NULL,'优衣库男士衬衫','20180510144017883-002','20180510144017883','yyknscs','男士衬衫',1,'优衣库','红色','M','新衣服',99,'件',200,10,6000,6000,10000,8000,NULL,1,'优衣库','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 15:30:01','2018-05-10 14:44:09'),(76,NULL,'优衣库男士衬衫','20180510144017883-003','20180510144017883','yyknscs','男士衬衫',1,'优衣库','黄色','S','新衣服',99,'件',200,10,6000,6000,10000,8000,NULL,1,'优衣库','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 15:30:01','2018-05-10 14:44:09'),(77,NULL,'优衣库男士衬衫','20180510144017883-004','20180510144017883','yyknscs','男士衬衫',1,'优衣库','黄色','M','新衣服',0,'件',200,10,6000,6000,10000,8000,NULL,1,'优衣库','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 14:44:59','2018-05-10 14:44:09'),(78,NULL,'adidas女士运动上衣','20180510144945408-001','20180510144945408','adidasnsydsy','女士运动上衣',1,'Adidas','红色','XL','',48,'件',NULL,NULL,8000,8000,20000,NULL,NULL,1,'Adidas','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 15:53:43','2018-05-10 14:50:51'),(79,NULL,'adidas女士运动上衣','20180510144945408-002','20180510144945408','adidasnsydsy','女士运动上衣',1,'Adidas','红色','L','',49,'件',NULL,NULL,8000,8000,20000,NULL,NULL,1,'Adidas','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 18:34:01','2018-05-10 14:50:51'),(80,NULL,'adidas女士运动上衣','20180510144945408-003','20180510144945408','adidasnsydsy','女士运动上衣',1,'Adidas','黄色','XL','',50,'件',NULL,NULL,8000,8000,20000,NULL,NULL,1,'Adidas','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 14:51:41','2018-05-10 14:50:51'),(81,NULL,'adidas女士运动上衣','20180510144945408-004','20180510144945408','adidasnsydsy','女士运动上衣',1,'Adidas','黄色','L','',50,'件',NULL,NULL,8000,8000,20000,NULL,NULL,1,'Adidas','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 14:51:41','2018-05-10 14:50:51'),(82,NULL,'adidas女士运动上衣','20180510144945408-005','20180510144945408','adidasnsydsy','女士运动上衣',1,'Adidas','蓝色','XL','',50,'件',NULL,NULL,8000,8000,20000,NULL,NULL,1,'Adidas','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 14:51:41','2018-05-10 14:50:51'),(83,NULL,'adidas女士运动上衣','20180510144945408-006','20180510144945408','adidasnsydsy','女士运动上衣',1,'Adidas','蓝色','L','',50,'件',NULL,NULL,8000,8000,20000,NULL,NULL,1,'Adidas','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 14:51:41','2018-05-10 14:50:51'),(84,NULL,'adidas女士运动上衣','20180510144945408-007','20180510144945408','adidasnsydsy','女士运动上衣',1,'Adidas','花色','XL','',50,'件',NULL,NULL,8000,8000,20000,NULL,NULL,1,'Adidas','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 14:51:41','2018-05-10 14:50:51'),(85,NULL,'adidas女士运动上衣','20180510144945408-008','20180510144945408','adidasnsydsy','女士运动上衣',1,'Adidas','花色','L','',50,'件',NULL,NULL,8000,8000,20000,NULL,NULL,1,'Adidas','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 14:51:41','2018-05-10 14:50:51'),(86,NULL,'Nike空军一号运动鞋','20180510151712752-001','20180510151712752','nikekjyhydx','男运动鞋',1,'Nike','红色','40','',19,'双',NULL,NULL,20000,20000,50000,45000,NULL,1,'Nike','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 15:30:01','2018-05-10 15:20:30'),(87,NULL,'Nike空军一号运动鞋','20180510151712752-002','20180510151712752','nikekjyhydx','男运动鞋',1,'Nike','红色','42','',20,'双',NULL,NULL,20000,20000,50000,NULL,NULL,1,'Nike','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 15:19:24','2018-05-10 15:18:34'),(88,NULL,'Nike空军一号运动鞋','20180510151712752-003','20180510151712752','nikekjyhydx','男运动鞋',1,'Nike','红色','41','',19,'双',NULL,NULL,20000,20000,50000,NULL,NULL,1,'Nike','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 15:30:01','2018-05-10 15:18:34'),(89,NULL,'Nike空军一号运动鞋','20180510151712752-004','20180510151712752','nikekjyhydx','男运动鞋',1,'Nike','黄色','40','',20,'双',NULL,NULL,20000,20000,50000,NULL,NULL,1,'Nike','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 15:19:24','2018-05-10 15:18:34'),(90,NULL,'Nike空军一号运动鞋','20180510151712752-005','20180510151712752','nikekjyhydx','男运动鞋',1,'Nike','黄色','42','',20,'双',NULL,NULL,20000,20000,50000,NULL,NULL,1,'Nike','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 15:19:24','2018-05-10 15:18:34'),(91,NULL,'Nike空军一号运动鞋','20180510151712752-006','20180510151712752','nikekjyhydx','男运动鞋',1,'Nike','黄色','41','',20,'双',NULL,NULL,20000,20000,50000,NULL,NULL,1,'Nike','',NULL,0,'{type:\"0\",value:\"0\"}',0,0,0,0,0,0,'','2018-05-10 15:19:24','2018-05-10 15:18:34');
 
 /*Table structure for table `goods_lose_info` */
 
@@ -201,11 +201,11 @@ CREATE TABLE `goods_quantity_unit` (
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UQ_NAME` (`unit_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_quantity_unit` */
 
-insert  into `goods_quantity_unit`(`id`,`unit_name`,`gmt_update`,`gmt_create`) values (7,'双','2018-04-26 21:24:35','2018-04-26 21:24:19'),(8,'件','2018-04-28 18:59:34','2018-04-28 18:59:08');
+insert  into `goods_quantity_unit`(`id`,`unit_name`,`gmt_update`,`gmt_create`) values (9,'件','2018-05-10 14:43:17','2018-05-10 14:42:27'),(10,'双','2018-05-10 15:19:11','2018-05-10 15:18:21');
 
 /*Table structure for table `goods_size` */
 
@@ -217,11 +217,11 @@ CREATE TABLE `goods_size` (
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods_size` */
 
-insert  into `goods_size`(`id`,`size_name`,`gmt_update`,`gmt_create`) values (1,'XS','2018-04-26 14:28:35','2018-04-26 14:28:20'),(3,'S','2018-04-26 20:05:21','2018-04-26 20:05:06'),(4,'M','2018-04-28 18:58:27','2018-04-28 18:58:00'),(5,'L','2018-04-28 18:58:30','2018-04-28 18:58:04');
+insert  into `goods_size`(`id`,`size_name`,`gmt_update`,`gmt_create`) values (6,'S','2018-05-10 14:42:20','2018-05-10 14:41:30'),(7,'M','2018-05-10 14:42:23','2018-05-10 14:41:33'),(8,'L','2018-05-10 14:42:26','2018-05-10 14:41:36'),(9,'XL','2018-05-10 14:42:28','2018-05-10 14:41:38'),(10,'40','2018-05-10 15:18:29','2018-05-10 15:17:39'),(11,'41','2018-05-10 15:18:32','2018-05-10 15:17:42'),(12,'42','2018-05-10 15:18:34','2018-05-10 15:17:44');
 
 /*Table structure for table `goods_stock_check` */
 
@@ -255,8 +255,8 @@ CREATE TABLE `goods_stock_check_detail` (
   `checked_goods_stock` int(11) NOT NULL COMMENT '盘点库存',
   `stock_diff` int(11) NOT NULL COMMENT '库存差异=盘点库存-原库存。可能为负',
   `profit_loss_amount` int(11) DEFAULT NULL COMMENT '盈亏金额=库存差异*加权平均进货价，单位：分。可能为负',
-  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -280,9 +280,11 @@ CREATE TABLE `goods_stock_flow` (
   PRIMARY KEY (`id`),
   KEY `IDX_GOODS_NAME` (`goods_name`),
   KEY `IDX_BAR_CODE` (`bar_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='库存流水表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='库存流水表';
 
 /*Data for the table `goods_stock_flow` */
+
+insert  into `goods_stock_flow`(`id`,`goods_name`,`bar_code`,`flow_type`,`flow_count`,`check_count`,`out_biz_no`,`remark`,`gmt_update`,`gmt_create`) values (1,'优衣库男士衬衫','20180510144017883-001','goods_stock_edit',50,NULL,'20180510144017883-001',NULL,'2018-05-10 14:48:16','2018-05-10 14:47:26'),(2,'优衣库男士衬衫','20180510144017883-001','goods_stock_edit',10,NULL,'20180510144017883-001',NULL,'2018-05-10 14:48:34','2018-05-10 14:47:44');
 
 /*Table structure for table `goods_tag` */
 
@@ -345,7 +347,7 @@ CREATE TABLE `member_info` (
   `member_name` varchar(64) NOT NULL COMMENT '会员姓名',
   `member_rank` varchar(64) NOT NULL COMMENT '会员等级',
   `member_discount` int(11) NOT NULL DEFAULT '100' COMMENT '会员折扣。默认100即不打折，8.5折填85',
-  `member_integral` double DEFAULT NULL COMMENT '会员积分',
+  `member_integral` double DEFAULT '0' COMMENT '会员积分',
   `phone` varchar(32) DEFAULT NULL COMMENT '联系电话',
   `password` varchar(32) DEFAULT NULL COMMENT '会员密码',
   `birthday` varchar(32) DEFAULT NULL COMMENT '会员生日',
@@ -353,6 +355,7 @@ CREATE TABLE `member_info` (
   `qq_no` varchar(32) DEFAULT NULL COMMENT 'qq号码',
   `email` varchar(32) DEFAULT NULL COMMENT '邮箱地址',
   `address` varchar(128) DEFAULT NULL COMMENT '地址',
+  `account_balance` int(11) DEFAULT '0' COMMENT '账户余额，单位:分',
   `shopper_name` varchar(64) DEFAULT NULL COMMENT '导购员',
   `remark` varchar(256) DEFAULT NULL COMMENT '备注',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
@@ -361,11 +364,11 @@ CREATE TABLE `member_info` (
   KEY `IDX_MEMBER_NO` (`member_no`),
   KEY `IDX_PHONE` (`phone`),
   KEY `IDX_MEMBER_NAME` (`member_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `member_info` */
 
-insert  into `member_info`(`id`,`status`,`member_no`,`member_name`,`member_rank`,`member_discount`,`member_integral`,`phone`,`password`,`birthday`,`is_on_credit`,`qq_no`,`email`,`address`,`shopper_name`,`remark`,`gmt_update`,`gmt_create`) values (1,1,'12345678','51','1',85,99,'15812345678','12345678','',0,NULL,NULL,NULL,NULL,NULL,'2018-05-04 15:45:27','2018-05-04 15:38:02'),(2,1,'12345679','52','1',85,99,'15812345679','12345678','',0,'','','','','','2018-05-04 15:45:27','2018-05-04 15:38:02'),(3,1,'1','1','',1,1,'1','','',0,'','','','','','2018-05-08 19:21:02','2018-05-08 19:20:21'),(4,1,'2','2','',2567,2,'2','2','2',0,'2','2','2','','2','2018-05-08 19:30:01','2018-05-08 19:20:37');
+insert  into `member_info`(`id`,`status`,`member_no`,`member_name`,`member_rank`,`member_discount`,`member_integral`,`phone`,`password`,`birthday`,`is_on_credit`,`qq_no`,`email`,`address`,`account_balance`,`shopper_name`,`remark`,`gmt_update`,`gmt_create`) values (6,1,'1001','张飞','银牌会员',80,0,'88886666','1001','',0,'','','',0,'','','2018-05-10 15:52:09','2018-05-10 15:07:37'),(7,1,'1002','关羽','铜牌会员',70,0,'55556666','1002','',1,'','','',0,'','','2018-05-10 15:52:13','2018-05-10 15:13:14'),(8,1,'1003','刘备','金牌会员',60,0,'11115555','1003','',1,'','','',0,'','','2018-05-10 15:52:02','2018-05-10 15:26:10');
 
 /*Table structure for table `member_integral` */
 
@@ -392,7 +395,7 @@ DROP TABLE IF EXISTS `member_rank`;
 CREATE TABLE `member_rank` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
   `rank_title` varchar(128) NOT NULL COMMENT '等级名称',
-  `discount` int(11) NOT NULL COMMENT '优惠折扣，整数，8.5折填85',
+  `discount` int(11) NOT NULL DEFAULT '100' COMMENT '优惠折扣，整数，8.5折填85',
   `is_integral` tinyint(1) DEFAULT '1' COMMENT '是否积分。1：积分。0：不计分',
   `is_auto_upgrade` tinyint(1) DEFAULT '0' COMMENT '是否自动升级。1：是。0：否',
   `integral_to_upgrade` int(11) DEFAULT NULL COMMENT '当积分到达该值时自动升级到该等级',
@@ -401,9 +404,29 @@ CREATE TABLE `member_rank` (
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='会员等级表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='会员等级表';
 
 /*Data for the table `member_rank` */
+
+insert  into `member_rank`(`id`,`rank_title`,`discount`,`is_integral`,`is_auto_upgrade`,`integral_to_upgrade`,`rank_period`,`prepaid_card_no`,`gmt_update`,`gmt_create`) values (2,'金牌会员',80,1,1,300,0,'','2018-05-10 15:50:09','2018-05-10 15:49:19'),(3,'银牌会员',90,1,1,200,0,'','2018-05-10 15:51:11','2018-05-10 15:50:21'),(4,'铜牌会员',95,1,1,100,0,'','2018-05-10 15:51:30','2018-05-10 15:50:40');
+
+/*Table structure for table `member_recharge_detail` */
+
+DROP TABLE IF EXISTS `member_recharge_detail`;
+
+CREATE TABLE `member_recharge_detail` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `seller_no` varchar(32) NOT NULL COMMENT '收银员编号',
+  `shopper_no` varchar(32) DEFAULT NULL COMMENT '导购编号',
+  `recharge_amount` int(11) NOT NULL COMMENT '实际充值金额，单位:分',
+  `donation_amount` int(11) DEFAULT NULL COMMENT '赠送金额，单位:分',
+  `total_amount` int(11) NOT NULL COMMENT '充值总金额，单位:分',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `member_recharge_detail` */
 
 /*Table structure for table `seller_info` */
 
@@ -464,11 +487,11 @@ CREATE TABLE `shopper_info` (
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `UQ_SHOPPER_NO` (`shopper_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shopper_info` */
 
-insert  into `shopper_info`(`id`,`shopper_no`,`name`,`phone`,`sales_percentage`,`recharge_percentage`,`shopping_card_percentage`,`status`,`royalty_type`,`gmt_update`,`gmt_create`) values (1,'123','123','213',23,23,23,1,'','2018-05-08 20:13:08','2018-05-08 20:12:26');
+insert  into `shopper_info`(`id`,`shopper_no`,`name`,`phone`,`sales_percentage`,`recharge_percentage`,`shopping_card_percentage`,`status`,`royalty_type`,`gmt_update`,`gmt_create`) values (2,'5675','567567','567567',567,67,5675,1,'','2018-05-10 19:57:43','2018-05-10 19:56:56'),(3,'7898','7897','89789',879,789789,89,1,'','2018-05-10 20:13:14','2018-05-10 20:07:35');
 
 /*Table structure for table `supplier_info` */
 
@@ -491,11 +514,11 @@ CREATE TABLE `supplier_info` (
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `IDX_SUPPLIER_NAME` (`supplier_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `supplier_info` */
 
-insert  into `supplier_info`(`id`,`supplier_code`,`supplier_name`,`pinyin_code`,`contact_name`,`contact_phone`,`contact_email`,`status`,`delivery_rebate`,`regular_rebate`,`supplier_address`,`remark`,`gmt_update`,`gmt_create`) values (1,'1001','优衣库',NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,'2018-04-24 21:27:51','0000-00-00 00:00:00'),(2,'1002','JackJonse',NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,'2018-04-24 21:28:07','0000-00-00 00:00:00');
+insert  into `supplier_info`(`id`,`supplier_code`,`supplier_name`,`pinyin_code`,`contact_name`,`contact_phone`,`contact_email`,`status`,`delivery_rebate`,`regular_rebate`,`supplier_address`,`remark`,`gmt_update`,`gmt_create`) values (1,'1001','优衣库','yyk',NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,'2018-05-10 14:54:31','0000-00-00 00:00:00'),(2,'1002','JackJonse',NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,'2018-04-24 21:28:07','0000-00-00 00:00:00'),(3,'1003','Adidas','adidas',NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,'2018-05-10 14:54:41','2018-05-10 14:53:48'),(4,'1004','Nike','nike',NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,'2018-05-10 15:19:49','2018-05-10 15:18:57');
 
 /*Table structure for table `system_parameter` */
 
@@ -541,11 +564,11 @@ CREATE TABLE `trade_detail` (
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建日期',
   PRIMARY KEY (`id`),
   UNIQUE KEY `INX_TRADE_NO` (`trade_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 /*Data for the table `trade_detail` */
 
-insert  into `trade_detail`(`id`,`trade_no`,`trade_time`,`trade_type`,`member_name`,`goods_count`,`total_amount`,`goods_discount`,`total_actual_amount`,`profit_amount`,`seller_no`,`shopper_no`,`goods_detail`,`pay_chenal`,`is_exchange_job`,`exchange_job_id`,`gmt_update`,`gmt_create`) values (1,'20180503144148820','2018-05-03 14:41:49','sales',NULL,1,10000,100,10000,10000,'123',NULL,'[{\"barCode\":\"20180502112525345\",\"goodsCount\":1,\"goodsDiscount\":100,\"goodsId\":62,\"goodsName\":\"JackJonse\",\"isVipDiscount\":\"true\",\"priceTotal\":\"100\",\"totalActualAmount\":\"100\",\"totalAmount\":\"100\"}]','[{\"amount\":\"\",\"chenal\":\"\"}]',0,456,'2018-05-03 14:42:20','2018-05-03 14:41:49'),(2,'20180503151132894','2018-05-03 15:11:33','sales',NULL,0,0,100,0,0,'123',NULL,'[]','[{\"amount\":\"\",\"chenal\":\"\"}]',0,456,'2018-05-03 15:12:04','2018-05-03 15:11:33'),(3,'20180504164947090','2018-05-04 16:49:47','sales',NULL,1,20000,100,20000,20000,'1001',NULL,'[{\"barCode\":\"20180502140348557-001\",\"goodsCount\":1,\"goodsDiscount\":100,\"goodsId\":70,\"goodsName\":\"dfgdfg\",\"isVipDiscount\":\"true\",\"priceTotal\":\"200\",\"totalActualAmount\":\"200\",\"totalAmount\":\"200\"}]','[{\"amount\":\"985\",\"chenal\":\"cash\"}]',0,1,'2018-05-04 16:50:19','2018-05-04 16:49:47'),(4,'20180504170643437','2018-05-04 17:06:43','sales',NULL,2,43387,100,43387,43387,'1001',NULL,'[{\"barCode\":\"20180502140348557-001\",\"goodsCount\":1,\"goodsDiscount\":100,\"goodsId\":70,\"goodsName\":\"dfgdfg\",\"isVipDiscount\":\"true\",\"priceTotal\":\"200\",\"totalActualAmount\":\"200\",\"totalAmount\":\"200\"},{\"barCode\":\"20180502140348557-002\",\"goodsCount\":1,\"goodsDiscount\":100,\"goodsId\":71,\"goodsName\":\"dfgdfg\",\"isVipDiscount\":\"true\",\"priceTotal\":\"233.87\",\"totalActualAmount\":\"233.87\",\"totalAmount\":\"233.87\"}]','[]',0,1,'2018-05-04 17:07:16','2018-05-04 17:06:43'),(5,'20180504171347486','2018-05-04 17:13:47','sales',NULL,3,23387,100,23387,23387,'1001',NULL,'[{\"barCode\":\"20180502140348557-002\",\"goodsCount\":3,\"goodsDiscount\":100,\"goodsId\":71,\"goodsName\":\"dfgdfg\",\"isVipDiscount\":\"true\",\"priceTotal\":\"701.61\",\"totalActualAmount\":\"233.87\",\"totalAmount\":\"233.87\"}]','[{\"amount\":\"300\",\"chenal\":\"cash\"},{\"amount\":\"300\",\"chenal\":\"cash\"}]',0,1,'2018-05-04 17:14:20','2018-05-04 17:13:48'),(6,'20180507162715727','2018-05-07 16:27:16','sales',NULL,1,20000,85,17000,14450,'1001',NULL,'[{\"barCode\":\"20180502140348557-001\",\"goodsCount\":1,\"goodsDiscount\":85,\"goodsId\":70,\"goodsName\":\"dfgdfg\",\"isVipDiscount\":\"true\",\"priceTotal\":\"170\",\"totalActualAmount\":\"170.00\",\"totalAmount\":\"200\"}]','[{\"amount\":\"170\",\"chenal\":\"cash\"}]',0,1,'2018-05-07 16:27:55','2018-05-07 16:27:16'),(7,'20180507163101361','2018-05-07 16:31:01','sales',NULL,2,55687,85,52179,49197,'1001',NULL,'[{\"barCode\":\"20180502140448353-001\",\"goodsCount\":1,\"goodsDiscount\":100,\"goodsId\":72,\"goodsName\":\"cs\",\"isVipDiscount\":\"false\",\"priceTotal\":\"323\",\"totalActualAmount\":\"323\",\"totalAmount\":\"323\",\"vipPrice\":\"{\\\"amount\\\":323,\\\"centFactor\\\":100,\\\"cent\\\":32300,\\\"currency\\\":\\\"CNY\\\",\\\"currencyCode\\\":\\\"CNY\\\"}\"},{\"barCode\":\"20180502140348557-002\",\"goodsCount\":1,\"goodsDiscount\":85,\"goodsId\":71,\"goodsName\":\"dfgdfg\",\"isVipDiscount\":\"true\",\"priceTotal\":\"198.79\",\"totalActualAmount\":\"198.79\",\"totalAmount\":\"233.87\"}]','[{\"amount\":\"0\",\"chenal\":\"cash\"},{\"amount\":\"0\",\"chenal\":\"cash\"}]',0,1,'2018-05-07 16:31:41','2018-05-07 16:31:01');
+insert  into `trade_detail`(`id`,`trade_no`,`trade_time`,`trade_type`,`member_name`,`goods_count`,`total_amount`,`goods_discount`,`total_actual_amount`,`profit_amount`,`seller_no`,`shopper_no`,`goods_detail`,`pay_chenal`,`is_exchange_job`,`exchange_job_id`,`gmt_update`,`gmt_create`) values (8,'20180510152910946','2018-05-10 15:29:11','sales',NULL,5,140000,80,112000,89600,'1001',NULL,'[{\"barCode\":\"20180510144945408-001\",\"goodsCount\":1,\"goodsDiscount\":80,\"goodsId\":78,\"goodsName\":\"adidas女士运动上衣\",\"isVipDiscount\":\"true\",\"priceTotal\":\"160\",\"totalActualAmount\":\"160.00\",\"totalAmount\":\"200\"},{\"barCode\":\"20180510151712752-001\",\"goodsCount\":1,\"goodsDiscount\":80,\"goodsId\":86,\"goodsName\":\"Nike空军一号运动鞋\",\"isVipDiscount\":\"true\",\"priceTotal\":\"400\",\"totalActualAmount\":\"400.00\",\"totalAmount\":\"500\"},{\"barCode\":\"20180510151712752-003\",\"goodsCount\":1,\"goodsDiscount\":80,\"goodsId\":88,\"goodsName\":\"Nike空军一号运动鞋\",\"isVipDiscount\":\"true\",\"priceTotal\":\"400\",\"totalActualAmount\":\"400.00\",\"totalAmount\":\"500\"},{\"barCode\":\"20180510144017883-002\",\"goodsCount\":1,\"goodsDiscount\":80,\"goodsId\":75,\"goodsName\":\"优衣库男士衬衫\",\"isVipDiscount\":\"true\",\"priceTotal\":\"80\",\"totalActualAmount\":\"80.00\",\"totalAmount\":\"100\"},{\"barCode\":\"20180510144017883-003\",\"goodsCount\":1,\"goodsDiscount\":80,\"goodsId\":76,\"goodsName\":\"优衣库男士衬衫\",\"isVipDiscount\":\"true\",\"priceTotal\":\"80\",\"totalActualAmount\":\"80.00\",\"totalAmount\":\"100\"}]','[{\"amount\":\"1200\",\"chenal\":\"cash\"}]',0,1,'2018-05-10 15:30:01','2018-05-10 15:29:11'),(9,'20180510155252637','2018-05-10 15:52:53','sales',NULL,1,20000,70,14000,9800,'1001',NULL,'[{\"barCode\":\"20180510144945408-001\",\"goodsCount\":1,\"goodsDiscount\":70,\"goodsId\":78,\"goodsName\":\"adidas女士运动上衣\",\"isVipDiscount\":\"true\",\"priceTotal\":\"140\",\"totalActualAmount\":\"140.00\",\"totalAmount\":\"200\"}]','[{\"amount\":\"140\",\"chenal\":\"cash\"}]',0,1,'2018-05-10 15:53:43','2018-05-10 15:52:53'),(10,'20180510183310636','2018-05-10 18:33:11','sales',NULL,1,20000,100,20000,20000,'1001',NULL,'[{\"barCode\":\"20180510144945408-002\",\"goodsCount\":1,\"goodsDiscount\":100,\"goodsId\":79,\"goodsName\":\"adidas女士运动上衣\",\"isVipDiscount\":\"true\",\"priceTotal\":\"200\",\"totalActualAmount\":\"200\",\"totalAmount\":\"200\"}]','[{\"amount\":\"300\",\"chenal\":\"cash\"}]',0,1,'2018-05-10 18:34:01','2018-05-10 18:33:11'),(11,'20180510192322429','2018-05-10 19:23:22','sales',NULL,1,56700,100,56700,56700,'1001',NULL,'[{\"goodsCount\":1,\"goodsDiscount\":100,\"goodsId\":-1,\"goodsName\":\"无码商品\",\"isVipDiscount\":\"true\",\"priceTotal\":\"567\",\"totalActualAmount\":\"567\",\"totalAmount\":\"567\"}]','[{\"amount\":\"567\",\"chenal\":\"cash\"}]',0,1,'2018-05-10 19:24:10','2018-05-10 19:23:22');
 
 /*Table structure for table `trade_goods_detail` */
 
@@ -579,11 +602,11 @@ CREATE TABLE `trade_goods_detail` (
   KEY `IDX_BAR_CODE` (`bar_code`),
   KEY `IDX_GOODS_TAG` (`goods_tag`),
   KEY `IDX_SELLER_NO` (`seller_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 /*Data for the table `trade_goods_detail` */
 
-insert  into `trade_goods_detail`(`id`,`trade_no`,`trade_time`,`trade_type`,`goods_name`,`goods_brand`,`bar_code`,`product_number`,`goods_color`,`goods_size`,`goods_count`,`goods_tag`,`category_name`,`seller_no`,`shopper_no`,`supplier_name`,`total_amount`,`goods_discount`,`total_actual_amount`,`profit_amount`,`gmt_update`,`gmt_create`) values (1,'20180503144148820','2018-05-03 14:41:49','sales','JackJonse','','20180502112525345','20180502112525345','白色','XS',1,'','a',NULL,NULL,'',10000,100,10000,10000,'2018-05-03 14:42:20','2018-05-03 14:41:49'),(2,'20180504164947090','2018-05-04 16:49:47','sales','dfgdfg','','20180502140348557-001','20180502140348557','白色','XS',1,'','a','1001',NULL,'',20000,100,20000,20000,'2018-05-04 16:50:19','2018-05-04 16:49:47'),(3,'20180504170643437','2018-05-04 17:06:43','sales','dfgdfg','','20180502140348557-001','20180502140348557','白色','XS',1,'','a','1001',NULL,'',20000,100,20000,20000,'2018-05-04 17:07:16','2018-05-04 17:06:43'),(4,'20180504170643437','2018-05-04 17:06:43','sales','dfgdfg','','20180502140348557-002','20180502140348557','红色','XS',1,'','a','1001',NULL,'',23387,100,23387,23387,'2018-05-04 17:07:16','2018-05-04 17:06:43'),(5,'20180504171347486','2018-05-04 17:13:47','sales','dfgdfg','','20180502140348557-002','20180502140348557','红色','XS',3,'','a','1001',NULL,'',23387,100,23387,23387,'2018-05-04 17:14:20','2018-05-04 17:13:47'),(6,'20180507162715727','2018-05-07 16:27:16','sales','dfgdfg','','20180502140348557-001','20180502140348557','白色','XS',1,'','a','1001',NULL,'',20000,85,17000,14450,'2018-05-07 16:27:55','2018-05-07 16:27:16'),(7,'20180507163101361','2018-05-07 16:31:01','sales','cs','','20180502140448353-001','20180502140448353','白色','XS',1,'','a','1001',NULL,'',32300,100,32300,32300,'2018-05-07 16:31:41','2018-05-07 16:31:01'),(8,'20180507163101361','2018-05-07 16:31:01','sales','dfgdfg','','20180502140348557-002','20180502140348557','红色','XS',1,'','a','1001',NULL,'',23387,85,19879,16897,'2018-05-07 16:31:41','2018-05-07 16:31:01');
+insert  into `trade_goods_detail`(`id`,`trade_no`,`trade_time`,`trade_type`,`goods_name`,`goods_brand`,`bar_code`,`product_number`,`goods_color`,`goods_size`,`goods_count`,`goods_tag`,`category_name`,`seller_no`,`shopper_no`,`supplier_name`,`total_amount`,`goods_discount`,`total_actual_amount`,`profit_amount`,`gmt_update`,`gmt_create`) values (9,'20180510152910946','2018-05-10 15:29:11','sales','adidas女士运动上衣','Adidas','20180510144945408-001','20180510144945408','红色','XL',1,'','女士运动上衣','1001',NULL,'Adidas',20000,80,16000,12800,'2018-05-10 15:30:01','2018-05-10 15:29:11'),(10,'20180510152910946','2018-05-10 15:29:11','sales','Nike空军一号运动鞋','Nike','20180510151712752-001','20180510151712752','红色','40',1,'','男运动鞋','1001',NULL,'Nike',50000,80,40000,32000,'2018-05-10 15:30:01','2018-05-10 15:29:11'),(11,'20180510152910946','2018-05-10 15:29:11','sales','Nike空军一号运动鞋','Nike','20180510151712752-003','20180510151712752','红色','41',1,'','男运动鞋','1001',NULL,'Nike',50000,80,40000,32000,'2018-05-10 15:30:01','2018-05-10 15:29:11'),(12,'20180510152910946','2018-05-10 15:29:11','sales','优衣库男士衬衫','优衣库','20180510144017883-002','20180510144017883','红色','M',1,'新衣服','男士衬衫','1001',NULL,'优衣库',10000,80,8000,6400,'2018-05-10 15:30:01','2018-05-10 15:29:11'),(13,'20180510152910946','2018-05-10 15:29:11','sales','优衣库男士衬衫','优衣库','20180510144017883-003','20180510144017883','黄色','S',1,'新衣服','男士衬衫','1001',NULL,'优衣库',10000,80,8000,6400,'2018-05-10 15:30:01','2018-05-10 15:29:11'),(14,'20180510155252637','2018-05-10 15:52:53','sales','adidas女士运动上衣','Adidas','20180510144945408-001','20180510144945408','红色','XL',1,'','女士运动上衣','1001',NULL,'Adidas',20000,70,14000,9800,'2018-05-10 15:53:43','2018-05-10 15:52:53'),(15,'20180510183310636','2018-05-10 18:33:11','sales','adidas女士运动上衣','Adidas','20180510144945408-002','20180510144945408','红色','L',1,'','女士运动上衣','1001',NULL,'Adidas',20000,100,20000,20000,'2018-05-10 18:34:01','2018-05-10 18:33:11'),(16,'20180510192322429','2018-05-10 19:23:22','sales','无码商品',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,'1001',NULL,NULL,56700,100,56700,56700,'2018-05-10 19:24:10','2018-05-10 19:23:22');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
