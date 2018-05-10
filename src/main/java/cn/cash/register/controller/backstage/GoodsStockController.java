@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.dao.domain.GoodsStockFlow;
 import cn.cash.register.service.GoodsInfoService;
 import cn.cash.register.service.GoodsStockService;
+import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -33,11 +36,13 @@ import cn.cash.register.util.ResultSet;
 @RequestMapping("/admin/stock")
 public class GoodsStockController {
 
-    @Resource
-    private GoodsStockService stockService;
+    private static final Logger logger = LoggerFactory.getLogger(GoodsStockController.class);
 
     @Resource
-    private GoodsInfoService  goodsInfoService;
+    private GoodsStockService   stockService;
+
+    @Resource
+    private GoodsInfoService    goodsInfoService;
 
     /**
      * 跳转到库存查询页
@@ -58,12 +63,24 @@ public class GoodsStockController {
     }
 
     /**
-     * 查询商品库存变动明细
+     * 跳转到库存变动明细页
+     */
+    @GetMapping(value = "/flow")
+    public String flowList() {
+        return "backstage/_stock-flow-list";
+    }
+
+    /**
+     * 查询库存变动明细
      */
     @ResponseBody
-    @RequestMapping(value = "/queryStockFlow")
+    @RequestMapping(value = "/flow/queryList")
     public ResultSet queryStockFlow(StockFlowQueryRequest request) {
+        LogUtil.info(logger, "[Controller]接收到查询库存变动明细请求,request={0}", request);
+
         List<GoodsStockFlow> list = stockService.query(request);
+
+        LogUtil.info(logger, "[Controller]查询库存变动明细结果,list={0}", list);
         return ResultSet.success().put("list", list);
     }
 
@@ -71,7 +88,7 @@ public class GoodsStockController {
      * 跳转到库存预警页
      */
     @GetMapping(value = "/warning")
-    public String warninglist() {
+    public String warningList() {
         return "backstage/_stock-warning-list";
     }
 

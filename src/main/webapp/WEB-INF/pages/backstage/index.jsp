@@ -66,7 +66,7 @@
                         <ul class="treeview-menu">
                             <li><a href="#stock" @click="menuClick"><i class="fa fa-file-text-o"></i>库存查询</a></li>
                             <li><a href="#stock/warning" @click="menuClick"><i class="fa fa-warning"></i>库存预警</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>变动明细</a></li>
+                            <li><a href="#stock/flow" @click="menuClick"><i class="fa fa-circle-o"></i>变动明细</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>盘点历史</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>商品报损</a></li>
                         </ul>
