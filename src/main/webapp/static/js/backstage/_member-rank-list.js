@@ -6,8 +6,24 @@ $(function() {
         	{ label: '会员等级ID', name: 'id', hidden: true, key: true },
             { label: '等级名称', name: 'rankTitle', index: 'rank_Title', width: 80 },
             { label: '优惠折扣', name: 'discount', index: 'discount', width: 80 },
-            { label: '是否积分', name: 'isIntegral', index: 'is_Integral', width: 80 },
-            { label: '自动升级规则', name: 'isAutoUpgrade', index: 'is_Auto_Upgrade', width: 80 },
+            { label: '是否积分', name: 'isIntegral', index: 'is_Integral', width: 80,
+            	formatter: function(value, options, row) {
+                    if (value) {
+                        return '<span class="label label-success">积分</span>';
+                    } else {
+                    	return '<span class="label label-info">不积分</span>';
+                    }
+                }
+            },
+            { label: '自动升级规则', name: 'isAutoUpgrade', index: 'is_Auto_Upgrade', width: 80,
+            	formatter: function(value, options, row) {
+                    if (value) {
+                        return '积分需达到' + row['integralToUpgrade'] + '分，等级有效期: ' + (row['rankPeriod']=='0'?'永久':'1年');
+                    } else {
+                    	return '无';
+                    }
+                }
+            },
         ],
         viewrecords: true, height: "auto", width: "100%",
         rowNum: 10, rowList: [10, 30, 50], 

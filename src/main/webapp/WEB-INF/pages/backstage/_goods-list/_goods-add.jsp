@@ -140,7 +140,7 @@
             <div class="col-xs-7">
                 <div class="input-group">
                     <span class="input-group-addon">生产日期</span>
-                    <input type="text" class="form-control" v-model="goods.productionDate">
+                    <input type="text" class="form-control" v-model="goods.productionDate" placeholder="格式yyyy-MM-dd，如：1989-10-08">
                 </div>
             </div>
             <div class="col-xs-5">

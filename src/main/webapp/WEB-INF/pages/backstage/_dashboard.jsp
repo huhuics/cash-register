@@ -7,6 +7,6 @@
 <title>Dashboard</title>
 </head>
 <body>
-	<h3>This is the dashboard.</h3>
+	<h3>Welcome</h3>
 </body>
 </html>

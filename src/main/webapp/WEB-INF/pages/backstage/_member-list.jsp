@@ -93,7 +93,7 @@
                     <div class="col-xs-7">
                     	<div class="input-group">
 		                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;联系电话</span>
-		                    <input type="password" class="form-control" v-model="member.phone">
+		                    <input type="text" class="form-control" v-model="member.phone">
 		                </div>
                     </div>
                     <div class="col-xs-5">
@@ -141,7 +141,7 @@
                 	<div class="col-xs-12">
                     	<div class="input-group">
 		                    <span class="input-group-addon">生日</span>
-		                    <input type="text" class="form-control" v-model="member.birthday">
+		                    <input type="text" class="form-control" v-model="member.birthday" placeholder="格式yyyy-MM-dd，如：1989-10-08">
 		                </div>
                     </div>
                 </div>

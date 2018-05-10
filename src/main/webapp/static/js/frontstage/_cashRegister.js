@@ -47,7 +47,7 @@ var vm = new Vue({
         keyword_search_goods_list: [], // 搜索商品清单
         select_goods_id_list: [], // 选择要加入的商品列表
         price_without_barcode: null, // 无码商品价格
-        noBarcodeIdNum: 1, // 无码商品id序列
+        noBarcodeIdNum: -1, // 无码商品id序列
         vip_keyword: null,
         keyword_search_vip_list: [], // 搜索会员清单
         select_vip_id: null, // 选择的会员id
@@ -95,6 +95,7 @@ var vm = new Vue({
                             return;
                         } else if (result.size > 1) { // 查到多个商品，选择加入
                             _self.keyword_search_goods_list = result.goodsInfos;
+                            _self.select_goods_id_list = []; // 打开窗口前清空选择列表
                             layer.open({
                                 type: 1,
                                 skin: 'layui-layer-lan',
@@ -156,7 +157,7 @@ var vm = new Vue({
         createNoBarcodeItem: function() { // 创建无码收银商品
             this.reset_goods_item(); // 重置
 
-            this.goods_item.goodsId = 'nobarcode-' + this.noBarcodeIdNum++;
+            this.goods_item.goodsId = this.noBarcodeIdNum--;
             this.goods_item.barCode = null;
             this.goods_item.goodsName = '无码商品';
             this.goods_item.totalAmount = this.price_without_barcode;
@@ -370,6 +371,7 @@ var vm = new Vue({
                         layer.msg(_msg);
                         return;
                     }
+                    _self.payChenals.payChenal_cash.amount -= _self.change;
                     $.ajax({
                         url: basePath + "/cashier/trade/checkout",
                         data: {

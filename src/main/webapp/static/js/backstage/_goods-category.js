@@ -60,13 +60,13 @@ function onRemove(e, treeId, treeNode) {
         data: { 'id': treeNode.id },
         success: function(result) {
             if (result.code == "00") {
-                layer.alert('删除成功');
+                layer.msg('删除成功');
+                refreshTree();
             } else {
                 layer.alert(result.msg);
             }
         }
     });
-    refreshTree();
 }
 
 /**
@@ -91,13 +91,13 @@ function onRename(e, treeId, treeNode, isCancel) {
         data: { 'id': treeNode.id, 'categoryName': treeNode.name },
         success: function(result) {
             if (result.code == "00") {
-                layer.alert('编辑成功');
+                layer.msg('编辑成功');
+                refreshTree();
             } else {
                 layer.alert(result.msg);
             }
         }
     });
-    refreshTree();
 }
 
 function showRemoveBtn(treeId, treeNode) {
@@ -129,7 +129,8 @@ function addHoverDom(treeId, treeNode) {
                     data: {'categoryName':categoryName,'parentId':parentId},
                     success: function(result) {
                         if (result.code == "00") {
-                            layer.alert('添加成功');
+                            layer.msg('添加成功');
+                            $("#goodsCategoryAddInput").val('');
                             layer.close(index);
                             refreshTree();
                         } else {
