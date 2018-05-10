@@ -1,8 +1,5 @@
-/*
- * 商品列表页jqgrid加载参数
- */
 var option = {
-    url: basePath + '/admin/goods/goodsInfoList',
+    url: basePath + '/admin/stock/warning/queryGoods',
     datatype: "json",
     mtype: "post",
     colModel: [{
@@ -155,5 +152,81 @@ var option = {
         page: "pageNum",
         rows: "pageSize",
         order: "order"
-    }
+    },
+    postData: {
+        'warningType': "less",
+    },
 }
+
+$(function() {
+    $("#jqGrid").jqGrid(option);
+});
+
+var vm = new Vue({
+    el: '#goodsListDiv',
+    data: {
+    	q: {
+            categoryName: '',
+            supplierName: '',
+            warningType: 'less'
+        },
+    	goods_categorys: [], // 全部分类
+        goods_suppliers: [], // 全部供货商
+    },
+    methods: {
+        search: function() {
+        	this.reloadPage();
+        },
+        resetSearch: function() {
+        	this.q.categoryName = '';
+        	this.q.supplierName = '';
+        	this.q.warningType = 'less';
+        	this.reloadPage();
+        },
+        reloadPage: function() {
+            var page = $("#jqGrid").jqGrid('getGridParam', 'page');
+            var _self = this;
+            $("#jqGrid").jqGrid('setGridParam', {
+                postData: {
+                    'categoryName': _self.q.categoryName,
+                    'supplierName': _self.q.supplierName,
+                    'warningType': _self.q.warningType,
+                },
+                page: page
+            }).trigger("reloadGrid");
+        },
+        loadGoodsCategorys: function() { // 加载所有商品分类列表
+        	var _self = this;
+            $.ajax({
+                url: basePath + "/admin/goods/getGoodsCategoryList",
+                data:  { 'parentCategoryId': 0 },
+                success: function(result) {
+                    if (result.code == "00") {
+                    	_self.goods_categorys = result.list;
+                    } else {
+                        layer.alert("加载商品分类列表出错" + result.msg);
+                    }
+                }
+            });
+        },
+        loadGoodsSuppliers: function() { // 加载所有供货商列表
+        	var _self = this;
+        	$.ajax({
+        		type: "GET",
+        		url: basePath + "/admin/supplier/queryAllSupplierNames",
+        		success: function(result) {
+        			if (result.code == "00") {
+        				_self.goods_suppliers = result.names;
+        			} else {
+        				layer.alert("加载供货商列表出错" + result.msg);
+        			}
+        		}
+        	});
+        },
+    },
+    mounted: function() {
+    	this.loadGoodsCategorys();
+    	this.loadGoodsSuppliers();
+    }
+});
+

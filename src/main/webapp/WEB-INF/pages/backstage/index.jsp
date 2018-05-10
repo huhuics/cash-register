@@ -58,14 +58,14 @@
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>营业报表</a></li>
                         </ul>
                     </li>
-                    <li class="treeview"><a href="#"> <i class="fa fa-circle-o"></i>
+                    <li class="treeview"><a href="#"> <i class="fa fa-battery-3"></i>
 					<span>库存</span> <span class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
 				</span>
 			</a>
                         <ul class="treeview-menu">
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>库存查询</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>库存预警</a></li>
+                            <li><a href="#stock" @click="menuClick"><i class="fa fa-file-text-o"></i>库存查询</a></li>
+                            <li><a href="#stock/warning" @click="menuClick"><i class="fa fa-warning"></i>库存预警</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>变动明细</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>盘点历史</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>商品报损</a></li>
