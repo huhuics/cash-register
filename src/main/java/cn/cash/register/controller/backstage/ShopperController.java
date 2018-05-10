@@ -18,13 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.AchievementQueryRequest;
-import cn.cash.register.common.request.SellerInfoQueryRequest;
 import cn.cash.register.common.request.ShopperInfoQueryRequest;
-import cn.cash.register.dao.domain.SellerInfo;
 import cn.cash.register.dao.domain.ShopperInfo;
 import cn.cash.register.dao.domain.TradeGoodsDetail;
 import cn.cash.register.service.ShopperInfoService;
-import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -47,19 +44,13 @@ public class ShopperController {
     }
 
     /**
-     * 导购员列表
-     * 
-     * @return
+     * 根据条件翻页查询导购员资料
      */
-    @RequestMapping(value = "/list")
     @ResponseBody
-    public ResultSet queryList(SellerInfoQueryRequest request) {
-        LogUtil.info(logger, "[Controller]收到#导购员列表查询#请求,request={0}", request);
-
-        PageInfo<SellerInfo> pageInfo = null; // TODO
-
-        LogUtil.info(logger, "[Controller]#导购员列表查询#请求处理,pageInfo={0}", pageInfo);
-        return ResultSet.success().put("page", pageInfo);
+    @RequestMapping(value = "queryPage", method = RequestMethod.GET)
+    public ResultSet queryPage(ShopperInfoQueryRequest request) {
+        PageInfo<ShopperInfo> infos = shopperInfoService.queryPage(request);
+        return ResultSet.success().put("page", infos);
     }
 
     /**
@@ -103,16 +94,6 @@ public class ShopperController {
     @RequestMapping(value = "queryAll", method = RequestMethod.POST)
     public ResultSet queryAll(ShopperInfoQueryRequest request) {
         List<ShopperInfo> infos = shopperInfoService.queryAll(request);
-        return ResultSet.success().put("infos", infos);
-    }
-
-    /**
-     * 根据条件翻页查询导购员资料
-     */
-    @ResponseBody
-    @RequestMapping(value = "queryPage", method = RequestMethod.POST)
-    public ResultSet queryPage(ShopperInfoQueryRequest request) {
-        PageInfo<ShopperInfo> infos = shopperInfoService.queryPage(request);
         return ResultSet.success().put("infos", infos);
     }
 

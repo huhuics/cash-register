@@ -21,7 +21,10 @@
                     </select>
                 </div>
                 <div class="form-group col-xs-2">
-                    <input type="text" class="form-control" v-model="q.keyword" @keyup.enter="query" placeholder="卡号/姓名/电话">
+                    <input type="text" class="form-control" v-model="q.shopperNo" @keyup.enter="search" placeholder="编号">
+                </div>
+                <div class="form-group col-xs-2">
+                    <input type="text" class="form-control" v-model="q.name" @keyup.enter="search" placeholder="姓名">
                 </div>
                 <div class="form-group col-xs-4">
                     <a class="btn btn-default" @click="search"><i class="fa fa-search"></i>&nbsp;搜索</a>

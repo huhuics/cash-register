@@ -242,7 +242,7 @@ var vm = new Vue({
         loadShoppers: function() { // 加载所有导购员列表
         	var _self = this;
         	$.ajax({
-        		url: basePath + "/admin/shopper/query",
+        		url: basePath + "/admin/shopper/queryAll",
         		data: {status: true},
         		success: function(result) {
         			if (result.code == "00") {
