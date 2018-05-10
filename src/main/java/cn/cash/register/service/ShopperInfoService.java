@@ -41,9 +41,14 @@ public interface ShopperInfoService {
     ShopperInfo queryById(Long id);
 
     /**
-     * 根据条件查询导购员资料
+     * 根据条件查询所有导购员资料
      */
-    List<ShopperInfo> query(ShopperInfoQueryRequest request);
+    List<ShopperInfo> queryAll(ShopperInfoQueryRequest request);
+
+    /**
+     * 翻页查询导购员资料
+     */
+    PageInfo<ShopperInfo> queryPage(ShopperInfoQueryRequest request);
 
     /**
      * 查询导购员业绩

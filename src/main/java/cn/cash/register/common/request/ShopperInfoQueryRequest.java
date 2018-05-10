@@ -9,7 +9,7 @@ package cn.cash.register.common.request;
  * @author HuHui
  * @version $Id: ShopperInfoQueryRequest.java, v 0.1 2018年5月3日 上午11:37:01 HuHui Exp $
  */
-public class ShopperInfoQueryRequest extends BaseRequest {
+public class ShopperInfoQueryRequest extends BasePageRequest {
 
     /**  */
     private static final long serialVersionUID = 4028182476777388723L;

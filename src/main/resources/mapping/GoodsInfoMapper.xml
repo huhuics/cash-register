@@ -621,4 +621,10 @@
     where bar_code = #{barCode,jdbcType=VARCHAR}
   </update>
   
+  <select id="listAll" resultMap="BaseResultMap">
+ 	select 
+    <include refid="Base_Column_List" />
+    from goods_info
+  </select>
+  
 </mapper>

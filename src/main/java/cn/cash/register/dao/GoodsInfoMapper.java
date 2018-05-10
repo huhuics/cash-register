@@ -30,4 +30,6 @@ public interface GoodsInfoMapper {
     List<GoodsInfo> queryByStock(StockWarningQueryRequest request);
 
     int updateByBarCodeSelective(GoodsInfo info);
+
+    List<GoodsInfo> listAll();
 }

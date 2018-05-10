@@ -67,6 +67,11 @@ public interface GoodsInfoService {
     PageInfo<GoodsInfo> queryList(GoodsInfoQueryRequest request);
 
     /**
+     * 查询所有商品信息
+     */
+    List<GoodsInfo> queryAll();
+
+    /**
      * 修改商品图片
      * 商品图片的增、删、改都可以调用此方法,删除的时候图片数组传null
      * @param goodsInfoId  商品id
