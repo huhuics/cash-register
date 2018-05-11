@@ -85,6 +85,7 @@ public class ExchangeJobServiceImpl implements ExchangeJobService {
 
         Money checkoutTotalAmount = new Money();
         Money cashAmount = new Money();
+        Money balanceAmount = new Money();
         Money unionpayAmount = new Money();
         Money alipayAmount = new Money();
         Money wcpayAmount = new Money();
@@ -101,6 +102,8 @@ public class ExchangeJobServiceImpl implements ExchangeJobService {
                     if (chenalEnum == PayChenalEnum.cash) {
                         cashAmount.addTo(cheanlAmount);
                     } else if (chenalEnum == PayChenalEnum.unionpay) {
+                        balanceAmount.addTo(cheanlAmount);
+                    } else if (chenalEnum == PayChenalEnum.unionpay) {
                         unionpayAmount.addTo(cheanlAmount);
                     } else if (chenalEnum == PayChenalEnum.alipay) {
                         alipayAmount.addTo(cheanlAmount);
@@ -114,6 +117,7 @@ public class ExchangeJobServiceImpl implements ExchangeJobService {
         unfinishedJob.setEndTime(new Date());
         unfinishedJob.setCheckoutTotalAmount(checkoutTotalAmount);
         unfinishedJob.setCashAmount(cashAmount);
+        unfinishedJob.setBalanceAmount(balanceAmount);
         unfinishedJob.setUnionpayAmount(unionpayAmount);
         unfinishedJob.setAlipayAmount(alipayAmount);
         unfinishedJob.setWcpayAmount(wcpayAmount);

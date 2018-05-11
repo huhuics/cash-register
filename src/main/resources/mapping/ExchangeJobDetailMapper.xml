@@ -8,6 +8,7 @@
     <result column="seller_no" jdbcType="VARCHAR" property="sellerNo" />
     <result column="checkout_total_amount" jdbcType="INTEGER" property="checkoutTotalAmount" />
     <result column="cash_amount" jdbcType="INTEGER" property="cashAmount" />
+    <result column="balance_amount" jdbcType="INTEGER" property="balanceAmount" />
     <result column="unionpay_amount" jdbcType="INTEGER" property="unionpayAmount" />
     <result column="alipay_amount" jdbcType="INTEGER" property="alipayAmount" />
     <result column="wcpay_amount" jdbcType="INTEGER" property="wcpayAmount" />
@@ -18,9 +19,9 @@
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, start_time, end_time, seller_no, checkout_total_amount, cash_amount, unionpay_amount, 
-    alipay_amount, wcpay_amount, petty_cash_amount, paid_amount, isFinished, gmt_update, 
-    gmt_create
+    id, start_time, end_time, seller_no, checkout_total_amount, cash_amount, balance_amount, 
+    unionpay_amount, alipay_amount, wcpay_amount, petty_cash_amount, paid_amount, isFinished, 
+    gmt_update, gmt_create
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -35,14 +36,16 @@
   <insert id="insert" parameterType="cn.cash.register.dao.domain.ExchangeJobDetail">
     insert into exchange_job_detail (id, start_time, end_time, 
       seller_no, checkout_total_amount, cash_amount, 
-      unionpay_amount, alipay_amount, wcpay_amount, 
-      petty_cash_amount, paid_amount, isFinished, 
-      gmt_update, gmt_create)
+      balance_amount, unionpay_amount, alipay_amount, 
+      wcpay_amount, petty_cash_amount, paid_amount, 
+      isFinished, gmt_update, gmt_create
+      )
     values (#{id,jdbcType=BIGINT}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
       #{sellerNo,jdbcType=VARCHAR}, #{checkoutTotalAmount,jdbcType=INTEGER}, #{cashAmount,jdbcType=INTEGER}, 
-      #{unionpayAmount,jdbcType=INTEGER}, #{alipayAmount,jdbcType=INTEGER}, #{wcpayAmount,jdbcType=INTEGER}, 
-      #{pettyCashAmount,jdbcType=INTEGER}, #{paidAmount,jdbcType=INTEGER}, #{isfinished,jdbcType=BIT}, 
-      #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
+      #{balanceAmount,jdbcType=INTEGER}, #{unionpayAmount,jdbcType=INTEGER}, #{alipayAmount,jdbcType=INTEGER}, 
+      #{wcpayAmount,jdbcType=INTEGER}, #{pettyCashAmount,jdbcType=INTEGER}, #{paidAmount,jdbcType=INTEGER}, 
+      #{isfinished,jdbcType=BIT}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.ExchangeJobDetail" useGeneratedKeys="true" keyProperty="id">
     insert into exchange_job_detail
@@ -64,6 +67,9 @@
       </if>
       <if test="cashAmount != null">
         cash_amount,
+      </if>
+      <if test="balanceAmount != null">
+        balance_amount,
       </if>
       <if test="unionpayAmount != null">
         unionpay_amount,
@@ -109,6 +115,9 @@
       <if test="cashAmount != null">
         #{cashAmount,jdbcType=INTEGER},
       </if>
+      <if test="balanceAmount != null">
+        #{balanceAmount,jdbcType=INTEGER},
+      </if>
       <if test="unionpayAmount != null">
         #{unionpayAmount,jdbcType=INTEGER},
       </if>
@@ -153,6 +162,9 @@
       <if test="cashAmount != null">
         cash_amount = #{cashAmount,jdbcType=INTEGER},
       </if>
+      <if test="balanceAmount != null">
+        balance_amount = #{balanceAmount,jdbcType=INTEGER},
+      </if>
       <if test="unionpayAmount != null">
         unionpay_amount = #{unionpayAmount,jdbcType=INTEGER},
       </if>
@@ -187,6 +199,7 @@
       seller_no = #{sellerNo,jdbcType=VARCHAR},
       checkout_total_amount = #{checkoutTotalAmount,jdbcType=INTEGER},
       cash_amount = #{cashAmount,jdbcType=INTEGER},
+      balance_amount = #{balanceAmount,jdbcType=INTEGER},
       unionpay_amount = #{unionpayAmount,jdbcType=INTEGER},
       alipay_amount = #{alipayAmount,jdbcType=INTEGER},
       wcpay_amount = #{wcpayAmount,jdbcType=INTEGER},
@@ -211,9 +224,9 @@
     <include refid="Base_Column_List" />
     from exchange_job_detail
     where
-    	gmt_create &lt;= to_date(#{gmtCreateUp},'yyyy-MM-dd HH:mm:ss')
+    	gmt_create &lt;= STR_TO_DATE(#{gmtCreateUp},'%Y-%m-%d %H:%i:%s')
   		and
-  		gmt_create &gt;= to_date(#{gmtCreateDown},'yyyy-MM-dd HH:mm:ss')
+  		gmt_create &gt;= STR_TO_DATE(#{gmtCreateDown},'%Y-%m-%d %H:%i:%s')
   </select>
   
 </mapper>

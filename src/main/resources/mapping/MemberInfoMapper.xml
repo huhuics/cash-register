@@ -16,6 +16,7 @@
     <result column="qq_no" jdbcType="VARCHAR" property="qqNo" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="account_balance" jdbcType="INTEGER" property="accountBalance" />
     <result column="shopper_name" jdbcType="VARCHAR" property="shopperName" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
@@ -23,8 +24,8 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, status, member_no, member_name, member_rank, member_discount, member_integral, 
-    phone, password, birthday, is_on_credit, qq_no, email, address, shopper_name, remark, 
-    gmt_update, gmt_create
+    phone, password, birthday, is_on_credit, qq_no, email, address, account_balance, 
+    shopper_name, remark, gmt_update, gmt_create
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -41,16 +42,16 @@
       member_name, member_rank, member_discount, 
       member_integral, phone, password, 
       birthday, is_on_credit, qq_no, 
-      email, address, shopper_name, 
-      remark, gmt_update, gmt_create
-      )
+      email, address, account_balance, 
+      shopper_name, remark, gmt_update, 
+      gmt_create)
     values (#{id,jdbcType=BIGINT}, #{status,jdbcType=BIT}, #{memberNo,jdbcType=VARCHAR}, 
       #{memberName,jdbcType=VARCHAR}, #{memberRank,jdbcType=VARCHAR}, #{memberDiscount,jdbcType=INTEGER}, 
       #{memberIntegral,jdbcType=DOUBLE}, #{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{birthday,jdbcType=VARCHAR}, #{isOnCredit,jdbcType=BIT}, #{qqNo,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{shopperName,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}
-      )
+      #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{accountBalance,jdbcType=INTEGER}, 
+      #{shopperName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
+      #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.MemberInfo" useGeneratedKeys="true" keyProperty="id">
     insert into member_info
@@ -96,6 +97,9 @@
       </if>
       <if test="address != null">
         address,
+      </if>
+      <if test="accountBalance != null">
+        account_balance,
       </if>
       <if test="shopperName != null">
         shopper_name,
@@ -153,6 +157,9 @@
       <if test="address != null">
         #{address,jdbcType=VARCHAR},
       </if>
+      <if test="accountBalance != null">
+        #{accountBalance,jdbcType=INTEGER},
+      </if>
       <if test="shopperName != null">
         #{shopperName,jdbcType=VARCHAR},
       </if>
@@ -209,6 +216,9 @@
       <if test="address != null">
         address = #{address,jdbcType=VARCHAR},
       </if>
+      <if test="accountBalance != null">
+        account_balance = #{accountBalance,jdbcType=INTEGER},
+      </if>
       <if test="shopperName != null">
         shopper_name = #{shopperName,jdbcType=VARCHAR},
       </if>
@@ -239,6 +249,7 @@
       qq_no = #{qqNo,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
+      account_balance = #{accountBalance,jdbcType=INTEGER},
       shopper_name = #{shopperName,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
@@ -275,6 +286,13 @@
     member_no = #{keyword,jdbcType=VARCHAR}
     or member_name like concat(#{keyword,jdbcType=VARCHAR},'%')
     or phone = #{keyword,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from member_info
+    where member_no = #{memberNo,jdbcType=VARCHAR}
   </select>
   
 </mapper>

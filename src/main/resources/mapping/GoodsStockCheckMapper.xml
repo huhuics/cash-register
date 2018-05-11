@@ -109,9 +109,9 @@
     <include refid="Base_Column_List" />
     from goods_stock_check
     where 
-		check_date &lt;= to_date(#{checkDateUp},'yyyy-MM-dd HH:mm:ss')
+		check_date &lt;= STR_TO_DATE(#{checkDateUp},'%Y-%m-%d %H:%i:%s')
   		and
-  		check_date &gt;= to_date(#{checkDateDown},'yyyy-MM-dd HH:mm:ss')
+  		check_date &gt;= STR_TO_DATE(#{checkDateDown},'%Y-%m-%d %H:%i:%s')
   </select>
   
 </mapper>

@@ -147,9 +147,9 @@
     where 1 = 1
     <if test="gmtCreateUp != null">
   		and
-  		gmt_create &lt;= to_date(#{gmtCreateUp},'yyyy-MM-dd HH:mm:ss')
+  		gmt_create &lt;= STR_TO_DATE(#{gmtCreateUp},'%Y-%m-%d %H:%i:%s')
   		and
-  		gmt_create &gt;= to_date(#{gmtCreateDown},'yyyy-MM-dd HH:mm:ss')
+  		gmt_create &gt;= STR_TO_DATE(#{gmtCreateDown},'%Y-%m-%d %H:%i:%s')
     </if>
   </select>
 </mapper>
