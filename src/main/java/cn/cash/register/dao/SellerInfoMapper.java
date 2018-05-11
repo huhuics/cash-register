@@ -21,4 +21,6 @@ public interface SellerInfoMapper {
     List<SellerInfo> list(SellerInfoQueryRequest request);
 
     SellerInfo selectBySellerNo(String sellerNo);
+
+    List<SellerInfo> listAll();
 }

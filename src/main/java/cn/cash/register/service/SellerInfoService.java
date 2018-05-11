@@ -4,6 +4,8 @@
  */
 package cn.cash.register.service;
 
+import java.util.List;
+
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.AchievementQueryRequest;
@@ -38,6 +40,11 @@ public interface SellerInfoService {
      * 分页查询收银员信息
      */
     PageInfo<SellerInfo> queryList(SellerInfoQueryRequest request);
+
+    /**
+     * 查询所有收银员信息
+     */
+    List<SellerInfo> queryAll();
 
     /**
      * 根据id查询收银员信息

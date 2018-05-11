@@ -87,6 +87,12 @@ public class SellerInfoServiceImpl implements SellerInfoService {
     }
 
     @Override
+    public List<SellerInfo> queryAll() {
+        List<SellerInfo> list = sellerInfoMapper.listAll();
+        return list;
+    }
+
+    @Override
     public SellerInfo queryById(Long id) {
         LogUtil.info(logger, "收到查询收银员请求,id={0}", id);
 
