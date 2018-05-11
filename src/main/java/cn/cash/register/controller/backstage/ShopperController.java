@@ -43,7 +43,7 @@ public class ShopperController {
         return "backstage/_shopper-list";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/achievement", method = RequestMethod.GET)
     public String achievementList() {
         return "backstage/_shopper-achievement-list";
     }
