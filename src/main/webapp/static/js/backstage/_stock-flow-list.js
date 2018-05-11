@@ -3,10 +3,10 @@ var vm = new Vue({
     data: {
         q: {
             flowType: '',
-            goodsName: '优衣库男士衬衫',
-            barCode: '20180510144017883-001',
-            gmtCreateUp: '2018-05-09 00:00:00',
-            gmtCreateDown: '2018-05-11 23:59:59',
+            goodsName: null,
+            barCode: null,
+            gmtCreateUp: null,
+            gmtCreateDown: null,
         },
         stockFlowList: [],
     },
@@ -25,6 +25,35 @@ var vm = new Vue({
                     }
                 }
             });
-        }
-    }
+        },
+        datetimepickerLoad : function() {
+			$('#datetimepickerAfter').datetimepicker({
+				language : 'zh-CN',
+				todayHighlight : 1,
+				format: 'yyyy-mm-dd hh:ii:ss',
+			    autoclose: true,
+			    minView: 0,
+			    minuteStep: 1
+			});
+			$('#datetimepickerAfter').datetimepicker().on('hide', function(ev) {
+				var value = $("#datetimepickerAfter").val();
+				vm.q.gmtCreateUp = value;
+			});
+			$('#datetimepickerBefore').datetimepicker({
+				language : 'zh-CN',
+				todayHighlight : 1,
+				format: 'yyyy-mm-dd hh:ii:ss',
+			    autoclose: true,
+			    minView: 0,
+			    minuteStep: 1
+			});
+			$('#datetimepickerBefore').datetimepicker().on('hide', function(ev) {
+				var value = $("#datetimepickerBefore").val();
+				vm.q.gmtCreateDown = value;
+			});
+		}
+    },
+    mounted: function() {
+	    this.datetimepickerLoad();
+	}
 });

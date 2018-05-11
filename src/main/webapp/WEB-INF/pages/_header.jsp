@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="${ctx}/static/plugins/adminlte/css/font-awesome.min.css">
 <link rel="stylesheet" href="${ctx}/static/plugins/jqgrid/ui.jqgrid-bootstrap.css">
 <link rel="stylesheet" href="${ctx}/static/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="${ctx}/static/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
 <link rel="stylesheet" href="${ctx}/static/css/main.css">
 
 	
@@ -27,4 +28,6 @@
 <script src="${ctx}/static/plugins/ztree/js/jquery.ztree.core.js"></script>
 <script src="${ctx}/static/plugins/ztree/js/jquery.ztree.excheck.js"></script>
 <script src="${ctx}/static/plugins/ztree/js/jquery.ztree.exedit.js"></script>
+<script src="${ctx}/static/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script src="${ctx}/static/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="${ctx}/static/js/common.js"></script>
