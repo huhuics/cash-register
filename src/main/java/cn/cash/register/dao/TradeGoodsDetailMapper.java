@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.cash.register.common.request.AchievementQueryRequest;
 import cn.cash.register.common.request.TradeGoodsDetailQueryRequest;
+import cn.cash.register.dao.domain.GoodsSaleStatistics;
 import cn.cash.register.dao.domain.TradeGoodsDetail;
 
 public interface TradeGoodsDetailMapper {
@@ -26,5 +27,7 @@ public interface TradeGoodsDetailMapper {
     List<TradeGoodsDetail> selectSellerAchievement(AchievementQueryRequest request);
 
     List<TradeGoodsDetail> selectShopperAchievement(AchievementQueryRequest request);
+
+    List<GoodsSaleStatistics> querySaleStatistics(TradeGoodsDetailQueryRequest request);
 
 }

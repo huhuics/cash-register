@@ -6,7 +6,11 @@ package cn.cash.register.service;
 
 import java.util.Map;
 
+import com.github.pagehelper.PageInfo;
+
 import cn.cash.register.common.request.SalesBasicFactsQueryRequest;
+import cn.cash.register.common.request.TradeGoodsDetailQueryRequest;
+import cn.cash.register.dao.domain.GoodsSaleStatistics;
 import cn.cash.register.dao.domain.SalesBasicFacts;
 import cn.cash.register.enums.SalesBasicFactsEnum;
 
@@ -23,5 +27,10 @@ public interface SalesService {
      * @return 营业概况,key为{@link SalesBasicFactsEnum}
      */
     Map<String, SalesBasicFacts> queryBasicFacts(SalesBasicFactsQueryRequest request);
+
+    /**
+     * 翻页查询商品销售统计信息
+     */
+    PageInfo<GoodsSaleStatistics> queryGoodsSaleStatistics(TradeGoodsDetailQueryRequest request);
 
 }

@@ -14,9 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageInfo;
+
 import cn.cash.register.common.request.ExchangeJobQueryRequest;
 import cn.cash.register.common.request.SalesBasicFactsQueryRequest;
+import cn.cash.register.common.request.TradeGoodsDetailQueryRequest;
 import cn.cash.register.dao.domain.ExchangeJobDetail;
+import cn.cash.register.dao.domain.GoodsSaleStatistics;
 import cn.cash.register.dao.domain.SalesBasicFacts;
 import cn.cash.register.service.ExchangeJobService;
 import cn.cash.register.service.SalesService;
@@ -57,6 +61,16 @@ public class SalesController {
         AssertUtil.assertNotNull(request, "查询参数不能为空");
         Map<String, SalesBasicFacts> basicFacts = salesService.queryBasicFacts(request);
         return ResultSet.success().put("basicFacts", basicFacts);
+    }
+
+    /**
+     * 查询商品销售统计
+     */
+    @ResponseBody
+    @PostMapping(value = "/queryGoodsSaleStatistics")
+    public ResultSet queryGoodsSaleStatistics(TradeGoodsDetailQueryRequest request) {
+        PageInfo<GoodsSaleStatistics> ret = salesService.queryGoodsSaleStatistics(request);
+        return ResultSet.success().put("ret", ret);
     }
 
 }

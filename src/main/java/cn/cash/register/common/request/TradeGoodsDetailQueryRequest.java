@@ -4,6 +4,8 @@
  */
 package cn.cash.register.common.request;
 
+import cn.cash.register.util.AssertUtil;
+
 /**
  * 商品销售明细查询请求
  * @author HuHui
@@ -29,6 +31,13 @@ public class TradeGoodsDetailQueryRequest extends BasePageRequest {
     private String            barCode;
 
     private String            goodsName;
+
+    @Override
+    public void validate() {
+        super.validate();
+        AssertUtil.assertNotBlank(tradeTimeUp, "查询时间不能为空");
+        AssertUtil.assertNotBlank(tradeTimeDown, "查询时间不能为空");
+    }
 
     public String getCategoryName() {
         return categoryName;
