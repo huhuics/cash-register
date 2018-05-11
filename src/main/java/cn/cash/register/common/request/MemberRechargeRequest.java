@@ -7,6 +7,7 @@ package cn.cash.register.common.request;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import cn.cash.register.dao.domain.PayChenal;
 import cn.cash.register.util.AssertUtil;
 
 /**
@@ -37,10 +38,16 @@ public class MemberRechargeRequest extends BaseRequest {
      */
     private String            donationAmount;
 
+    /**
+     * 支付方式{@link PayChenal}
+     */
+    private PayChenal         payChenal;
+
     @Override
     public void validate() {
         AssertUtil.assertNotBlank(sellerNo, "收银员编号不能为空");
         AssertUtil.assertNotBlank(memberNo, "会员号不能为空");
+        AssertUtil.assertNotNull(payChenal, "支付方式不能为空");
         AssertUtil.assertTrue(NumberUtils.isDigits(rechargeAmount), "充值金额错误");
         if (StringUtils.isNotBlank(donationAmount)) {
             AssertUtil.assertTrue(NumberUtils.isDigits(donationAmount), "赠送金额错误");
@@ -93,6 +100,14 @@ public class MemberRechargeRequest extends BaseRequest {
 
     public void setShopperNo(String shopperNo) {
         this.shopperNo = shopperNo;
+    }
+
+    public PayChenal getPayChenal() {
+        return payChenal;
+    }
+
+    public void setPayChenal(PayChenal payChenal) {
+        this.payChenal = payChenal;
     }
 
 }

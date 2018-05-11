@@ -125,14 +125,6 @@
 			<columnOverride column="account_balance" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
 		
-		<table tableName="member_recharge_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-			<columnOverride column="recharge_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-			<columnOverride column="donation_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-			<columnOverride column="total_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-		</table>
-		
-		-->
-		
 		<table tableName="exchange_job_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 			<columnOverride column="checkout_total_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="cash_amount" javaType="cn.cash.register.util.Money"></columnOverride>
@@ -143,6 +135,16 @@
 			<columnOverride column="paid_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="balance_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
+		
+		-->
+		
+		<table tableName="member_recharge_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<columnOverride column="recharge_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="donation_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="total_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+		</table>
+		
+		
 		 
     </context>  
 </generatorConfiguration>

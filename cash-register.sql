@@ -422,6 +422,7 @@ CREATE TABLE `member_recharge_detail` (
   `recharge_amount` int(11) NOT NULL COMMENT '实际充值金额，单位:分',
   `donation_amount` int(11) DEFAULT NULL COMMENT '赠送金额，单位:分',
   `total_amount` int(11) NOT NULL COMMENT '充值总金额，单位:分',
+  `pay_chenal` varchar(256) NOT NULL COMMENT 'JSON格式，支付方式及该方式对应的金额。金额单位：元。有可能是混合支付',
   `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)

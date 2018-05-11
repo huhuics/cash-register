@@ -18,6 +18,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -193,6 +194,7 @@ public class MemberServiceImpl implements MemberService {
                 rechargeDetail.setRechargeAmount(new Money(request.getRechargeAmount()));
                 rechargeDetail.setDonationAmount(new Money(request.getDonationAmount()));
                 rechargeDetail.setTotalAmount(rechargeTotalAmount);
+                rechargeDetail.setPayChenal(JSON.toJSONString(request.getPayChenal()));
 
                 rechargeDetailMapper.insertSelective(rechargeDetail);
 

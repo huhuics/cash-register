@@ -8,12 +8,13 @@
     <result column="recharge_amount" jdbcType="INTEGER" property="rechargeAmount" />
     <result column="donation_amount" jdbcType="INTEGER" property="donationAmount" />
     <result column="total_amount" jdbcType="INTEGER" property="totalAmount" />
+    <result column="pay_chenal" jdbcType="VARCHAR" property="payChenal" />
     <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, seller_no, shopper_no, recharge_amount, donation_amount, total_amount, gmt_update, 
-    gmt_create
+    id, seller_no, shopper_no, recharge_amount, donation_amount, total_amount, pay_chenal, 
+    gmt_update, gmt_create
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -28,10 +29,12 @@
   <insert id="insert" parameterType="cn.cash.register.dao.domain.MemberRechargeDetail">
     insert into member_recharge_detail (id, seller_no, shopper_no, 
       recharge_amount, donation_amount, total_amount, 
-      gmt_update, gmt_create)
+      pay_chenal, gmt_update, gmt_create
+      )
     values (#{id,jdbcType=BIGINT}, #{sellerNo,jdbcType=VARCHAR}, #{shopperNo,jdbcType=VARCHAR}, 
       #{rechargeAmount,jdbcType=INTEGER}, #{donationAmount,jdbcType=INTEGER}, #{totalAmount,jdbcType=INTEGER}, 
-      #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
+      #{payChenal,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.MemberRechargeDetail">
     insert into member_recharge_detail
@@ -53,6 +56,9 @@
       </if>
       <if test="totalAmount != null">
         total_amount,
+      </if>
+      <if test="payChenal != null">
+        pay_chenal,
       </if>
       <if test="gmtUpdate != null">
         gmt_update,
@@ -80,6 +86,9 @@
       <if test="totalAmount != null">
         #{totalAmount,jdbcType=INTEGER},
       </if>
+      <if test="payChenal != null">
+        #{payChenal,jdbcType=VARCHAR},
+      </if>
       <if test="gmtUpdate != null">
         #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
@@ -106,6 +115,9 @@
       <if test="totalAmount != null">
         total_amount = #{totalAmount,jdbcType=INTEGER},
       </if>
+      <if test="payChenal != null">
+        pay_chenal = #{payChenal,jdbcType=VARCHAR},
+      </if>
       <if test="gmtUpdate != null">
         gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
@@ -122,6 +134,7 @@
       recharge_amount = #{rechargeAmount,jdbcType=INTEGER},
       donation_amount = #{donationAmount,jdbcType=INTEGER},
       total_amount = #{totalAmount,jdbcType=INTEGER},
+      pay_chenal = #{payChenal,jdbcType=VARCHAR},
       gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

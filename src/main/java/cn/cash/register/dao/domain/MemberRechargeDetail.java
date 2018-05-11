@@ -6,7 +6,7 @@ import cn.cash.register.util.Money;
 
 public class MemberRechargeDetail extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = -5399110005547854868L;
+    private static final long serialVersionUID = 6398006255508133074L;
 
     private Long              id;
 
@@ -19,6 +19,8 @@ public class MemberRechargeDetail extends BaseDomain {
     private Money             donationAmount;
 
     private Money             totalAmount;
+
+    private String            payChenal;
 
     private Date              gmtUpdate;
 
@@ -70,6 +72,14 @@ public class MemberRechargeDetail extends BaseDomain {
 
     public void setTotalAmount(Money totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public String getPayChenal() {
+        return payChenal;
+    }
+
+    public void setPayChenal(String payChenal) {
+        this.payChenal = payChenal == null ? null : payChenal.trim();
     }
 
     public Date getGmtUpdate() {
