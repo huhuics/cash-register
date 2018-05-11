@@ -18,7 +18,6 @@ import com.github.pagehelper.PageInfo;
 import cn.cash.register.common.request.SupplierQueryRequest;
 import cn.cash.register.dao.domain.SupplierInfo;
 import cn.cash.register.service.SupplierService;
-import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -38,20 +37,33 @@ public class SupplierController {
      */
     @GetMapping
     public String list() {
-        //TODO
-        return "";
+        return "backstage/_supplier-list";
     }
 
     /**
-     * 增加供货商
+     * 分页查询供货商
+     */
+    @ResponseBody
+    @RequestMapping(value = "/queryPage")
+    public ResultSet querySupplierByList(SupplierQueryRequest request) {
+        PageInfo<SupplierInfo> supplierList = supplierService.queryList(request);
+        return ResultSet.success().put("page", supplierList);
+    }
+
+    /**
+     * 增加或编辑供货商
      * @return 返回主键
      */
     @ResponseBody
-    @RequestMapping(value = "/addSupplierInfo")
+    @RequestMapping(value = "/addOrUpdate")
     public ResultSet addSupplierInfo(SupplierInfo supplier) {
         supplier.validate();
-        Long result = supplierService.add(supplier);
-        return ResultSet.success().put("result", result);
+        if (null == supplier.getId()) {
+            supplierService.add(supplier);
+        } else {
+            supplierService.update(supplier);
+        }
+        return ResultSet.success();
     }
 
     /**
@@ -59,21 +71,9 @@ public class SupplierController {
      * @return 1:删除成功,0:删除失败
      */
     @ResponseBody
-    @RequestMapping(value = "/deleteSupplierInfo")
+    @RequestMapping(value = "/delById")
     public ResultSet deleteSupplierInfo(Long id) {
         int result = supplierService.delete(id);
-        return ResultSet.success().put("result", result);
-    }
-
-    /**
-     * 修改供货商
-     * @return 1:修改成功,0:修改失败
-     */
-    @ResponseBody
-    @RequestMapping(value = "/updateSupplierInfo")
-    public ResultSet updateSupplierInfo(SupplierInfo supplier) {
-        AssertUtil.assertNotNull(supplier.getId());
-        int result = supplierService.update(supplier);
         return ResultSet.success().put("result", result);
     }
 
@@ -81,7 +81,7 @@ public class SupplierController {
      * 根据id查询供货商信息
      */
     @ResponseBody
-    @RequestMapping(value = "/querySupplierById")
+    @RequestMapping(value = "/getById")
     public ResultSet querySupplierById(Long id) {
         SupplierInfo supplier = supplierService.queryById(id);
         return ResultSet.success().put("supplier", supplier);
@@ -95,16 +95,6 @@ public class SupplierController {
     public ResultSet queryAllSupplierNames() {
         List<String> names = supplierService.querySupplierNames();
         return ResultSet.success().put("names", names);
-    }
-
-    /**
-     * 分页查询供货商
-     */
-    @ResponseBody
-    @RequestMapping(value = "/querySupplierByList")
-    public ResultSet querySupplierByList(SupplierQueryRequest request) {
-        PageInfo<SupplierInfo> supplierList = supplierService.queryList(request);
-        return ResultSet.success().put("supplierList", supplierList);
     }
 
 }
