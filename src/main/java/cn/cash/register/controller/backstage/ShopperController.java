@@ -43,6 +43,11 @@ public class ShopperController {
         return "backstage/_shopper-list";
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    public String achievementList() {
+        return "backstage/_shopper-achievement-list";
+    }
+
     /**
      * 根据条件翻页查询导购员资料
      */
