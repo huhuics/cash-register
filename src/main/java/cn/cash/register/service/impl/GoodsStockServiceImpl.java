@@ -55,7 +55,7 @@ public class GoodsStockServiceImpl implements GoodsStockService {
     @Override
     public List<GoodsStockFlow> query(StockFlowQueryRequest request) {
 
-        if (StringUtils.isBlank(request.getBarCode()) || StringUtils.isBlank(request.getGoodsName())) {
+        if (StringUtils.isBlank(request.getBarCode()) && StringUtils.isBlank(request.getGoodsName())) {
             return null;
         }
 

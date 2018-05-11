@@ -200,4 +200,10 @@
     where seller_no = #{sellerNo,jdbcType=VARCHAR}
   </select>
   
+  <select id="listAll" resultMap="BaseResultMap" >
+  		select 
+    	<include refid="Base_Column_List" />
+    	from seller_info
+  </select>
+  
 </mapper>

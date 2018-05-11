@@ -1,10 +1,13 @@
 package cn.cash.register.controller.backstage;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -55,7 +58,7 @@ public class SellerController {
     }
 
     /**
-     * 收银员列表
+     * 翻页查询收银员列表
      * 
      * @return
      */
@@ -68,6 +71,22 @@ public class SellerController {
 
         LogUtil.info(logger, "[Controller]#收银员列表查询#请求处理,pageInfo={0}", pageInfo);
         return ResultSet.success().put("page", pageInfo);
+    }
+
+    /**
+     * 查询所有收银员列表
+     * 
+     * @return
+     */
+    @ResponseBody
+    @GetMapping(value = "/queryAll")
+    public ResultSet queryAll() {
+        LogUtil.info(logger, "[Controller]收到#查询所有收银员#请求");
+
+        List<SellerInfo> sellerInfos = sellerInfoService.queryAll();
+
+        LogUtil.info(logger, "[Controller]#查询所有收银员#请求处理,sellerInfos={0}", sellerInfos);
+        return ResultSet.success().put("sellerInfos", sellerInfos);
     }
 
     /**
