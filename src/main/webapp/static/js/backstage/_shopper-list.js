@@ -1,6 +1,6 @@
 $(function() {
     $("#jqGrid").jqGrid({
-        url: basePath + '/admin/shopper/list',
+        url: basePath + '/admin/shopper/queryPage',
         datatype: "json",
         colModel: [
         	{ label: '导购员ID', name: 'id', hidden: true, key: true },
@@ -56,7 +56,8 @@ var vm = new Vue({
     data: {
         q: {
             status: '',
-            keyword: null,
+            shopperNo: null,
+            name: null,
         },
         shopper: cloneJsonObj(entity_shopper_info),
     },
@@ -65,7 +66,8 @@ var vm = new Vue({
             this.reloadPage();
         },
         resetSearch: function() {
-            this.q.keyword = null;
+            this.q.shopperNo = null;
+            this.q.name = null;
             this.q.status = '';
             this.reloadPage();
         },
@@ -102,12 +104,11 @@ var vm = new Vue({
             this.resetShopper();
             var _self = this;
             $.ajax({
-                type: "GET",
-                url: basePath + "/admin/shopper/getById",
+                url: basePath + "/admin/shopper/queryById",
                 data: { 'id': shopperId },
                 success: function(result) {
                     if (result.code == "00") {
-                    	_self.shopper = result.shopper;
+                    	_self.shopper = result.info;
                         layer.open({
                             type: 1, skin: 'layui-layer-lan', shadeClose: false, title: "编辑导购员", area: '500px',
                             content: jQuery("#shopperDiv"),
@@ -157,7 +158,7 @@ var vm = new Vue({
 //                });
 //            });
         	var shopperId = getSelectedRow();
-        	if (isBlank(shopperIds)) {
+        	if (isBlank(shopperId)) {
                 return;
             }
         	var shopperName = getSelectedRowValue('name');
@@ -183,10 +184,12 @@ var vm = new Vue({
         },
         reloadPage: function() {
             var page = $("#jqGrid").jqGrid('getGridParam', 'page');
+            var _self = this;
             $("#jqGrid").jqGrid('setGridParam', {
                 postData: {
-                    'keyword': this.q.keyword,
-                    'status': this.q.status
+                    'shopperNo': _self.q.shopperNo,
+                    'name': _self.q.name,
+                    'status': _self.q.status
                 },
                 page: page
             }).trigger("reloadGrid");
