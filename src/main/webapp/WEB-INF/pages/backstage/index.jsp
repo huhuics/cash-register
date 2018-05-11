@@ -85,8 +85,7 @@
                             <li><a href="#seller" @click="menuClick"><i class="fa fa-user"></i>收银员资料</a></li>
                             <li><a href="#seller/achievement" @click="menuClick"><i class="fa fa-bar-chart"></i>收银员业绩</a></li>
                             <li><a href="#shopper" @click="menuClick"><i class="fa fa-user-o"></i>导购员资料</a></li>
-                            <li><a href="#shopper/achievement" @click="menuClick"><i class="fa fa-line-chart"></i>导购员业绩</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>导购明细</a></li>
+                            <li><a href="#shopper/achievement" @click="menuClick"><i class="fa fa-line-chart"></i>导购明细</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-truck"></i><span>货流</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>

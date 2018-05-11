@@ -103,13 +103,13 @@ public class ShopperController {
     }
 
     /**
-     * 查询导购员业绩
+     * 查询导购明细
      */
     @ResponseBody
-    @RequestMapping(value = "queryAchievement", method = RequestMethod.POST)
+    @RequestMapping(value = "/achievement/queryPage")
     public ResultSet queryAchievement(AchievementQueryRequest request) {
         PageInfo<TradeGoodsDetail> ret = shopperInfoService.queryAchievement(request);
-        return ResultSet.success().put("ret", ret);
+        return ResultSet.success().put("page", ret);
     }
 
 }

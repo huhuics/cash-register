@@ -1,18 +1,19 @@
 $(function() {
     $("#jqGrid").jqGrid({
-        url: basePath + '/admin/seller/achievement/queryPage',
+        url: basePath + '/admin/shopper/achievement/queryPage',
         datatype: "json",
         colModel: [
-        	{ label: '收银员业绩ID', name: 'id', hidden: true, key: true },
-            { label: '日期', name: 'tradeTime', index: 'trade_Time', width: 80 },
-            { label: '收银员', name: 'sellerNo', index: 'seller_No', width: 80 },
+        	{ label: '导购明细ID', name: 'id', hidden: true, key: true },
+        	{ label: '日期', name: 'tradeTime', index: 'trade_Time', width: 80 },
+            { label: '导购员', name: 'shopperNo', index: 'shopper_No', width: 80 },
             { label: '商品名称', name: 'goodsName', index: 'goods_Name', width: 80 },
             { label: '颜色', name: 'goodsColor', index: 'goods_Color', width: 80 },
             { label: '尺码', name: 'goodsSize', index: 'goods_Size', width: 80 },
-            { label: '销售价', name: 'totalAmount.amount', index: 'total_Amount', width: 80 },
-            { label: '数量', name: 'goodsCount', index: 'goods_Count', sortable: false, width: 80 },
+            { label: '单价', name: 'totalAmount.amount', index: 'total_Amount', width: 80 },
+            { label: '数量', name: 'goodsCount', index: 'goods_Count', width: 80 },
             { label: '实收', name: 'totalActualAmount.amount', index: 'total_Actual_Amount', width: 80 },
             { label: '利润', name: 'profitAmount.amount', index: 'profit_Amount', width: 80 },
+            { label: '提成', name: 'profitAmount.amount', index: 'profit_Amount', width: 80 },
             { label: '类型', name: 'tradeType', index: 'trade_Type', width: 80 }
         ],
         viewrecords: true, height: "auto", width: "100%",
@@ -30,7 +31,7 @@ $(function() {
 
 
 var vm = new Vue({
-    el: '#sellerAchievementListDiv',
+    el: '#shopperAchievementListDiv',
     data: {
         q: {
         	bizNo: '',
@@ -39,7 +40,7 @@ var vm = new Vue({
         	tradeTimeDown: null,
         },
         goods_categorys: [], // 全部分类
-        sellers: [], // 全部收银员
+        shoppers: [], // 全部导购员
     },
     methods: {
         search: function() {
@@ -52,7 +53,7 @@ var vm = new Vue({
             this.q.tradeTimeDown = null;
             this.reloadPage();
         },
-        exportSellerAchievement: function() {},
+        exportShopperAchievement: function() {},
         reloadPage: function() {
             var page = $("#jqGrid").jqGrid('getGridParam', 'page');
             $("#jqGrid").jqGrid('setGridParam', {
@@ -76,7 +77,7 @@ var vm = new Vue({
 			});
 			$('#datetimepickerAfter').datetimepicker().on('hide', function(ev) {
 				var value = $("#datetimepickerAfter").val();
-				vm.q.tradeTimeDown = value;
+				vm.q.tradeTimeUp = value;
 			});
 			$('#datetimepickerBefore').datetimepicker({
 				language : 'zh-CN',
@@ -88,7 +89,7 @@ var vm = new Vue({
 			});
 			$('#datetimepickerBefore').datetimepicker().on('hide', function(ev) {
 				var value = $("#datetimepickerBefore").val();
-				vm.q.tradeTimeUp = value;
+				vm.q.tradeTimeDown = value;
 			});
 		},
 		rangeToday: function() {
@@ -147,17 +148,16 @@ var vm = new Vue({
                 }
             });
         },
-        loadSellers: function() { // 加载所有收银员列表
+        loadShoppers: function() { // 加载所有导购员列表
         	var _self = this;
         	$.ajax({
-        		type: 'GET',
-        		url: basePath + "/admin/seller/queryAll",
+        		url: basePath + "/admin/shopper/queryAll",
         		data: {status: true},
         		success: function(result) {
         			if (result.code == "00") {
-        				_self.sellers = result.sellerInfos;
+        				_self.shoppers = result.infos;
         			} else {
-        				layer.alert("加载收银员列表出错" + result.msg);
+        				layer.alert("加载导购员列表出错" + result.msg);
         			}
         		}
         	});
@@ -166,6 +166,6 @@ var vm = new Vue({
     mounted: function() {
     	this.datetimepickerLoad();
     	this.loadGoodsCategorys();
-    	this.loadSellers();
+    	this.loadShoppers();
     }
 });
