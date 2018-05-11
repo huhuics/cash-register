@@ -69,7 +69,7 @@
                         <ul class="treeview-menu">
                             <li><a href="#member" @click="menuClick"><i class="fa fa-user-circle"></i>会员资料</a></li>
                             <li><a href="#member/rank" @click="menuClick"><i class="fa fa-signal"></i>会员等级</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员制度</a></li>
+                            <li><a href="#member/integral" @click="menuClick"><i class="fa fa-sliders"></i>会员制度</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员卡报表</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员分析</a></li>
                         </ul>
