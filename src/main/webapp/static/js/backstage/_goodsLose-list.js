@@ -1,24 +1,21 @@
 var vm = new Vue({
-    el: '#stockFlowListDiv',
+    el: '#goodsLoseListDiv',
     data: {
         q: {
-            flowType: '',
-            goodsName: null,
-            barCode: null,
             gmtCreateUp: null,
             gmtCreateDown: null,
         },
-        stockFlowList: [],
+        goodsLoseList: [],
     },
     methods: {
         search: function() {
             var _self = this;
             $.ajax({
-                url: basePath + '/admin/stock/flow/queryList',
+                url: basePath + '/admin/goodsLose/queryAllLoseInfo',
                 data: _self.q,
                 success: function(result) {
                     if (result.code == "00") {
-                        _self.stockFlowList = result.list;
+                        _self.goodsLoseList = result.loseInfos;
                         layer.msg('查询成功');
                     } else {
                         layer.alert(result.msg);
@@ -27,6 +24,7 @@ var vm = new Vue({
             });
         },
         datetimepickerLoad : function() {
+        	var _self = this;
 			$('#datetimepickerAfter').datetimepicker({
 				language : 'zh-CN',
 				todayHighlight : 1,
@@ -37,7 +35,7 @@ var vm = new Vue({
 			});
 			$('#datetimepickerAfter').datetimepicker().on('hide', function(ev) {
 				var value = $("#datetimepickerAfter").val();
-				vm.q.gmtCreateUp = value;
+				_self.q.gmtCreateUp = value;
 			});
 			$('#datetimepickerBefore').datetimepicker({
 				language : 'zh-CN',
@@ -49,7 +47,7 @@ var vm = new Vue({
 			});
 			$('#datetimepickerBefore').datetimepicker().on('hide', function(ev) {
 				var value = $("#datetimepickerBefore").val();
-				vm.q.gmtCreateDown = value;
+				_self.q.gmtCreateDown = value;
 			});
 		}
     },

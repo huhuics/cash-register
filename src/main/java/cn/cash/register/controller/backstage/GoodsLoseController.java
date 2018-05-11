@@ -34,6 +34,24 @@ public class GoodsLoseController {
     private GoodsLoseService loseService;
 
     /**
+     * 跳转到商品报损页
+     */
+    @GetMapping
+    public String goodsLoseList() {
+        return "backstage/_goodsLose-list";
+    }
+
+    /**
+     * 查询所有报损记录
+     */
+    @ResponseBody
+    @RequestMapping("/queryAllLoseInfo")
+    public ResultSet queryAllLoseInfo(GoodsLoseInfoQueryRequest request) {
+        List<GoodsLoseInfo> loseInfos = loseService.queryAllLoseInfo(request);
+        return ResultSet.success().put("loseInfos", loseInfos);
+    }
+
+    /**
      * 增加报损原因
      * @return  主键id
      */
@@ -87,16 +105,6 @@ public class GoodsLoseController {
         AssertUtil.assertNotBlank(request.getLoseItems(), "报损商品不能为空");
         Long id = loseService.addLoseInfo(request);
         return ResultSet.success().put("id", id);
-    }
-
-    /**
-     * 查询所有报损记录
-     */
-    @ResponseBody
-    @GetMapping("/queryAllLoseInfo")
-    public ResultSet queryAllLoseInfo(GoodsLoseInfoQueryRequest request) {
-        List<GoodsLoseInfo> loseInfos = loseService.queryAllLoseInfo(request);
-        return ResultSet.success().put("loseInfos", loseInfos);
     }
 
 }
