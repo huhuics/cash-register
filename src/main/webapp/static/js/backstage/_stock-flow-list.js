@@ -26,7 +26,7 @@ var vm = new Vue({
                 }
             });
         },
-        datetimepickerLoad : function() {
+        datetimepickerLoad: function() {
 			$('#datetimepickerAfter').datetimepicker({
 				language : 'zh-CN',
 				todayHighlight : 1,
@@ -37,7 +37,7 @@ var vm = new Vue({
 			});
 			$('#datetimepickerAfter').datetimepicker().on('hide', function(ev) {
 				var value = $("#datetimepickerAfter").val();
-				vm.q.gmtCreateUp = value;
+				vm.q.gmtCreateDown = value;
 			});
 			$('#datetimepickerBefore').datetimepicker({
 				language : 'zh-CN',
@@ -49,9 +49,51 @@ var vm = new Vue({
 			});
 			$('#datetimepickerBefore').datetimepicker().on('hide', function(ev) {
 				var value = $("#datetimepickerBefore").val();
-				vm.q.gmtCreateDown = value;
+				vm.q.gmtCreateUp = value;
 			});
-		}
+		},
+		rangeToday: function() {
+			var _now = new Date();
+			this.q.gmtCreateDown = dateFormater(getDayStart(_now));
+			this.q.gmtCreateUp = dateFormater(getDayEnd(_now));
+		},
+		rangeYesterday: function() {
+			var _now = new Date();
+			var _yesterday = getLastDay(_now);
+			this.q.gmtCreateDown = dateFormater(getDayStart(_yesterday));
+			this.q.gmtCreateUp = dateFormater(getDayEnd(_yesterday));
+		},
+		rangeDayBeforeYesterday: function() {
+			var _now = new Date();
+			var _dayBeforeYesterday = getLastDay(getLastDay(_now));
+			this.q.gmtCreateDown = dateFormater(getDayStart(_dayBeforeYesterday));
+			this.q.gmtCreateUp = dateFormater(getDayEnd(_dayBeforeYesterday));
+		},
+		rangeWeek: function() {
+			var _now = new Date();
+			this.q.gmtCreateDown = dateFormater(getWeekStart(_now));
+			this.q.gmtCreateUp = dateFormater(getWeekEnd(_now));
+		},
+		rangeLastWeek: function() {
+			var _now = new Date();
+			this.q.gmtCreateDown = dateFormater(getLastWeekStart(_now));
+			this.q.gmtCreateUp = dateFormater(getLastWeekEnd(_now));
+		},
+		range7Days: function() {
+			var _now = new Date();
+			this.q.gmtCreateDown = dateFormater(get7DaysBefore(_now));
+			this.q.gmtCreateUp = dateFormater(getDayEnd(_now));
+		},
+		rangeMonth: function() {
+			var _now = new Date();
+			this.q.gmtCreateDown = dateFormater(getMonthStart(_now));
+			this.q.gmtCreateUp = dateFormater(getMonthEnd(_now));
+		},
+		rangeLastMonth: function() {
+			var _now = new Date();
+			this.q.gmtCreateDown = dateFormater(getMonthStart(getLastMonthEnd(_now)));
+			this.q.gmtCreateUp = dateFormater(getLastMonthEnd(_now));
+		},
     },
     mounted: function() {
 	    this.datetimepickerLoad();
