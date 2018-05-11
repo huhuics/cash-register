@@ -34,9 +34,24 @@ public class SellerController {
     @Resource
     private SellerInfoService   sellerInfoService;
 
+    /**
+     * 收银员列表页面
+     * 
+     * @return
+     */
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
         return "backstage/_seller-list";
+    }
+
+    /**
+     * 收银员业绩页面
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/achievement", method = RequestMethod.GET)
+    public String achievementList() {
+        return "backstage/_seller-achievement-list";
     }
 
     /**
@@ -111,10 +126,10 @@ public class SellerController {
      * 查询收银员业绩
      */
     @ResponseBody
-    @RequestMapping
+    @RequestMapping(value = "/achievement/queryPage")
     public ResultSet querySellerAchievement(AchievementQueryRequest request) {
         PageInfo<TradeGoodsDetail> ret = sellerInfoService.queryAchievement(request);
-        return ResultSet.success().put("ret", ret);
+        return ResultSet.success().put("page", ret);
     }
 
 }
