@@ -103,13 +103,6 @@
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>操作日志</a></li>
                         </ul>
                     </li>
-                    <li class="treeview"><a href="#"> <i class="fa fa-circle-o"></i><span>其它</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
-                        <ul class="treeview-menu">
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>文件上传</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>报表打印</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>缓存</a></li>
-                        </ul>
-                    </li>
                 </ul>
                 <!-- 菜单ul结束 -->
             </section>
