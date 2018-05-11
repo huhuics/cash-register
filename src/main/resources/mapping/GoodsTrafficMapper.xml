@@ -316,9 +316,9 @@
     </if>
     <if test="createTimeUp != null and createTimeUp !=''">
     	and
-  		gmt_create &lt;= to_date(#{createTimeUp},'yyyy-MM-dd HH:mm:ss')
+  		gmt_create &lt;= STR_TO_DATE(#{createTimeUp},'%Y-%m-%d %H:%i:%s')
   		and
-  		gmt_create &gt;= to_date(#{createTimeDown},'yyyy-MM-dd HH:mm:ss')
+  		gmt_create &gt;= STR_TO_DATE(#{createTimeDown},'%Y-%m-%d %H:%i:%s')
     </if>
     
   </select>

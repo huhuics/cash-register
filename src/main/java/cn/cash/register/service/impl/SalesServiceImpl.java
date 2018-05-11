@@ -83,8 +83,8 @@ public class SalesServiceImpl implements SalesService {
             }
         }
 
-        String goodsSalesBasicFacts = "销售额：" + checkoutTotalAmount.getAmount() + ", 利润：" + profitAmount.getAmount() + ", 单数：" + tradeDetails.size() + ", 单均价："
-                                      + checkoutTotalAmount.divide(tradeDetails.size()).getAmount();
+        String goodsSalesBasicFacts = "销售额：" + checkoutTotalAmount.getAmount() + ", 利润：" + profitAmount.getAmount() + ", 单数：" + (tradeDetails == null ? 0 : tradeDetails.size()) + ", 单均价："
+                                      + ((tradeDetails == null || tradeDetails.size() == 0) ? 0 : checkoutTotalAmount.divide(tradeDetails.size()).getAmount());
 
         goodsSalesFact.setBasicFacts(goodsSalesBasicFacts);
         goodsSalesFact.setCash(goodsCashAmount);
@@ -127,7 +127,7 @@ public class SalesServiceImpl implements SalesService {
             }
         }
 
-        String balanceSalesBasicFacts = "充值：" + totalRechargeAmount.getAmount() + ", 赠送：" + totalDonationAmount.getAmount() + ", 单数：" + rechargeDetails.size();
+        String balanceSalesBasicFacts = "充值：" + totalRechargeAmount.getAmount() + ", 赠送：" + totalDonationAmount.getAmount() + ", 单数：" + (rechargeDetails == null ? 0 : rechargeDetails.size());
         balanceSalesFact.setBasicFacts(balanceSalesBasicFacts);
         balanceSalesFact.setCash(balanceCashAmount);
         balanceSalesFact.setUnionpay(balanceUnionpayAmount);

@@ -311,9 +311,9 @@
     </if>
     <if test="tradeTimeUp != null">
     	and 
-  		trade_time &lt;= to_date(#{tradeTimeUp},'yyyy-MM-dd HH:mm:ss')
+  		trade_time &lt;= STR_TO_DATE(#{tradeTimeUp},'%Y-%m-%d %H:%i:%s')
   		and
-  		trade_time &gt;= to_date(#{tradeTimeDown},'yyyy-MM-dd HH:mm:ss')
+  		trade_time &gt;= STR_TO_DATE(#{tradeTimeDown},'%Y-%m-%d %H:%i:%s')
     </if>
     <if test="barCode != null and barCode !=''">
   		and bar_code = #{barCode,jdbcType=VARCHAR}
@@ -340,9 +340,9 @@
     </if>
     <if test="tradeTimeUp != null">
     	and 
-  		trade_time &lt;= to_date(#{tradeTimeUp},'yyyy-MM-dd HH:mm:ss')
+  		trade_time &lt;= STR_TO_DATE(#{tradeTimeUp},'%Y-%m-%d %H:%i:%s')
   		and
-  		trade_time &gt;= to_date(#{tradeTimeDown},'yyyy-MM-dd HH:mm:ss')
+  		trade_time &gt;= STR_TO_DATE(#{tradeTimeDown},'%Y-%m-%d %H:%i:%s')
     </if>
    </select>
    
@@ -358,9 +358,9 @@
     </if>
     <if test="tradeTimeUp != null">
     	and 
-  		trade_time &lt;= to_date(#{tradeTimeUp},'yyyy-MM-dd HH:mm:ss')
+  		trade_time &lt;= STR_TO_DATE(#{tradeTimeUp},'%Y-%m-%d %H:%i:%s')
   		and
-  		trade_time &gt;= to_date(#{tradeTimeDown},'yyyy-MM-dd HH:mm:ss')
+  		trade_time &gt;= STR_TO_DATE(#{tradeTimeDown},'%Y-%m-%d %H:%i:%s')
     </if>
    </select>
   

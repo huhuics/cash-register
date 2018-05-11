@@ -261,9 +261,9 @@
     </if>
     <if test="tradeTimeUp != null">
   		and
-  		trade_time &lt;= to_date(#{tradeTimeUp},'yyyy-MM-dd HH:mm:ss')
+  		trade_time &lt;= STR_TO_DATE(#{tradeTimeUp},'%Y-%m-%d %H:%i:%s')
   		and
-  		trade_time &gt;= to_date(#{tradeTimeDown},'yyyy-MM-dd HH:mm:ss')
+  		trade_time &gt;= STR_TO_DATE(#{tradeTimeDown},'%Y-%m-%d %H:%i:%s')
     </if>
     <if test="tradeNo != null and tradeNo !=''">
   		and trade_no = #{tradeNo,jdbcType=VARCHAR}
@@ -289,9 +289,9 @@
   	select 
     <include refid="Base_Column_List" />
   	from trade_detail where 
-  		trade_time &lt;= to_date(#{timeUp},'yyyy-MM-dd HH:mm:ss')
+  		trade_time &lt;= STR_TO_DATE(#{timeUp},'%Y-%m-%d %H:%i:%s')
   		and
-  		trade_time &gt;= to_date(#{timeDown},'yyyy-MM-dd HH:mm:ss')
+  		trade_time &gt;= STR_TO_DATE(#{timeDown},'%Y-%m-%d %H:%i:%s')
   </select>
   
 </mapper>

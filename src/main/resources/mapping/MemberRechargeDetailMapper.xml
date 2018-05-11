@@ -144,9 +144,9 @@
     select 
     <include refid="Base_Column_List" />
     from member_recharge_detail
-    where gmt_create &lt;= to_date(#{timeUp},'yyyy-MM-dd HH:mm:ss')
+    where gmt_create &lt;= STR_TO_DATE(#{timeUp},'%Y-%m-%d %H:%i:%s')
   		and
-  		gmt_create &gt;= to_date(#{timeDown},'yyyy-MM-dd HH:mm:ss')
+  		gmt_create &gt;= STR_TO_DATE(#{timeDown},'%Y-%m-%d %H:%i:%s')
   </select>
   
 </mapper>
