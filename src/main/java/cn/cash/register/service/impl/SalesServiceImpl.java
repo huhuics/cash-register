@@ -14,10 +14,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.SalesBasicFactsQueryRequest;
+import cn.cash.register.common.request.TradeGoodsDetailQueryRequest;
 import cn.cash.register.dao.MemberRechargeDetailMapper;
 import cn.cash.register.dao.TradeDetailMapper;
+import cn.cash.register.dao.TradeGoodsDetailMapper;
+import cn.cash.register.dao.domain.GoodsSaleStatistics;
 import cn.cash.register.dao.domain.MemberRechargeDetail;
 import cn.cash.register.dao.domain.PayChenal;
 import cn.cash.register.dao.domain.SalesBasicFacts;
@@ -25,6 +30,7 @@ import cn.cash.register.dao.domain.TradeDetail;
 import cn.cash.register.enums.PayChenalEnum;
 import cn.cash.register.enums.SalesBasicFactsEnum;
 import cn.cash.register.service.SalesService;
+import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.Money;
 
 /**
@@ -37,6 +43,9 @@ public class SalesServiceImpl implements SalesService {
 
     @Resource
     private TradeDetailMapper          tradeDetailMapper;
+
+    @Resource
+    private TradeGoodsDetailMapper     tradeGoodsDetailMapper;
 
     @Resource
     private MemberRechargeDetailMapper rechargeDetailMapper;
@@ -137,6 +146,18 @@ public class SalesServiceImpl implements SalesService {
         factsMap.put(SalesBasicFactsEnum.balance.name(), balanceSalesFact);
 
         return factsMap;
+    }
+
+    @Override
+    public PageInfo<GoodsSaleStatistics> queryGoodsSaleStatistics(TradeGoodsDetailQueryRequest request) {
+        AssertUtil.assertNotNull(request, "参数不能为空");
+        request.validate();
+
+        PageHelper.startPage(request.getPageNum(), request.getPageSize());
+        PageHelper.orderBy(request.getSidx() + " " + request.getOrder());
+        List<GoodsSaleStatistics> statisticses = tradeGoodsDetailMapper.querySaleStatistics(request);
+
+        return new PageInfo<>(statisticses);
     }
 
 }
