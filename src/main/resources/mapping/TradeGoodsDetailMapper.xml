@@ -25,6 +25,22 @@
     <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
+  
+  <!-- 自定义result map -->
+  <resultMap id="statisticsResultMap" type="cn.cash.register.dao.domain.GoodsSaleStatistics">
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="bar_code" jdbcType="VARCHAR" property="barCode" />
+    <result column="goods_color" jdbcType="VARCHAR" property="goodsColor" />
+    <result column="goods_size" jdbcType="VARCHAR" property="goodsSize" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="goods_stock" jdbcType="INTEGER" property="goodsStock" />
+    <result column="sales_count" jdbcType="INTEGER" property="salesCount" />
+    <result column="total_amount" jdbcType="INTEGER" property="totalAmount" />
+    <result column="total_actual_amount" jdbcType="INTEGER" property="totalActualAmount" />
+    <result column="total_profit" jdbcType="INTEGER" property="totalProfit" />
+    <result column="profit_rate" jdbcType="DOUBLE" property="profitRate" />
+  </resultMap>
+  
   <sql id="Base_Column_List">
     id, trade_no, trade_time, trade_type, goods_name, goods_brand, bar_code, product_number, 
     goods_color, goods_size, goods_count, goods_tag, category_name, seller_no, shopper_no, 
@@ -293,7 +309,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   
-  <select id="list" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.TradeDetailQueryRequest">
+  <select id="list" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.TradeGoodsDetailQueryRequest">
   	select 
     <include refid="Base_Column_List" />
   	from trade_goods_detail where 1=1
@@ -362,6 +378,50 @@
   		and
   		trade_time &gt;= STR_TO_DATE(#{tradeTimeDown},'%Y-%m-%d %H:%i:%s')
     </if>
+   </select>
+   
+   <select id="querySaleStatistics" resultMap="statisticsResultMap" parameterType="cn.cash.register.common.request.TradeGoodsDetailQueryRequest">
+  	SELECT 
+	  t.goods_name,
+	  t.bar_code,
+	  t.goods_color,
+	  t.goods_size,
+	  t.category_name,
+	  g.goods_stock,
+	  SUM(t.goods_count) 'sales_count',
+	  SUM(t.total_amount) 'total_amount',
+	  SUM(t.total_actual_amount) 'total_actual_amount',
+	  SUM(t.profit_amount) 'total_profit',
+	  ROUND((SUM(t.profit_amount)/SUM(t.total_actual_amount))*100,2) 'profit_rate'
+	FROM
+  	  trade_goods_detail t,
+  	  goods_info g 
+  	where t.bar_code = g.bar_code
+  	<if test="categoryName != null and categoryName !=''">
+  		and category_name = #{categoryName,jdbcType=VARCHAR}
+    </if>
+    <if test="goodsBrand != null and goodsBrand !=''">
+  		and goods_brand = #{goodsBrand,jdbcType=VARCHAR}
+    </if>
+    <if test="supplierName != null and supplierName !=''">
+  		and supplier_name = #{supplierName,jdbcType=VARCHAR}
+    </if>
+    <if test="goodsTag != null and goodsTag !=''">
+  		and goods_tag like concat(#{goodsTag,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="tradeTimeUp != null">
+    	and 
+  		trade_time &lt;= STR_TO_DATE(#{tradeTimeUp},'%Y-%m-%d %H:%i:%s')
+  		and
+  		trade_time &gt;= STR_TO_DATE(#{tradeTimeDown},'%Y-%m-%d %H:%i:%s')
+    </if>
+    <if test="barCode != null and barCode !=''">
+  		and bar_code = #{barCode,jdbcType=VARCHAR}
+    </if>
+    <if test="goodsName != null and goodsName !=''">
+  		and goods_name = #{goodsName,jdbcType=VARCHAR}
+    </if>
+    group by t.bar_code
    </select>
   
 </mapper>
