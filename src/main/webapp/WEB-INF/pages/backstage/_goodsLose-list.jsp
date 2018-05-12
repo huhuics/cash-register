@@ -9,7 +9,6 @@
 
 <body>
     <div id="goodsLoseListDiv" v-cloak>
-        <!-- 分页表格 -->
         <div>
             <div class="grid-btn">
                 <div class="form-group col-xs-8">
@@ -67,7 +66,6 @@
 	            </table>
 	        </div>
         </div>
-        <!-- /.分页表格 -->
     </div>
     
     <script src="${ctx}/static/js/backstage/_goodsLose-list.js"></script>
