@@ -2,14 +2,15 @@ var goods_item = { // 商品元素
     goodsId: null,
     barCode: null,
     goodsName: null,
-    totalAmount: null, // 商品原价，对应字段salesPrice，根据辉哥的命名
+    salesPrice: null, // 商品原价
     isVipDiscount: null,
     vipPrice: null,
     //--- 以上为商品表中对应数据
     goodsDiscount: null, // 实际折扣
-    totalActualAmount: null, // 实际单价
+    actualAmount: null, // 实际单价
     goodsCount: null, // 数量
-    priceTotal: null, // 总价.数量*实际单价
+    totalAmount: null, // 原总价.数量*商品原单价
+    totalActualAmount: null, // 总价.数量*实际单价
 };
 
 var vip_info = {
@@ -160,36 +161,36 @@ var vm = new Vue({
             this.goods_item.goodsId = this.noBarcodeIdNum--;
             this.goods_item.barCode = null;
             this.goods_item.goodsName = '无码商品';
-            this.goods_item.totalAmount = this.price_without_barcode;
+            this.goods_item.salesPrice = this.price_without_barcode;
             this.goods_item.isVipDiscount = true;
             this.goods_item.vipPrice = null;
 
             if (isBlank(this.vip_info.discount)) { // 没有录入会员信息，原价
-                this.goods_item.totalActualAmount = this.goods_item.totalAmount;
+                this.goods_item.actualAmount = this.goods_item.salesPrice;
                 this.goods_item.goodsDiscount = 100;
             } else {
-                this.goods_item.totalActualAmount = (this.goods_item.totalAmount * this.vip_info.discount / 100).toFixed(2);
+                this.goods_item.actualAmount = (this.goods_item.salesPrice * this.vip_info.discount / 100).toFixed(2);
                 this.goods_item.goodsDiscount = this.vip_info.discount;
             }
         },
-        transferGoodsToItem: function(goods) { // 将goods转换为item,对除count与priceTotal以外的值赋值
+        transferGoodsToItem: function(goods) { // 将goods转换为item,对除count、totalAmount、totalActualAmount以外的值赋值
             this.reset_goods_item(); // 重置
 
             this.goods_item.goodsId = goods.id;
             this.goods_item.barCode = goods.barCode;
             this.goods_item.goodsName = goods.goodsName;
-            this.goods_item.totalAmount = goods.salesPrice.amount;
+            this.goods_item.salesPrice = goods.salesPrice.amount;
             this.goods_item.isVipDiscount = goods.isVipDiscount;
             this.goods_item.vipPrice = goods.vipPrice;
 
             if (isBlank(this.vip_info.discount)) { // 没有录入会员信息，原价
-                this.goods_item.totalActualAmount = this.goods_item.totalAmount;
+                this.goods_item.actualAmount = this.goods_item.salesPrice;
                 this.goods_item.goodsDiscount = 100;
             } else if (!goods.isVipDiscount) { // 已经录入会员信息，但商品不参与折扣，会员价
-                this.goods_item.totalActualAmount = this.goods_item.vipPrice.toFixed(2);
-                this.goods_item.goodsDiscount = (this.goods_item.totalActualAmount / this.goods_item.totalAmount * 100).toFixed(2);
+                this.goods_item.actualAmount = this.goods_item.vipPrice.toFixed(2);
+                this.goods_item.goodsDiscount = (this.goods_item.actualAmount / this.goods_item.salesPrice * 100).toFixed(2);
             } else {
-                this.goods_item.totalActualAmount = (this.goods_item.totalAmount * this.vip_info.discount / 100).toFixed(2);
+                this.goods_item.actualAmount = (this.goods_item.salesPrice * this.vip_info.discount / 100).toFixed(2);
                 this.goods_item.goodsDiscount = this.vip_info.discount;
             }
         },
@@ -218,7 +219,7 @@ var vm = new Vue({
             for (var i = 0; i < this.goods_list.length; i++) {
                 if (this.goods_list[i].goodsId == id) {
                     this.goods_list[i].goodsDiscount = goodsDiscount;
-                    this.goods_list[i].totalActualAmount = (this.goods_list[i].totalAmount * this.goods_list[i].goodsDiscount / 100).toFixed(2);
+                    this.goods_list[i].actualAmount = (this.goods_list[i].salesPrice * this.goods_list[i].goodsDiscount / 100).toFixed(2);
                     this.summary();
                     return;
                 }
@@ -229,11 +230,11 @@ var vm = new Vue({
             this.getItemById();
             this.addItemToGoodsList(count * 1 - this.goods_item.goodsCount * 1);
         },
-        editItemPriceById: function(id, totalActualAmount) { // 修改实际价格
+        editItemPriceById: function(id, actualAmount) { // 修改实际价格
             for (var i = 0; i < this.goods_list.length; i++) {
                 if (this.goods_list[i].goodsId == id) {
-                    this.goods_list[i].totalActualAmount = totalActualAmount;
-                    this.goods_list[i].goodsDiscount = (this.goods_list[i].totalActualAmount / this.goods_list[i].totalAmount * 100).toFixed(2);
+                    this.goods_list[i].actualAmount = actualAmount;
+                    this.goods_list[i].goodsDiscount = (this.goods_list[i].actualAmount / this.goods_list[i].salesPrice * 100).toFixed(2);
                     this.summary();
                     return;
                 }
@@ -329,7 +330,7 @@ var vm = new Vue({
                 for (var i = 0; i < this.goods_list.length; i++) {
                     var _item = this.goods_list[i];
                     _item.goodsDiscount = 100;
-                    _item.totalActualAmount = _item.totalAmount;
+                    _item.actualAmount = _item.salesPrice;
                 }
             } else { // 会员信息被添加时
                 for (var i = 0; i < this.goods_list.length; i++) {
@@ -337,10 +338,10 @@ var vm = new Vue({
                     __log('this.goods_list[i]', this.goods_list[i])
                     var _item = this.goods_list[i];
                     if (!_item.isVipDiscount) { // 商品不参与折扣，会员价
-                        _item.totalActualAmount = this.goods_item.vipPrice.toFixed(2);
-                        _item.goodsDiscount = (_item.totalActualAmount / _item.totalAmount * 100).toFixed(2);
+                        _item.actualAmount = this.goods_item.vipPrice.toFixed(2);
+                        _item.goodsDiscount = (_item.actualAmount / _item.salesPrice * 100).toFixed(2);
                     } else {
-                        _item.totalActualAmount = (_item.totalAmount * this.vip_info.discount / 100).toFixed(2);
+                        _item.actualAmount = (_item.salesPrice * this.vip_info.discount / 100).toFixed(2);
                         _item.goodsDiscount = this.vip_info.discount;
                     }
                 }
@@ -437,7 +438,7 @@ var vm = new Vue({
             if (countSelected > 2) {
                 return '付款通道不能多于2个';
             }
-            if (amountSelected < this.goods_item.priceTotal) {
+            if (amountSelected < this.goods_item.totalActualAmount) {
                 return '付款金额不足';
             }
             return null;
@@ -469,9 +470,10 @@ var vm = new Vue({
             var _totalCount = 0;
             var _totalPrice = 0;
             for (var i = 0; i < this.goods_list.length; i++) {
-                this.goods_list[i].priceTotal = this.goods_list[i].totalActualAmount * this.goods_list[i].goodsCount;
+            	this.goods_list[i].totalAmount = this.goods_list[i].salesPrice * this.goods_list[i].goodsCount;
+                this.goods_list[i].totalActualAmount = this.goods_list[i].actualAmount * this.goods_list[i].goodsCount;
                 _totalCount += this.goods_list[i].goodsCount;
-                _totalPrice += this.goods_list[i].priceTotal;
+                _totalPrice += this.goods_list[i].totalActualAmount;
             }
             this.summary_count = _totalCount;
             this.summary_price = _totalPrice;

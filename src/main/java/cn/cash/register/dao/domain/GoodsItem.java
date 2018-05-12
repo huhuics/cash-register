@@ -24,7 +24,6 @@ public class GoodsItem extends BaseDomain {
     private String            salesPrice;                              //未使用，只为方便前台传值
     private String            isVipDiscount;                           //未使用，只为方便前台传值
     private String            vipPrice;                                //未使用，只为方便前台传值
-    private String            priceTotal;                              //未使用，只为方便前台传值
 
     /***********收银时以下字段为正;退款/反结账时以下字段为负************/
 
@@ -114,14 +113,6 @@ public class GoodsItem extends BaseDomain {
 
     public void setVipPrice(String vipPrice) {
         this.vipPrice = vipPrice;
-    }
-
-    public String getPriceTotal() {
-        return priceTotal;
-    }
-
-    public void setPriceTotal(String priceTotal) {
-        this.priceTotal = priceTotal;
     }
 
 }
