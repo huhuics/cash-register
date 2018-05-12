@@ -71,6 +71,14 @@ public class GoodsStockController {
     }
 
     /**
+     * 跳转到盘点历史页
+     */
+    @GetMapping(value = "/check")
+    public String checkPage() {
+        return "backstage/_stock-check-list";
+    }
+
+    /**
      * 查询库存变动明细
      */
     @ResponseBody

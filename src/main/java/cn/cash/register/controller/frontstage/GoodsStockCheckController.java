@@ -62,7 +62,7 @@ public class GoodsStockCheckController {
      * 盘点记录查询
      */
     @ResponseBody
-    @PostMapping(value = "queryCheck")
+    @PostMapping(value = "/queryCheck")
     public ResultSet queryCheck(GoodsStockCheckQueryRequest request) {
         List<GoodsStockCheck> checks = checkService.queryCheck(request);
         return ResultSet.success().put("checks", checks);
