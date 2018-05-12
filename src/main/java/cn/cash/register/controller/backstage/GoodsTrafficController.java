@@ -7,6 +7,7 @@ package cn.cash.register.controller.backstage;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -30,6 +31,14 @@ public class GoodsTrafficController {
 
     @Resource
     private GoodsTrafficService trafficService;
+
+    /**
+     * 货流页面
+     */
+    @GetMapping
+    public String list() {
+        return "backstage/_goodsTraffic-list";
+    }
 
     /**
      * 商品进货
@@ -69,9 +78,9 @@ public class GoodsTrafficController {
      * 货流分页查询
      */
     @ResponseBody
-    @RequestMapping(value = "/queryList")
+    @RequestMapping(value = "/queryPage")
     public ResultSet queryList(GoodsTrafficQueryRequest request) {
         PageInfo<GoodsTraffic> traffics = trafficService.queryList(request);
-        return ResultSet.success().put("traffics", traffics);
+        return ResultSet.success().put("page", traffics);
     }
 }
