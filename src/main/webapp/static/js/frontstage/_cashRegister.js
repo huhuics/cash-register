@@ -357,6 +357,7 @@ var vm = new Vue({
             this.vip_info.discount = member.memberDiscount;
         },
         toCheckout: function() { // 去收款
+        	this.reset_payChenals();
             var _self = this;
             layer.open({
                 type: 1,
@@ -393,27 +394,19 @@ var vm = new Vue({
             });
         },
         checkout_all_cash: function() {
+        	this.reset_payChenals();
         	this.payChenals.payChenal_cash.amount = this.summary_price;
-        	this.payChenals.payChenal_unionpay.amount = 0;
-        	this.payChenals.payChenal_alipay.amount = 0;
-        	this.payChenals.payChenal_wcpay.amount = 0;
         },
         checkout_all_alipay: function() {
-        	this.payChenals.payChenal_cash.amount = 0;
-        	this.payChenals.payChenal_unionpay.amount = 0;
+        	this.reset_payChenals();
         	this.payChenals.payChenal_alipay.amount = this.summary_price;
-        	this.payChenals.payChenal_wcpay.amount = 0;
         },
         checkout_all_unionpay: function() {
-        	this.payChenals.payChenal_cash.amount = 0;
+        	this.reset_payChenals();
         	this.payChenals.payChenal_unionpay.amount = this.summary_price;
-        	this.payChenals.payChenal_alipay.amount = 0;
-        	this.payChenals.payChenal_wcpay.amount = 0;
         },
         checkout_all_wcpay: function() {
-        	this.payChenals.payChenal_cash.amount = 0;
-        	this.payChenals.payChenal_unionpay.amount = 0;
-        	this.payChenals.payChenal_alipay.amount = 0;
+        	this.reset_payChenals();
         	this.payChenals.payChenal_wcpay.amount = this.summary_price;
         },
         checkPayChenals: function() {
@@ -465,6 +458,9 @@ var vm = new Vue({
         },
         reset_vip_info: function() {
             this.vip_info = cloneJsonObj(vip_info);
+        },
+        reset_payChenals: function() {
+        	this.payChenals = cloneJsonObj(payChenals);
         },
         summary: function() { // 计算小计与统计数据
             var _totalCount = 0;
