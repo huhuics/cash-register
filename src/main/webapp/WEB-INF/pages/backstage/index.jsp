@@ -39,13 +39,13 @@
                     <li class="active">
                         <a href="#dashboard" @click="menuClick"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
                     </li>
-                    <li class="treeview"><a href="#"><i class="fa fa-circle-o"></i><span>销售</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                    <li class="treeview"><a href="#"><i class="fa fa-pie-chart"></i><span>销售</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                         <ul class="treeview-menu">
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>营业概况</a></li>
+                            <li><a href="#sales/queryBasicFacts" @click="menuClick"><i class="fa fa-bar-chart"></i>营业概况</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>销售单据</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>日结记录</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>销售统计</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>交接班记录</a></li>
+                            <li><a href="#sales/queryExchangeJobs" @click="menuClick"><i class="fa fa-exchange"></i>交接班记录</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>现金收支明细</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>营业报表</a></li>
                         </ul>

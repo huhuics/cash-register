@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,6 +40,14 @@ public class SalesController {
     private SalesService       salesService;
 
     /**
+     * 查询交接班记录页面
+     */
+    @GetMapping(value = "/queryExchangeJobs")
+    public String queryExchangeJobsPage() {
+        return "backstage/_sales-exchangeJobs";
+    }
+
+    /**
      * 查询交接班记录
      */
     @ResponseBody
@@ -46,6 +55,14 @@ public class SalesController {
     public ResultSet queryExchangeJobs(ExchangeJobQueryRequest request) {
         List<ExchangeJobDetail> exchangeJobs = exchangeJobService.query(request);
         return ResultSet.success().put("exchangeJobs", exchangeJobs);
+    }
+
+    /**
+     * 查询营业概况页面
+     */
+    @GetMapping(value = "/queryBasicFacts")
+    public String queryBasicFactsPage() {
+        return "backstage/_sales-basicFacts";
     }
 
     /**

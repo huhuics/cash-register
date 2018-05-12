@@ -5,33 +5,13 @@ pageEncoding="UTF-8"%>
 <html>
 
 <head>
-    <title>库存变动明细查询</title>
+    <title>交接班记录</title>
 </head>
 
 <body>
-    <div id="stockFlowListDiv" v-cloak>
+    <div id="salesExchangeJobsDiv" v-cloak>
         <div>
             <div class="grid-btn">
-                <div class="form-group col-xs-2">
-                    <select class="form-control" v-model="q.flowType">
-                        <option value="">全部变动类型</option>
-                        <option value="checkout">商品销售</option>
-                        <option value="refund">退款</option>
-                        <option value="cancel">反结账</option>
-                        <option value="traffic_in">货流进货</option>
-                        <option value="traffic_out">货流出库</option>
-                        <option value="traffic_out_supplier">货流退货</option>
-                        <option value="goods_lose">商品报损</option>
-                        <option value="goods_stock_edit">编辑库存</option>
-                    </select>
-                </div>
-                <div class="form-group col-xs-3">
-                    <input type="text" class="form-control" v-model="q.goodsName" placeholder="商品名称">
-                </div>
-                <div class="form-group col-xs-3">
-                    <input type="text" class="form-control" v-model="q.barCode" placeholder="商品条码">
-                </div>
-                <div class="clearfix"></div>
                 <div class="form-group col-xs-8">
                     <div class="input-group">
                         <input type="text" class="form-control" v-model="q.gmtCreateDown" id="datetimepickerAfter" placeholder="起始时间 yyyy-MM-dd hh:mm:ss">
@@ -63,35 +43,40 @@ pageEncoding="UTF-8"%>
             <div style="width: 100%">
                 <table class="table table-bordered tableStyle">
                     <thead>
-                        <th>序号</th>
-                        <th>商品名称</th>
-                        <th>商品条码</th>
-                        <th>变动类型</th>
-                        <th>变动数量</th>
-                        <th>校正库存数量</th>
-                        <th>外部流水号</th>
-                        <th>备注</th>
-                        <th>日期</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                        <th>收银员</th>
+                        <th>收银总额</th>
+                        <th>现金支付</th>
+                        <th>储值卡支付</th>
+                        <th>银联支付</th>
+                        <th>支付宝支付</th>
+                        <th>微信支付</th>
+                        <th>pettyCashAmount</th>
+                        <th>paidAmount</th>
+                        <th>isfinished</th>
                     </thead>
                     <tbody>
-                        <tr v-for="(stockFlow, index) in stockFlowList">
-                            <td>{{index + 1}}</td>
-                            <td>{{stockFlow.goodsName}}</td>
-                            <td>{{stockFlow.barCode}}</td>
-                            <td>{{stockFlow.flowType}}</td>
-                            <td>{{stockFlow.flowCount}}</td>
-                            <td>{{stockFlow.checkCount}}</td>
-                            <td>{{stockFlow.outBizNo}}</td>
-                            <td>{{stockFlow.remark}}</td>
-                            <td>{{stockFlow.gmtUpdate}}</td>
-                            <td>{{stockFlow.gmtCreate}}</td>
+                        <tr v-for="exchangeJobDetail in exchangeJobDetailList">
+                            <td>{{exchangeJobDetail.startTime}}</td>
+                            <td>{{exchangeJobDetail.endTime}}</td>
+                            <td>{{exchangeJobDetail.sellerNo}}</td>
+                            <td>{{exchangeJobDetail.checkoutTotalAmount}}</td>
+                            <td>{{exchangeJobDetail.cashAmount}}</td>
+                            <td>{{exchangeJobDetail.balanceAmount}}</td>
+                            <td>{{exchangeJobDetail.unionpayAmount}}</td>
+                            <td>{{exchangeJobDetail.alipayAmount}}</td>
+                            <td>{{exchangeJobDetail.wcpayAmount}}</td>
+                            <td>{{exchangeJobDetail.pettyCashAmount}}</td>
+                            <td>{{exchangeJobDetail.paidAmount}}</td>
+                            <td>{{exchangeJobDetail.isfinished}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    <script src="${ctx}/static/js/backstage/_stock-flow-list.js"></script>
+    <script src="${ctx}/static/js/backstage/_sales-exchangeJobs.js"></script>
 </body>
 
 </html>
