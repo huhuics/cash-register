@@ -76,4 +76,12 @@ public class SalesController {
         return ResultSet.success().put("basicFacts", basicFacts);
     }
 
+    /**
+     * 查询销售单据页面
+     */
+    @GetMapping(value = "/tradeDetail")
+    public String salesTradeDetailList() {
+        return "backstage/_sales-tradeDetail-list";
+    }
+
 }
