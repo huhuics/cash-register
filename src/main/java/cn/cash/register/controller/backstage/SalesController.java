@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -71,6 +72,30 @@ public class SalesController {
     public ResultSet queryGoodsSaleStatistics(TradeGoodsDetailQueryRequest request) {
         PageInfo<GoodsSaleStatistics> ret = salesService.queryGoodsSaleStatistics(request);
         return ResultSet.success().put("ret", ret);
+    }
+
+    /**
+     * 查询交接班记录页面
+     */
+    @GetMapping(value = "/queryExchangeJobs")
+    public String queryExchangeJobsPage() {
+        return "backstage/_sales-exchangeJobs";
+    }
+
+    /**
+     * 查询营业概况页面
+     */
+    @GetMapping(value = "/queryBasicFacts")
+    public String queryBasicFactsPage() {
+        return "backstage/_sales-basicFacts";
+    }
+
+    /**
+     * 查询销售单据页面
+     */
+    @GetMapping(value = "/tradeDetail")
+    public String salesTradeDetailList() {
+        return "backstage/_sales-tradeDetail-list";
     }
 
 }
