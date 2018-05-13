@@ -373,7 +373,11 @@ var vm = new Vue({
                         layer.msg(_msg);
                         return;
                     }
-                    _self.payChenals.payChenal_cash.amount -= _self.change;
+                    if(_self.change < 0) {
+                    	layer.msg('收款金额不足！');
+                        return;
+                    }
+                    _self.payChenals.payChenal_cash.amount -= _self.change; // 所有找零都用现金，该值可能会为负
                     $.ajax({
                         url: basePath + "/cashier/trade/checkout",
                         data: {
@@ -431,24 +435,19 @@ var vm = new Vue({
             if (countSelected > 2) {
                 return '付款通道不能多于2个';
             }
-            if (amountSelected < this.goods_item.totalActualAmount) {
-                return '付款金额不足';
-            }
             return null;
         },
         payChenalsStr: function() {
             var str = '[';
-            if (this.payChenals.payChenal_cash.amount > 0) {
-                str += '{chenal: "cash",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
-            }
+            str += '{chenal: "cash",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
             if (this.payChenals.payChenal_unionpay.amount > 0) {
-                str += '{chenal: "cash",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
+                str += ',{chenal: "unionpay",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
             }
             if (this.payChenals.payChenal_alipay.amount > 0) {
-                str += '{chenal: "cash",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
+                str += ',{chenal: "alipay",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
             }
             if (this.payChenals.payChenal_wcpay.amount > 0) {
-                str += '{chenal: "cash",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
+                str += ',{chenal: "wcpay",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
             }
             str += ']'
             return str;
