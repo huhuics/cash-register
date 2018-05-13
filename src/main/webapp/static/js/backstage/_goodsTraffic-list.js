@@ -210,6 +210,7 @@ var vm = new Vue({
             }).trigger("reloadGrid");
         },
         datetimepickerLoad: function() {
+        	var _self = this;
 			$('#datetimepickerAfter').datetimepicker({
 				language : 'zh-CN',
 				todayHighlight : 1,
@@ -220,7 +221,7 @@ var vm = new Vue({
 			});
 			$('#datetimepickerAfter').datetimepicker().on('hide', function(ev) {
 				var value = $("#datetimepickerAfter").val();
-				vm.q.createTimeDown = value;
+				_self.q.createTimeDown = value;
 			});
 			$('#datetimepickerBefore').datetimepicker({
 				language : 'zh-CN',
@@ -232,7 +233,7 @@ var vm = new Vue({
 			});
 			$('#datetimepickerBefore').datetimepicker().on('hide', function(ev) {
 				var value = $("#datetimepickerBefore").val();
-				vm.q.createTimeUp = value;
+				_self.q.createTimeUp = value;
 			});
 		},
 		rangeToday: function() {

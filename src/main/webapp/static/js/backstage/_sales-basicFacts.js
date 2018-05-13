@@ -25,6 +25,7 @@ var vm = new Vue({
         },
         exportSalesBasicFacts: function() {},
         datetimepickerLoad: function() {
+        	var _self = this;
 			$('#datetimepickerAfter').datetimepicker({
 				language : 'zh-CN',
 				todayHighlight : 1,
@@ -35,7 +36,7 @@ var vm = new Vue({
 			});
 			$('#datetimepickerAfter').datetimepicker().on('hide', function(ev) {
 				var value = $("#datetimepickerAfter").val();
-				vm.q.timeDown = value;
+				_self.q.timeDown = value;
 			});
 			$('#datetimepickerBefore').datetimepicker({
 				language : 'zh-CN',
@@ -47,7 +48,7 @@ var vm = new Vue({
 			});
 			$('#datetimepickerBefore').datetimepicker().on('hide', function(ev) {
 				var value = $("#datetimepickerBefore").val();
-				vm.q.timeUp = value;
+				_self.q.timeUp = value;
 			});
 		},
 		rangeToday: function() {

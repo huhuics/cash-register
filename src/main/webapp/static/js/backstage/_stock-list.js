@@ -1,6 +1,6 @@
 /*
  * 本文件依赖：
- * 1. var-jqGrid-option.js
+ * 1. ./_goods-list/var-jqGrid-option.js
  * 请按照上述顺序，在文件同页面之前引用
  */
 $(function() {

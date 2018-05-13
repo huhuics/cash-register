@@ -27,6 +27,7 @@ var vm = new Vue({
             });
         },
         datetimepickerLoad: function() {
+        	var _self = this;
 			$('#datetimepickerAfter').datetimepicker({
 				language : 'zh-CN',
 				todayHighlight : 1,
@@ -37,7 +38,7 @@ var vm = new Vue({
 			});
 			$('#datetimepickerAfter').datetimepicker().on('hide', function(ev) {
 				var value = $("#datetimepickerAfter").val();
-				vm.q.gmtCreateDown = value;
+				_self.q.gmtCreateDown = value;
 			});
 			$('#datetimepickerBefore').datetimepicker({
 				language : 'zh-CN',
@@ -49,7 +50,7 @@ var vm = new Vue({
 			});
 			$('#datetimepickerBefore').datetimepicker().on('hide', function(ev) {
 				var value = $("#datetimepickerBefore").val();
-				vm.q.gmtCreateUp = value;
+				_self.q.gmtCreateUp = value;
 			});
 		},
 		rangeToday: function() {

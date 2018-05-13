@@ -55,7 +55,7 @@ function beforeRemove(treeId, treeNode) {
  * 删除
  */
 function onRemove(e, treeId, treeNode) {
-	$.ajax({
+    $.ajax({
         url: basePath + "/admin/goods/deleteGoodsCategory",
         data: { 'id': treeNode.id },
         success: function(result) {
@@ -86,7 +86,7 @@ function beforeRename(treeId, treeNode, newName, isCancel) {
  * 编辑
  */
 function onRename(e, treeId, treeNode, isCancel) {
-	$.ajax({
+    $.ajax({
         url: basePath + "/admin/goods/updateGoodsCategory",
         data: { 'id': treeNode.id, 'categoryName': treeNode.name },
         success: function(result) {
@@ -115,18 +115,22 @@ function addHoverDom(treeId, treeNode) {
         var zTree = $.fn.zTree.getZTreeObj("categoryTree");
         var parentId = treeNode.id;
         layer.open({
-        	type: 1, skin: 'layui-layer-lan', title: "添加分类", area: '350px', shadeClose: false,
+            type: 1,
+            skin: 'layui-layer-lan',
+            title: "添加分类",
+            area: '350px',
+            shadeClose: false,
             content: jQuery("#goodsCategoryAddDiv"),
             btn: ['提交', '取消'],
             btn1: function(index) {
-            	var categoryName = $("#goodsCategoryAddInput").val();
-            	if(categoryName.length == 0) {
-            		layer.alert('输入分类为空');
-            		return;
-            	}
+                var categoryName = $("#goodsCategoryAddInput").val();
+                if (categoryName.length == 0) {
+                    layer.alert('输入分类为空');
+                    return;
+                }
                 $.ajax({
                     url: basePath + "/admin/goods/addGoodsCategory",
-                    data: {'categoryName':categoryName,'parentId':parentId},
+                    data: { 'categoryName': categoryName, 'parentId': parentId },
                     success: function(result) {
                         if (result.code == "00") {
                             layer.msg('添加成功');
