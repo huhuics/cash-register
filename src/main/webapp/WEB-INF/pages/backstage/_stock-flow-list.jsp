@@ -10,7 +10,6 @@ pageEncoding="UTF-8"%>
 
 <body>
     <div id="stockFlowListDiv" v-cloak>
-        <!-- 分页表格 -->
         <div>
             <div class="grid-btn">
                 <div class="form-group col-xs-2">
@@ -76,7 +75,7 @@ pageEncoding="UTF-8"%>
                     </thead>
                     <tbody>
                         <tr v-for="(stockFlow, index) in stockFlowList">
-                            <td>{{index}}</td>
+                            <td>{{index + 1}}</td>
                             <td>{{stockFlow.goodsName}}</td>
                             <td>{{stockFlow.barCode}}</td>
                             <td>{{stockFlow.flowType}}</td>
@@ -91,7 +90,6 @@ pageEncoding="UTF-8"%>
                 </table>
             </div>
         </div>
-        <!-- /.分页表格 -->
     </div>
     <script src="${ctx}/static/js/backstage/_stock-flow-list.js"></script>
 </body>

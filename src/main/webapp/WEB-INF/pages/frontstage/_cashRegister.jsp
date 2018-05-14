@@ -28,17 +28,17 @@
                     <tr v-for="item in goods_list" style="height: 30px; line-height: 30px;">
                         <td>{{item.barCode}}</td>
                         <td>{{item.goodsName}}</td>
-                        <td>{{item.totalAmount}}</td>
+                        <td>{{item.salesPrice}}</td>
                         <td>
                             <input class="form-control" type="text" v-model="item.goodsDiscount" @blur="editItemDiscountById(item.goodsId,item.goodsDiscount)" @keyup.enter="editItemDiscountById(item.goodsId,item.goodsDiscount)">
                         </td>
                         <td>
-                            <input class="form-control" type="text" v-model="item.totalActualAmount" @blur="editItemPriceById(item.goodsId,item.totalActualAmount)" @keyup.enter="editItemPriceById(item.goodsId,item.totalActualAmount)">
+                            <input class="form-control" type="text" v-model="item.actualAmount" @blur="editItemPriceById(item.goodsId,item.actualAmount)" @keyup.enter="editItemPriceById(item.goodsId,item.actualAmount)">
                         </td>
                         <td>
                             <input class="form-control" type="text" v-model="item.goodsCount" @blur="editItemCountById(item.goodsId,item.goodsCount)" @keyup.enter="editItemCountById(item.goodsId,item.goodsCount)">
                         </td>
-                        <td>{{item.priceTotal}}</td>
+                        <td>{{item.totalActualAmount}}</td>
                         <td>
                             <button class="btn btn-danger" type="button" @click="deleteItemById(item.goodsId)">删除</button>
                         </td>

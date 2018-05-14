@@ -1,25 +1,25 @@
 $(function() {
     $("#jqGrid").jqGrid({
-        url: basePath + '/admin/seller/achievement/queryPage',
+        url: basePath + '/cashier/trade/queryTradeDetailList',
         datatype: "json",
         colModel: [
-        	{ label: '收银员业绩ID', name: 'id', hidden: true, key: true },
+        	{ label: '销售单据ID', name: 'id', hidden: true, key: true },
+            { label: '流水号', name: 'tradeNo', index: 'trade_No', width: 80 },
             { label: '日期', name: 'tradeTime', index: 'trade_Time', width: 80 },
+            { label: '类型', name: 'tradeType', index: 'trade_Type', width: 80 },
             { label: '收银员', name: 'sellerNo', index: 'seller_No', width: 80 },
-            { label: '商品名称', name: 'goodsName', index: 'goods_Name', width: 80 },
-            { label: '颜色', name: 'goodsColor', index: 'goods_Color', width: 80 },
-            { label: '尺码', name: 'goodsSize', index: 'goods_Size', width: 80 },
-            { label: '销售价', name: 'totalAmount.amount', index: 'total_Amount', width: 80 },
-            { label: '数量', name: 'goodsCount', index: 'goods_Count', sortable: false, width: 80 },
-            { label: '实收', name: 'totalActualAmount.amount', index: 'total_Actual_Amount', width: 80 },
+            { label: '会员', name: 'memberName', index: 'member_Name', width: 80 },
+            { label: '商品数量', name: 'goodsCount', index: 'goods_Count', width: 80 },
+            { label: '商品原价', name: 'totalAmount.amount', index: 'total_Amount', width: 80 },
+            { label: '实收金额', name: 'totalActualAmount.amount', index: 'total_Actual_Amount', width: 80 },
             { label: '利润', name: 'profitAmount.amount', index: 'profit_Amount', width: 80 },
-            { label: '类型', name: 'tradeType', index: 'trade_Type', width: 80 }
+            { label: '导购员', name: 'shopperNo', index: 'shopperNo', width: 80 },
         ],
         viewrecords: true, height: "auto", width: "100%",
         rowNum: 10, rowList: [10, 30, 50], 
         rownumbers: true, rownumWidth: 45,
         shrinkToFit: true, autowidth: true,
-        multiselect: false,
+        multiselect: true,
         sortname: "gmt_Update", sortorder: "desc",
         pager: "#jqGridPager",
         jsonReader: { root: "page.list", page: "page.pageNum", total: "page.pages", records: "page.total" },
@@ -27,18 +27,17 @@ $(function() {
     });
 });
 
-
-
 var vm = new Vue({
-    el: '#sellerAchievementListDiv',
+    el: '#salesTradeDetailListDiv',
     data: {
         q: {
-        	bizNo: '',
-        	categoryName: '',
+        	sellerNo: '',
+        	payChenal: '',
+        	tradeType: '',
         	tradeTimeUp: null,
         	tradeTimeDown: null,
+        	tradeNo: null,
         },
-        goods_categorys: [], // 全部分类
         sellers: [], // 全部收银员
     },
     methods: {
@@ -46,21 +45,26 @@ var vm = new Vue({
             this.reloadPage();
         },
         resetSearch: function() {
-            this.q.bizNo = '';
-            this.q.categoryName = '';
+            this.q.sellerNo = '';
+            this.q.payChenal = '';
+            this.q.tradeType = '';
             this.q.tradeTimeUp = null;
             this.q.tradeTimeDown = null;
+            this.q.tradeNo = null;
             this.reloadPage();
         },
-        exportSellerAchievement: function() {},
+        exportSalesTradeDetail: function() {},
         reloadPage: function() {
             var page = $("#jqGrid").jqGrid('getGridParam', 'page');
+            var _self = this;
             $("#jqGrid").jqGrid('setGridParam', {
                 postData: {
-                    'bizNo': this.q.bizNo,
-                    'categoryName': this.q.categoryName,
-                    'tradeTimeUp': this.q.tradeTimeUp,
-                    'tradeTimeDown': this.q.tradeTimeDown
+                    'sellerNo': _self.q.sellerNo,
+                    'payChenal': _self.q.payChenal,
+                    'tradeType': _self.q.tradeType,
+                    'tradeTimeUp': _self.q.tradeTimeUp,
+                    'tradeTimeDown': _self.q.tradeTimeDown,
+                    'tradeNo': _self.q.tradeNo,
                 },
                 page: page
             }).trigger("reloadGrid");
@@ -134,21 +138,7 @@ var vm = new Vue({
 			this.q.tradeTimeDown = dateFormater(getMonthStart(getLastMonthEnd(_now)));
 			this.q.tradeTimeUp = dateFormater(getLastMonthEnd(_now));
 		},
-        loadGoodsCategorys: function() { // 加载所有商品分类列表
-        	var _self = this;
-            $.ajax({
-                url: basePath + "/admin/goods/getGoodsCategoryList",
-                data:  { 'parentCategoryId': 0 },
-                success: function(result) {
-                    if (result.code == "00") {
-                    	_self.goods_categorys = result.list;
-                    } else {
-                        layer.alert("加载商品分类列表出错" + result.msg);
-                    }
-                }
-            });
-        },
-        loadSellers: function() { // 加载所有收银员列表
+		loadSellers: function() { // 加载所有收银员列表
         	var _self = this;
         	$.ajax({
         		type: 'GET',
@@ -166,7 +156,6 @@ var vm = new Vue({
     },
     mounted: function() {
     	this.datetimepickerLoad();
-    	this.loadGoodsCategorys();
     	this.loadSellers();
     }
 });

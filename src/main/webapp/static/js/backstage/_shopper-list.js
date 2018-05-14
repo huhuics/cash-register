@@ -138,25 +138,6 @@ var vm = new Vue({
             });
         },
         del: function() {
-//        	var shopperIds = getSelectedRows();
-//        	if (isBlank(shopperIds) || shopperIds.length < 1) {
-//                return;
-//            }
-//        	var _self = this;
-//        	confirm("确定删除这" + shopperIds.length + "个导购员吗?", function() {
-//                $.ajax({
-//                    url: basePath + "/admin/shopper/deleteShopperInfo",
-//                    data: { 'idStr': shopperIds + '' },
-//                    success: function(result) {
-//                        if (result.code == "00") {
-//                            layer.msg('删除成功');
-//                            _self.reloadPage();
-//                        } else {
-//                            layer.alert(result.msg);
-//                        }
-//                    }
-//                });
-//            });
         	var shopperId = getSelectedRow();
         	if (isBlank(shopperId)) {
                 return;

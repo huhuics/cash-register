@@ -1,24 +1,21 @@
 var vm = new Vue({
-    el: '#stockFlowListDiv',
+    el: '#salesExchangeJobsDiv',
     data: {
         q: {
-            flowType: '',
-            goodsName: null,
-            barCode: null,
             gmtCreateUp: null,
             gmtCreateDown: null,
         },
-        stockFlowList: [],
+        exchangeJobDetailList: [],
     },
     methods: {
         search: function() {
             var _self = this;
             $.ajax({
-                url: basePath + '/admin/stock/flow/queryList',
+                url: basePath + '/admin/sales/queryExchangeJobs',
                 data: _self.q,
                 success: function(result) {
                     if (result.code == "00") {
-                        _self.stockFlowList = result.list;
+                        _self.exchangeJobDetailList = result.exchangeJobs;
                         layer.msg('查询成功');
                     } else {
                         layer.alert(result.msg);

@@ -10,9 +10,21 @@ $(window).on('resize', function() {
 var vm = new Vue({
     el:'#app',
     data:{
-    	cashRegisterPage:"frontstage/cashRegister",
+    	iframeSrc : "cashRegister",
     },
     methods: {
-        
+    	menuClick : function(url) {
+			var url = (event.currentTarget + '').split('#')[1];
+			vm.iframeSrc = url;
+
+			var $currentA = $("a[href='#" + url + "']");
+
+			// 导航菜单展开
+			$(".sidebar-menu li").removeClass("active");
+			$(".treeview-menu li").removeClass("active");
+			$currentA.parents("li").addClass("active");
+
+			vm.navTitle = $currentA.text();
+		}
     }
 });

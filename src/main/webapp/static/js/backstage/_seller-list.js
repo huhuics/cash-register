@@ -1,101 +1,54 @@
 $(function() {
-    $("#jqGrid")
-        .jqGrid({
-            url: basePath + '/admin/seller/list',
-            datatype: "json",
-            colModel: [{
-                    label: '收银员ID',
-                    name: 'id',
-                    hidden: true,
-                    key: true
-                },
-                {
-                    label: '所属门店',
-                    name: 'partOfShop',
-                    index: 'part_Of_Shop',
-                    width: 200
-                },
-                {
-                    label: '编号',
-                    name: 'sellerNo',
-                    index: 'seller_No',
-                    width: 80
-                },
-                {
-                    label: '姓名',
-                    name: 'name',
-                    index: 'name',
-                    width: 80
-                },
-                {
-                    label: '角色',
-                    name: 'role',
-                    index: 'role',
-                    formatter: function(value, options, row) {
-                        if (value == 'seller') {
-                            return '收银员';
-                        }
-                        if (value == 'admin') {
-                            return '管理员';
-                        }
-                        return '未知角色:' + value;
-                    },
-                    width: 80
-                },
-                {
-                    label: '密码',
-                    name: 'password',
-                    index: 'password',
-                    sortable: false,
-                    width: 100
-                },
-                {
-                    label: '电话',
-                    name: 'phone',
-                    index: 'phone',
-                    width: 100
-                },
-                {
-                    label: '状态',
-                    name: 'status',
-                    index: 'status',
-                    width: 80,
-                    formatter: function(value, options, row) {
-                        if (value == '1') {
-                            return '<span class="label label-success">启用</span>';
-                        }
-                        if (value == '0') {
-                            return '<span class="label label-danger">禁用</span>';
-                        }
-                        return '未知状态:' + value;
+    $("#jqGrid").jqGrid({
+        url: basePath + '/admin/seller/list',
+        datatype: "json",
+        colModel: [{ label: '收银员ID', name: 'id', hidden: true, key: true },
+            { label: '所属门店', name: 'partOfShop', index: 'part_Of_Shop', width: 200 },
+            { label: '编号', name: 'sellerNo', index: 'seller_No', width: 80 },
+            { label: '姓名', name: 'name', index: 'name', width: 80 },
+            {
+                label: '角色',
+                name: 'role',
+                index: 'role',
+                formatter: function(value, options, row) {
+                    if (value == 'seller') {
+                        return '收银员';
                     }
-                }
-            ],
-            viewrecords: true,
-            height: "auto",
-            width: "100%",
-            rowNum: 10,
-            rowList: [10, 30, 50],
-            rownumbers: true,
-            rownumWidth: 45,
-            shrinkToFit: true,
-            autowidth: true,
-            multiselect: true,
-            sortname: "gmt_Update",
-            sortorder: "desc",
-            pager: "#jqGridPager",
-            jsonReader: {
-                root: "page.list",
-                page: "page.pageNum",
-                total: "page.pages",
-                records: "page.total"
+                    if (value == 'admin') {
+                        return '管理员';
+                    }
+                    return '未知角色:' + value;
+                },
+                width: 80
             },
-            prmNames: {
-                page: "pageNum",
-                rows: "pageSize",
-                order: "order"
+            { label: '密码', name: 'password', index: 'password', sortable: false, width: 100 },
+            { label: '电话', name: 'phone', index: 'phone', width: 100 },
+            {
+                label: '状态',
+                name: 'status',
+                index: 'status',
+                width: 80,
+                formatter: function(value, options, row) {
+                    if (value == '1') {
+                        return '<span class="label label-success">启用</span>';
+                    }
+                    if (value == '0') {
+                        return '<span class="label label-danger">禁用</span>';
+                    }
+                    return '未知状态:' + value;
+                }
             }
-        });
+        ],
+        viewrecords: true, height: "auto", width: "100%",
+        rowNum: 10, rowList: [10, 30, 50], 
+        rownumbers: true, rownumWidth: 45,
+        shrinkToFit: true, autowidth: true,
+        multiselect: true,
+        sortname: "gmt_Update", sortorder: "desc",
+        pager: "#jqGridPager",
+        jsonReader: { root: "page.list", page: "page.pageNum", total: "page.pages", records: "page.total" },
+        prmNames: { page: "pageNum", rows: "pageSize", order: "order" }
+    });
 });
 
 var vm = new Vue({
@@ -122,21 +75,22 @@ var vm = new Vue({
     },
     methods: {
         search: function() {
-            vm.reload();
+            this.reloadPage();
         },
         resetSearch: function() {
-            vm.q.sellerNo = null;
-            vm.q.name = null;
-            vm.q.phone = null;
-            vm.q.status = '';
-            vm.reload();
+            this.q.sellerNo = null;
+            this.q.name = null;
+            this.q.phone = null;
+            this.q.status = '';
+            this.reloadPage();
         },
         add: function() {
-            vm.resetSeller();
-            vm.seller.status = true; // 默认状态为启用
-            vm.seller.role = 'seller'; // 默认角色为收银员
-            vm.seller.cashPermission = ["option1", "option2"]; // 默认收银端权限
-            vm.seller.backgroundPermission = ["option2", "option3"]; // 默认后台权限
+            this.resetSeller();
+            this.seller.status = true; // 默认状态为启用
+            this.seller.role = 'seller'; // 默认角色为收银员
+            this.seller.cashPermission = ["option1", "option2"]; // 默认收银端权限
+            this.seller.backgroundPermission = ["option2", "option3"]; // 默认后台权限
+            var _self = this;
             layer.open({
                 type: 1,
                 skin: 'layui-layer-lan',
@@ -149,14 +103,14 @@ var vm = new Vue({
                     $.ajax({
                         url: basePath + "/admin/seller/addOrUpdate",
                         data: {
-                            'sellerNo': vm.seller.sellerNo,
-                            'name': vm.seller.name,
-                            'password': vm.seller.password,
-                            'phone': vm.seller.phone,
-                            'role': vm.seller.role,
-                            'status': vm.seller.status,
-                            'cashPermission': JSON.stringify(vm.seller.cashPermission),
-                            'backgroundPermission': JSON.stringify(vm.seller.backgroundPermission)
+                            'sellerNo': _self.seller.sellerNo,
+                            'name': _self.seller.name,
+                            'password': _self.seller.password,
+                            'phone': _self.seller.phone,
+                            'role': _self.seller.role,
+                            'status': _self.seller.status,
+                            'cashPermission': JSON.stringify(_self.seller.cashPermission),
+                            'backgroundPermission': JSON.stringify(_self.seller.backgroundPermission)
                         },
                         dataType: "json",
                         success: function(result) {
@@ -166,7 +120,7 @@ var vm = new Vue({
                             } else {
                                 layer.alert(result.msg);
                             }
-                            vm.reload();
+                            _self.reloadPage();
                         }
                     });
                 }
@@ -177,7 +131,8 @@ var vm = new Vue({
             if (isBlank(sellerId)) {
                 return;
             }
-            vm.resetSeller();
+            this.resetSeller();
+            var _self = this;
             $.ajax({
                 type: "GET",
                 url: basePath + "/admin/seller/getById",
@@ -187,15 +142,15 @@ var vm = new Vue({
                 dataType: "json",
                 success: function(result) {
                     if (result.code == "00") {
-                        vm.seller.id = result.seller.id;
-                        vm.seller.sellerNo = result.seller.sellerNo;
-                        vm.seller.name = result.seller.name;
-                        vm.seller.password = result.seller.password;
-                        vm.seller.phone = result.seller.phone;
-                        vm.seller.role = result.seller.role;
-                        vm.seller.status = result.seller.status;
-                        vm.seller.cashPermission = JSON.parse(result.seller.cashPermission);
-                        vm.seller.backgroundPermission = JSON.parse(result.seller.backgroundPermission);
+                        _self.seller.id = result.seller.id;
+                        _self.seller.sellerNo = result.seller.sellerNo;
+                        _self.seller.name = result.seller.name;
+                        _self.seller.password = result.seller.password;
+                        _self.seller.phone = result.seller.phone;
+                        _self.seller.role = result.seller.role;
+                        _self.seller.status = result.seller.status;
+                        _self.seller.cashPermission = JSON.parse(result.seller.cashPermission);
+                        _self.seller.backgroundPermission = JSON.parse(result.seller.backgroundPermission);
                         layer.open({
                             type: 1,
                             skin: 'layui-layer-lan',
@@ -209,15 +164,15 @@ var vm = new Vue({
                                     type: "POST",
                                     url: basePath + "/admin/seller/addOrUpdate",
                                     data: {
-                                        'id': vm.seller.id, // 编辑收银员时必传id
-                                        'sellerNo': vm.seller.sellerNo,
-                                        'name': vm.seller.name,
-                                        'password': vm.seller.password,
-                                        'phone': vm.seller.phone,
-                                        'role': vm.seller.role,
-                                        'status': vm.seller.status,
-                                        'cashPermission': JSON.stringify(vm.seller.cashPermission),
-                                        'backgroundPermission': JSON.stringify(vm.seller.backgroundPermission)
+                                        'id': _self.seller.id, // 编辑收银员时必传id
+                                        'sellerNo': _self.seller.sellerNo,
+                                        'name': _self.seller.name,
+                                        'password': _self.seller.password,
+                                        'phone': _self.seller.phone,
+                                        'role': _self.seller.role,
+                                        'status': _self.seller.status,
+                                        'cashPermission': JSON.stringify(_self.seller.cashPermission),
+                                        'backgroundPermission': JSON.stringify(_self.seller.backgroundPermission)
                                     },
                                     dataType: "json",
                                     success: function(result) {
@@ -227,7 +182,7 @@ var vm = new Vue({
                                         } else {
                                             layer.alert(result.msg);
                                         }
-                                        vm.reload();
+                                        _self.reloadPage();
                                     }
                                 });
                             }
@@ -239,13 +194,14 @@ var vm = new Vue({
             });
         },
         del: function() {
-        	vm.resetSeller();
+            this.resetSeller();
             var sellerId = getSelectedRow();
             var sellerNo = getSelectedRowValue('sellerNo');
             var name = getSelectedRowValue('name');
             if (isBlank(sellerId)) {
                 return;
             }
+            var _self = this;
             confirm("确定删除[" + name + "(" + sellerNo + ")]这个收银员吗?", function() {
                 $.ajax({
                     type: "POST",
@@ -257,7 +213,7 @@ var vm = new Vue({
                     success: function(result) {
                         if (result.code == "00") {
                             layer.alert('删除成功');
-                            vm.reload();
+                            _self.reloadPage();
                         } else {
                             layer.alert(result.msg);
                         }
@@ -267,26 +223,27 @@ var vm = new Vue({
 
         },
         resetSeller: function() {
-            vm.seller.id = null;
-            vm.seller.partOfShop = null;
-            vm.seller.sellerNo = null;
-            vm.seller.name = null;
-            vm.seller.role = 'seller';
-            vm.seller.password = null;
-            vm.seller.phone = null;
-            vm.seller.status = null;
-            vm.seller.cashPermission = [];
-            vm.seller.backgroundPermission = [];
+            this.seller.id = null;
+            this.seller.partOfShop = null;
+            this.seller.sellerNo = null;
+            this.seller.name = null;
+            this.seller.role = 'seller';
+            this.seller.password = null;
+            this.seller.phone = null;
+            this.seller.status = null;
+            this.seller.cashPermission = [];
+            this.seller.backgroundPermission = [];
         },
-        reload: function() {
-            vm.showList = true;
+        reloadPage: function() {
+            this.showList = true;
+            var _self = this;
             var page = $("#jqGrid").jqGrid('getGridParam', 'page');
             $("#jqGrid").jqGrid('setGridParam', {
                 postData: {
-                    'sellerNo': vm.q.sellerNo,
-                    'name': vm.q.name,
-                    'phone': vm.q.phone,
-                    'status': vm.q.status
+                    'sellerNo': _self.q.sellerNo,
+                    'name': _self.q.name,
+                    'phone': _self.q.phone,
+                    'status': _self.q.status
                 },
                 page: page
             }).trigger("reloadGrid");

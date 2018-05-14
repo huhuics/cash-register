@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+pageEncoding="UTF-8"%>
 <%@ include file="../_header.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
 <head>
-    <title>商品报损查询</title>
+    <title>交接班记录</title>
 </head>
 
 <body>
-    <div id="goodsLoseListDiv" v-cloak>
+    <div id="salesExchangeJobsDiv" v-cloak>
         <div>
             <div class="grid-btn">
                 <div class="form-group col-xs-8">
@@ -40,36 +41,42 @@
                 <div class="clearfix"></div>
             </div>
             <div style="width: 100%">
-	            <table class="table table-bordered tableStyle">
-	            	<thead>
-	            		<th>序号</th>
-	            		<th>操作</th>
-	            		<th>报损时间</th>
-	            		<th>报损门店</th>
-	            		<th>报损金额</th>
-	            		<th>营业额占比</th>
-	            		<th>报损人</th>
-	            		<th>备注</th>
-	            	</thead>
-	            	<tbody>
-	            		<tr v-for="(goodsLose, index) in goodsLoseList">
-	            			<td>{{index}}</td>
-	            			<td><a class="btn btn-link" href="javascript: void(0);">操作</a></td>
-	            			<td>{{goodsLose.gmtCreate}}</td>
-	            			<td>{{goodsLose.shopName}}</td>
-	            			<td>{{goodsLose.totalLoseAmount}}</td>
-	            			<td>{{goodsLose.turnoverPercent}}</td>
-	            			<td>{{goodsLose.operatorNo}}</td>
-	            			<td>{{goodsLose.remark}}</td>
-	            		</tr>
-	            	</tbody>
-	            </table>
-	        </div>
+                <table class="table table-bordered tableStyle">
+                    <thead>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                        <th>收银员</th>
+                        <th>收银总额</th>
+                        <th>现金支付</th>
+                        <th>储值卡支付</th>
+                        <th>银联支付</th>
+                        <th>支付宝支付</th>
+                        <th>微信支付</th>
+                        <th>pettyCashAmount</th>
+                        <th>paidAmount</th>
+                        <th>isfinished</th>
+                    </thead>
+                    <tbody>
+                        <tr v-for="exchangeJobDetail in exchangeJobDetailList">
+                            <td>{{exchangeJobDetail.startTime}}</td>
+                            <td>{{exchangeJobDetail.endTime}}</td>
+                            <td>{{exchangeJobDetail.sellerNo}}</td>
+                            <td>{{exchangeJobDetail.checkoutTotalAmount}}</td>
+                            <td>{{exchangeJobDetail.cashAmount}}</td>
+                            <td>{{exchangeJobDetail.balanceAmount}}</td>
+                            <td>{{exchangeJobDetail.unionpayAmount}}</td>
+                            <td>{{exchangeJobDetail.alipayAmount}}</td>
+                            <td>{{exchangeJobDetail.wcpayAmount}}</td>
+                            <td>{{exchangeJobDetail.pettyCashAmount}}</td>
+                            <td>{{exchangeJobDetail.paidAmount}}</td>
+                            <td>{{exchangeJobDetail.isfinished}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-    
-    <script src="${ctx}/static/js/backstage/_goodsLose-list.js"></script>
-    
+    <script src="${ctx}/static/js/backstage/_sales-exchangeJobs.js"></script>
 </body>
 
 </html>

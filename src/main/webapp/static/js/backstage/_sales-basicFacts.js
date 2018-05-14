@@ -1,24 +1,21 @@
 var vm = new Vue({
-    el: '#stockFlowListDiv',
+    el: '#salesBasicFactsDiv',
     data: {
         q: {
-            flowType: '',
-            goodsName: null,
-            barCode: null,
-            gmtCreateUp: null,
-            gmtCreateDown: null,
+        	timeUp: null,
+        	timeDown: null,
         },
-        stockFlowList: [],
+        salesBasicFacts: [],
     },
     methods: {
         search: function() {
             var _self = this;
             $.ajax({
-                url: basePath + '/admin/stock/flow/queryList',
+                url: basePath + '/admin/sales/queryBasicFacts',
                 data: _self.q,
                 success: function(result) {
                     if (result.code == "00") {
-                        _self.stockFlowList = result.list;
+                        _self.salesBasicFacts = result.basicFacts;
                         layer.msg('查询成功');
                     } else {
                         layer.alert(result.msg);
@@ -26,6 +23,7 @@ var vm = new Vue({
                 }
             });
         },
+        exportSalesBasicFacts: function() {},
         datetimepickerLoad: function() {
         	var _self = this;
 			$('#datetimepickerAfter').datetimepicker({
@@ -38,7 +36,7 @@ var vm = new Vue({
 			});
 			$('#datetimepickerAfter').datetimepicker().on('hide', function(ev) {
 				var value = $("#datetimepickerAfter").val();
-				_self.q.gmtCreateDown = value;
+				_self.q.timeDown = value;
 			});
 			$('#datetimepickerBefore').datetimepicker({
 				language : 'zh-CN',
@@ -50,50 +48,50 @@ var vm = new Vue({
 			});
 			$('#datetimepickerBefore').datetimepicker().on('hide', function(ev) {
 				var value = $("#datetimepickerBefore").val();
-				_self.q.gmtCreateUp = value;
+				_self.q.timeUp = value;
 			});
 		},
 		rangeToday: function() {
 			var _now = new Date();
-			this.q.gmtCreateDown = dateFormater(getDayStart(_now));
-			this.q.gmtCreateUp = dateFormater(getDayEnd(_now));
+			this.q.timeDown = dateFormater(getDayStart(_now));
+			this.q.timeUp = dateFormater(getDayEnd(_now));
 		},
 		rangeYesterday: function() {
 			var _now = new Date();
 			var _yesterday = getLastDay(_now);
-			this.q.gmtCreateDown = dateFormater(getDayStart(_yesterday));
-			this.q.gmtCreateUp = dateFormater(getDayEnd(_yesterday));
+			this.q.timeDown = dateFormater(getDayStart(_yesterday));
+			this.q.timeUp = dateFormater(getDayEnd(_yesterday));
 		},
 		rangeDayBeforeYesterday: function() {
 			var _now = new Date();
 			var _dayBeforeYesterday = getLastDay(getLastDay(_now));
-			this.q.gmtCreateDown = dateFormater(getDayStart(_dayBeforeYesterday));
-			this.q.gmtCreateUp = dateFormater(getDayEnd(_dayBeforeYesterday));
+			this.q.timeDown = dateFormater(getDayStart(_dayBeforeYesterday));
+			this.q.timeUp = dateFormater(getDayEnd(_dayBeforeYesterday));
 		},
 		rangeWeek: function() {
 			var _now = new Date();
-			this.q.gmtCreateDown = dateFormater(getWeekStart(_now));
-			this.q.gmtCreateUp = dateFormater(getWeekEnd(_now));
+			this.q.timeDown = dateFormater(getWeekStart(_now));
+			this.q.timeUp = dateFormater(getWeekEnd(_now));
 		},
 		rangeLastWeek: function() {
 			var _now = new Date();
-			this.q.gmtCreateDown = dateFormater(getLastWeekStart(_now));
-			this.q.gmtCreateUp = dateFormater(getLastWeekEnd(_now));
+			this.q.timeDown = dateFormater(getLastWeekStart(_now));
+			this.q.timeUp = dateFormater(getLastWeekEnd(_now));
 		},
 		range7Days: function() {
 			var _now = new Date();
-			this.q.gmtCreateDown = dateFormater(get7DaysBefore(_now));
-			this.q.gmtCreateUp = dateFormater(getDayEnd(_now));
+			this.q.timeDown = dateFormater(get7DaysBefore(_now));
+			this.q.timeUp = dateFormater(getDayEnd(_now));
 		},
 		rangeMonth: function() {
 			var _now = new Date();
-			this.q.gmtCreateDown = dateFormater(getMonthStart(_now));
-			this.q.gmtCreateUp = dateFormater(getMonthEnd(_now));
+			this.q.timeDown = dateFormater(getMonthStart(_now));
+			this.q.timeUp = dateFormater(getMonthEnd(_now));
 		},
 		rangeLastMonth: function() {
 			var _now = new Date();
-			this.q.gmtCreateDown = dateFormater(getMonthStart(getLastMonthEnd(_now)));
-			this.q.gmtCreateUp = dateFormater(getLastMonthEnd(_now));
+			this.q.timeDown = dateFormater(getMonthStart(getLastMonthEnd(_now)));
+			this.q.timeUp = dateFormater(getLastMonthEnd(_now));
 		},
     },
     mounted: function() {

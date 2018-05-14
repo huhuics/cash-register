@@ -1,27 +1,27 @@
 var vm = new Vue({
-    el:'#app',
-    data:{
-    	loginName: null,
-    	loginPassword: null
+    el: '#app',
+    data: {
+        loginName: null,
+        loginPassword: null
     },
     methods: {
-    	login: function(){
-    		$.ajax({
-    			type : 'post',
-    			url : basePath + '/adminLogin',
-    			data : {
-    				loginName: vm.loginName,
-    				loginPassword: vm.loginPassword
-    			},
-    			success: function(result) {
+        login: function() {
+            var _self = this;
+            $.ajax({
+                type: 'post',
+                url: basePath + '/adminLogin',
+                data: {
+                    loginName: _self.loginName,
+                    loginPassword: _self.loginPassword
+                },
+                success: function(result) {
                     if (result.code == "00") {
-                    	window.location.href = basePath + '/admin/index'
+                        window.location.href = basePath + '/admin/index'
                     } else {
                         layer.alert(result.msg);
                     }
                 }
-    		});
-    	}
+            });
+        }
     }
 });
-

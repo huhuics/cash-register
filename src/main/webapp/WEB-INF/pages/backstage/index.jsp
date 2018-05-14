@@ -39,13 +39,13 @@
                     <li class="active">
                         <a href="#dashboard" @click="menuClick"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
                     </li>
-                    <li class="treeview"><a href="#"><i class="fa fa-circle-o"></i><span>销售</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                    <li class="treeview"><a href="#"><i class="fa fa-pie-chart"></i><span>销售</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                         <ul class="treeview-menu">
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>营业概况</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>销售单据</a></li>
+                            <li><a href="#sales/queryBasicFacts" @click="menuClick"><i class="fa fa-bar-chart"></i>营业概况</a></li>
+                            <li><a href="#sales/tradeDetail" @click="menuClick"><i class="fa fa-file-text"></i>销售单据</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>日结记录</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>销售统计</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>交接班记录</a></li>
+                            <li><a href="#sales/queryExchangeJobs" @click="menuClick"><i class="fa fa-exchange"></i>交接班记录</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>现金收支明细</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>营业报表</a></li>
                         </ul>
@@ -61,7 +61,7 @@
                             <li><a href="#stock" @click="menuClick"><i class="fa fa-search"></i>库存查询</a></li>
                             <li><a href="#stock/warning" @click="menuClick"><i class="fa fa-hourglass-half"></i>库存预警</a></li>
                             <li><a href="#stock/flow" @click="menuClick"><i class="fa fa-file-text-o"></i>变动明细</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>盘点历史</a></li>
+                            <li><a href="#stock/check" @click="menuClick"><i class="fa fa-history"></i>盘点历史</a></li>
                             <li><a href="#goodsLose" @click="menuClick"><i class="fa fa-chain-broken"></i>商品报损</a></li>
                         </ul>
                     </li>
@@ -69,7 +69,7 @@
                         <ul class="treeview-menu">
                             <li><a href="#member" @click="menuClick"><i class="fa fa-user-circle"></i>会员资料</a></li>
                             <li><a href="#member/rank" @click="menuClick"><i class="fa fa-signal"></i>会员等级</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员制度</a></li>
+                            <li><a href="#member/integral" @click="menuClick"><i class="fa fa-sliders"></i>会员制度</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员卡报表</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员分析</a></li>
                         </ul>
@@ -90,9 +90,8 @@
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-truck"></i><span>货流</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
                         <ul class="treeview-menu">
+                        	<li><a href="#traffic" @click="menuClick"><i class="fa fa-info-circle"></i>货流信息</a></li>
                             <li><a href="#supplier" @click="menuClick"><i class="fa fa-drivers-license-o"></i>供货商</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>进货</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>出库</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-circle-o"></i><span>设置</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
@@ -101,13 +100,6 @@
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>系统设置</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>支付方式</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>操作日志</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview"><a href="#"> <i class="fa fa-circle-o"></i><span>其它</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
-                        <ul class="treeview-menu">
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>文件上传</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>报表打印</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>缓存</a></li>
                         </ul>
                     </li>
                 </ul>

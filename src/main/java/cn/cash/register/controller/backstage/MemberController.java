@@ -184,10 +184,18 @@ public class MemberController {
     /****************************会员积分方式相关接口****************************/
 
     /**
+     * 会员积分策略页面
+     */
+    @GetMapping(value = "/integral")
+    public String integral() {
+        return "backstage/_member-integral";
+    }
+
+    /**
      * 查询会员积分策略（策略只有一条记录）
      */
     @ResponseBody
-    @GetMapping(value = "/queryMemIntegral")
+    @GetMapping(value = "/integral/query")
     public ResultSet queryMemIntegral() {
         MemberIntegral memberIntegral = memberService.queryMemIntegral();
         return ResultSet.success().put("memberIntegral", memberIntegral);
@@ -197,7 +205,7 @@ public class MemberController {
      * 修改会员积分策略
      */
     @ResponseBody
-    @GetMapping(value = "/updateMemIntegral")
+    @RequestMapping(value = "/integral/update")
     public ResultSet updateMemIntegral(MemberIntegral integral) {
         int ret = memberService.updateMemIntegral(integral);
         return ResultSet.success().put("ret", ret);
