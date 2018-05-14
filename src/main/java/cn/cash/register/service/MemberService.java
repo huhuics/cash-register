@@ -6,6 +6,7 @@ package cn.cash.register.service;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.MemberInfoQueryRequest;
@@ -66,6 +67,11 @@ public interface MemberService {
      * 修改会员积分值
      */
     void updateIntegral(Long memberId, Money money);
+
+    /**
+     * 会员等级及其对应的数量查询
+     */
+    JSONArray getRankAndCounts();
 
     /****************************会员等级相关接口****************************/
 

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.MemberInfoQueryRequest;
@@ -126,6 +127,16 @@ public class MemberController {
         LogUtil.info(logger, "[Controller]收到#会员积分变动#请求,id={0},moneyStr={1}", memberId, moneyStr);
         memberService.updateIntegral(memberId, moneyStr);
         return ResultSet.success();
+    }
+
+    /**
+     * 会员分析
+     */
+    @ResponseBody
+    @GetMapping(value = "/getRankAndCounts")
+    public ResultSet getRankAndCounts() {
+        JSONArray rankAndCounts = memberService.getRankAndCounts();
+        return ResultSet.success().put("rankAndCounts", rankAndCounts);
     }
 
     /****************************会员等级相关接口****************************/

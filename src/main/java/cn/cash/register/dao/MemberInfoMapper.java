@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.cash.register.common.request.MemberInfoQueryRequest;
 import cn.cash.register.dao.domain.MemberInfo;
+import cn.cash.register.dao.domain.MemberRankAndCounts;
 
 public interface MemberInfoMapper {
     int deleteByPrimaryKey(Long id);
@@ -23,4 +24,6 @@ public interface MemberInfoMapper {
     List<MemberInfo> search(String keyword);
 
     MemberInfo selectByNo(String memberNo);
+
+    List<MemberRankAndCounts> groupByRank();
 }

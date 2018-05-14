@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -26,6 +28,7 @@ import cn.cash.register.dao.MemberRankMapper;
 import cn.cash.register.dao.domain.MemberInfo;
 import cn.cash.register.dao.domain.MemberIntegral;
 import cn.cash.register.dao.domain.MemberRank;
+import cn.cash.register.dao.domain.MemberRankAndCounts;
 import cn.cash.register.service.MemberService;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.Money;
@@ -147,6 +150,20 @@ public class MemberServiceImpl implements MemberService {
         } catch (Exception e) {
             LogUtil.error(e, logger, "修改会员积分异常");
         }
+    }
+
+    @Override
+    public JSONArray getRankAndCounts() {
+        List<MemberRankAndCounts> items = infoMapper.groupByRank();
+        JSONArray jsonArray = new JSONArray();
+        for (MemberRankAndCounts item : items) {
+            JSONObject jsonObj = new JSONObject();
+            jsonObj.put("memberRank", item.getMemberRank());
+            jsonObj.put("counts", item.getCounts());
+            jsonArray.add(jsonObj);
+        }
+
+        return jsonArray;
     }
 
     /****************************会员等级相关接口****************************/

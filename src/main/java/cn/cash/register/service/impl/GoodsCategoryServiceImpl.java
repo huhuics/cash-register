@@ -102,8 +102,6 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
     @Override
     public JSONArray getTree(Long parentCategoryId) {
 
-        //        AssertUtil.assertTrue(categoryId > 0L, "id必须大约0");
-
         //1.查询当前节点的所有子节点
         List<GoodsCategory> children = goodsCategoryMapper.selectByParentId(parentCategoryId);
 
