@@ -10,7 +10,6 @@ import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.MemberInfoQueryRequest;
 import cn.cash.register.common.request.MemberRankQueryRequest;
-import cn.cash.register.common.request.MemberRechargeRequest;
 import cn.cash.register.dao.domain.MemberInfo;
 import cn.cash.register.dao.domain.MemberIntegral;
 import cn.cash.register.dao.domain.MemberRank;
@@ -68,20 +67,13 @@ public interface MemberService {
      */
     void updateIntegral(Long memberId, Money money);
 
-    /**
-     * 会员余额充值
-     */
-    boolean recharge(MemberRechargeRequest request);
-
     /****************************会员等级相关接口****************************/
 
     /**
      * 增加会员等级信息
      * 返回主键
      */
-    Long
-
-            addMemRank(MemberRank rank);
+    Long addMemRank(MemberRank rank);
 
     /**
      * 删除会员等级
