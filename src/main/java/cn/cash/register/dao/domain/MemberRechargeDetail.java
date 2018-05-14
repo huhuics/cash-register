@@ -6,9 +6,15 @@ import cn.cash.register.util.Money;
 
 public class MemberRechargeDetail extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = 6398006255508133074L;
+    private static final long serialVersionUID = -8568248259703257470L;
 
     private Long              id;
+
+    private String            memberNo;
+
+    private String            memberName;
+
+    private String            rankTitle;
 
     private String            sellerNo;
 
@@ -32,6 +38,30 @@ public class MemberRechargeDetail extends BaseDomain {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getMemberNo() {
+        return memberNo;
+    }
+
+    public void setMemberNo(String memberNo) {
+        this.memberNo = memberNo == null ? null : memberNo.trim();
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName == null ? null : memberName.trim();
+    }
+
+    public String getRankTitle() {
+        return rankTitle;
+    }
+
+    public void setRankTitle(String rankTitle) {
+        this.rankTitle = rankTitle == null ? null : rankTitle.trim();
     }
 
     public String getSellerNo() {

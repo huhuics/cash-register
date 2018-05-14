@@ -96,12 +96,6 @@
 			<columnOverride column="total_lose_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
 		
-		<table tableName="trade_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-			<columnOverride column="total_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-			<columnOverride column="total_actual_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-			<columnOverride column="profit_amount" javaType="cn.cash.register.util.Money"></columnOverride>
-		</table>
-		
 		<table tableName="system_parameter" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 		</table>
 		
@@ -136,12 +130,18 @@
 			<columnOverride column="balance_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
 		
-		-->
-		
 		<table tableName="member_recharge_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 			<columnOverride column="recharge_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="donation_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="total_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+		</table>
+		
+		-->
+		
+		<table tableName="trade_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<columnOverride column="total_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="total_actual_amount" javaType="cn.cash.register.util.Money"></columnOverride>
+			<columnOverride column="profit_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
 		
 		

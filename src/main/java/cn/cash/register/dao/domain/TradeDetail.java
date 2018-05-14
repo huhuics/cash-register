@@ -6,7 +6,7 @@ import cn.cash.register.util.Money;
 
 public class TradeDetail extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = -6300820513255393435L;
+    private static final long serialVersionUID = -939133376535178912L;
 
     private Long              id;
 
@@ -15,6 +15,8 @@ public class TradeDetail extends BaseDomain {
     private Date              tradeTime;
 
     private String            tradeType;
+
+    private String            memberNo;
 
     private String            memberName;
 
@@ -83,6 +85,14 @@ public class TradeDetail extends BaseDomain {
 
     public void setTradeType(String tradeType) {
         this.tradeType = tradeType == null ? null : tradeType.trim();
+    }
+
+    public String getMemberNo() {
+        return memberNo;
+    }
+
+    public void setMemberNo(String memberNo) {
+        this.memberNo = memberNo == null ? null : memberNo.trim();
     }
 
     public String getMemberName() {

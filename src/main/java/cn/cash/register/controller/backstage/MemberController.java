@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,9 +21,14 @@ import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.MemberInfoQueryRequest;
 import cn.cash.register.common.request.MemberRankQueryRequest;
+import cn.cash.register.common.request.MemberRechargeCheckQueryRequest;
+import cn.cash.register.common.request.MemberRechargeQueryRequest;
 import cn.cash.register.dao.domain.MemberInfo;
 import cn.cash.register.dao.domain.MemberIntegral;
 import cn.cash.register.dao.domain.MemberRank;
+import cn.cash.register.dao.domain.MemberRechargeDetail;
+import cn.cash.register.dao.domain.RechargeCheckDetail;
+import cn.cash.register.service.MemberRechargeService;
 import cn.cash.register.service.MemberService;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
@@ -36,10 +42,13 @@ import cn.cash.register.util.ResultSet;
 @RequestMapping("/admin/member")
 public class MemberController {
 
-    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+    private static final Logger   logger = LoggerFactory.getLogger(MemberController.class);
 
     @Resource
-    private MemberService       memberService;
+    private MemberService         memberService;
+
+    @Resource
+    private MemberRechargeService memberRechargeService;
 
     /****************************会员信息相关接口****************************/
 
@@ -205,10 +214,32 @@ public class MemberController {
      * 修改会员积分策略
      */
     @ResponseBody
-    @RequestMapping(value = "/integral/update")
+    @PostMapping(value = "/integral/update")
     public ResultSet updateMemIntegral(MemberIntegral integral) {
         int ret = memberService.updateMemIntegral(integral);
         return ResultSet.success().put("ret", ret);
+    }
+
+    /****************************会员充值相关接口****************************/
+
+    /**
+     * 充值明细
+     */
+    @ResponseBody
+    @PostMapping(value = "/recharge/query")
+    public ResultSet queryRechargeDetail(MemberRechargeQueryRequest request) {
+        PageInfo<MemberRechargeDetail> rechargeDetails = memberRechargeService.query(request);
+        return ResultSet.success().put("rechargeDetails", rechargeDetails);
+    }
+
+    /**
+     * 储值卡对账
+     */
+    @ResponseBody
+    @PostMapping(value = "/recharge/check")
+    public ResultSet queryRechargeCheck(MemberRechargeCheckQueryRequest request) {
+        List<RechargeCheckDetail> checkDetails = memberRechargeService.list(request);
+        return ResultSet.success().put("checkDetails", checkDetails);
     }
 
 }

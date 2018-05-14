@@ -3,6 +3,9 @@
 <mapper namespace="cn.cash.register.dao.MemberRechargeDetailMapper">
   <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.MemberRechargeDetail">
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="member_no" jdbcType="VARCHAR" property="memberNo" />
+    <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+    <result column="rank_title" jdbcType="VARCHAR" property="rankTitle" />
     <result column="seller_no" jdbcType="VARCHAR" property="sellerNo" />
     <result column="shopper_no" jdbcType="VARCHAR" property="shopperNo" />
     <result column="recharge_amount" jdbcType="INTEGER" property="rechargeAmount" />
@@ -12,9 +15,17 @@
     <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
+  
+  <resultMap id="CheckResultMap" type="cn.cash.register.dao.domain.RechargeCheckDetail">
+    <result column="member_no" jdbcType="VARCHAR" property="memberNo" />
+    <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+    <result column="recharge_amount" jdbcType="INTEGER" property="rechargeAmount" />
+    <result column="donation_amount" jdbcType="INTEGER" property="donationAmount" />
+  </resultMap>
+  
   <sql id="Base_Column_List">
-    id, seller_no, shopper_no, recharge_amount, donation_amount, total_amount, pay_chenal, 
-    gmt_update, gmt_create
+    id, member_no, member_name, rank_title, seller_no, shopper_no, recharge_amount, donation_amount, 
+    total_amount, pay_chenal, gmt_update, gmt_create
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -27,11 +38,13 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="cn.cash.register.dao.domain.MemberRechargeDetail">
-    insert into member_recharge_detail (id, seller_no, shopper_no, 
+    insert into member_recharge_detail (id, member_no, member_name, 
+      rank_title, seller_no, shopper_no, 
       recharge_amount, donation_amount, total_amount, 
       pay_chenal, gmt_update, gmt_create
       )
-    values (#{id,jdbcType=BIGINT}, #{sellerNo,jdbcType=VARCHAR}, #{shopperNo,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{memberNo,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, 
+      #{rankTitle,jdbcType=VARCHAR}, #{sellerNo,jdbcType=VARCHAR}, #{shopperNo,jdbcType=VARCHAR}, 
       #{rechargeAmount,jdbcType=INTEGER}, #{donationAmount,jdbcType=INTEGER}, #{totalAmount,jdbcType=INTEGER}, 
       #{payChenal,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}
       )
@@ -41,6 +54,15 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="memberNo != null">
+        member_no,
+      </if>
+      <if test="memberName != null">
+        member_name,
+      </if>
+      <if test="rankTitle != null">
+        rank_title,
       </if>
       <if test="sellerNo != null">
         seller_no,
@@ -71,6 +93,15 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="memberNo != null">
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null">
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="rankTitle != null">
+        #{rankTitle,jdbcType=VARCHAR},
+      </if>
       <if test="sellerNo != null">
         #{sellerNo,jdbcType=VARCHAR},
       </if>
@@ -100,6 +131,15 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.MemberRechargeDetail">
     update member_recharge_detail
     <set>
+      <if test="memberNo != null">
+        member_no = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null">
+        member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="rankTitle != null">
+        rank_title = #{rankTitle,jdbcType=VARCHAR},
+      </if>
       <if test="sellerNo != null">
         seller_no = #{sellerNo,jdbcType=VARCHAR},
       </if>
@@ -129,7 +169,10 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.MemberRechargeDetail">
     update member_recharge_detail
-    set seller_no = #{sellerNo,jdbcType=VARCHAR},
+    set member_no = #{memberNo,jdbcType=VARCHAR},
+      member_name = #{memberName,jdbcType=VARCHAR},
+      rank_title = #{rankTitle,jdbcType=VARCHAR},
+      seller_no = #{sellerNo,jdbcType=VARCHAR},
       shopper_no = #{shopperNo,jdbcType=VARCHAR},
       recharge_amount = #{rechargeAmount,jdbcType=INTEGER},
       donation_amount = #{donationAmount,jdbcType=INTEGER},
@@ -147,6 +190,41 @@
     where gmt_create &lt;= STR_TO_DATE(#{timeUp},'%Y-%m-%d %H:%i:%s')
   		and
   		gmt_create &gt;= STR_TO_DATE(#{timeDown},'%Y-%m-%d %H:%i:%s')
+  </select>
+  
+  <select id="list" parameterType="cn.cash.register.common.request.MemberRechargeQueryRequest" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from member_recharge_detail
+    where 1 = 1
+    <if test="sellerNo != null and sellerNo !=''">
+  		and seller_no = #{sellerNo,jdbcType=VARCHAR}
+    </if>
+    <if test="payChanel != null and payChanel !=''">
+  		and pay_chenal like concat('%',#{payChanel,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="gmtCreateUp != null and gmtCreateUp !=''">
+  		and gmt_create &lt;= STR_TO_DATE(#{gmtCreateUp},'%Y-%m-%d %H:%i:%s')
+  		and gmt_create &gt;= STR_TO_DATE(#{gmtCreateDown},'%Y-%m-%d %H:%i:%s')
+    </if>
+  </select>
+  
+  <select id="listCheck" parameterType="cn.cash.register.common.request.MemberRechargeCheckQueryRequest" resultMap="CheckResultMap">
+    select 
+      	t.member_no,
+  		t.member_name,
+  		SUM(t.recharge_amount) 'recharge_amount',
+  		SUM(t.donation_amount)  'donation_amount'
+    from member_recharge_detail
+    where 1 = 1
+    <if test="rankTitle != null and rankTitle !=''">
+  		and rank_title = #{rankTitle,jdbcType=VARCHAR}
+    </if>
+    <if test="gmtCreateUp != null and gmtCreateUp !=''">
+  		and gmt_create &lt;= STR_TO_DATE(#{gmtCreateUp},'%Y-%m-%d %H:%i:%s')
+  		and gmt_create &gt;= STR_TO_DATE(#{gmtCreateDown},'%Y-%m-%d %H:%i:%s')
+    </if>
+    GROUP BY t.member_no
   </select>
   
 </mapper>
