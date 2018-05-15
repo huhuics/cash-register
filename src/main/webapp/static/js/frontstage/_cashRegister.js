@@ -17,7 +17,8 @@ var vip_info = {
     id: null,
     name: null,
     score: null,
-    discount: null
+    discount: null,
+    memberNo: null
 };
 
 var payChenals = {
@@ -355,6 +356,7 @@ var vm = new Vue({
             this.vip_info.name = member.memberName;
             this.vip_info.score = member.memberIntegral;
             this.vip_info.discount = member.memberDiscount;
+            this.vip_info.memberNo = member.memberNo;
         },
         toCheckout: function() { // 去收款
         	this.reset_payChenals();
@@ -383,6 +385,8 @@ var vm = new Vue({
                         data: {
                             goodsItemsJSONStr: JSON.stringify(_self.goods_list),
                             payChenalsJSONStr: _self.payChenalsStr(),
+                            memberId: _self.vip_info.id,
+                            memberNo: _self.vip_info.memberNo
                         },
                         success: function(result) {
                             if (result.code == "00") {
