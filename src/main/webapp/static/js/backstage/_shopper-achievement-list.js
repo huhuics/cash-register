@@ -24,7 +24,11 @@ $(function() {
         sortname: "gmt_Update", sortorder: "desc",
         pager: "#jqGridPager",
         jsonReader: { root: "page.list", page: "page.pageNum", total: "page.pages", records: "page.total" },
-        prmNames: { page: "pageNum", rows: "pageSize", order: "order" }
+        prmNames: { page: "pageNum", rows: "pageSize", order: "order" },
+        postData: {
+            'tradeTimeUp': dateFormater(getDayStart()),
+            'tradeTimeDown': dateFormater(getDayEnd())
+        }
     });
 });
 
@@ -168,5 +172,6 @@ var vm = new Vue({
     	this.datetimepickerLoad();
     	this.loadGoodsCategorys();
     	this.loadShoppers();
+    	this.rangeToday();
     }
 });
