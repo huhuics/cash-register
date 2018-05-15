@@ -37,7 +37,11 @@ var payChenals = {
     payChenal_wcpay: {
         chenal: 'wcpay',
         amount: 0
-    }
+    },
+    payChenal_balance: {
+    	chenal: 'balance',
+    	amount: 0
+    },
 }
 
 var vm = new Vue({
@@ -72,6 +76,9 @@ var vm = new Vue({
             }
             if (this.payChenals.payChenal_wcpay.amount > 0) {
                 amountSelected += 1 * this.payChenals.payChenal_wcpay.amount;
+            }
+            if (this.payChenals.payChenal_balance.amount > 0) {
+            	amountSelected += 1 * this.payChenals.payChenal_balance.amount;
             }
             return amountSelected * 1 - this.summary_price * 1;
         },
@@ -417,24 +424,26 @@ var vm = new Vue({
         	this.reset_payChenals();
         	this.payChenals.payChenal_wcpay.amount = this.summary_price;
         },
+        checkout_all_balance: function() {
+        	this.reset_payChenals();
+        	this.payChenals.payChenal_balance.amount = this.summary_price;
+        },
         checkPayChenals: function() {
             var countSelected = 0;
-            var amountSelected = 0;
             if (this.payChenals.payChenal_cash.amount > 0) {
                 countSelected++;
-                amountSelected += 1 * this.payChenals.payChenal_cash.amount;
             }
             if (this.payChenals.payChenal_unionpay.amount > 0) {
                 countSelected++;
-                amountSelected += 1 * this.payChenals.payChenal_unionpay.amount;
             }
             if (this.payChenals.payChenal_alipay.amount > 0) {
                 countSelected++;
-                amountSelected += 1 * this.payChenals.payChenal_alipay.amount;
             }
             if (this.payChenals.payChenal_wcpay.amount > 0) {
                 countSelected++;
-                amountSelected += 1 * this.payChenals.payChenal_wcpay.amount;
+            }
+            if (this.payChenals.payChenal_balance.amount > 0) {
+            	countSelected++;
             }
             if (countSelected > 2) {
                 return '付款通道不能多于2个';
@@ -452,6 +461,9 @@ var vm = new Vue({
             }
             if (this.payChenals.payChenal_wcpay.amount > 0) {
                 str += ',{chenal: "wcpay",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
+            }
+            if (this.payChenals.payChenal_balance.amount > 0) {
+            	str += ',{chenal: "balance",amount: "' + this.payChenals.payChenal_balance.amount + '"}';
             }
             str += ']'
             return str;

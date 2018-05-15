@@ -50,6 +50,16 @@
             </div>
         </div>
         <div class="form-group">
+            <div class="col-xs-5">
+            	<div class="input-group">
+            	    <span class="input-group-btn"><button class="btn btn-primary" type="button" @click="checkout_all_balance">全部</button></span>
+            		<span class="input-group-addon">储值卡</span>
+                    <input class="form-control" type="text" v-model="payChenals.payChenal_balance.amount">
+                    <span class="input-group-addon">元</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
             <div class="col-xs-12">
             	<div class="input-group">
             		<span class="input-group-addon">找零</span>
