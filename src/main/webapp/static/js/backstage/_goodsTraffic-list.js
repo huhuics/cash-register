@@ -190,6 +190,7 @@ var vm = new Vue({
         		}
         	});
         },
+        exportGoodsTraffic: function() {},
         resetInTraffic: function() {
             this.inTraffic = cloneJsonObj(entity_inTrafficRequest);
         },

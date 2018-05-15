@@ -57,6 +57,7 @@
                 <div class="pull-right">
                     <a class="btn btn-primary" @click="addInTraffic"><i class="fa fa-download"></i>&nbsp;进货</a>
                     <a class="btn btn-primary" @click="addOutTraffic"><i class="fa fa-upload"></i>&nbsp;出库</a>
+                    <a class="btn btn-info" @click="exportGoodsTraffic"><i class="fa fa-upload"></i>&nbsp;导出</a>
                 </div>
                 <div class="clearfix"></div>
             </div>
