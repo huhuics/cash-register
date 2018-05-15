@@ -6,6 +6,7 @@
     <result column="trade_no" jdbcType="VARCHAR" property="tradeNo" />
     <result column="trade_time" jdbcType="TIMESTAMP" property="tradeTime" />
     <result column="trade_type" jdbcType="VARCHAR" property="tradeType" />
+    <result column="member_no" jdbcType="VARCHAR" property="memberNo" />
     <result column="member_name" jdbcType="VARCHAR" property="memberName" />
     <result column="goods_count" jdbcType="INTEGER" property="goodsCount" />
     <result column="total_amount" jdbcType="INTEGER" property="totalAmount" />
@@ -22,9 +23,9 @@
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, trade_no, trade_time, trade_type, member_name, goods_count, total_amount, goods_discount, 
-    total_actual_amount, profit_amount, seller_no, shopper_no, goods_detail, pay_chenal, 
-    is_exchange_job, exchange_job_id, gmt_update, gmt_create
+    id, trade_no, trade_time, trade_type, member_no, member_name, goods_count, total_amount, 
+    goods_discount, total_actual_amount, profit_amount, seller_no, shopper_no, goods_detail, 
+    pay_chenal, is_exchange_job, exchange_job_id, gmt_update, gmt_create
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -38,19 +39,19 @@
   </delete>
   <insert id="insert" parameterType="cn.cash.register.dao.domain.TradeDetail">
     insert into trade_detail (id, trade_no, trade_time, 
-      trade_type, member_name, goods_count, 
-      total_amount, goods_discount, total_actual_amount, 
-      profit_amount, seller_no, shopper_no, 
-      goods_detail, pay_chenal, is_exchange_job, 
-      exchange_job_id, gmt_update, gmt_create
-      )
+      trade_type, member_no, member_name, 
+      goods_count, total_amount, goods_discount, 
+      total_actual_amount, profit_amount, seller_no, 
+      shopper_no, goods_detail, pay_chenal, 
+      is_exchange_job, exchange_job_id, gmt_update, 
+      gmt_create)
     values (#{id,jdbcType=BIGINT}, #{tradeNo,jdbcType=VARCHAR}, #{tradeTime,jdbcType=TIMESTAMP}, 
-      #{tradeType,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, #{goodsCount,jdbcType=INTEGER}, 
-      #{totalAmount,jdbcType=INTEGER}, #{goodsDiscount,jdbcType=INTEGER}, #{totalActualAmount,jdbcType=INTEGER}, 
-      #{profitAmount,jdbcType=INTEGER}, #{sellerNo,jdbcType=VARCHAR}, #{shopperNo,jdbcType=VARCHAR}, 
-      #{goodsDetail,jdbcType=VARCHAR}, #{payChenal,jdbcType=VARCHAR}, #{isExchangeJob,jdbcType=BIT}, 
-      #{exchangeJobId,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}
-      )
+      #{tradeType,jdbcType=VARCHAR}, #{memberNo,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, 
+      #{goodsCount,jdbcType=INTEGER}, #{totalAmount,jdbcType=INTEGER}, #{goodsDiscount,jdbcType=INTEGER}, 
+      #{totalActualAmount,jdbcType=INTEGER}, #{profitAmount,jdbcType=INTEGER}, #{sellerNo,jdbcType=VARCHAR}, 
+      #{shopperNo,jdbcType=VARCHAR}, #{goodsDetail,jdbcType=VARCHAR}, #{payChenal,jdbcType=VARCHAR}, 
+      #{isExchangeJob,jdbcType=BIT}, #{exchangeJobId,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
+      #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.TradeDetail">
     insert into trade_detail
@@ -66,6 +67,9 @@
       </if>
       <if test="tradeType != null">
         trade_type,
+      </if>
+      <if test="memberNo != null">
+        member_no,
       </if>
       <if test="memberName != null">
         member_name,
@@ -123,6 +127,9 @@
       <if test="tradeType != null">
         #{tradeType,jdbcType=VARCHAR},
       </if>
+      <if test="memberNo != null">
+        #{memberNo,jdbcType=VARCHAR},
+      </if>
       <if test="memberName != null">
         #{memberName,jdbcType=VARCHAR},
       </if>
@@ -179,6 +186,9 @@
       <if test="tradeType != null">
         trade_type = #{tradeType,jdbcType=VARCHAR},
       </if>
+      <if test="memberNo != null">
+        member_no = #{memberNo,jdbcType=VARCHAR},
+      </if>
       <if test="memberName != null">
         member_name = #{memberName,jdbcType=VARCHAR},
       </if>
@@ -229,6 +239,7 @@
     set trade_no = #{tradeNo,jdbcType=VARCHAR},
       trade_time = #{tradeTime,jdbcType=TIMESTAMP},
       trade_type = #{tradeType,jdbcType=VARCHAR},
+      member_no = #{memberNo,jdbcType=VARCHAR},
       member_name = #{memberName,jdbcType=VARCHAR},
       goods_count = #{goodsCount,jdbcType=INTEGER},
       total_amount = #{totalAmount,jdbcType=INTEGER},
@@ -292,6 +303,18 @@
   		trade_time &lt;= STR_TO_DATE(#{timeUp},'%Y-%m-%d %H:%i:%s')
   		and
   		trade_time &gt;= STR_TO_DATE(#{timeDown},'%Y-%m-%d %H:%i:%s')
+  </select>
+  
+  <select id="queryPaychanel" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.MemberPayChanelQueryRequest">
+  	select 
+    <include refid="Base_Column_List" />
+  	from trade_detail
+  	where 
+  		trade_time &lt;= STR_TO_DATE(#{timeUp},'%Y-%m-%d %H:%i:%s')
+  		and
+  		trade_time &gt;= STR_TO_DATE(#{timeDown},'%Y-%m-%d %H:%i:%s')
+  		and member_no = #{memberNo,jdbcType=VARCHAR}
+  		and pay_chenal like '%balance%'
   </select>
   
 </mapper>

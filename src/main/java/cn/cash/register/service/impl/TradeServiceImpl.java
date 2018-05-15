@@ -230,6 +230,7 @@ public class TradeServiceImpl implements TradeService {
      * 收银写trade_detail
      */
     private void insertTradeDetail(TradeDetail tradeDetail, TradeRequest request) {
+        tradeDetail.setMemberNo(request.getMemberNo());
         tradeDetail.setMemberName(request.getMemberName());
         tradeDetail.setSellerNo(request.getSellerNo());
         tradeDetail.setShopperNo(request.getShopperNo());

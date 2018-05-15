@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.cash.register.common.request.MemberRechargeRequest;
-import cn.cash.register.service.MemberService;
+import cn.cash.register.service.MemberRechargeService;
 import cn.cash.register.util.ResultSet;
 
 /**
- * 前台收银会员Controller
+ * 前台收银会员充值Controller
  * @author HuHui
- * @version $Id: MemberInfoController.java, v 0.1 2018年5月10日 下午7:18:20 HuHui Exp $
+ * @version $Id: MemberRechargeController.java, v 0.1 2018年5月10日 下午7:18:20 HuHui Exp $
  */
 @Controller
-@RequestMapping(value = "/cashier/member")
-public class MemberInfoController {
+@RequestMapping(value = "/cashier/memberRecharge")
+public class MemberRechargeController {
 
     @Resource
-    private MemberService memberService;
+    private MemberRechargeService memberRechargeService;
 
     /**
      * 会员余额充值
@@ -33,7 +33,7 @@ public class MemberInfoController {
     @ResponseBody
     @PostMapping(value = "/recharge")
     public ResultSet recharge(MemberRechargeRequest request) {
-        boolean ret = memberService.recharge(request);
+        boolean ret = memberRechargeService.recharge(request);
         return ResultSet.success().put("ret", ret);
     }
 

@@ -271,7 +271,7 @@ public class GoodsInfoController {
     @ResponseBody
     @RequestMapping(value = "/genePinyinShort")
     public ResultSet genePinyinShort(String goodsName) {
-        AssertUtil.assertNotBlank(goodsName, "商品名称不能为空");
+        AssertUtil.assertNotBlank(goodsName, "名称不能为空");
         String pinyin = PinyinUtil.getPinyinHeadLowerChar(goodsName);
         return ResultSet.success().put("pinyin", pinyin);
     }

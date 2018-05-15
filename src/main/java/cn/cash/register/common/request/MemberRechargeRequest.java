@@ -22,6 +22,11 @@ public class MemberRechargeRequest extends BaseRequest {
 
     private String            memberNo;
 
+    private String            memberName;
+
+    /** 会员级别名称 */
+    private String            rankTitle;
+
     private String            sellerNo;
 
     private String            shopperNo;
@@ -47,6 +52,8 @@ public class MemberRechargeRequest extends BaseRequest {
     public void validate() {
         AssertUtil.assertNotBlank(sellerNo, "收银员编号不能为空");
         AssertUtil.assertNotBlank(memberNo, "会员号不能为空");
+        AssertUtil.assertNotBlank(memberName, "会员名称不能为空");
+        AssertUtil.assertNotBlank(rankTitle, "会员级别名称不能为空");
         AssertUtil.assertNotNull(payChenal, "支付方式不能为空");
         AssertUtil.assertTrue(NumberUtils.isDigits(rechargeAmount), "充值金额错误");
         if (StringUtils.isNotBlank(donationAmount)) {
@@ -108,6 +115,22 @@ public class MemberRechargeRequest extends BaseRequest {
 
     public void setPayChenal(PayChenal payChenal) {
         this.payChenal = payChenal;
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
+
+    public String getRankTitle() {
+        return rankTitle;
+    }
+
+    public void setRankTitle(String rankTitle) {
+        this.rankTitle = rankTitle;
     }
 
 }

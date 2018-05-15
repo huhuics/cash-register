@@ -6,11 +6,11 @@ package cn.cash.register.service;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.MemberInfoQueryRequest;
 import cn.cash.register.common.request.MemberRankQueryRequest;
-import cn.cash.register.common.request.MemberRechargeRequest;
 import cn.cash.register.dao.domain.MemberInfo;
 import cn.cash.register.dao.domain.MemberIntegral;
 import cn.cash.register.dao.domain.MemberRank;
@@ -69,9 +69,9 @@ public interface MemberService {
     void updateIntegral(Long memberId, Money money);
 
     /**
-     * 会员余额充值
+     * 会员等级及其对应的数量查询
      */
-    boolean recharge(MemberRechargeRequest request);
+    JSONArray getRankAndCounts();
 
     /****************************会员等级相关接口****************************/
 
@@ -79,9 +79,7 @@ public interface MemberService {
      * 增加会员等级信息
      * 返回主键
      */
-    Long
-
-            addMemRank(MemberRank rank);
+    Long addMemRank(MemberRank rank);
 
     /**
      * 删除会员等级

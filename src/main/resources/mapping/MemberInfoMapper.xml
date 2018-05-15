@@ -22,6 +22,12 @@
     <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
+  
+  <resultMap id="RankAndCountsMap" type="cn.cash.register.dao.domain.MemberRankAndCounts">
+    <result column="member_rank" jdbcType="VARCHAR" property="memberRank" />
+    <result column="counts" jdbcType="INTEGER" property="counts" />
+  </resultMap>
+  
   <sql id="Base_Column_List">
     id, status, member_no, member_name, member_rank, member_discount, member_integral, 
     phone, password, birthday, is_on_credit, qq_no, email, address, account_balance, 
@@ -293,6 +299,15 @@
     <include refid="Base_Column_List" />
     from member_info
     where member_no = #{memberNo,jdbcType=VARCHAR}
+  </select>
+
+  <select id="groupByRank" resultMap="RankAndCountsMap">
+	SELECT
+	member_rank,
+	COUNT(*) 'counts'
+	FROM
+	member_info
+	GROUP BY member_rank
   </select>
   
 </mapper>
