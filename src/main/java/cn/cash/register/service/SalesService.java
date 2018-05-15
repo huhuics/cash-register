@@ -6,8 +6,10 @@ package cn.cash.register.service;
 
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.request.SalesAmountQueryRequest;
 import cn.cash.register.common.request.SalesBasicFactsQueryRequest;
 import cn.cash.register.common.request.TradeGoodsDetailQueryRequest;
 import cn.cash.register.dao.domain.GoodsSaleStatistics;
@@ -32,5 +34,10 @@ public interface SalesService {
      * 翻页查询商品销售统计信息
      */
     PageInfo<GoodsSaleStatistics> queryGoodsSaleStatistics(TradeGoodsDetailQueryRequest request);
+
+    /**
+     * 根据营业时间段查询交易额
+     */
+    JSONArray querySalesAmountByTime(SalesAmountQueryRequest request);
 
 }
