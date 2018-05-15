@@ -51,6 +51,7 @@
                     	<div class="input-group">
 		                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;编号</span>
 		                    <input type="text" class="form-control" v-model="supplier.supplierCode">
+		                    <span class="input-group-btn"><button class="btn btn-success" type="button" @click="getCode">生成</button></span>
 		                </div>
                     </div>
                 </div>
