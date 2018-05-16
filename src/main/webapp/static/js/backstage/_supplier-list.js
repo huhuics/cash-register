@@ -165,6 +165,20 @@ var vm = new Vue({
             });
 
         },
+        getCode: function() {
+            var _self = this;
+            $.ajax({
+                type: "GET",
+                url: basePath + "/admin/goods/getBarCode",
+                success: function(result) {
+                    if (result.code == "00") {
+                        _self.supplier.supplierCode = result.barCode;
+                    } else {
+                        layer.alert("编号生成失败：" + result.msg);
+                    }
+                }
+            });
+        },
         getPinyinCode: function() {
         	var _self = this;
         	$.ajax({
