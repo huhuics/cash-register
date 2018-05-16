@@ -130,6 +130,14 @@ public class MemberController {
     }
 
     /**
+     * 会员分析页面
+     */
+    @GetMapping("/analysis")
+    public String analysis() {
+        return "backstage/_member-analysis";
+    }
+
+    /**
      * 会员分析
      */
     @ResponseBody

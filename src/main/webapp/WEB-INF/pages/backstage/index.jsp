@@ -39,7 +39,7 @@
                     <li class="active">
                         <a href="#dashboard" @click="menuClick"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
                     </li>
-                    <li class="treeview"><a href="#"><i class="fa fa-pie-chart"></i><span>销售</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                    <li class="treeview"><a href="#"><i class="fa fa-shopping-cart"></i><span>销售</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                         <ul class="treeview-menu">
                             <li><a href="#sales/queryBasicFacts" @click="menuClick"><i class="fa fa-bar-chart"></i>营业概况</a></li>
                             <li><a href="#sales/tradeDetail" @click="menuClick"><i class="fa fa-file-text"></i>销售单据</a></li>
@@ -50,9 +50,9 @@
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>营业报表</a></li>
                         </ul>
                     </li>
-                    <li class="treeview"><a href="#"><i class="fa fa-shopping-cart"></i><span>商品</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
+                    <li class="treeview"><a href="#"><i class="fa fa-shopping-bag"></i><span>商品</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
                         <ul class="treeview-menu">
-                            <li><a href="#goods" @click="menuClick"><i class="fa fa-shopping-bag"></i>商品资料</a></li>
+                            <li><a href="#goods" @click="menuClick"><i class="fa fa-gift"></i>商品资料</a></li>
                             <li><a href="#goods-category" @click="menuClick"><i class="fa fa-list"></i>商品分类</a></li>
                         </ul>
                     </li>
@@ -71,7 +71,7 @@
                             <li><a href="#member/rank" @click="menuClick"><i class="fa fa-signal"></i>会员等级</a></li>
                             <li><a href="#member/integral" @click="menuClick"><i class="fa fa-sliders"></i>会员制度</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员卡报表</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员分析</a></li>
+                            <li><a href="#member/analysis" @click="menuClick"><i class="fa fa-pie-chart"></i>会员分析</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-circle-o"></i><span>营销</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
