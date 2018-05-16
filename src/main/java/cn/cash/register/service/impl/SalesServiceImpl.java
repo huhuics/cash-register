@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -176,10 +177,20 @@ public class SalesServiceImpl implements SalesService {
         } else if (TimePeriodEnum.valueOf(request.getTimeUp()) == TimePeriodEnum.day) {
             charts = tradeDetailMapper.querySalesAmountByDay(request);
         } else if (TimePeriodEnum.valueOf(request.getTimeUp()) == TimePeriodEnum.month) {
-            charts = tradeDetailMapper.querySalesAmountByMonty(request);
+            charts = tradeDetailMapper.querySalesAmountByMonth(request);
         }
 
-        return null;
+        JSONArray jsonArray = new JSONArray();
+        for (SalesAmountChart chart : charts) {
+            JSONObject jsonObj = new JSONObject();
+            jsonObj.put("time", chart.getTime());
+            jsonObj.put("totalActualAmount", chart.getTotalActualAmount());
+            jsonObj.put("profitAmount", chart.getProfitAmount());
+            jsonObj.put("goodsCount", chart.getGoodsCount());
+            jsonObj.put("profitRate", chart.getProfitRate());
+        }
+
+        return jsonArray;
     }
 
 }

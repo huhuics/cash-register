@@ -22,6 +22,15 @@
     <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
+  
+  <resultMap type="cn.cash.register.dao.domain.SalesAmountChart" id="SalesAmountChartResultMap">
+  	<result column="time" jdbcType="VARCHAR" property="time" />
+  	<result column="total_actual_amount" jdbcType="INTEGER" property="totalActualAmount" />
+  	<result column="profit_amount" jdbcType="INTEGER" property="profitAmount" />
+  	<result column="goods_count" jdbcType="INTEGER" property="goodsCount" />
+  	<result column="profit_rate" jdbcType="Double" property="profitRate" />
+  </resultMap>
+  
   <sql id="Base_Column_List">
     id, trade_no, trade_time, trade_type, member_no, member_name, goods_count, total_amount, 
     goods_discount, total_actual_amount, profit_amount, seller_no, shopper_no, goods_detail, 
@@ -315,6 +324,54 @@
   		trade_time &gt;= STR_TO_DATE(#{timeDown},'%Y-%m-%d %H:%i:%s')
   		and member_no = #{memberNo,jdbcType=VARCHAR}
   		and pay_chenal like '%balance%'
+  </select>
+  
+  <select id="querySalesAmountByHour" resultMap="SalesAmountChartResultMap" parameterType="cn.cash.register.common.request.SalesAmountQueryRequest">
+	  SELECT 
+	  HOUR(trade_time) 'time',
+	  SUM(d.total_actual_amount) 'total_actual_amount',
+      SUM(d.profit_amount) 'profit_amount',
+      SUM(d.goods_count) 'goods_count',
+	  ROUND((SUM(d.profit_amount) / SUM(d.total_actual_amount)) * 100,2) 'profit_rate' 
+		FROM
+	  trade_detail d
+	  where 
+	  trade_time &lt;= STR_TO_DATE(#{timeUp},'%Y-%m-%d %H:%i:%s')
+  	    and
+  	  trade_time &gt;= STR_TO_DATE(#{timeDown},'%Y-%m-%d %H:%i:%s')
+	  GROUP BY HOUR(trade_time)
+  </select>
+  
+  <select id="querySalesAmountByDay" resultMap="SalesAmountChartResultMap" parameterType="cn.cash.register.common.request.SalesAmountQueryRequest">
+	  SELECT 
+	  DAY(trade_time) 'time',
+	  SUM(d.total_actual_amount) 'total_actual_amount',
+      SUM(d.profit_amount) 'profit_amount',
+      SUM(d.goods_count) 'goods_count',
+	  ROUND((SUM(d.profit_amount) / SUM(d.total_actual_amount)) * 100,2) 'profit_rate' 
+		FROM
+	  trade_detail d
+	  where 
+	  trade_time &lt;= STR_TO_DATE(#{timeUp},'%Y-%m-%d %H:%i:%s')
+  	    and
+  	  trade_time &gt;= STR_TO_DATE(#{timeDown},'%Y-%m-%d %H:%i:%s')
+	  GROUP BY DAY(trade_time)
+  </select>
+  
+  <select id="querySalesAmountByMonth" resultMap="SalesAmountChartResultMap" parameterType="cn.cash.register.common.request.SalesAmountQueryRequest">
+	  SELECT 
+	  MONTH(trade_time) 'time',
+	  SUM(d.total_actual_amount) 'total_actual_amount',
+      SUM(d.profit_amount) 'profit_amount',
+      SUM(d.goods_count) 'goods_count',
+	  ROUND((SUM(d.profit_amount) / SUM(d.total_actual_amount)) * 100,2) 'profit_rate' 
+		FROM
+	  trade_detail d
+	  where 
+	  trade_time &lt;= STR_TO_DATE(#{timeUp},'%Y-%m-%d %H:%i:%s')
+  	    and
+  	  trade_time &gt;= STR_TO_DATE(#{timeDown},'%Y-%m-%d %H:%i:%s')
+	  GROUP BY MONTH(trade_time)
   </select>
   
 </mapper>

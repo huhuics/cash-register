@@ -37,5 +37,5 @@ public interface TradeDetailMapper {
 
     List<SalesAmountChart> querySalesAmountByDay(SalesAmountQueryRequest request);
 
-    List<SalesAmountChart> querySalesAmountByMonty(SalesAmountQueryRequest request);
+    List<SalesAmountChart> querySalesAmountByMonth(SalesAmountQueryRequest request);
 }
