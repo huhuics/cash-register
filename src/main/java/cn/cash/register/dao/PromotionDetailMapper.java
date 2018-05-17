@@ -16,6 +16,8 @@ public interface PromotionDetailMapper {
 
     int updateByPrimaryKeySelective(PromotionDetail record);
 
+    int updateByPrimaryKeyWithBLOBs(PromotionDetail record);
+
     int updateByPrimaryKey(PromotionDetail record);
 
     List<PromotionDetail> list(PromotionQueryRequest request);

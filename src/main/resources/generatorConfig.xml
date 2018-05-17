@@ -134,8 +134,6 @@
 			<columnOverride column="profit_amount" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
 		
-		-->
-		
 		<table tableName="goods_info" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 			<columnOverride column="last_import_price" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="average_import_price" javaType="cn.cash.register.util.Money"></columnOverride>
@@ -143,6 +141,8 @@
 			<columnOverride column="trade_price" javaType="cn.cash.register.util.Money"></columnOverride>
 			<columnOverride column="vip_price" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
+		
+		-->
 		
 		<table tableName="promotion_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 		</table>

@@ -5,10 +5,12 @@
 package cn.cash.register.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.PromotionQueryRequest;
+import cn.cash.register.dao.domain.DiscountGoodsDetail;
 import cn.cash.register.dao.domain.PromotionDetail;
 
 /**
@@ -20,8 +22,9 @@ public interface PromotionService {
 
     /**
      * 增加促销
+     * Map的key为商品id
      */
-    Long add(PromotionDetail item, List<Long> goodsIds);
+    Long add(PromotionDetail item, List<Long> goodsIds, Map<Long, DiscountGoodsDetail> discountGoodsMap);
 
     /**
      * 删除促销
@@ -37,6 +40,11 @@ public interface PromotionService {
      * 根据id查询促销
      */
     PromotionDetail queryById(Long id);
+
+    /**
+     * 返回商品促销信息
+     */
+    DiscountGoodsDetail getPromotion(Long goodsId, Long promotionId);
 
     /**
      * 分页查询促销
