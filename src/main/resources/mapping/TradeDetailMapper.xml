@@ -28,7 +28,7 @@
   	<result column="total_actual_amount" jdbcType="INTEGER" property="totalActualAmount" />
   	<result column="profit_amount" jdbcType="INTEGER" property="profitAmount" />
   	<result column="goods_count" jdbcType="INTEGER" property="goodsCount" />
-  	<result column="profit_rate" jdbcType="Double" property="profitRate" />
+  	<result column="profit_rate" jdbcType="DOUBLE" property="profitRate" />
   </resultMap>
   
   <sql id="Base_Column_List">

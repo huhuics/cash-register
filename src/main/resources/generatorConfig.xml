@@ -142,10 +142,15 @@
 			<columnOverride column="vip_price" javaType="cn.cash.register.util.Money"></columnOverride>
 		</table>
 		
-		-->
-		
 		<table tableName="promotion_detail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 		</table>
+		
+		-->
+		
+		<table tableName="authorization_code" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+		
+		
 		 
     </context>  
 </generatorConfiguration>
