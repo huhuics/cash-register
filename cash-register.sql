@@ -560,11 +560,11 @@ CREATE TABLE `system_parameter` (
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UQ_PARAM_CODE` (`param_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `system_parameter` */
 
-insert  into `system_parameter`(`id`,`param_code`,`param_value`,`description`,`gmt_update`,`gmt_create`) values (1,'SHOP_NAME','小熊维尼的糖果店','商店名称','2018-05-02 17:25:40','2018-04-23 21:44:25'),(3,'PETTY_AMOUNT','false','备用金开关，true为启用,false为不启用','2018-05-02 17:32:17','2018-05-02 17:31:34');
+insert  into `system_parameter`(`id`,`param_code`,`param_value`,`description`,`gmt_update`,`gmt_create`) values (1,'SHOP_NAME','小熊维尼的糖果店','商店名称','2018-05-02 17:25:40','2018-04-23 21:44:25'),(3,'PETTY_AMOUNT','false','备用金开关，true为启用,false为不启用','2018-05-02 17:32:17','2018-05-02 17:31:34'),(5,'REGISTER_TIME',NULL,'注册时间','2018-05-18 14:39:24','2018-05-18 14:39:26'),(6,'INVALID_TIME',NULL,'有效期截止时间','2018-05-18 14:45:26','2018-05-18 14:44:08'),(7,'RELATED_EMAIL',NULL,'绑定邮箱','2018-05-18 14:45:40','2018-05-18 14:45:42'),(8,'PHONE',NULL,'联系电话','2018-05-18 14:48:45','2018-05-18 14:48:47'),(9,'ADDRESS',NULL,'联系地址','2018-05-18 14:49:31','2018-05-18 14:49:33'),(10,'IS_AUTHORIZED','false','软件是否已授权，true为已授权，false为未授权','2018-05-18 15:29:39','2018-05-18 14:59:16');
 
 /*Table structure for table `trade_detail` */
 
