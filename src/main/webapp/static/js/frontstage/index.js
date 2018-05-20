@@ -20,8 +20,8 @@ var vm = new Vue({
 			var $currentA = $("a[href='#" + url + "']");
 
 			// 导航菜单展开
-			$(".sidebar-menu li").removeClass("active");
-			$(".treeview-menu li").removeClass("active");
+			$(".navbar-nav li").removeClass("active");
+			$(".dropdown-menu li").removeClass("active");
 			$currentA.parents("li").addClass("active");
 
 			vm.navTitle = $currentA.text();

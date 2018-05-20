@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class FrontstageCommonController {
 
     /**
-     * 前端首页
+     * 收银端首页
      * 
      * @return
      */
@@ -25,22 +25,82 @@ public class FrontstageCommonController {
     }
 
     /**
-     * 前端登录页
+     * 收银端登录页
      * 
      * @return
      */
     @RequestMapping(value = "/login")
-    public String flogin(Model model) {
+    public String login() {
         return "frontstage/login";
     }
 
     /**
-     * 前端收银页
+     * 收银端收银页
      * 
      * @return
      */
     @RequestMapping(value = "/cashRegister")
-    public String fcashRegister(Model model) {
+    public String cashRegister() {
         return "frontstage/_cashRegister";
+    }
+
+    /**
+     * 收银端会员管理页
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/memberPage")
+    public String memberPage() {
+        return "frontstage/_member-list";
+    }
+
+    /**
+     * 收银端商品编辑页
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/goodsEditPage")
+    public String goodsEditPage() {
+        return "frontstage/_goods-list";
+    }
+
+    /**
+     * 收银端商品报损页
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/goodsLosePage")
+    public String goodsLosePage() {
+        return "frontstage/_goodsLose-add";
+    }
+
+    /**
+     * 收银端进货页
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/goodsStockAddPage")
+    public String goodsStockAddPage() {
+        return "frontstage/_goods-stock-add";
+    }
+
+    /**
+     * 收银端退货页
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/refundPage")
+    public String refundPage() {
+        return "frontstage/_refund";
+    }
+
+    /**
+     * 收银端设置页
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/settings")
+    public String settings() {
+        return "frontstage/_settings";
     }
 }

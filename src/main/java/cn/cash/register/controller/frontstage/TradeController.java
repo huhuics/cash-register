@@ -136,6 +136,14 @@ public class TradeController {
     }
 
     /**
+     * 销售单据分页查询页面
+     */
+    @RequestMapping(value = "/queryTradeDetailListPage")
+    public String queryTradeDetailListPage() {
+        return "frontstage/_sales-tradeDetail-list";
+    }
+
+    /**
      * 销售单据分页查询
      */
     @ResponseBody
