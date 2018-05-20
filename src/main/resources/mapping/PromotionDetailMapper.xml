@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cash.register.dao.PromotionDetailMapper">
+  <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.PromotionDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="promotion_name" jdbcType="VARCHAR" property="promotionName" />
+    <result column="promotion_type" jdbcType="VARCHAR" property="promotionType" />
+    <result column="is_member_only" jdbcType="BIT" property="isMemberOnly" />
+    <result column="is_member_discount_twice" jdbcType="BIT" property="isMemberDiscountTwice" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.cash.register.dao.domain.PromotionDetail">
+    <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, promotion_name, promotion_type, is_member_only, is_member_discount_twice, start_time, 
+    end_time, status, gmt_update, gmt_create
+  </sql>
+  <sql id="Blob_Column_List">
+    detail
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from promotion_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from promotion_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.cash.register.dao.domain.PromotionDetail">
+    insert into promotion_detail (id, promotion_name, promotion_type, 
+      is_member_only, is_member_discount_twice, start_time, 
+      end_time, status, gmt_update, 
+      gmt_create, detail)
+    values (#{id,jdbcType=BIGINT}, #{promotionName,jdbcType=VARCHAR}, #{promotionType,jdbcType=VARCHAR}, 
+      #{isMemberOnly,jdbcType=BIT}, #{isMemberDiscountTwice,jdbcType=BIT}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{status,jdbcType=BIT}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{detail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.PromotionDetail" useGeneratedKeys="true" keyProperty="id">
+    insert into promotion_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="promotionName != null">
+        promotion_name,
+      </if>
+      <if test="promotionType != null">
+        promotion_type,
+      </if>
+      <if test="isMemberOnly != null">
+        is_member_only,
+      </if>
+      <if test="isMemberDiscountTwice != null">
+        is_member_discount_twice,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="detail != null">
+        detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="promotionName != null">
+        #{promotionName,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionType != null">
+        #{promotionType,jdbcType=VARCHAR},
+      </if>
+      <if test="isMemberOnly != null">
+        #{isMemberOnly,jdbcType=BIT},
+      </if>
+      <if test="isMemberDiscountTwice != null">
+        #{isMemberDiscountTwice,jdbcType=BIT},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detail != null">
+        #{detail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.PromotionDetail">
+    update promotion_detail
+    <set>
+      <if test="promotionName != null">
+        promotion_name = #{promotionName,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionType != null">
+        promotion_type = #{promotionType,jdbcType=VARCHAR},
+      </if>
+      <if test="isMemberOnly != null">
+        is_member_only = #{isMemberOnly,jdbcType=BIT},
+      </if>
+      <if test="isMemberDiscountTwice != null">
+        is_member_discount_twice = #{isMemberDiscountTwice,jdbcType=BIT},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detail != null">
+        detail = #{detail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.cash.register.dao.domain.PromotionDetail">
+    update promotion_detail
+    set promotion_name = #{promotionName,jdbcType=VARCHAR},
+      promotion_type = #{promotionType,jdbcType=VARCHAR},
+      is_member_only = #{isMemberOnly,jdbcType=BIT},
+      is_member_discount_twice = #{isMemberDiscountTwice,jdbcType=BIT},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=BIT},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      detail = #{detail,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.PromotionDetail">
+    update promotion_detail
+    set promotion_name = #{promotionName,jdbcType=VARCHAR},
+      promotion_type = #{promotionType,jdbcType=VARCHAR},
+      is_member_only = #{isMemberOnly,jdbcType=BIT},
+      is_member_discount_twice = #{isMemberDiscountTwice,jdbcType=BIT},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=BIT},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="list" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.PromotionQueryRequest">
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from promotion_detail
+    where 1 = 1
+    <if test="promotionType != null and promotionType !=''">
+  		and promotion_type = #{promotionType,jdbcType=VARCHAR}
+    </if>
+     <if test="status != null">
+  		and status = #{status,jdbcType=BIT}
+    </if>
+     <if test="promotionName != null and promotionName !=''">
+  		and promotion_name = #{promotionName,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

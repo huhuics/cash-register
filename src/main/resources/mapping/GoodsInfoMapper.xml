@@ -35,6 +35,7 @@
     <result column="is_fixed_price" jdbcType="BIT" property="isFixedPrice" />
     <result column="is_timeing_price" jdbcType="BIT" property="isTimeingPrice" />
     <result column="is_hidden" jdbcType="BIT" property="isHidden" />
+    <result column="promotion_id" jdbcType="BIGINT" property="promotionId" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
@@ -45,7 +46,7 @@
     stock_upper_limit, stock_lower_limit, last_import_price, average_import_price, sales_price, 
     trade_price, vip_price, is_vip_discount, supplier_name, production_date, quality_guarantee_period, 
     is_integral, royalty_type, is_booked, is_gift, is_weigh, is_fixed_price, is_timeing_price, 
-    is_hidden, remark, gmt_update, gmt_create
+    is_hidden, promotion_id, remark, gmt_update, gmt_create
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -68,8 +69,9 @@
       is_vip_discount, supplier_name, production_date, 
       quality_guarantee_period, is_integral, royalty_type, 
       is_booked, is_gift, is_weigh, is_fixed_price, 
-      is_timeing_price, is_hidden, remark, 
-      gmt_update, gmt_create)
+      is_timeing_price, is_hidden, promotion_id, 
+      remark, gmt_update, gmt_create
+      )
     values (#{id,jdbcType=BIGINT}, #{goodsImageId,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR}, 
       #{barCode,jdbcType=VARCHAR}, #{productNumber,jdbcType=VARCHAR}, #{pinyinCode,jdbcType=VARCHAR}, 
       #{categoryName,jdbcType=VARCHAR}, #{goodsStatus,jdbcType=BIT}, #{goodsBrand,jdbcType=VARCHAR}, 
@@ -80,10 +82,11 @@
       #{isVipDiscount,jdbcType=BIT}, #{supplierName,jdbcType=VARCHAR}, #{productionDate,jdbcType=VARCHAR}, 
       #{qualityGuaranteePeriod,jdbcType=INTEGER}, #{isIntegral,jdbcType=BIT}, #{royaltyType,jdbcType=VARCHAR}, 
       #{isBooked,jdbcType=BIT}, #{isGift,jdbcType=BIT}, #{isWeigh,jdbcType=BIT}, #{isFixedPrice,jdbcType=BIT}, 
-      #{isTimeingPrice,jdbcType=BIT}, #{isHidden,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, 
-      #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
+      #{isTimeingPrice,jdbcType=BIT}, #{isHidden,jdbcType=BIT}, #{promotionId,jdbcType=BIGINT}, 
+      #{remark,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.GoodsInfo" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.GoodsInfo">
     insert into goods_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -184,6 +187,9 @@
       </if>
       <if test="isHidden != null">
         is_hidden,
+      </if>
+      <if test="promotionId != null">
+        promotion_id,
       </if>
       <if test="remark != null">
         remark,
@@ -295,6 +301,9 @@
       <if test="isHidden != null">
         #{isHidden,jdbcType=BIT},
       </if>
+      <if test="promotionId != null">
+        #{promotionId,jdbcType=BIGINT},
+      </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
@@ -405,6 +414,9 @@
       <if test="isHidden != null">
         is_hidden = #{isHidden,jdbcType=BIT},
       </if>
+      <if test="promotionId != null">
+        promotion_id = #{promotionId,jdbcType=BIGINT},
+      </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
@@ -451,6 +463,7 @@
       is_fixed_price = #{isFixedPrice,jdbcType=BIT},
       is_timeing_price = #{isTimeingPrice,jdbcType=BIT},
       is_hidden = #{isHidden,jdbcType=BIT},
+      promotion_id = #{promotionId,jdbcType=BIGINT},
       remark = #{remark,jdbcType=VARCHAR},
       gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
@@ -614,6 +627,9 @@
       <if test="isHidden != null">
         is_hidden = #{isHidden,jdbcType=BIT},
       </if>
+      <if test="promotionId != null">
+        promotion_id = #{promotionId,jdbcType=BIGINT},
+      </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
@@ -626,5 +642,13 @@
     <include refid="Base_Column_List" />
     from goods_info
   </select>
+  
+  <update id="clearPromotion" parameterType="java.lang.Long">
+  	UPDATE 
+ 	 goods_info 
+	SET
+  	promotion_id = NULL 
+	WHERE promotion_id = #{promotionId,jdbcType=BIGINT}
+  </update>
   
 </mapper>

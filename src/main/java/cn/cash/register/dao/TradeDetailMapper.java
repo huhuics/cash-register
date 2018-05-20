@@ -4,8 +4,10 @@ import java.util.List;
 
 import cn.cash.register.common.request.ExchangeJobTradeDetailRequest;
 import cn.cash.register.common.request.MemberPayChanelQueryRequest;
+import cn.cash.register.common.request.SalesAmountQueryRequest;
 import cn.cash.register.common.request.SalesBasicFactsQueryRequest;
 import cn.cash.register.common.request.TradeDetailQueryRequest;
+import cn.cash.register.dao.domain.SalesAmountChart;
 import cn.cash.register.dao.domain.TradeDetail;
 
 public interface TradeDetailMapper {
@@ -30,4 +32,10 @@ public interface TradeDetailMapper {
     List<TradeDetail> queryByTradeTime(SalesBasicFactsQueryRequest request);
 
     List<TradeDetail> queryPaychanel(MemberPayChanelQueryRequest request);
+
+    List<SalesAmountChart> querySalesAmountByHour(SalesAmountQueryRequest request);
+
+    List<SalesAmountChart> querySalesAmountByDay(SalesAmountQueryRequest request);
+
+    List<SalesAmountChart> querySalesAmountByMonth(SalesAmountQueryRequest request);
 }

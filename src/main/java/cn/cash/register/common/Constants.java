@@ -33,8 +33,26 @@ public class Constants {
     /** 商店名 */
     public static final String SHOP_NAME                   = "SHOP_NAME";
 
-    /** Excel保存路径 */
-    public static final String EXCEL_PATH                  = "EXCEL_PATH";
+    /** 备用金开关 */
+    public static final String PETTY_AMOUNT                = "PETTY_AMOUNT";
+
+    /** 注册时间 */
+    public static final String REGISTER_TIME               = "REGISTER_TIME";
+
+    /** 有效期截止时间 */
+    public static final String INVALID_TIME                = "INVALID_TIME";
+
+    /** 绑定邮箱 */
+    public static final String RELATED_EMAIL               = "RELATED_EMAIL";
+
+    /** 联系电话 */
+    public static final String PHONE                       = "PHONE";
+
+    /** 联系地址 */
+    public static final String ADDRESS                     = "ADDRESS";
+
+    /** 软件是否已授权 */
+    public static final String IS_AUTHORIZED               = "IS_AUTHORIZED";
 
     /*********************************end***********************************/
 }

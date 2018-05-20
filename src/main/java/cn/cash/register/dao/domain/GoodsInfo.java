@@ -6,7 +6,7 @@ import cn.cash.register.util.Money;
 
 public class GoodsInfo extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = 3706844316320387568L;
+    private static final long serialVersionUID = -3079051475219611653L;
 
     private Long              id;
 
@@ -73,6 +73,8 @@ public class GoodsInfo extends BaseDomain {
     private Boolean           isTimeingPrice;
 
     private Boolean           isHidden;
+
+    private Long              promotionId;
 
     private String            remark;
 
@@ -342,6 +344,14 @@ public class GoodsInfo extends BaseDomain {
 
     public void setIsHidden(Boolean isHidden) {
         this.isHidden = isHidden;
+    }
+
+    public Long getPromotionId() {
+        return promotionId;
+    }
+
+    public void setPromotionId(Long promotionId) {
+        this.promotionId = promotionId;
     }
 
     public String getRemark() {

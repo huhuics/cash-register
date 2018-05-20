@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.ExchangeJobQueryRequest;
+import cn.cash.register.common.request.SalesAmountQueryRequest;
 import cn.cash.register.common.request.SalesBasicFactsQueryRequest;
 import cn.cash.register.common.request.TradeGoodsDetailQueryRequest;
 import cn.cash.register.dao.domain.ExchangeJobDetail;
@@ -71,6 +73,16 @@ public class SalesController {
     @PostMapping(value = "/queryGoodsSaleStatistics")
     public ResultSet queryGoodsSaleStatistics(TradeGoodsDetailQueryRequest request) {
         PageInfo<GoodsSaleStatistics> ret = salesService.queryGoodsSaleStatistics(request);
+        return ResultSet.success().put("ret", ret);
+    }
+
+    /**
+     * 查询营业报表
+     */
+    @ResponseBody
+    @PostMapping(value = "/querySalesAmountByTime")
+    public ResultSet querySalesAmountByTime(SalesAmountQueryRequest request) {
+        JSONArray ret = salesService.querySalesAmountByTime(request);
         return ResultSet.success().put("ret", ret);
     }
 

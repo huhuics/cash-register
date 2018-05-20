@@ -32,4 +32,6 @@ public interface GoodsInfoMapper {
     int updateByBarCodeSelective(GoodsInfo info);
 
     List<GoodsInfo> listAll();
+
+    void clearPromotion(Long promotionId);
 }

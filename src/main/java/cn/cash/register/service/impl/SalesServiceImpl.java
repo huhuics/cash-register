@@ -4,6 +4,7 @@
  */
 package cn.cash.register.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +15,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.request.SalesAmountQueryRequest;
 import cn.cash.register.common.request.SalesBasicFactsQueryRequest;
 import cn.cash.register.common.request.TradeGoodsDetailQueryRequest;
 import cn.cash.register.dao.MemberRechargeDetailMapper;
@@ -25,10 +29,12 @@ import cn.cash.register.dao.TradeGoodsDetailMapper;
 import cn.cash.register.dao.domain.GoodsSaleStatistics;
 import cn.cash.register.dao.domain.MemberRechargeDetail;
 import cn.cash.register.dao.domain.PayChenal;
+import cn.cash.register.dao.domain.SalesAmountChart;
 import cn.cash.register.dao.domain.SalesBasicFacts;
 import cn.cash.register.dao.domain.TradeDetail;
 import cn.cash.register.enums.PayChenalEnum;
 import cn.cash.register.enums.SalesBasicFactsEnum;
+import cn.cash.register.enums.TimePeriodEnum;
 import cn.cash.register.service.SalesService;
 import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.Money;
@@ -158,6 +164,33 @@ public class SalesServiceImpl implements SalesService {
         List<GoodsSaleStatistics> statisticses = tradeGoodsDetailMapper.querySaleStatistics(request);
 
         return new PageInfo<>(statisticses);
+    }
+
+    @Override
+    public JSONArray querySalesAmountByTime(SalesAmountQueryRequest request) {
+        AssertUtil.assertNotNull(request, "参数不能为空");
+        request.validate();
+
+        List<SalesAmountChart> charts = new ArrayList<>();
+        if (TimePeriodEnum.valueOf(request.getTimeUp()) == TimePeriodEnum.hour) {
+            charts = tradeDetailMapper.querySalesAmountByHour(request);
+        } else if (TimePeriodEnum.valueOf(request.getTimeUp()) == TimePeriodEnum.day) {
+            charts = tradeDetailMapper.querySalesAmountByDay(request);
+        } else if (TimePeriodEnum.valueOf(request.getTimeUp()) == TimePeriodEnum.month) {
+            charts = tradeDetailMapper.querySalesAmountByMonth(request);
+        }
+
+        JSONArray jsonArray = new JSONArray();
+        for (SalesAmountChart chart : charts) {
+            JSONObject jsonObj = new JSONObject();
+            jsonObj.put("time", chart.getTime());
+            jsonObj.put("totalActualAmount", chart.getTotalActualAmount());
+            jsonObj.put("profitAmount", chart.getProfitAmount());
+            jsonObj.put("goodsCount", chart.getGoodsCount());
+            jsonObj.put("profitRate", chart.getProfitRate());
+        }
+
+        return jsonArray;
     }
 
 }
