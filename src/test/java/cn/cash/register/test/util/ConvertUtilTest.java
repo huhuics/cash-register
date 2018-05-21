@@ -78,6 +78,8 @@ public class ConvertUtilTest {
         discountGoodsMap.put("112233", detail);
         String jsonStr = JSON.toJSONString(discountGoodsMap);
 
+        System.out.println("jsonStr=" + jsonStr);
+
         Map<String, DiscountGoodsDetail> parseObject = JSON.parseObject(jsonStr, Map.class);
 
         System.out.println(parseObject);
