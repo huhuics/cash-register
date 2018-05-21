@@ -5,7 +5,6 @@
 package cn.cash.register.controller.backstage;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -40,8 +39,8 @@ public class PromotionController {
      */
     @ResponseBody
     @PostMapping(value = "/add")
-    public ResultSet add(PromotionDetail item, List<Long> goodsIds, Map<Long, DiscountGoodsDetail> discountGoodsMap) {
-        Long ret = promotionService.add(item, goodsIds, discountGoodsMap);
+    public ResultSet add(PromotionDetail item, List<Long> goodsIds, List<DiscountGoodsDetail> discountGoodsList) {
+        Long ret = promotionService.add(item, goodsIds, discountGoodsList);
         return ResultSet.success().put("ret", ret);
     }
 

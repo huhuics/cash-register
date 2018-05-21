@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.cash.register.dao.domain.SellerInfo;
+import cn.cash.register.enums.LogSourceEnum;
+import cn.cash.register.enums.SubSystemTypeEnum;
 import cn.cash.register.service.ExchangeJobService;
+import cn.cash.register.service.LogService;
 import cn.cash.register.service.SellerInfoService;
 import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.ResultSet;
@@ -32,6 +35,9 @@ public class LoginAndOutController {
     @Resource
     private ExchangeJobService exchangeJobService;
 
+    @Resource
+    private LogService         logService;
+
     /**
      * 收银员登录
      * @return 收银员信息
@@ -44,7 +50,7 @@ public class LoginAndOutController {
         AssertUtil.assertNotBlank(password, "密码不能为空");
 
         SellerInfo seller = sellerInfoService.login(sellerNo, password);
-
+        logService.record(LogSourceEnum.front, SubSystemTypeEnum.employee, sellerNo, "登录收银台");
         return ResultSet.success().put("seller", seller);
     }
 

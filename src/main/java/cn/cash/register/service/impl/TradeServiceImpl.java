@@ -30,8 +30,11 @@ import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.dao.domain.GoodsItem;
 import cn.cash.register.dao.domain.TradeDetail;
 import cn.cash.register.dao.domain.TradeGoodsDetail;
+import cn.cash.register.enums.LogSourceEnum;
+import cn.cash.register.enums.SubSystemTypeEnum;
 import cn.cash.register.enums.TradeTypeEnum;
 import cn.cash.register.service.GoodsInfoService;
+import cn.cash.register.service.LogService;
 import cn.cash.register.service.MemberService;
 import cn.cash.register.service.TradeService;
 import cn.cash.register.util.LogUtil;
@@ -63,6 +66,9 @@ public class TradeServiceImpl implements TradeService {
     @Resource
     private GoodsInfoService       goodsInfoService;
 
+    @Resource
+    private LogService             logService;
+
     @Override
     public boolean checkout(TradeRequest request) {
         LogUtil.info(logger, "收到收银请求");
@@ -78,6 +84,8 @@ public class TradeServiceImpl implements TradeService {
                 TradeDetail tradeDetail = new TradeDetail(tradeNo, new Date(), TradeTypeEnum.SALES.getCode());
 
                 doTrade(tradeDetail, request);
+
+                logService.record(LogSourceEnum.front, SubSystemTypeEnum.account, request.getSellerNo(), "收银" + tradeDetail.getTotalActualAmount().getAmount() + "元");
 
                 return true;
             }
@@ -100,6 +108,8 @@ public class TradeServiceImpl implements TradeService {
 
                 doTrade(tradeDetail, request);
 
+                logService.record(LogSourceEnum.front, SubSystemTypeEnum.account, request.getSellerNo(), "退款" + tradeDetail.getTotalActualAmount().getAmount() + "元");
+
                 return true;
             }
         });
@@ -115,6 +125,8 @@ public class TradeServiceImpl implements TradeService {
             public Boolean doInTransaction(TransactionStatus status) {
 
                 doCancel(request);
+
+                logService.record(LogSourceEnum.front, SubSystemTypeEnum.account, request.getSellerNo(), "反结账" + request.getTotalActualAmountMoney().getAmount() + "元");
 
                 return true;
             }

@@ -79,6 +79,7 @@ public class MemberController {
     @RequestMapping(value = "/addOrUpdate")
     public ResultSet addOrUpdate(MemberInfo memberInfo) {
         LogUtil.info(logger, "[Controller]收到#添加或更新会员#请求");
+
         // 根据ID是否为空判断是新增还是编辑
         if (memberInfo.getId() == null) {
             LogUtil.info(logger, "[Controller]#添加会员#,memberInfo={0}", memberInfo);

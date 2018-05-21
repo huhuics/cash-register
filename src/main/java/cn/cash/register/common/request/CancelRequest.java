@@ -25,6 +25,7 @@ public class CancelRequest extends BaseRequest {
     private List<GoodsItem>   goodsItems;
 
     /***********************Controller填充以下参数***************************/
+    private String            sellerNo;
 
     private String            tradeNo;
 
@@ -36,6 +37,7 @@ public class CancelRequest extends BaseRequest {
 
     @Override
     public void validate() {
+        AssertUtil.assertNotBlank(sellerNo, "收银员编号不能为空");
         AssertUtil.assertNotBlank(tradeNo, "交易编号不能为空");
         AssertUtil.assertNotNull(totalActualAmount, "实收总金额不能为空");
         AssertUtil.assertNotBlank(goodsItemsJSONStr, "收银商品不能为空");
@@ -85,6 +87,14 @@ public class CancelRequest extends BaseRequest {
 
     public void setGoodsItemsJSONStr(String goodsItemsJSONStr) {
         this.goodsItemsJSONStr = goodsItemsJSONStr;
+    }
+
+    public String getSellerNo() {
+        return sellerNo;
+    }
+
+    public void setSellerNo(String sellerNo) {
+        this.sellerNo = sellerNo;
     }
 
 }
