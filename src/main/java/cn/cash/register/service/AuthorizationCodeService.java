@@ -4,8 +4,6 @@
  */
 package cn.cash.register.service;
 
-import cn.cash.register.dao.domain.AuthorizationCode;
-
 /**
  * 密钥服务接口
  * @author HuHui
@@ -15,17 +13,21 @@ public interface AuthorizationCodeService {
 
     /**
      * 将密钥写入U盘
+     * 该方法用于生成加密设备
+     * 成功返回true,失败返回false
      */
     boolean writeIntoUDisk();
 
     /**
-     * 删除密钥
+     * 比对密钥
+     * 成功返回true,失败返回false
      */
-    int delete(String code);
+    boolean checkAuth();
 
     /**
-     * 查询密钥
+     * 循环检测密钥是否存在
+     * 成功返回true,失败返回false
      */
-    AuthorizationCode queryByCode(String code);
+    boolean loopCheckAuth();
 
 }

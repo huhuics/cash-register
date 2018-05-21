@@ -5,12 +5,12 @@
 package cn.cash.register.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
@@ -48,13 +48,18 @@ public class PromotionServiceImpl implements PromotionService {
     private TransactionTemplate   txTemplate;
 
     @Override
-    public Long add(PromotionDetail item, List<Long> goodsIds, Map<Long, DiscountGoodsDetail> discountGoodsMap) {
-        checkAndSet(item, goodsIds, discountGoodsMap);
+    public Long add(PromotionDetail item, List<Long> goodsIds, List<DiscountGoodsDetail> discountGoodsList) {
+        checkAndSet(item, goodsIds, discountGoodsList);
+
+        Map<Long, DiscountGoodsDetail> disCountGoodsDetailMap = new HashMap<Long, DiscountGoodsDetail>();
+        for (DiscountGoodsDetail detail : discountGoodsList) {
+            disCountGoodsDetailMap.put(detail.getGoodsId(), detail);
+        }
 
         return txTemplate.execute(new TransactionCallback<Long>() {
             @Override
             public Long doInTransaction(TransactionStatus status) {
-                item.setDetail(JSON.toJSONString(discountGoodsMap));
+                item.setDetail(JSON.toJSONString(disCountGoodsDetailMap));
                 Long promotionId = promotionMapper.insertSelective(item);
                 for (Long goodsId : goodsIds) {
                     GoodsInfo goodsInfo = goodsInfoMapper.selectByPrimaryKey(goodsId);
@@ -153,12 +158,12 @@ public class PromotionServiceImpl implements PromotionService {
     /**
      * 参数校验并赋值
      */
-    private void checkAndSet(PromotionDetail item, List<Long> goodsIds, Map<Long, DiscountGoodsDetail> discountGoodsMap) {
+    private void checkAndSet(PromotionDetail item, List<Long> goodsIds, List<DiscountGoodsDetail> discountGoodsList) {
         AssertUtil.assertNotNull(item, "参数不能为空");
         AssertUtil.assertNotBlank(item.getPromotionName(), "促销名称不能为空");
         AssertUtil.assertNotBlank(item.getPromotionType(), "促销类型不能为空");
         AssertUtil.assertNotBlank(goodsIds, "促销商品不能为空");
-        AssertUtil.assertTrue(MapUtils.isNotEmpty(discountGoodsMap), "促销商品不能为空");
+        AssertUtil.assertNotBlank(discountGoodsList, "促销商品不能为空");
         item.setGmtCreate(new Date());
         item.setStatus(true);
     }

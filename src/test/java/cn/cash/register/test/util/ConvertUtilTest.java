@@ -74,9 +74,11 @@ public class ConvertUtilTest {
     @Test
     public void testJsonMap() {
         Map<String, DiscountGoodsDetail> discountGoodsMap = new HashMap<>();
-        DiscountGoodsDetail detail = new DiscountGoodsDetail(12.0, "12.13");
+        DiscountGoodsDetail detail = new DiscountGoodsDetail(1L, 12.0, "12.13");
         discountGoodsMap.put("112233", detail);
         String jsonStr = JSON.toJSONString(discountGoodsMap);
+
+        System.out.println("jsonStr=" + jsonStr);
 
         Map<String, DiscountGoodsDetail> parseObject = JSON.parseObject(jsonStr, Map.class);
 

@@ -14,6 +14,8 @@ public class DiscountGoodsDetail extends BaseDomain {
     /**  */
     private static final long serialVersionUID = -4007517191850097112L;
 
+    private Long              goodsId;
+
     private Double            discount;
 
     private String            price;
@@ -21,7 +23,8 @@ public class DiscountGoodsDetail extends BaseDomain {
     public DiscountGoodsDetail() {
     }
 
-    public DiscountGoodsDetail(Double discount, String price) {
+    public DiscountGoodsDetail(Long goodsId, Double discount, String price) {
+        this.goodsId = goodsId;
         this.discount = discount;
         this.price = price;
     }
@@ -40,6 +43,14 @@ public class DiscountGoodsDetail extends BaseDomain {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public Long getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
     }
 
 }
