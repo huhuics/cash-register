@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.Constants;
 import cn.cash.register.common.request.GoodsBatchEditRequest;
 import cn.cash.register.common.request.GoodsInfoInportRequest;
 import cn.cash.register.common.request.GoodsInfoQueryRequest;
@@ -28,8 +30,12 @@ import cn.cash.register.common.request.GoodsInfoRequest;
 import cn.cash.register.dao.domain.GoodsImage;
 import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.dao.domain.RoyaltyType;
+import cn.cash.register.dao.domain.SellerInfo;
+import cn.cash.register.enums.LogSourceEnum;
+import cn.cash.register.enums.SubSystemTypeEnum;
 import cn.cash.register.enums.UpdateFieldEnum;
 import cn.cash.register.service.GoodsInfoService;
+import cn.cash.register.service.LogService;
 import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.NumUtil;
@@ -49,6 +55,9 @@ public class GoodsInfoController {
 
     @Resource
     private GoodsInfoService    goodsInfoService;
+
+    @Resource
+    private LogService          logService;
 
     private static final String SEP    = ",";
 
@@ -75,9 +84,11 @@ public class GoodsInfoController {
      */
     @ResponseBody
     @RequestMapping(value = "/addGoodsInfo")
-    public ResultSet addGoodsInfo(GoodsInfoRequest request) {
+    public ResultSet addGoodsInfo(GoodsInfoRequest request, HttpSession session) {
         validateAddRequest(request);
         Long id = goodsInfoService.add(request);
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG);
+        logService.record(LogSourceEnum.backstage, SubSystemTypeEnum.employee, seller.getSellerNo(), "增加商品" + request.getBarCode());
         return ResultSet.success().put("id", id);
     }
 
@@ -87,9 +98,13 @@ public class GoodsInfoController {
      */
     @ResponseBody
     @RequestMapping(value = "/updateGoodsInfo")
-    public ResultSet updateGoodsInfo(GoodsInfoRequest request) {
+    public ResultSet updateGoodsInfo(GoodsInfoRequest request, HttpSession session) {
         AssertUtil.assertNotNull(request.getId(), "商品id不能为空");
         int result = goodsInfoService.update(request);
+        if (result > 0) {
+            SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG);
+            logService.record(LogSourceEnum.backstage, SubSystemTypeEnum.employee, seller.getSellerNo(), "修改商品" + request.getBarCode());
+        }
         return ResultSet.success().put("result", result);
     }
 
@@ -100,12 +115,14 @@ public class GoodsInfoController {
      */
     @ResponseBody
     @RequestMapping(value = "/deleteGoodsInfo")
-    public ResultSet deleteGoodsInfo(String idStr) {
+    public ResultSet deleteGoodsInfo(String idStr, HttpSession session) {
         LogUtil.info(logger, "收到删除请求,idStr", idStr);
         AssertUtil.assertNotBlank(idStr, "商品id不能为空");
         String[] idArray = idStr.split(SEP);
         Long[] ids = (Long[]) ConvertUtils.convert(idArray, Long.class);
         goodsInfoService.delete(Arrays.asList(ids));
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG);
+        logService.record(LogSourceEnum.backstage, SubSystemTypeEnum.employee, seller.getSellerNo(), "删除商品" + idStr);
         return ResultSet.success();
     }
 
@@ -128,7 +145,7 @@ public class GoodsInfoController {
      */
     @ResponseBody
     @RequestMapping(value = "/batchUpdate")
-    public ResultSet batchUpdate(GoodsBatchEditRequest request) {
+    public ResultSet batchUpdate(GoodsBatchEditRequest request, HttpSession session) {
         LogUtil.info(logger, "[Controller]接收到批量编辑请求,request={0}", request);
         request.validate();
 
@@ -225,6 +242,9 @@ public class GoodsInfoController {
                 goodsInfoService.batchUpdate(goodsIds, bool.toString(), UpdateFieldEnum.isFixedPrice);
             }
         }
+
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG);
+        logService.record(LogSourceEnum.backstage, SubSystemTypeEnum.employee, seller.getSellerNo(), "批量修改商品");
 
         return ResultSet.success();
     }
