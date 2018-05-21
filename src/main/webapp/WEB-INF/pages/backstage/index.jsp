@@ -46,7 +46,7 @@
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>日结记录</a></li>
                             <li><a href="#sales/goodsSaleStatistics" @click="menuClick"><i class="fa fa-file-text-o"></i>销售统计</a></li>
                             <li><a href="#sales/queryExchangeJobs" @click="menuClick"><i class="fa fa-exchange"></i>交接班记录</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>营业报表</a></li>
+                            <li><a href="#sales/goodsSaleAmountByTime" @click="menuClick"><i class="fa fa-file-text-o"></i>营业报表</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"><i class="fa fa-shopping-bag"></i><span>商品</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>

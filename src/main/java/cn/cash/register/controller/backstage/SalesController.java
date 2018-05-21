@@ -80,7 +80,7 @@ public class SalesController {
      * 查询营业报表
      */
     @ResponseBody
-    @PostMapping(value = "/querySalesAmountByTime")
+    @RequestMapping(value = "/querySalesAmountByTime")
     public ResultSet querySalesAmountByTime(SalesAmountQueryRequest request) {
         JSONArray ret = salesService.querySalesAmountByTime(request);
         return ResultSet.success().put("ret", ret);
@@ -116,6 +116,14 @@ public class SalesController {
     @GetMapping(value = "/goodsSaleStatistics")
     public String goodsSaleStatistics() {
         return "backstage/_sales-statistics-list";
+    }
+
+    /**
+     * 查询营业报表页面
+     */
+    @GetMapping(value = "/goodsSaleAmountByTime")
+    public String goodsSaleAmountByTime() {
+        return "backstage/_sales-amountByTime";
     }
 
 }

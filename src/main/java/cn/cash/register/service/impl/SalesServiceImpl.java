@@ -172,11 +172,11 @@ public class SalesServiceImpl implements SalesService {
         request.validate();
 
         List<SalesAmountChart> charts = new ArrayList<>();
-        if (TimePeriodEnum.valueOf(request.getTimeUp()) == TimePeriodEnum.hour) {
+        if (TimePeriodEnum.valueOf(request.getTimePeriod()) == TimePeriodEnum.hour) {
             charts = tradeDetailMapper.querySalesAmountByHour(request);
-        } else if (TimePeriodEnum.valueOf(request.getTimeUp()) == TimePeriodEnum.day) {
+        } else if (TimePeriodEnum.valueOf(request.getTimePeriod()) == TimePeriodEnum.day) {
             charts = tradeDetailMapper.querySalesAmountByDay(request);
-        } else if (TimePeriodEnum.valueOf(request.getTimeUp()) == TimePeriodEnum.month) {
+        } else if (TimePeriodEnum.valueOf(request.getTimePeriod()) == TimePeriodEnum.month) {
             charts = tradeDetailMapper.querySalesAmountByMonth(request);
         }
 
