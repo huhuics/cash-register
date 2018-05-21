@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,6 +34,14 @@ public class PromotionController {
 
     @Resource
     private PromotionService promotionService;
+
+    /**
+     * 促销信息页面
+     */
+    @GetMapping
+    public String list() {
+        return "backstage/_promotion-list";
+    }
 
     /**
      * 增加促销

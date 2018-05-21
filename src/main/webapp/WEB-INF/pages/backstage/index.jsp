@@ -68,13 +68,14 @@
                             <li><a href="#member" @click="menuClick"><i class="fa fa-user-circle"></i>会员资料</a></li>
                             <li><a href="#member/rank" @click="menuClick"><i class="fa fa-signal"></i>会员等级</a></li>
                             <li><a href="#member/integral" @click="menuClick"><i class="fa fa-sliders"></i>会员制度</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员卡报表</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员充值明细</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>储值卡对账</a></li>
                             <li><a href="#member/analysis" @click="menuClick"><i class="fa fa-pie-chart"></i>会员分析</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-circle-o"></i><span>营销</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
                         <ul class="treeview-menu">
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>促销活动设置</a></li>
+                            <li><a href="#promotion" @click="menuClick"><i class="fa fa-circle-o"></i>促销活动设置</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>充值赠送活动设置</a></li>
                         </ul>
                     </li>
