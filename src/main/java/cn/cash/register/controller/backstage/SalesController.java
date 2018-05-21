@@ -70,10 +70,10 @@ public class SalesController {
      * 查询商品销售统计
      */
     @ResponseBody
-    @PostMapping(value = "/queryGoodsSaleStatistics")
+    @RequestMapping(value = "/queryGoodsSaleStatistics")
     public ResultSet queryGoodsSaleStatistics(TradeGoodsDetailQueryRequest request) {
         PageInfo<GoodsSaleStatistics> ret = salesService.queryGoodsSaleStatistics(request);
-        return ResultSet.success().put("ret", ret);
+        return ResultSet.success().put("page", ret);
     }
 
     /**
@@ -108,6 +108,14 @@ public class SalesController {
     @GetMapping(value = "/tradeDetail")
     public String salesTradeDetailList() {
         return "backstage/_sales-tradeDetail-list";
+    }
+
+    /**
+     * 查询销售统计页面
+     */
+    @GetMapping(value = "/goodsSaleStatistics")
+    public String goodsSaleStatistics() {
+        return "backstage/_sales-statistics-list";
     }
 
 }
