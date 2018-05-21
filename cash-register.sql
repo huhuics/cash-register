@@ -450,6 +450,23 @@ CREATE TABLE `member_recharge_detail` (
 
 /*Data for the table `member_recharge_detail` */
 
+/*Table structure for table `operation_log` */
+
+DROP TABLE IF EXISTS `operation_log`;
+
+CREATE TABLE `operation_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  `log_source` varchar(64) NOT NULL COMMENT '日志来源，收银端或后台管理端',
+  `sub_system_type` varchar(64) NOT NULL COMMENT '子系统类型',
+  `operator` varchar(64) NOT NULL COMMENT '操作人账号',
+  `log_content` varchar(256) DEFAULT NULL COMMENT '日志内容',
+  `gmt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间,即操作时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `operation_log` */
+
 /*Table structure for table `promotion_detail` */
 
 DROP TABLE IF EXISTS `promotion_detail`;
