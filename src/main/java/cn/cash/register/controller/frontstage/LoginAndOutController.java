@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.cash.register.common.Constants;
@@ -61,7 +60,7 @@ public class LoginAndOutController {
         AssertUtil.assertNotBlank(password, "密码不能为空");
 
         // 删除可能存在session中的记录
-        session.removeAttribute(Constants.LOGIN_FLAG);
+        session.removeAttribute(Constants.LOGIN_FLAG_SELLER);
         session.removeAttribute(Constants.CURRENT_JOB_ID);
 
         // 校验登录用户名密码
@@ -71,7 +70,7 @@ public class LoginAndOutController {
         Long exchangeJobId = exchangeJobService.create(sellerNo);
 
         // 放入session
-        session.setAttribute(Constants.LOGIN_FLAG, seller);
+        session.setAttribute(Constants.LOGIN_FLAG_SELLER, seller);
         session.setAttribute(Constants.CURRENT_JOB_ID, exchangeJobId);
 
         logService.record(LogSourceEnum.front, SubSystemTypeEnum.employee, sellerNo, "登录收银台");
@@ -82,13 +81,13 @@ public class LoginAndOutController {
      * 收银员登出(交接班接口)
      */
     @ResponseBody
-    @RequestMapping(value = "/cashier/exchangeJob", method = RequestMethod.POST)
+    @RequestMapping(value = "/cashier/logout")
     public ResultSet exchangeJob(HttpSession session) {
         Long exchangeJobId = (Long) session.getAttribute(Constants.CURRENT_JOB_ID);
         boolean ret = exchangeJobService.exchangeJob(exchangeJobId);
 
         // 删除存在session中的记录
-        session.removeAttribute(Constants.LOGIN_FLAG);
+        session.removeAttribute(Constants.LOGIN_FLAG_SELLER);
         session.removeAttribute(Constants.CURRENT_JOB_ID);
 
         return ResultSet.success().put("ret", ret);

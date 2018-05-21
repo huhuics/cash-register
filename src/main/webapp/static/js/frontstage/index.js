@@ -28,7 +28,7 @@ var vm = new Vue({
 		},
         exchangeJob: function() {
             $.ajax({
-                url: basePath + '/cashier/exchangeJob',
+                url: basePath + '/cashier/logout',
                 success: function(result) {
                     if (result.code == "00") {
                         window.location.href = basePath + '/cashierLogin';
