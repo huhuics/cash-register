@@ -1,22 +1,29 @@
 var vm = new Vue({
     el: '#app',
     data: {
-        loginName: null,
-        loginPassword: null
+        sellerNo: null,
+        password: null
     },
     methods: {
         login: function() {
+            if (isBlank(this.sellerNo)) {
+                layer.msg('收银员编号不能为空');
+                return;
+            }
+            if (isBlank(this.password)) {
+                layer.msg('密码不能为空');
+                return;
+            }
             var _self = this;
             $.ajax({
-                type: 'post',
-                url: basePath + '/adminLogin',
+                url: basePath + '/cashierLogin',
                 data: {
-                    loginName: _self.loginName,
-                    loginPassword: _self.loginPassword
+                    sellerNo: _self.sellerNo,
+                    password: _self.password
                 },
                 success: function(result) {
                     if (result.code == "00") {
-                        window.location.href = basePath + '/admin/index'
+                        window.location.href = basePath + '/cashier/index';
                     } else {
                         layer.alert(result.msg);
                     }

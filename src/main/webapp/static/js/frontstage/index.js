@@ -25,6 +25,18 @@ var vm = new Vue({
 			$currentA.parents("li").addClass("active");
 
 			vm.navTitle = $currentA.text();
-		}
+		},
+        exchangeJob: function() {
+            $.ajax({
+                url: basePath + '/cashier/exchangeJob',
+                success: function(result) {
+                    if (result.code == "00") {
+                        window.location.href = basePath + '/cashierLogin';
+                    } else {
+                        layer.alert('系统错误：' + result.msg);
+                    }
+                }
+            });
+        }
     }
 });

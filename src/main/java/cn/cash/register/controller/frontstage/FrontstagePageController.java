@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/cashier")
-public class FrontstageCommonController {
+public class FrontstagePageController {
 
     /**
      * 收银端首页
@@ -22,16 +22,6 @@ public class FrontstageCommonController {
     @RequestMapping(value = "/index")
     public String index(Model model) {
         return "frontstage/index";
-    }
-
-    /**
-     * 收银端登录页
-     * 
-     * @return
-     */
-    @RequestMapping(value = "/login")
-    public String login() {
-        return "frontstage/login";
     }
 
     /**
