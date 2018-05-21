@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cash.register.dao.OperationLogMapper">
+  <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.OperationLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="log_source" jdbcType="VARCHAR" property="logSource" />
+    <result column="sub_system_type" jdbcType="VARCHAR" property="subSystemType" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="log_content" jdbcType="VARCHAR" property="logContent" />
+    <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, log_source, sub_system_type, operator, log_content, gmt_update, gmt_create
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from operation_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from operation_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.cash.register.dao.domain.OperationLog">
+    insert into operation_log (id, log_source, sub_system_type, 
+      operator, log_content, gmt_update, 
+      gmt_create)
+    values (#{id,jdbcType=BIGINT}, #{logSource,jdbcType=VARCHAR}, #{subSystemType,jdbcType=VARCHAR}, 
+      #{operator,jdbcType=VARCHAR}, #{logContent,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
+      #{gmtCreate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.OperationLog">
+    insert into operation_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="logSource != null">
+        log_source,
+      </if>
+      <if test="subSystemType != null">
+        sub_system_type,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="logContent != null">
+        log_content,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="logSource != null">
+        #{logSource,jdbcType=VARCHAR},
+      </if>
+      <if test="subSystemType != null">
+        #{subSystemType,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="logContent != null">
+        #{logContent,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.OperationLog">
+    update operation_log
+    <set>
+      <if test="logSource != null">
+        log_source = #{logSource,jdbcType=VARCHAR},
+      </if>
+      <if test="subSystemType != null">
+        sub_system_type = #{subSystemType,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="logContent != null">
+        log_content = #{logContent,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.OperationLog">
+    update operation_log
+    set log_source = #{logSource,jdbcType=VARCHAR},
+      sub_system_type = #{subSystemType,jdbcType=VARCHAR},
+      operator = #{operator,jdbcType=VARCHAR},
+      log_content = #{logContent,jdbcType=VARCHAR},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="list" parameterType="cn.cash.register.common.request.LogQueryRequest" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from operation_log
+    where 1 = 1
+    <if test="logSource != null and logSource !=''">
+    	and log_source = #{logSource,jdbcType=VARCHAR}
+    </if>
+    <if test="subSystemLogType != null and subSystemLogType !=''">
+    	and sub_system_type = #{subSystemType,jdbcType=VARCHAR}
+    </if>
+    <if test="gmtCreateUp != null">
+  		and
+  		gmt_create &lt;= STR_TO_DATE(#{gmtCreateUp},'%Y-%m-%d %H:%i:%s')
+  		and
+  		gmt_create &gt;= STR_TO_DATE(#{gmtCreateDown},'%Y-%m-%d %H:%i:%s')
+    </if>
+  </select>
+</mapper>

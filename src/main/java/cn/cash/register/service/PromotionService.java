@@ -5,7 +5,6 @@
 package cn.cash.register.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.github.pagehelper.PageInfo;
 
@@ -24,7 +23,7 @@ public interface PromotionService {
      * 增加促销
      * Map的key为商品id
      */
-    Long add(PromotionDetail item, List<Long> goodsIds, Map<Long, DiscountGoodsDetail> discountGoodsMap);
+    Long add(PromotionDetail item, List<Long> goodsIds, List<DiscountGoodsDetail> discountGoodsList);
 
     /**
      * 删除促销

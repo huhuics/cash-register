@@ -7,6 +7,7 @@ package cn.cash.register.controller.backstage;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.Constants;
 import cn.cash.register.common.request.MemberInfoQueryRequest;
 import cn.cash.register.common.request.MemberRankQueryRequest;
 import cn.cash.register.common.request.MemberRechargeCheckQueryRequest;
@@ -29,6 +31,10 @@ import cn.cash.register.dao.domain.MemberIntegral;
 import cn.cash.register.dao.domain.MemberRank;
 import cn.cash.register.dao.domain.MemberRechargeDetail;
 import cn.cash.register.dao.domain.RechargeCheckDetail;
+import cn.cash.register.dao.domain.SellerInfo;
+import cn.cash.register.enums.LogSourceEnum;
+import cn.cash.register.enums.SubSystemTypeEnum;
+import cn.cash.register.service.LogService;
 import cn.cash.register.service.MemberRechargeService;
 import cn.cash.register.service.MemberService;
 import cn.cash.register.util.LogUtil;
@@ -50,6 +56,9 @@ public class MemberController {
 
     @Resource
     private MemberRechargeService memberRechargeService;
+
+    @Resource
+    private LogService            logService;
 
     /****************************会员信息相关接口****************************/
 
@@ -77,15 +86,18 @@ public class MemberController {
      */
     @ResponseBody
     @RequestMapping(value = "/addOrUpdate")
-    public ResultSet addOrUpdate(MemberInfo memberInfo) {
+    public ResultSet addOrUpdate(MemberInfo memberInfo, HttpSession session) {
         LogUtil.info(logger, "[Controller]收到#添加或更新会员#请求");
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG);
         // 根据ID是否为空判断是新增还是编辑
         if (memberInfo.getId() == null) {
             LogUtil.info(logger, "[Controller]#添加会员#,memberInfo={0}", memberInfo);
             memberService.addMember(memberInfo);
+            logService.record(LogSourceEnum.backstage, SubSystemTypeEnum.employee, seller.getSellerNo(), "增加会员" + memberInfo.getMemberNo());
         } else {
             LogUtil.info(logger, "[Controller]#修改会员#,memberInfo={0}", memberInfo);
             memberService.updateMember(memberInfo);
+            logService.record(LogSourceEnum.backstage, SubSystemTypeEnum.employee, seller.getSellerNo(), "修改会员" + memberInfo.getMemberNo());
         }
 
         return ResultSet.success();
@@ -109,11 +121,11 @@ public class MemberController {
      */
     @ResponseBody
     @RequestMapping(value = "/delById", method = RequestMethod.POST)
-    public ResultSet delById(Long id) {
+    public ResultSet delById(Long id, HttpSession session) {
         LogUtil.info(logger, "[Controller]收到#根据ID删除会员信息#请求,id={0}", id);
-
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG);
         memberService.deleteMember(id);
-
+        logService.record(LogSourceEnum.backstage, SubSystemTypeEnum.employee, seller.getSellerNo(), "删除会员" + id);
         return ResultSet.success();
     }
 
@@ -123,9 +135,11 @@ public class MemberController {
      */
     @ResponseBody
     @RequestMapping(value = "/updateIntegral", method = RequestMethod.POST)
-    public ResultSet updateIntegral(Long memberId, String moneyStr) {
+    public ResultSet updateIntegral(Long memberId, String moneyStr, HttpSession session) {
         LogUtil.info(logger, "[Controller]收到#会员积分变动#请求,id={0},moneyStr={1}", memberId, moneyStr);
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG);
         memberService.updateIntegral(memberId, moneyStr);
+        logService.record(LogSourceEnum.backstage, SubSystemTypeEnum.employee, seller.getSellerNo(), "修改会员积分" + memberId);
         return ResultSet.success();
     }
 
