@@ -4,6 +4,8 @@
  */
 package cn.cash.register.test.util;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.codec.binary.Base64;
@@ -42,7 +44,8 @@ public class DigestTest extends BaseTest {
             long currentTimeMillis = System.currentTimeMillis();
             String sha512Hex = DigestUtils.sha512Hex(currentTimeMillis + "");
             AuthorizationCode record = new AuthorizationCode(sha512Hex);
-            codeMapper.insert(record);
+            record.setGmtCreate(new Date());
+            codeMapper.insertSelective(record);
             System.out.println(sha512Hex);
             Thread.sleep(5);
         }

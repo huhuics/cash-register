@@ -28,6 +28,11 @@ public class Constants {
      */
     public static final String NULL_STR                    = "null";
 
+    /**
+     * 密钥文件名
+     */
+    public static final String AUTH_CODE_FILE              = "auth_code";
+
     /************************系统参数表param_code字段************************/
 
     /** 商店名 */
