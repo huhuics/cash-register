@@ -16,4 +16,6 @@ public interface AuthorizationCodeMapper {
     int updateByPrimaryKey(AuthorizationCode record);
 
     AuthorizationCode selectByCode(String code);
+
+    AuthorizationCode selectOne();
 }

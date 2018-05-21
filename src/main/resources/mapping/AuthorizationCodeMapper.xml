@@ -3,11 +3,12 @@
 <mapper namespace="cn.cash.register.dao.AuthorizationCodeMapper">
   <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.AuthorizationCode">
     <id column="code" jdbcType="VARCHAR" property="code" />
+    <result column="is_used" jdbcType="BIT" property="isUsed" />
     <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
   <sql id="Base_Column_List">
-    code, gmt_update, gmt_create
+    code, is_used, gmt_update, gmt_create
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -20,16 +21,19 @@
     where code = #{code,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="cn.cash.register.dao.domain.AuthorizationCode">
-    insert into authorization_code (code, gmt_update, gmt_create
-      )
-    values (#{code,jdbcType=VARCHAR}, #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}
-      )
+    insert into authorization_code (code, is_used, gmt_update, 
+      gmt_create)
+    values (#{code,jdbcType=VARCHAR}, #{isUsed,jdbcType=BIT}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
+      #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.AuthorizationCode">
     insert into authorization_code
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="code != null">
         code,
+      </if>
+      <if test="isUsed != null">
+        is_used,
       </if>
       <if test="gmtUpdate != null">
         gmt_update,
@@ -42,6 +46,9 @@
       <if test="code != null">
         #{code,jdbcType=VARCHAR},
       </if>
+      <if test="isUsed != null">
+        #{isUsed,jdbcType=BIT},
+      </if>
       <if test="gmtUpdate != null">
         #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
@@ -53,6 +60,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.AuthorizationCode">
     update authorization_code
     <set>
+      <if test="isUsed != null">
+        is_used = #{isUsed,jdbcType=BIT},
+      </if>
       <if test="gmtUpdate != null">
         gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       </if>
@@ -64,7 +74,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.AuthorizationCode">
     update authorization_code
-    set gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+    set is_used = #{isUsed,jdbcType=BIT},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
     where code = #{code,jdbcType=VARCHAR}
   </update>
@@ -74,5 +85,12 @@
     <include refid="Base_Column_List" />
     from authorization_code
     where code = #{code,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectOne" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from authorization_code
+    WHERE is_used = 0 LIMIT 1
   </select>
 </mapper>

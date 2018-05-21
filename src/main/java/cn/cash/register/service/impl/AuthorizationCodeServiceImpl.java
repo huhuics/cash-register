@@ -25,6 +25,7 @@ public class AuthorizationCodeServiceImpl implements AuthorizationCodeService {
 
     @Override
     public boolean writeIntoUDisk() {
+        AuthorizationCode one = codeMapper.selectOne();
 
         return false;
     }

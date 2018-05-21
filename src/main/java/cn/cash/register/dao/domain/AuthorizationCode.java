@@ -4,9 +4,11 @@ import java.util.Date;
 
 public class AuthorizationCode extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = -6063100559791953844L;
+    private static final long serialVersionUID = 3763341636444318896L;
 
     private String            code;
+
+    private Boolean           isUsed;
 
     private Date              gmtUpdate;
 
@@ -15,7 +17,8 @@ public class AuthorizationCode extends BaseDomain {
     public AuthorizationCode() {
     }
 
-    public AuthorizationCode(String sha512Hex) {
+    public AuthorizationCode(String code) {
+        this.code = code;
     }
 
     public String getCode() {
@@ -24,6 +27,14 @@ public class AuthorizationCode extends BaseDomain {
 
     public void setCode(String code) {
         this.code = code == null ? null : code.trim();
+    }
+
+    public Boolean getIsUsed() {
+        return isUsed;
+    }
+
+    public void setIsUsed(Boolean isUsed) {
+        this.isUsed = isUsed;
     }
 
     public Date getGmtUpdate() {
