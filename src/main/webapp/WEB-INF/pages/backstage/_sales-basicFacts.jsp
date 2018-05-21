@@ -58,11 +58,11 @@ pageEncoding="UTF-8"%>
                         <tr v-for="(value, key) in salesBasicFacts">
                             <td>{{key}}</td>
                             <td>{{value.basicFacts}}</td>
-                            <td>{{value.cash}}</td>
-                            <td>{{value.unionpay}}</td>
-                            <td>{{value.balance}}</td>
-                            <td>{{value.alipay}}</td>
-                            <td>{{value.wcpay}}</td>
+                            <td><span v-if="value.cash != null">{{value.cash.amount}}</span></td>
+                            <td><span v-if="value.unionpay != null">{{value.unionpay.amount}}</span></td>
+                            <td><span v-if="value.balance != null">{{value.balance.amount}}</span></td>
+                            <td><span v-if="value.alipay != null">{{value.alipay.amount}}</span></td>
+                            <td><span v-if="value.wcpay != null">{{value.wcpay.amount}}</span></td>
                         </tr>
                     </tbody>
                 </table>
