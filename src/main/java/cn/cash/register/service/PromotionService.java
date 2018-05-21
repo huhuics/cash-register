@@ -9,8 +9,8 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.PromotionQueryRequest;
-import cn.cash.register.dao.domain.DiscountGoodsDetail;
 import cn.cash.register.dao.domain.PromotionDetail;
+import cn.cash.register.dao.domain.PromotionGoodsDetail;
 
 /**
  * 促销服务接口
@@ -21,9 +21,8 @@ public interface PromotionService {
 
     /**
      * 增加促销
-     * Map的key为商品id
      */
-    Long add(PromotionDetail item, List<Long> goodsIds, List<DiscountGoodsDetail> discountGoodsList);
+    Long add(PromotionDetail item, List<PromotionGoodsDetail> promotionGoodsList);
 
     /**
      * 删除促销
@@ -43,7 +42,7 @@ public interface PromotionService {
     /**
      * 返回商品促销信息
      */
-    DiscountGoodsDetail getPromotion(Long goodsId, Long promotionId);
+    PromotionGoodsDetail getPromotion(Long goodsId, Long promotionId);
 
     /**
      * 分页查询促销

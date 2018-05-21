@@ -13,21 +13,13 @@
     <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.cash.register.dao.domain.PromotionDetail">
-    <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
-  </resultMap>
   <sql id="Base_Column_List">
     id, promotion_name, promotion_type, is_member_only, is_member_discount_twice, start_time, 
     end_time, status, gmt_update, gmt_create
   </sql>
-  <sql id="Blob_Column_List">
-    detail
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from promotion_detail
     where id = #{id,jdbcType=BIGINT}
   </select>
@@ -39,11 +31,11 @@
     insert into promotion_detail (id, promotion_name, promotion_type, 
       is_member_only, is_member_discount_twice, start_time, 
       end_time, status, gmt_update, 
-      gmt_create, detail)
+      gmt_create)
     values (#{id,jdbcType=BIGINT}, #{promotionName,jdbcType=VARCHAR}, #{promotionType,jdbcType=VARCHAR}, 
       #{isMemberOnly,jdbcType=BIT}, #{isMemberDiscountTwice,jdbcType=BIT}, #{startTime,jdbcType=TIMESTAMP}, 
       #{endTime,jdbcType=TIMESTAMP}, #{status,jdbcType=BIT}, #{gmtUpdate,jdbcType=TIMESTAMP}, 
-      #{gmtCreate,jdbcType=TIMESTAMP}, #{detail,jdbcType=LONGVARCHAR})
+      #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.PromotionDetail" useGeneratedKeys="true" keyProperty="id">
     insert into promotion_detail
@@ -78,9 +70,6 @@
       <if test="gmtCreate != null">
         gmt_create,
       </if>
-      <if test="detail != null">
-        detail,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -112,9 +101,6 @@
       </if>
       <if test="gmtCreate != null">
         #{gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="detail != null">
-        #{detail,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -148,24 +134,7 @@
       <if test="gmtCreate != null">
         gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
-      <if test="detail != null">
-        detail = #{detail,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.cash.register.dao.domain.PromotionDetail">
-    update promotion_detail
-    set promotion_name = #{promotionName,jdbcType=VARCHAR},
-      promotion_type = #{promotionType,jdbcType=VARCHAR},
-      is_member_only = #{isMemberOnly,jdbcType=BIT},
-      is_member_discount_twice = #{isMemberDiscountTwice,jdbcType=BIT},
-      start_time = #{startTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=BIT},
-      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
-      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      detail = #{detail,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.PromotionDetail">

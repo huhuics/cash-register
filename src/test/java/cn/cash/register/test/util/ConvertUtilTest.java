@@ -5,16 +5,13 @@
 package cn.cash.register.test.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSON;
 
-import cn.cash.register.dao.domain.DiscountGoodsDetail;
 import cn.cash.register.dao.domain.GoodsItem;
 import cn.cash.register.dao.domain.RoyaltyType;
 
@@ -69,20 +66,6 @@ public class ConvertUtilTest {
         for (GoodsItem item : parseRet) {
             System.out.println(item);
         }
-    }
-
-    @Test
-    public void testJsonMap() {
-        Map<String, DiscountGoodsDetail> discountGoodsMap = new HashMap<>();
-        DiscountGoodsDetail detail = new DiscountGoodsDetail(1L, 12.0, "12.13");
-        discountGoodsMap.put("112233", detail);
-        String jsonStr = JSON.toJSONString(discountGoodsMap);
-
-        System.out.println("jsonStr=" + jsonStr);
-
-        Map<String, DiscountGoodsDetail> parseObject = JSON.parseObject(jsonStr, Map.class);
-
-        System.out.println(parseObject);
     }
 
 }

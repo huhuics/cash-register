@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cash.register.dao.PromotionGoodsDetailMapper">
+  <resultMap id="BaseResultMap" type="cn.cash.register.dao.domain.PromotionGoodsDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="promotion_id" jdbcType="BIGINT" property="promotionId" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="bar_code" jdbcType="VARCHAR" property="barCode" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="discount" jdbcType="DOUBLE" property="discount" />
+    <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, promotion_id, goods_id, bar_code, category_name, discount, gmt_update, gmt_create
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from promotion_goods_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from promotion_goods_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.cash.register.dao.domain.PromotionGoodsDetail">
+    insert into promotion_goods_detail (id, promotion_id, goods_id, 
+      bar_code, category_name, discount, 
+      gmt_update, gmt_create)
+    values (#{id,jdbcType=BIGINT}, #{promotionId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
+      #{barCode,jdbcType=VARCHAR}, #{categoryName,jdbcType=VARCHAR}, #{discount,jdbcType=DOUBLE}, 
+      #{gmtUpdate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cash.register.dao.domain.PromotionGoodsDetail">
+    insert into promotion_goods_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="promotionId != null">
+        promotion_id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="barCode != null">
+        bar_code,
+      </if>
+      <if test="categoryName != null">
+        category_name,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="promotionId != null">
+        #{promotionId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="barCode != null">
+        #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null">
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DOUBLE},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cash.register.dao.domain.PromotionGoodsDetail">
+    update promotion_goods_detail
+    <set>
+      <if test="promotionId != null">
+        promotion_id = #{promotionId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="barCode != null">
+        bar_code = #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null">
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=DOUBLE},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cash.register.dao.domain.PromotionGoodsDetail">
+    update promotion_goods_detail
+    set promotion_id = #{promotionId,jdbcType=BIGINT},
+      goods_id = #{goodsId,jdbcType=BIGINT},
+      bar_code = #{barCode,jdbcType=VARCHAR},
+      category_name = #{categoryName,jdbcType=VARCHAR},
+      discount = #{discount,jdbcType=DOUBLE},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="queryGoodsPromotionDetail" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from promotion_goods_detail
+    where goods_id = #{goodsId,jdbcType=BIGINT}
+    and promotion_id = #{promotionId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPromotionId" parameterType="java.lang.Long">
+    delete from promotion_goods_detail
+    where promotion_id = #{promotionId,jdbcType=BIGINT}
+  </delete>
+  
+</mapper>

@@ -5,28 +5,25 @@
 package cn.cash.register.service.impl;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.PromotionQueryRequest;
 import cn.cash.register.dao.GoodsInfoMapper;
 import cn.cash.register.dao.PromotionDetailMapper;
-import cn.cash.register.dao.domain.DiscountGoodsDetail;
+import cn.cash.register.dao.PromotionGoodsDetailMapper;
 import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.dao.domain.PromotionDetail;
+import cn.cash.register.dao.domain.PromotionGoodsDetail;
 import cn.cash.register.service.PromotionService;
 import cn.cash.register.util.AssertUtil;
 
@@ -39,30 +36,27 @@ import cn.cash.register.util.AssertUtil;
 public class PromotionServiceImpl implements PromotionService {
 
     @Resource
-    private PromotionDetailMapper promotionMapper;
+    private PromotionDetailMapper      promotionMapper;
 
     @Resource
-    private GoodsInfoMapper       goodsInfoMapper;
+    private PromotionGoodsDetailMapper promotionGoodsMapper;
 
     @Resource
-    private TransactionTemplate   txTemplate;
+    private GoodsInfoMapper            goodsInfoMapper;
+
+    @Resource
+    private TransactionTemplate        txTemplate;
 
     @Override
-    public Long add(PromotionDetail item, List<Long> goodsIds, List<DiscountGoodsDetail> discountGoodsList) {
-        checkAndSet(item, goodsIds, discountGoodsList);
-
-        Map<Long, DiscountGoodsDetail> disCountGoodsDetailMap = new HashMap<Long, DiscountGoodsDetail>();
-        for (DiscountGoodsDetail detail : discountGoodsList) {
-            disCountGoodsDetailMap.put(detail.getGoodsId(), detail);
-        }
+    public Long add(PromotionDetail item, List<PromotionGoodsDetail> promotionGoodsList) {
+        checkAndSet(item, promotionGoodsList);
 
         return txTemplate.execute(new TransactionCallback<Long>() {
             @Override
             public Long doInTransaction(TransactionStatus status) {
-                item.setDetail(JSON.toJSONString(disCountGoodsDetailMap));
                 Long promotionId = promotionMapper.insertSelective(item);
-                for (Long goodsId : goodsIds) {
-                    GoodsInfo goodsInfo = goodsInfoMapper.selectByPrimaryKey(goodsId);
+                for (PromotionGoodsDetail detail : promotionGoodsList) {
+                    GoodsInfo goodsInfo = goodsInfoMapper.selectByPrimaryKey(detail.getGoodsId());
                     goodsInfo.setPromotionId(promotionId);
                     goodsInfoMapper.updateByPrimaryKeySelective(goodsInfo);
                 }
@@ -79,6 +73,7 @@ public class PromotionServiceImpl implements PromotionService {
             public Integer doInTransaction(TransactionStatus status) {
                 int ret = promotionMapper.deleteByPrimaryKey(id);
                 goodsInfoMapper.clearPromotion(id);
+                promotionGoodsMapper.deleteByPromotionId(id);
                 return ret;
             }
         });
@@ -95,8 +90,7 @@ public class PromotionServiceImpl implements PromotionService {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public DiscountGoodsDetail getPromotion(Long goodsId, Long promotionId) {
+    public PromotionGoodsDetail getPromotion(Long goodsId, Long promotionId) {
 
         if (goodsId == null || promotionId == null) {
             return null;
@@ -108,17 +102,9 @@ public class PromotionServiceImpl implements PromotionService {
             return null;
         }
 
-        if (StringUtils.isBlank(promotionDetail.getDetail())) {
-            return null;
-        }
+        PromotionGoodsDetail goodsPromotionDetail = promotionGoodsMapper.queryGoodsPromotionDetail(goodsId, promotionId);
 
-        String detail = promotionDetail.getDetail();
-
-        Map<Long, DiscountGoodsDetail> parseMap = JSON.parseObject(detail, Map.class);
-
-        DiscountGoodsDetail discountGoodsDetail = parseMap.get(goodsId);
-
-        return discountGoodsDetail;
+        return goodsPromotionDetail;
     }
 
     @Override
@@ -158,12 +144,11 @@ public class PromotionServiceImpl implements PromotionService {
     /**
      * 参数校验并赋值
      */
-    private void checkAndSet(PromotionDetail item, List<Long> goodsIds, List<DiscountGoodsDetail> discountGoodsList) {
+    private void checkAndSet(PromotionDetail item, List<PromotionGoodsDetail> promotionGoodsList) {
         AssertUtil.assertNotNull(item, "参数不能为空");
         AssertUtil.assertNotBlank(item.getPromotionName(), "促销名称不能为空");
         AssertUtil.assertNotBlank(item.getPromotionType(), "促销类型不能为空");
-        AssertUtil.assertNotBlank(goodsIds, "促销商品不能为空");
-        AssertUtil.assertNotBlank(discountGoodsList, "促销商品不能为空");
+        AssertUtil.assertNotBlank(promotionGoodsList, "促销商品不能为空");
         item.setGmtCreate(new Date());
         item.setStatus(true);
     }
