@@ -6,6 +6,7 @@ package cn.cash.register.test.util;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeoutException;
 
 import javax.annotation.Resource;
 
@@ -26,12 +27,13 @@ public class DiskSearchServiceTest extends BaseTest {
     private ThreadPoolTaskExecutor executor;
 
     @Test
-    public void testUDisk() throws InterruptedException, ExecutionException {
+    public void testUDisk() throws InterruptedException, ExecutionException, TimeoutException {
         DiskSearchService diskSearch = new DiskSearchService();
         Future<String> ret = executor.submit(diskSearch);
+        //        String uDisk = ret.get(20, TimeUnit.SECONDS);
         String uDisk = ret.get();
         System.out.println(uDisk);
-        Thread.sleep(15000);
+        //        Thread.sleep(15000);
     }
 
 }
