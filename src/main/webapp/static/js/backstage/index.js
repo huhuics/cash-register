@@ -10,8 +10,8 @@ $(window).on('resize', function() {
 var vm = new Vue({
     el: '#app',
     data: {
-        iframeSrc: "dashboard",
-        navTitle: "Dashboard"
+        iframeSrc: "sales/queryBasicFacts",
+        navTitle: "营业概况"
     },
     methods: {
         menuClick: function(url) {
