@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import cn.cash.register.common.Constants;
+import cn.cash.register.dao.domain.SellerInfo;
 
 /**
  * 管理员登录拦截器
@@ -19,9 +20,13 @@ public class CheckAdminIntercepter extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        Object obj = request.getSession().getAttribute(Constants.LOGIN_FLAG); // 从session中获取用户信息
-        // TODO 51 配置拦截器逻辑
-        return true;
+        Object obj = request.getSession().getAttribute(Constants.LOGIN_FLAG_ADMIN); // 从session中获取用户信息
+        if (obj == null || !(obj instanceof SellerInfo)) {// session中没有值，未登录
+            request.getRequestDispatcher("/adminLogin").forward(request, response);
+            return false;
+        } else {// session中有值
+            return true;
+        }
 
     }
 

@@ -70,17 +70,17 @@ public class SalesController {
      * 查询商品销售统计
      */
     @ResponseBody
-    @PostMapping(value = "/queryGoodsSaleStatistics")
+    @RequestMapping(value = "/queryGoodsSaleStatistics")
     public ResultSet queryGoodsSaleStatistics(TradeGoodsDetailQueryRequest request) {
         PageInfo<GoodsSaleStatistics> ret = salesService.queryGoodsSaleStatistics(request);
-        return ResultSet.success().put("ret", ret);
+        return ResultSet.success().put("page", ret);
     }
 
     /**
      * 查询营业报表
      */
     @ResponseBody
-    @PostMapping(value = "/querySalesAmountByTime")
+    @RequestMapping(value = "/querySalesAmountByTime")
     public ResultSet querySalesAmountByTime(SalesAmountQueryRequest request) {
         JSONArray ret = salesService.querySalesAmountByTime(request);
         return ResultSet.success().put("ret", ret);
@@ -108,6 +108,22 @@ public class SalesController {
     @GetMapping(value = "/tradeDetail")
     public String salesTradeDetailList() {
         return "backstage/_sales-tradeDetail-list";
+    }
+
+    /**
+     * 查询销售统计页面
+     */
+    @GetMapping(value = "/goodsSaleStatistics")
+    public String goodsSaleStatistics() {
+        return "backstage/_sales-statistics-list";
+    }
+
+    /**
+     * 查询营业报表页面
+     */
+    @GetMapping(value = "/goodsSaleAmountByTime")
+    public String goodsSaleAmountByTime() {
+        return "backstage/_sales-amountByTime";
     }
 
 }

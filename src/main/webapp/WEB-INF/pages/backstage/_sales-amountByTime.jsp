@@ -5,13 +5,20 @@ pageEncoding="UTF-8"%>
 <html>
 
 <head>
-    <title>营业概况</title>
+    <title>营业报表</title>
 </head>
 
 <body>
-    <div id="salesBasicFactsDiv" v-cloak>
+    <div id="salesAmountByTimeDiv" v-cloak>
         <div>
             <div class="grid-btn">
+            	<div class="form-group col-xs-2">
+                    <select class="form-control" v-model="q.timePeriod">
+                        <option value="hour">小时</option>
+                        <option value="day">天</option>
+                        <option value="month">月</option>
+                    </select>
+                </div>
                 <div class="form-group col-xs-8">
                     <div class="input-group">
                         <input type="text" class="form-control" v-model="q.timeDown" id="datetimepickerAfter" placeholder="起始时间 yyyy-MM-dd hh:mm:ss">
@@ -38,38 +45,31 @@ pageEncoding="UTF-8"%>
                     <a class="btn btn-primary" @click="search"><i class="fa fa-search"></i>&nbsp;查询</a>
                 </div>
                 <div class="clearfix"></div>
-                <div class="pull-right">
-                    <a class="btn btn-info" @click="exportSalesBasicFacts"><i class="fa fa-upload"></i>&nbsp;导出</a>
-                </div>
-                <div class="clearfix"></div>
             </div>
             <div style="width: 100%">
                 <table class="table table-bordered tableStyle">
                     <thead>
                         <th></th>
-                        <th>概况</th>
-                        <th>现金支付</th>
-                        <th>银联支付</th>
-                        <th>储值卡支付</th>
-                        <th>支付宝支付</th>
-                        <th>微信支付</th>
+                        <th>时间</th>
+                        <th>实收总金额</th>
+                        <th>利润</th>
+                        <th>商品数量</th>
+                        <th>利润率</th>
                     </thead>
                     <tbody>
-                        <tr v-for="(value, key) in salesBasicFacts">
-                            <td>{{key}}</td>
-                            <td>{{value.basicFacts}}</td>
-                            <td><span v-if="value.cash != null">{{value.cash.amount}}</span></td>
-                            <td><span v-if="value.unionpay != null">{{value.unionpay.amount}}</span></td>
-                            <td><span v-if="value.balance != null">{{value.balance.amount}}</span></td>
-                            <td><span v-if="value.alipay != null">{{value.alipay.amount}}</span></td>
-                            <td><span v-if="value.wcpay != null">{{value.wcpay.amount}}</span></td>
+                        <tr v-for="item in salesAmountByTimeArray">
+                            <td>{{item.time}}</td>
+                            <td><span v-if="item.totalActualAmount != null">{{item.totalActualAmount.amount}}</span></td>
+                            <td><span v-if="item.profitAmount != null">{{item.profitAmount.amount}}</span></td>
+                            <td>{{item.goodsCount}}</td>
+                            <td>{{item.profitRate}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    <script src="${ctx}/static/js/backstage/_sales-basicFacts.js"></script>
+    <script src="${ctx}/static/js/backstage/_sales-amountByTime.js"></script>
 </body>
 
 </html>

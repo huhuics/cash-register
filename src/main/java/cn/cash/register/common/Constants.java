@@ -9,9 +9,14 @@ package cn.cash.register.common;
 public class Constants {
 
     /**
-     * 登录后存入session中的用户字段
+     * 收银员登录后存入session中的用户字段
      */
-    public static final String LOGIN_FLAG                  = "user";
+    public static final String LOGIN_FLAG_SELLER           = "seller";
+
+    /**
+     * 管理员登录后存入session中的用户字段
+     */
+    public static final String LOGIN_FLAG_ADMIN            = "admin";
 
     /**
      * 登录以后保存的当前交接班id

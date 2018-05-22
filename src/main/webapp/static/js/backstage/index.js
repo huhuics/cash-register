@@ -10,8 +10,6 @@ $(window).on('resize', function() {
 var vm = new Vue({
     el: '#app',
     data: {
-        user: {},
-        menuList: {},
         iframeSrc: "dashboard",
         navTitle: "Dashboard"
     },
@@ -28,6 +26,18 @@ var vm = new Vue({
             $currentA.parents("li").addClass("active");
 
             this.navTitle = $currentA.text();
+        },
+        logout: function() {
+        	$.ajax({
+                url: basePath + '/admin/logout',
+                success: function(result) {
+                    if (result.code == "00") {
+                        window.location.href = basePath + '/adminLogin';
+                    } else {
+                        layer.alert('系统错误：' + result.msg);
+                    }
+                }
+            });
         }
     }
 });

@@ -20,11 +20,23 @@ var vm = new Vue({
 			var $currentA = $("a[href='#" + url + "']");
 
 			// 导航菜单展开
-			$(".sidebar-menu li").removeClass("active");
-			$(".treeview-menu li").removeClass("active");
+			$(".navbar-nav li").removeClass("active");
+			$(".dropdown-menu li").removeClass("active");
 			$currentA.parents("li").addClass("active");
 
 			vm.navTitle = $currentA.text();
-		}
+		},
+        exchangeJob: function() {
+            $.ajax({
+                url: basePath + '/cashier/logout',
+                success: function(result) {
+                    if (result.code == "00") {
+                        window.location.href = basePath + '/cashierLogin';
+                    } else {
+                        layer.alert('系统错误：' + result.msg);
+                    }
+                }
+            });
+        }
     }
 });
