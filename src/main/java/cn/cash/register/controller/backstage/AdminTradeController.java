@@ -24,15 +24,16 @@ import cn.cash.register.service.TradeService;
 import cn.cash.register.util.ResultSet;
 
 /**
- * 交易服务Controller
- * @author HuHui
- * @version $Id: TradeController.java, v 0.1 2018年5月2日 下午3:12:07 HuHui Exp $
+ * 后端交易服务Controller
+ * 
+ * @author 51
+ * @version $Id: AdminTradeController.java, v 0.1 2018年5月22日 上午10:24:55 51 Exp $
  */
 @Controller
 @RequestMapping("/admin/trade")
-public class TradeController {
+public class AdminTradeController {
 
-    private static final Logger logger = LoggerFactory.getLogger(TradeController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AdminTradeController.class);
 
     @Resource
     private TradeService        tradeService;

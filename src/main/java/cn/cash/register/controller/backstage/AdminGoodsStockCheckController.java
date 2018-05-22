@@ -23,13 +23,13 @@ import cn.cash.register.service.GoodsStockCheckServie;
 import cn.cash.register.util.ResultSet;
 
 /**
- * 盘点--收银端Controller
+ * 盘点--后台管理Controller
  * @author HuHui
  * @version $Id: GoodsStockCheckController.java, v 0.1 2018年5月9日 下午9:38:00 HuHui Exp $
  */
 @Controller
 @RequestMapping(value = "/admin/stockCheck")
-public class GoodsStockCheckController {
+public class AdminGoodsStockCheckController {
 
     @Resource
     private GoodsInfoService      goodsInfoService;
