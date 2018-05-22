@@ -167,7 +167,13 @@ public class SystemConfigController {
         }
 
         return ResultSet.error("请购买正版");
+    }
 
+    @ResponseBody
+    @GetMapping(value = "/truncateAllTables")
+    public ResultSet truncateAllTables() {
+        systemParameterService.truncateAllTables();
+        return ResultSet.success();
     }
 
 }

@@ -111,4 +111,44 @@
     where param_code = #{paramCode,jdbcType=VARCHAR}
   </select>
   
+  <select id="truncateAllTables">
+  	TRUNCATE TABLE exchange_job_detail ;
+	TRUNCATE TABLE goods_brand;
+	TRUNCATE TABLE goods_category;
+	TRUNCATE TABLE goods_color;
+	TRUNCATE TABLE goods_image;
+	TRUNCATE TABLE goods_info;
+	TRUNCATE TABLE goods_lose_info;
+	TRUNCATE TABLE goods_lose_reason;
+	TRUNCATE TABLE goods_quantity_unit;
+	TRUNCATE TABLE goods_size;
+	TRUNCATE TABLE goods_stock_check;
+	TRUNCATE TABLE goods_stock_check_detail;
+	TRUNCATE TABLE goods_stock_flow;
+	TRUNCATE TABLE goods_tag;
+	TRUNCATE TABLE goods_traffic;
+	TRUNCATE TABLE member_info;
+	TRUNCATE TABLE member_integral;
+	TRUNCATE TABLE member_rank;
+	TRUNCATE TABLE member_recharge_detail;
+	TRUNCATE TABLE operation_log;
+	TRUNCATE TABLE promotion_detail;
+	TRUNCATE TABLE promotion_goods_detail;
+	TRUNCATE TABLE seller_info;
+	TRUNCATE TABLE seller_permission_info;
+	TRUNCATE TABLE shopper_info;
+	TRUNCATE TABLE supplier_info;
+	TRUNCATE TABLE trade_detail;
+	TRUNCATE TABLE trade_goods_detail;
+	UPDATE system_parameter SET param_value=NULL WHERE param_code='SHOP_NAME';
+	UPDATE system_parameter SET param_value= 'false' WHERE param_code='PETTY_AMOUNT';
+	UPDATE system_parameter SET param_value=NULL WHERE param_code='REGISTER_TIME';
+	UPDATE system_parameter SET param_value=NULL WHERE param_code='INVALID_TIME';
+	UPDATE system_parameter SET param_value=NULL WHERE param_code='RELATED_EMAIL';
+	UPDATE system_parameter SET param_value=NULL WHERE param_code='PHONE';
+	UPDATE system_parameter SET param_value=NULL WHERE param_code='ADDRESS';
+	UPDATE system_parameter SET param_value= 'false' WHERE param_code='IS_AUTHORIZED';
+	UPDATE system_parameter SET param_value= 'false' WHERE param_code='IS_INIT';
+  </select>
+  
 </mapper>

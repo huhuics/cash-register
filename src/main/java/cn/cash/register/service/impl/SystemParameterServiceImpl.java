@@ -78,4 +78,9 @@ public class SystemParameterServiceImpl implements SystemParameterService {
         return parameterMapper.selectByCode(code);
     }
 
+    @Override
+    public void truncateAllTables() {
+        parameterMapper.truncateAllTables();
+    }
+
 }

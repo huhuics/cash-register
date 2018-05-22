@@ -16,4 +16,6 @@ public interface SystemParameterMapper {
     int updateByPrimaryKey(SystemParameter record);
 
     SystemParameter selectByCode(String paramCode);
+
+    void truncateAllTables();
 }
