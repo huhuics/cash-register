@@ -32,7 +32,7 @@ public class CheckCashierIntercepter extends HandlerInterceptorAdapter {
         LogUtil.info(logger, "收银员角色拦截,当前登录收银员:{0},当前交接班ID:{1}", obj, exchangeId);
 
         if (obj == null || !(obj instanceof SellerInfo) || exchangeId == null) {// session中没有值，未登录
-            request.getRequestDispatcher("/cashierLogin").forward(request, response);
+            request.getRequestDispatcher("/toCashierLogin").forward(request, response);
             return false;
         } else {// session中有值
             return true;

@@ -22,7 +22,7 @@ public class CheckAdminIntercepter extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Object obj = request.getSession().getAttribute(Constants.LOGIN_FLAG_ADMIN); // 从session中获取用户信息
         if (obj == null || !(obj instanceof SellerInfo)) {// session中没有值，未登录
-            request.getRequestDispatcher("/adminLogin").forward(request, response);
+            request.getRequestDispatcher("/toAdminLogin").forward(request, response);
             return false;
         } else {// session中有值
             return true;

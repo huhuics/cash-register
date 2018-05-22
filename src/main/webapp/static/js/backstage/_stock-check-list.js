@@ -11,7 +11,7 @@ var vm = new Vue({
         search: function() {
             var _self = this;
             $.ajax({
-                url: basePath + '/cashier/stockCheck/queryCheck',
+                url: basePath + '/admin/stockCheck/queryCheck',
                 data: _self.q,
                 success: function(result) {
                     if (result.code == "00") {

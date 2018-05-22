@@ -31,7 +31,7 @@ var vm = new Vue({
                 url: basePath + '/cashier/logout',
                 success: function(result) {
                     if (result.code == "00") {
-                        window.location.href = basePath + '/cashierLogin';
+                        window.location.href = basePath + '/toCashierLogin';
                     } else {
                         layer.alert('系统错误：' + result.msg);
                     }

@@ -44,7 +44,7 @@ public class LoginAndOutController {
     /**
      * 收银员登录页
      */
-    @GetMapping(value = "/cashierLogin")
+    @GetMapping(value = "/toCashierLogin")
     public String login() {
         return "frontstage/login";
     }
