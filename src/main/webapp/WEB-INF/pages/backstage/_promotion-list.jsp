@@ -37,6 +37,7 @@ pageEncoding="UTF-8"%>
                 <div class="pull-right">
                     <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
                     <a class="btn btn-success" @click="update"><i class="fa fa-edit"></i>&nbsp;编辑</a>
+                    <a class="btn btn-warning" @click="updatePromotionGoods"><i class="fa fa-edit"></i>&nbsp;编辑促销商品</a>
                     <a class="btn btn-danger" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
                 </div>
                 <div class="clearfix"></div>
@@ -46,7 +47,11 @@ pageEncoding="UTF-8"%>
         </div>
         <!-- /.分页表格 -->
         <%@ include file="./_promotion-list/_promotion-add.jsp" %>
+        <%@ include file="./_promotion-list/_promotion-goods-list.jsp" %>
     </div>
+    <script src="${ctx}/static/js/backstage/_promotion-list/var-jqGrid-option.js"></script>
+    <script src="${ctx}/static/js/backstage/_promotion-list/var-promotion-entity.js"></script>
+    <script src="${ctx}/static/js/backstage/_promotion-list/var-vue-data.js"></script>
     <script src="${ctx}/static/js/backstage/_promotion-list.js"></script>
 </body>
 

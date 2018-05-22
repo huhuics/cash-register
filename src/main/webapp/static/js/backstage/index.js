@@ -29,6 +29,7 @@ var vm = new Vue({
         },
         logout: function() {
         	$.ajax({
+        		type: 'GET',
                 url: basePath + '/admin/logout',
                 success: function(result) {
                     if (result.code == "00") {

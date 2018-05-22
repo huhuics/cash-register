@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,7 @@ import cn.cash.register.dao.domain.PromotionDetail;
 import cn.cash.register.dao.domain.PromotionGoodsDetail;
 import cn.cash.register.service.PromotionGoodsDetailService;
 import cn.cash.register.service.PromotionService;
+import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -32,6 +35,7 @@ import cn.cash.register.util.ResultSet;
 @Controller
 @RequestMapping(value = "/admin/promotion")
 public class PromotionController {
+    private static final Logger         logger = LoggerFactory.getLogger(PromotionController.class);
 
     @Resource
     private PromotionService            promotionService;
@@ -55,6 +59,7 @@ public class PromotionController {
     @ResponseBody
     @PostMapping(value = "/addPromotionDetail")
     public ResultSet addPromotionDetail(PromotionDetail item) {
+        LogUtil.info(logger, "收到增加促销请求,item={0}", item);
         Long ret = promotionService.add(item);
         return ResultSet.success().put("ret", ret);
     }
