@@ -256,13 +256,29 @@ public class MemberController {
     /****************************会员充值相关接口****************************/
 
     /**
+     * 充值明细页面
+     */
+    @GetMapping(value = "/recharge")
+    public String queryRecharge() {
+        return "backstage/_member-recharge-list";
+    }
+
+    /**
      * 充值明细
      */
     @ResponseBody
-    @PostMapping(value = "/recharge/query")
+    @PostMapping(value = "/recharge/list")
     public ResultSet queryRechargeDetail(MemberRechargeQueryRequest request) {
         PageInfo<MemberRechargeDetail> rechargeDetails = memberRechargeService.query(request);
-        return ResultSet.success().put("rechargeDetails", rechargeDetails);
+        return ResultSet.success().put("page", rechargeDetails);
+    }
+
+    /**
+     * 储值卡对账页面
+     */
+    @GetMapping(value = "/recharge/check/list")
+    public String queryRechargeCheckPage() {
+        return "backstage/_member-recharge-check";
     }
 
     /**

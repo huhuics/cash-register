@@ -71,11 +71,6 @@ public class CommonController {
     public ResultSet login(String loginName, String loginPassword, HttpSession session) {
         LogUtil.info(logger, "[Controller]收到#管理员登录#请求,loginName={0},loginPassword={1}", loginName, loginPassword);
 
-        SystemParameter isInit = systemParameterMapper.selectByCode(Constants.IS_INIT);
-        if (isInit == null || StringUtils.equals(isInit.getParamValue(), Constants.FALSE)) {
-            return ResultSet.error("系统未初始化");
-        }
-
         session.removeAttribute(Constants.LOGIN_FLAG_ADMIN);// 移除当前可能有的登录用户
 
         // 校验登录用户名密码
@@ -83,7 +78,13 @@ public class CommonController {
         AssertUtil.assertEquals(seller.getRole(), SellerRoleEnum.admin.getCode(), "该用户不是管理员");
         LogUtil.info(logger, "seller:{0}", seller);
         session.setAttribute(Constants.LOGIN_FLAG_ADMIN, seller);
-        return ResultSet.success();
+
+        SystemParameter isInit = systemParameterMapper.selectByCode(Constants.IS_INIT);
+        if (isInit == null || StringUtils.equals(isInit.getParamValue(), Constants.FALSE)) {
+            return ResultSet.success().put("init", "false");
+        } else {
+            return ResultSet.success().put("init", "true");
+        }
     }
 
     /**
