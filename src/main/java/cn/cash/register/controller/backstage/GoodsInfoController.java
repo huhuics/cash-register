@@ -87,7 +87,7 @@ public class GoodsInfoController {
     public ResultSet addGoodsInfo(GoodsInfoRequest request, HttpSession session) {
         validateAddRequest(request);
         Long id = goodsInfoService.add(request);
-        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG);
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_SELLER);
         logService.record(LogSourceEnum.backstage, SubSystemTypeEnum.employee, seller.getSellerNo(), "增加商品" + request.getBarCode());
         return ResultSet.success().put("id", id);
     }
@@ -102,7 +102,7 @@ public class GoodsInfoController {
         AssertUtil.assertNotNull(request.getId(), "商品id不能为空");
         int result = goodsInfoService.update(request);
         if (result > 0) {
-            SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG);
+            SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_SELLER);
             logService.record(LogSourceEnum.backstage, SubSystemTypeEnum.employee, seller.getSellerNo(), "修改商品" + request.getBarCode());
         }
         return ResultSet.success().put("result", result);
@@ -121,7 +121,7 @@ public class GoodsInfoController {
         String[] idArray = idStr.split(SEP);
         Long[] ids = (Long[]) ConvertUtils.convert(idArray, Long.class);
         goodsInfoService.delete(Arrays.asList(ids));
-        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG);
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_SELLER);
         logService.record(LogSourceEnum.backstage, SubSystemTypeEnum.employee, seller.getSellerNo(), "删除商品" + idStr);
         return ResultSet.success();
     }
@@ -243,7 +243,7 @@ public class GoodsInfoController {
             }
         }
 
-        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG);
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_SELLER);
         logService.record(LogSourceEnum.backstage, SubSystemTypeEnum.employee, seller.getSellerNo(), "批量修改商品");
 
         return ResultSet.success();

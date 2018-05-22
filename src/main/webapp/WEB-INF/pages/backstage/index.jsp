@@ -1,17 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<%@ include file="../_header.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zh-CN">
-
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>后台管理</title>
-    <link rel="stylesheet" href="${ctx}/static/plugins/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="${ctx}/static/plugins/adminlte/css/font-awesome.min.css">
     <link rel="stylesheet" href="${ctx}/static/plugins/adminlte/css/AdminLTE.min.css">
     <link rel="stylesheet" href="${ctx}/static/plugins/adminlte/css/all-skins.min.css">
 </head>
@@ -26,7 +19,7 @@
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                         <li><a href="javascript:void(0);"><i class="fa fa-lock"></i> &nbsp;修改密码</a></li>
-                        <li><a href="javascript:void(0);"><i class="fa fa-sign-out"></i>&nbsp;退出系统</a></li>
+                        <li><a href="javascript:void(0);" @click="logout"><i class="fa fa-sign-out"></i>&nbsp;退出系统</a></li>
                     </ul>
                 </div>
             </nav>
@@ -39,20 +32,18 @@
                     <li class="active">
                         <a href="#dashboard" @click="menuClick"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
                     </li>
-                    <li class="treeview"><a href="#"><i class="fa fa-pie-chart"></i><span>销售</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                    <li class="treeview"><a href="#"><i class="fa fa-shopping-cart"></i><span>销售</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                         <ul class="treeview-menu">
                             <li><a href="#sales/queryBasicFacts" @click="menuClick"><i class="fa fa-bar-chart"></i>营业概况</a></li>
                             <li><a href="#sales/tradeDetail" @click="menuClick"><i class="fa fa-file-text"></i>销售单据</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>日结记录</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>销售统计</a></li>
+                            <li><a href="#sales/goodsSaleStatistics" @click="menuClick"><i class="fa fa-file-text-o"></i>销售统计</a></li>
                             <li><a href="#sales/queryExchangeJobs" @click="menuClick"><i class="fa fa-exchange"></i>交接班记录</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>现金收支明细</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>营业报表</a></li>
+                            <li><a href="#sales/goodsSaleAmountByTime" @click="menuClick"><i class="fa fa-file-text-o"></i>营业报表</a></li>
                         </ul>
                     </li>
-                    <li class="treeview"><a href="#"><i class="fa fa-shopping-cart"></i><span>商品</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
+                    <li class="treeview"><a href="#"><i class="fa fa-shopping-bag"></i><span>商品</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
                         <ul class="treeview-menu">
-                            <li><a href="#goods" @click="menuClick"><i class="fa fa-shopping-bag"></i>商品资料</a></li>
+                            <li><a href="#goods" @click="menuClick"><i class="fa fa-gift"></i>商品资料</a></li>
                             <li><a href="#goods-category" @click="menuClick"><i class="fa fa-list"></i>商品分类</a></li>
                         </ul>
                     </li>
@@ -70,13 +61,14 @@
                             <li><a href="#member" @click="menuClick"><i class="fa fa-user-circle"></i>会员资料</a></li>
                             <li><a href="#member/rank" @click="menuClick"><i class="fa fa-signal"></i>会员等级</a></li>
                             <li><a href="#member/integral" @click="menuClick"><i class="fa fa-sliders"></i>会员制度</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员卡报表</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员分析</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员充值明细</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>储值卡对账</a></li>
+                            <li><a href="#member/analysis" @click="menuClick"><i class="fa fa-pie-chart"></i>会员分析</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-circle-o"></i><span>营销</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
                         <ul class="treeview-menu">
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>促销活动设置</a></li>
+                            <li><a href="#promotion" @click="menuClick"><i class="fa fa-circle-o"></i>促销活动设置</a></li>
                             <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>充值赠送活动设置</a></li>
                         </ul>
                     </li>
@@ -125,11 +117,6 @@
         <footer class="main-footer"> Copyright &copy; 2018 All Rights Reserved </footer>
         <div class="control-sidebar-bg"></div>
     </div>
-    <script src="${ctx}/static/plugins/jquery/jquery-3.2.1.min.js"></script>
-    <script src="${ctx}/static/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <script src="${ctx}/static/plugins/adminlte/js/adminlte.min.js"></script>
-    <script src="${ctx}/static/js/vue.min.js"></script>
-    <script src="${ctx}/static/plugins/layer/layer.js"></script>
     <script src="${ctx}/static/js/backstage/index.js"></script>
 </body>
 

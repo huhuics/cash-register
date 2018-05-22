@@ -30,5 +30,6 @@
 <script src="${ctx}/static/plugins/ztree/js/jquery.ztree.exedit.js"></script>
 <script src="${ctx}/static/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
 <script src="${ctx}/static/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="${ctx}/static/plugins/echarts/js/echarts.js"></script>
 <script src="${ctx}/static/js/common.js"></script>
 <script src="${ctx}/static/js/date.js"></script>
