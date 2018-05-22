@@ -153,7 +153,7 @@ public class SystemConfigController {
     @GetMapping(value = "/queryRemainDays")
     public ResultSet queryRemainDays() {
         SystemParameter isAuthParam = systemParameterService.getByCode(Constants.IS_AUTHORIZED);
-        if (isAuthParam != null && StringUtils.equals(isAuthParam.getParamValue(), "true")) {//已激活
+        if (isAuthParam != null && StringUtils.equals(isAuthParam.getParamValue(), Constants.TRUE)) {//已激活
             return ResultSet.success();
         }
         SystemParameter invalidTimeParam = systemParameterService.getByCode(Constants.INVALID_TIME);

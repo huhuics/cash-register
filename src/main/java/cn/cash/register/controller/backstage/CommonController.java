@@ -3,6 +3,7 @@ package cn.cash.register.controller.backstage;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.cash.register.common.Constants;
+import cn.cash.register.dao.SystemParameterMapper;
 import cn.cash.register.dao.domain.SellerInfo;
+import cn.cash.register.dao.domain.SystemParameter;
 import cn.cash.register.enums.SellerRoleEnum;
 import cn.cash.register.service.SellerInfoService;
 import cn.cash.register.util.AssertUtil;
@@ -30,10 +33,13 @@ import cn.cash.register.util.ResultSet;
 @RequestMapping("/")
 public class CommonController {
 
-    private static final Logger logger = LoggerFactory.getLogger(CommonController.class);
+    private static final Logger   logger = LoggerFactory.getLogger(CommonController.class);
 
     @Resource
-    private SellerInfoService   sellerInfoService;
+    private SellerInfoService     sellerInfoService;
+
+    @Resource
+    private SystemParameterMapper systemParameterMapper;
 
     /**
      * 后台管理首页
@@ -64,6 +70,11 @@ public class CommonController {
     @ResponseBody
     public ResultSet login(String loginName, String loginPassword, HttpSession session) {
         LogUtil.info(logger, "[Controller]收到#管理员登录#请求,loginName={0},loginPassword={1}", loginName, loginPassword);
+
+        SystemParameter isInit = systemParameterMapper.selectByCode(Constants.IS_INIT);
+        if (isInit == null || StringUtils.equals(isInit.getParamValue(), Constants.FALSE)) {
+            return ResultSet.error("系统未初始化");
+        }
 
         session.removeAttribute(Constants.LOGIN_FLAG_ADMIN);// 移除当前可能有的登录用户
 

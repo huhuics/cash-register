@@ -7,6 +7,7 @@ package cn.cash.register.controller.frontstage;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.cash.register.common.Constants;
+import cn.cash.register.dao.SystemParameterMapper;
 import cn.cash.register.dao.domain.SellerInfo;
+import cn.cash.register.dao.domain.SystemParameter;
 import cn.cash.register.enums.LogSourceEnum;
 import cn.cash.register.enums.SubSystemTypeEnum;
 import cn.cash.register.service.ExchangeJobService;
@@ -33,13 +36,16 @@ import cn.cash.register.util.ResultSet;
 public class LoginAndOutController {
 
     @Resource
-    private SellerInfoService  sellerInfoService;
+    private SellerInfoService     sellerInfoService;
 
     @Resource
-    private ExchangeJobService exchangeJobService;
+    private ExchangeJobService    exchangeJobService;
 
     @Resource
-    private LogService         logService;
+    private LogService            logService;
+
+    @Resource
+    private SystemParameterMapper systemParameterMapper;
 
     /**
      * 收银员登录页
@@ -58,6 +64,11 @@ public class LoginAndOutController {
 
         AssertUtil.assertNotBlank(sellerNo, "收银员编号不能为空");
         AssertUtil.assertNotBlank(password, "密码不能为空");
+
+        SystemParameter isInit = systemParameterMapper.selectByCode(Constants.IS_INIT);
+        if (isInit == null || StringUtils.equals(isInit.getParamValue(), Constants.FALSE)) {
+            return ResultSet.error("系统未初始化");
+        }
 
         // 删除可能存在session中的记录
         session.removeAttribute(Constants.LOGIN_FLAG_SELLER);
