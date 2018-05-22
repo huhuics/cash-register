@@ -168,20 +168,24 @@ public class ConvertUtil {
         info.setQuantityUnit(request.getQuantityUnit());
         info.setStockUpperLimit(request.getStockUpperLimit());
         info.setStockLowerLimit(request.getStockLowerLimit());
-        if (StringUtils.isNotBlank(request.getLastImportPrice())) {
-            info.setLastImportPrice(new Money(request.getLastImportPrice()));
-        }
-        if (StringUtils.isNotBlank(request.getAverageImportPrice())) {
-            info.setAverageImportPrice(new Money(request.getAverageImportPrice()));
-        }
-        if (StringUtils.isNotBlank(request.getSalesPrice())) {
-            info.setSalesPrice(new Money(request.getSalesPrice()));
-        }
-        if (StringUtils.isNotBlank(request.getTradePrice())) {
-            info.setTradePrice(new Money(request.getTradePrice()));
-        }
-        if (StringUtils.isNotBlank(request.getVipPrice())) {
-            info.setVipPrice(new Money(request.getVipPrice()));
+        try {
+            if (StringUtils.isNotBlank(request.getLastImportPrice())) {
+                info.setLastImportPrice(new Money(request.getLastImportPrice()));
+            }
+            if (StringUtils.isNotBlank(request.getAverageImportPrice())) {
+                info.setAverageImportPrice(new Money(request.getAverageImportPrice()));
+            }
+            if (StringUtils.isNotBlank(request.getSalesPrice())) {
+                info.setSalesPrice(new Money(request.getSalesPrice()));
+            }
+            if (StringUtils.isNotBlank(request.getTradePrice())) {
+                info.setTradePrice(new Money(request.getTradePrice()));
+            }
+            if (StringUtils.isNotBlank(request.getVipPrice())) {
+                info.setVipPrice(new Money(request.getVipPrice()));
+            }
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("输入金额格式错误", e);
         }
         info.setIsVipDiscount(request.getIsVipDiscount());
         info.setSupplierName(request.getSupplierName());

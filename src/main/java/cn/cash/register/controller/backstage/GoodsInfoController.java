@@ -88,6 +88,7 @@ public class GoodsInfoController {
         validateAddRequest(request);
         Long id = goodsInfoService.add(request);
         SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_SELLER);
+        LogUtil.info(logger, "seller:{0}", seller);
         logService.record(LogSourceEnum.backstage, SubSystemTypeEnum.employee, seller.getSellerNo(), "增加商品" + request.getBarCode());
         return ResultSet.success().put("id", id);
     }

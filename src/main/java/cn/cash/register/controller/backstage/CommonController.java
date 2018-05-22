@@ -81,7 +81,7 @@ public class CommonController {
         // 校验登录用户名密码
         SellerInfo seller = sellerInfoService.login(loginName, loginPassword);
         AssertUtil.assertEquals(seller.getRole(), SellerRoleEnum.admin.getCode(), "该用户不是管理员");
-
+        LogUtil.info(logger, "seller:{0}", seller);
         session.setAttribute(Constants.LOGIN_FLAG_ADMIN, seller);
         return ResultSet.success();
     }
