@@ -38,6 +38,10 @@ public class Constants {
      */
     public static final String AUTH_CODE_FILE              = "auth_code";
 
+    public static final String TRUE                        = "true";
+
+    public static final String FALSE                       = "false";
+
     /************************系统参数表param_code字段************************/
 
     /** 商店名 */
@@ -61,8 +65,11 @@ public class Constants {
     /** 联系地址 */
     public static final String ADDRESS                     = "ADDRESS";
 
-    /** 软件是否已授权 */
+    /** 系统是否已授权 */
     public static final String IS_AUTHORIZED               = "IS_AUTHORIZED";
+
+    /** 系统是否已初始化 */
+    public static final String IS_INIT                     = "IS_INIT";
 
     /*********************************end***********************************/
 }
