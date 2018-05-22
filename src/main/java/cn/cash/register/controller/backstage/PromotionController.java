@@ -4,7 +4,7 @@
  */
 package cn.cash.register.controller.backstage;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.PromotionQueryRequest;
-import cn.cash.register.dao.domain.DiscountGoodsDetail;
 import cn.cash.register.dao.domain.PromotionDetail;
+import cn.cash.register.dao.domain.PromotionGoodsDetail;
+import cn.cash.register.service.PromotionGoodsDetailService;
 import cn.cash.register.service.PromotionService;
 import cn.cash.register.util.ResultSet;
 
@@ -32,7 +33,12 @@ import cn.cash.register.util.ResultSet;
 public class PromotionController {
 
     @Resource
-    private PromotionService promotionService;
+    private PromotionService            promotionService;
+
+    @Resource
+    private PromotionGoodsDetailService promotionGoodsDetailService;
+
+    /******************************促销信息相关**********************************/
 
     /**
      * 促销信息页面
@@ -44,12 +50,11 @@ public class PromotionController {
 
     /**
      * 增加促销
-     * Map的key为商品id
      */
     @ResponseBody
-    @PostMapping(value = "/add")
-    public ResultSet add(PromotionDetail item, List<Long> goodsIds, List<DiscountGoodsDetail> discountGoodsList) {
-        Long ret = promotionService.add(item, goodsIds, discountGoodsList);
+    @PostMapping(value = "/addPromotionDetail")
+    public ResultSet addPromotionDetail(PromotionDetail item, ArrayList<PromotionGoodsDetail> promotionGoodsList) {
+        Long ret = promotionService.add(item, promotionGoodsList);
         return ResultSet.success().put("ret", ret);
     }
 
@@ -57,9 +62,9 @@ public class PromotionController {
      * 删除促销
      */
     @ResponseBody
-    @PostMapping(value = "/delete")
-    public ResultSet delete(Long id) {
-        int ret = promotionService.delete(id);
+    @PostMapping(value = "/deletePromotion")
+    public ResultSet deletePromotion(Long promotionId) {
+        int ret = promotionService.delete(promotionId);
         return ResultSet.success().put("ret", ret);
     }
 
@@ -67,8 +72,8 @@ public class PromotionController {
      * 修改促销
      */
     @ResponseBody
-    @PostMapping(value = "/update")
-    public ResultSet update(PromotionDetail item) {
+    @PostMapping(value = "/updatePromotion")
+    public ResultSet updatePromotion(PromotionDetail item) {
         int ret = promotionService.update(item);
         return ResultSet.success().put("ret", ret);
     }
@@ -77,8 +82,8 @@ public class PromotionController {
      * 根据id查询促销
      */
     @ResponseBody
-    @PostMapping(value = "/queryById")
-    public ResultSet queryById(Long id) {
+    @PostMapping(value = "/queryPromotionById")
+    public ResultSet queryPromotionById(Long id) {
         PromotionDetail ret = promotionService.queryById(id);
         return ResultSet.success().put("ret", ret);
     }
@@ -89,7 +94,7 @@ public class PromotionController {
     @ResponseBody
     @PostMapping(value = "/getPromotion")
     public ResultSet getPromotion(Long goodsId, Long promotionId) {
-        DiscountGoodsDetail ret = promotionService.getPromotion(goodsId, promotionId);
+        PromotionGoodsDetail ret = promotionService.getPromotion(goodsId, promotionId);
         return ResultSet.success().put("ret", ret);
     }
 
@@ -101,6 +106,38 @@ public class PromotionController {
     public ResultSet list(PromotionQueryRequest request) {
         PageInfo<PromotionDetail> ret = promotionService.list(request);
         return ResultSet.success().put("ret", ret);
+    }
+
+    /**********************************促销商品相关***************************************/
+
+    /**
+     * 增加促销商品
+     */
+    @ResponseBody
+    @PostMapping(value = "/addPromotionGoodsDetail")
+    public ResultSet addPromotionGoodsDetail(ArrayList<PromotionGoodsDetail> promotionGoodsList) {
+        promotionGoodsDetailService.add(promotionGoodsList);
+        return ResultSet.success();
+    }
+
+    /**
+     * 删除促销商品
+     */
+    @ResponseBody
+    @PostMapping(value = "/deletePromotionGoodsDetail")
+    public ResultSet deletePromotionGoodsDetail(Long promotionGoodsId) {
+        int ret = promotionGoodsDetailService.delete(promotionGoodsId);
+        return ResultSet.success().put("ret", ret);
+    }
+
+    /**
+     * 增加促销商品
+     */
+    @ResponseBody
+    @PostMapping(value = "/updatePromotionGoodsDetail")
+    public ResultSet updatePromotionGoodsDetail(ArrayList<PromotionGoodsDetail> promotionGoodsList) {
+        promotionGoodsDetailService.update(promotionGoodsList);
+        return ResultSet.success();
     }
 
 }

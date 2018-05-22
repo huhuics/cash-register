@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class PromotionDetail extends BaseDomain {
     /**  */
-    private static final long serialVersionUID = 6004981001681516431L;
+    private static final long serialVersionUID = 1489757556708288514L;
 
     private Long              id;
 
@@ -25,8 +25,6 @@ public class PromotionDetail extends BaseDomain {
     private Date              gmtUpdate;
 
     private Date              gmtCreate;
-
-    private String            detail;
 
     public Long getId() {
         return id;
@@ -106,13 +104,5 @@ public class PromotionDetail extends BaseDomain {
 
     public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail == null ? null : detail.trim();
     }
 }
