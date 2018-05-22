@@ -28,6 +28,18 @@ pageEncoding="UTF-8"%>
                 <button class="btn btn-primary btn-lg btn-block" type="button" @click="login">登录</button>
             </div>
         </form>
+        <div id="systemInitDiv" style="display: none;">
+        	<form class="form-horizontal layerForm">
+		        <div class="form-group">
+		            <div class="col-xs-12">
+		            	<div class="input-group">
+		                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;店名</span>
+                    		<input type="text" class="form-control" v-model="shopName">
+		                </div>
+		            </div>
+		        </div>
+		    </form>
+        </div>
     </div>
     <script src="${ctx}/static/js/backstage/login.js"></script>
 </body>
