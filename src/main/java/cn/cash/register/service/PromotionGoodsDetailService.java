@@ -19,7 +19,7 @@ public interface PromotionGoodsDetailService {
      * 批量增加
      * @param details
      */
-    void add(List<PromotionGoodsDetail> details);
+    void add(Long promotionId, List<PromotionGoodsDetail> details);
 
     /**
      * 删除促销商品

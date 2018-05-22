@@ -54,8 +54,8 @@ public class PromotionController {
      */
     @ResponseBody
     @PostMapping(value = "/addPromotionDetail")
-    public ResultSet addPromotionDetail(PromotionDetail item, ArrayList<PromotionGoodsDetail> promotionGoodsList) {
-        Long ret = promotionService.add(item, promotionGoodsList);
+    public ResultSet addPromotionDetail(PromotionDetail item) {
+        Long ret = promotionService.add(item);
         return ResultSet.success().put("ret", ret);
     }
 
@@ -116,8 +116,8 @@ public class PromotionController {
      */
     @ResponseBody
     @PostMapping(value = "/addPromotionGoodsDetail")
-    public ResultSet addPromotionGoodsDetail(ArrayList<PromotionGoodsDetail> promotionGoodsList) {
-        promotionGoodsDetailService.add(promotionGoodsList);
+    public ResultSet addPromotionGoodsDetail(Long promotionId, ArrayList<PromotionGoodsDetail> promotionGoodsList) {
+        promotionGoodsDetailService.add(promotionId, promotionGoodsList);
         return ResultSet.success();
     }
 

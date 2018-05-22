@@ -9,8 +9,13 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
 
+import cn.cash.register.dao.GoodsInfoMapper;
 import cn.cash.register.dao.PromotionGoodsDetailMapper;
+import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.dao.domain.PromotionGoodsDetail;
 import cn.cash.register.service.PromotionGoodsDetailService;
 import cn.cash.register.util.AssertUtil;
@@ -26,12 +31,27 @@ public class PromotionGoodsDetailServiceImpl implements PromotionGoodsDetailServ
     @Resource
     private PromotionGoodsDetailMapper promotionGoodsDetailMapper;
 
+    @Resource
+    private TransactionTemplate        txTemplate;
+
+    @Resource
+    private GoodsInfoMapper            goodsInfoMapper;
+
     @Override
-    public void add(List<PromotionGoodsDetail> details) {
+    public void add(Long promotionId, List<PromotionGoodsDetail> details) {
         AssertUtil.assertNotBlank(details, "促销商品不能为空");
-        for (PromotionGoodsDetail detail : details) {
-            promotionGoodsDetailMapper.insertSelective(detail);
-        }
+        txTemplate.execute(new TransactionCallbackWithoutResult() {
+            @Override
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                for (PromotionGoodsDetail detail : details) {
+                    promotionGoodsDetailMapper.insertSelective(detail);
+
+                    GoodsInfo goodsInfo = goodsInfoMapper.selectByPrimaryKey(detail.getGoodsId());
+                    goodsInfo.setPromotionId(promotionId);
+                    goodsInfoMapper.updateByPrimaryKeySelective(goodsInfo);
+                }
+            }
+        });
     }
 
     @Override

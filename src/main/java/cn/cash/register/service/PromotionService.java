@@ -4,8 +4,6 @@
  */
 package cn.cash.register.service;
 
-import java.util.List;
-
 import com.github.pagehelper.PageInfo;
 
 import cn.cash.register.common.request.PromotionQueryRequest;
@@ -22,7 +20,7 @@ public interface PromotionService {
     /**
      * 增加促销
      */
-    Long add(PromotionDetail item, List<PromotionGoodsDetail> promotionGoodsList);
+    Long add(PromotionDetail item);
 
     /**
      * 删除促销
