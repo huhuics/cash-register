@@ -44,7 +44,7 @@ public class SystemConfigController {
             return ResultSet.error("无此参数");
         }
 
-        param.setParamValue(newValue);
+        systemParameterService.updateById(param.getId(), newValue);
 
         return ResultSet.success("设置成功");
     }
@@ -58,7 +58,7 @@ public class SystemConfigController {
             return ResultSet.error("无此参数");
         }
 
-        param.setParamValue(newValue);
+        systemParameterService.updateById(param.getId(), newValue);
 
         return ResultSet.success("设置成功");
     }
@@ -75,7 +75,7 @@ public class SystemConfigController {
             return ResultSet.error("无此参数");
         }
 
-        param.setParamValue(DateUtil.getNewFormatDateString(new Date()));
+        systemParameterService.updateById(param.getId(), DateUtil.getNewFormatDateString(new Date()));
 
         return ResultSet.success("设置成功");
     }
@@ -88,7 +88,7 @@ public class SystemConfigController {
             return ResultSet.error("无此参数");
         }
         Date invadeTime = DateUtils.addDays(new Date(), 15);
-        param.setParamValue(DateUtil.getNewFormatDateString(invadeTime));
+        systemParameterService.updateById(param.getId(), DateUtil.getNewFormatDateString(invadeTime));
 
         return ResultSet.success("设置成功");
     }
@@ -102,7 +102,7 @@ public class SystemConfigController {
             return ResultSet.error("无此参数");
         }
 
-        param.setParamValue(newValue);
+        systemParameterService.updateById(param.getId(), newValue);
 
         return ResultSet.success("设置成功");
     }
@@ -116,7 +116,7 @@ public class SystemConfigController {
             return ResultSet.error("无此参数");
         }
 
-        param.setParamValue(newValue);
+        systemParameterService.updateById(param.getId(), newValue);
 
         return ResultSet.success("设置成功");
     }
@@ -130,7 +130,7 @@ public class SystemConfigController {
             return ResultSet.error("无此参数");
         }
 
-        param.setParamValue(newValue);
+        systemParameterService.updateById(param.getId(), newValue);
 
         return ResultSet.success("设置成功");
     }
@@ -144,7 +144,7 @@ public class SystemConfigController {
             return ResultSet.error("无此参数");
         }
 
-        param.setParamValue(newValue);
+        systemParameterService.updateById(param.getId(), newValue);
 
         return ResultSet.success("设置成功");
     }
