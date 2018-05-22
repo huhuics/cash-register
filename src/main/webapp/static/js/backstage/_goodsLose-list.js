@@ -2,8 +2,8 @@ var vm = new Vue({
     el: '#goodsLoseListDiv',
     data: {
         q: {
-            gmtCreateUp: null,
-            gmtCreateDown: null,
+            gmtCreateUp: dateFormater(getDayEnd()),
+            gmtCreateDown: dateFormater(getDayStart()),
         },
         goodsLoseList: [],
     },
