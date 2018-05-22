@@ -18,7 +18,7 @@
                 <div style="float: left; color: #fff; padding: 15px 10px;">小胡自行车行(huhui2018)</div>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        <li><a href="javascript:void(0);"><i class="fa fa-lock"></i> &nbsp;修改密码</a></li>
+                        <!-- <li><a href="javascript:void(0);"><i class="fa fa-lock"></i> &nbsp;修改密码</a></li> -->
                         <li><a href="javascript:void(0);" @click="logout"><i class="fa fa-sign-out"></i>&nbsp;退出系统</a></li>
                     </ul>
                 </div>
