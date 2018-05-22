@@ -1,6 +1,6 @@
 $(function() {
     $("#jqGrid").jqGrid({
-        url: basePath + '/cashier/trade/queryTradeDetailList',
+        url: basePath + '/admin/trade/queryTradeDetailList',
         datatype: "json",
         colModel: [
         	{ label: '销售单据ID', name: 'id', hidden: true, key: true },

@@ -32,7 +32,7 @@ var vm = new Vue({
                 url: basePath + '/admin/logout',
                 success: function(result) {
                     if (result.code == "00") {
-                        window.location.href = basePath + '/adminLogin';
+                        window.location.href = basePath + '/toAdminLogin';
                     } else {
                         layer.alert('系统错误：' + result.msg);
                     }

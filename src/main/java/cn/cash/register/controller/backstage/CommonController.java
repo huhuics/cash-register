@@ -50,7 +50,7 @@ public class CommonController {
      * 
      * @return
      */
-    @GetMapping(value = "/adminLogin")
+    @GetMapping(value = "/toAdminLogin")
     public String toLogin() {
         return "backstage/login";
     }
