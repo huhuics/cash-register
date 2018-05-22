@@ -5,6 +5,7 @@
 package cn.cash.register.controller.backstage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -138,6 +139,16 @@ public class PromotionController {
     public ResultSet updatePromotionGoodsDetail(ArrayList<PromotionGoodsDetail> promotionGoodsList) {
         promotionGoodsDetailService.update(promotionGoodsList);
         return ResultSet.success();
+    }
+
+    /**
+     * 根据促销id查询所有促销商品
+     */
+    @ResponseBody
+    @PostMapping(value = "/queryByPromotionId")
+    public ResultSet queryByPromotionId(Long promotionId) {
+        List<PromotionGoodsDetail> promotionGoods = promotionGoodsDetailService.queryByPromotionId(promotionId);
+        return ResultSet.success().put("promotionGoods", promotionGoods);
     }
 
 }

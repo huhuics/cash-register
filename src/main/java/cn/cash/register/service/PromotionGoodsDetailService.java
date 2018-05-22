@@ -31,4 +31,9 @@ public interface PromotionGoodsDetailService {
      */
     void update(List<PromotionGoodsDetail> details);
 
+    /**
+     * 根据促销id查询所有促销商品
+     */
+    List<PromotionGoodsDetail> queryByPromotionId(Long promotionId);
+
 }

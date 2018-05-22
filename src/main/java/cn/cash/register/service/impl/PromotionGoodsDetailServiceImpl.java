@@ -48,4 +48,11 @@ public class PromotionGoodsDetailServiceImpl implements PromotionGoodsDetailServ
         }
     }
 
+    @Override
+    public List<PromotionGoodsDetail> queryByPromotionId(Long promotionId) {
+        AssertUtil.assertNotNull(promotionId, "促销id不能为空");
+        List<PromotionGoodsDetail> promotionGoods = promotionGoodsDetailMapper.selectByPromotionId(promotionId);
+        return promotionGoods;
+    }
+
 }

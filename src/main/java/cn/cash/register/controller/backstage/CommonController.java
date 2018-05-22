@@ -17,7 +17,10 @@ import cn.cash.register.common.Constants;
 import cn.cash.register.dao.SystemParameterMapper;
 import cn.cash.register.dao.domain.SellerInfo;
 import cn.cash.register.dao.domain.SystemParameter;
+import cn.cash.register.enums.LogSourceEnum;
 import cn.cash.register.enums.SellerRoleEnum;
+import cn.cash.register.enums.SubSystemTypeEnum;
+import cn.cash.register.service.LogService;
 import cn.cash.register.service.SellerInfoService;
 import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.LogUtil;
@@ -40,6 +43,9 @@ public class CommonController {
 
     @Resource
     private SystemParameterMapper systemParameterMapper;
+
+    @Resource
+    private LogService            logService;
 
     /**
      * 后台管理首页
@@ -77,6 +83,8 @@ public class CommonController {
         SellerInfo seller = sellerInfoService.login(loginName, loginPassword);
         AssertUtil.assertEquals(seller.getRole(), SellerRoleEnum.admin.getCode(), "该用户不是管理员");
         session.setAttribute(Constants.LOGIN_FLAG_ADMIN, seller);
+
+        logService.record(LogSourceEnum.backstage, SubSystemTypeEnum.employee, loginName, "登录后台");
 
         SystemParameter isInit = systemParameterMapper.selectByCode(Constants.IS_INIT);
         if (isInit == null || StringUtils.equals(isInit.getParamValue(), Constants.FALSE)) {
