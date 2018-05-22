@@ -19,7 +19,7 @@ public interface PromotionGoodsDetailService {
      * 批量增加
      * @param details
      */
-    void add(List<PromotionGoodsDetail> details);
+    void add(Long promotionId, List<PromotionGoodsDetail> details);
 
     /**
      * 删除促销商品
@@ -30,5 +30,10 @@ public interface PromotionGoodsDetailService {
      * 修改促销商品
      */
     void update(List<PromotionGoodsDetail> details);
+
+    /**
+     * 根据促销id查询所有促销商品
+     */
+    List<PromotionGoodsDetail> queryByPromotionId(Long promotionId);
 
 }

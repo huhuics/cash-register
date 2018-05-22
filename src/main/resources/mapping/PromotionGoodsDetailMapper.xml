@@ -138,5 +138,10 @@
     delete from promotion_goods_detail
     where promotion_id = #{promotionId,jdbcType=BIGINT}
   </delete>
-  
+  <select id="selectByPromotionId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from promotion_goods_detail
+    where promotion_id = #{promotionId,jdbcType=BIGINT}
+  </select>
 </mapper>

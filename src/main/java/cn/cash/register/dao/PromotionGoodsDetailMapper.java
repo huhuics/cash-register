@@ -1,5 +1,7 @@
 package cn.cash.register.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import cn.cash.register.dao.domain.PromotionGoodsDetail;
@@ -20,4 +22,6 @@ public interface PromotionGoodsDetailMapper {
     PromotionGoodsDetail queryGoodsPromotionDetail(@Param("goodsId") Long goodsId, @Param("promotionId") Long promotionId);
 
     void deleteByPromotionId(Long promotionId);
+
+    List<PromotionGoodsDetail> selectByPromotionId(Long promotionId);
 }

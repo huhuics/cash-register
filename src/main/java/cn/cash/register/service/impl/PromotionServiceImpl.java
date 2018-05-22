@@ -21,7 +21,6 @@ import cn.cash.register.common.request.PromotionQueryRequest;
 import cn.cash.register.dao.GoodsInfoMapper;
 import cn.cash.register.dao.PromotionDetailMapper;
 import cn.cash.register.dao.PromotionGoodsDetailMapper;
-import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.dao.domain.PromotionDetail;
 import cn.cash.register.dao.domain.PromotionGoodsDetail;
 import cn.cash.register.service.PromotionService;
@@ -48,21 +47,9 @@ public class PromotionServiceImpl implements PromotionService {
     private TransactionTemplate        txTemplate;
 
     @Override
-    public Long add(PromotionDetail item, List<PromotionGoodsDetail> promotionGoodsList) {
-        checkAndSet(item, promotionGoodsList);
-
-        return txTemplate.execute(new TransactionCallback<Long>() {
-            @Override
-            public Long doInTransaction(TransactionStatus status) {
-                Long promotionId = promotionMapper.insertSelective(item);
-                for (PromotionGoodsDetail detail : promotionGoodsList) {
-                    GoodsInfo goodsInfo = goodsInfoMapper.selectByPrimaryKey(detail.getGoodsId());
-                    goodsInfo.setPromotionId(promotionId);
-                    goodsInfoMapper.updateByPrimaryKeySelective(goodsInfo);
-                }
-                return promotionId;
-            }
-        });
+    public Long add(PromotionDetail item) {
+        checkAndSet(item);
+        return promotionMapper.insertSelective(item);
     }
 
     @Override
@@ -144,11 +131,10 @@ public class PromotionServiceImpl implements PromotionService {
     /**
      * 参数校验并赋值
      */
-    private void checkAndSet(PromotionDetail item, List<PromotionGoodsDetail> promotionGoodsList) {
+    private void checkAndSet(PromotionDetail item) {
         AssertUtil.assertNotNull(item, "参数不能为空");
         AssertUtil.assertNotBlank(item.getPromotionName(), "促销名称不能为空");
         AssertUtil.assertNotBlank(item.getPromotionType(), "促销类型不能为空");
-        AssertUtil.assertNotBlank(promotionGoodsList, "促销商品不能为空");
         item.setGmtCreate(new Date());
         item.setStatus(true);
     }

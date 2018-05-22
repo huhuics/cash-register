@@ -42,4 +42,9 @@ public interface SystemParameterService {
      */
     int deleteById(Long id);
 
+    /**
+     * 清空所有数据
+     */
+    void truncateAllTables();
+
 }
