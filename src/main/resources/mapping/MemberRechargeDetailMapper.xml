@@ -211,10 +211,10 @@
   
   <select id="listCheck" parameterType="cn.cash.register.common.request.MemberRechargeCheckQueryRequest" resultMap="CheckResultMap">
     select 
-      	t.member_no,
-  		t.member_name,
-  		SUM(t.recharge_amount) 'recharge_amount',
-  		SUM(t.donation_amount)  'donation_amount'
+      	member_no,
+  		member_name,
+  		SUM(recharge_amount) 'recharge_amount',
+  		SUM(donation_amount)  'donation_amount'
     from member_recharge_detail
     where 1 = 1
     <if test="rankTitle != null and rankTitle !=''">
@@ -224,7 +224,7 @@
   		and gmt_create &lt;= STR_TO_DATE(#{gmtCreateUp},'%Y-%m-%d %H:%i:%s')
   		and gmt_create &gt;= STR_TO_DATE(#{gmtCreateDown},'%Y-%m-%d %H:%i:%s')
     </if>
-    GROUP BY t.member_no
+    GROUP BY member_no
   </select>
   
 </mapper>
