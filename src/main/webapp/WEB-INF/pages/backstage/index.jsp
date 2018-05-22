@@ -61,8 +61,8 @@
                             <li><a href="#member" @click="menuClick"><i class="fa fa-user-circle"></i>会员资料</a></li>
                             <li><a href="#member/rank" @click="menuClick"><i class="fa fa-signal"></i>会员等级</a></li>
                             <li><a href="#member/integral" @click="menuClick"><i class="fa fa-sliders"></i>会员制度</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>会员充值明细</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>储值卡对账</a></li>
+                            <li><a href="#member/recharge" @click="menuClick"><i class="fa fa-credit-card"></i>会员充值明细</a></li>
+                            <li><a href="#member/recharge/check/list" @click="menuClick"><i class="fa fa-file-text-o"></i>储值卡对账</a></li>
                             <li><a href="#member/analysis" @click="menuClick"><i class="fa fa-pie-chart"></i>会员分析</a></li>
                         </ul>
                     </li>
