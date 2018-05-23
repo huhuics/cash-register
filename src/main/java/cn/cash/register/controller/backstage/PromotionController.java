@@ -112,7 +112,7 @@ public class PromotionController {
     @PostMapping(value = "/list")
     public ResultSet list(PromotionQueryRequest request) {
         PageInfo<PromotionDetail> ret = promotionService.list(request);
-        return ResultSet.success().put("ret", ret);
+        return ResultSet.success().put("page", ret);
     }
 
     /**********************************促销商品相关***************************************/
