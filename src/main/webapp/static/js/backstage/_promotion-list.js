@@ -21,7 +21,11 @@ var vm = new Vue({
             this.promotion.status = true;
             var _self = this;
             layer.open({
-                type: 1, skin: 'layui-layer-lan', title: "新增促销活动", area: '650px', shadeClose: false,
+                type: 1,
+                skin: 'layui-layer-lan',
+                title: "新增促销活动",
+                area: '650px',
+                shadeClose: false,
                 content: jQuery("#promotionDiv"),
                 btn: ['提交', '取消'],
                 btn1: function(index) {
@@ -55,16 +59,20 @@ var vm = new Vue({
                     if (result.code == "00") {
                         _self.promotion = result.ret;
                         layer.open({
-                            type: 1, skin: 'layui-layer-lan', title: "编辑促销活动信息", area: '650px', shadeClose: false,
+                            type: 1,
+                            skin: 'layui-layer-lan',
+                            title: "编辑促销活动信息",
+                            area: '650px',
+                            shadeClose: false,
                             content: jQuery("#promotionDiv"),
                             btn: ['提交', '取消'],
                             btn1: function(index) {
-                            	delete _self.promotion.gmtCreate;
-                            	delete _self.promotion.gmtUpdate;
+                                delete _self.promotion.gmtCreate;
+                                delete _self.promotion.gmtUpdate;
                                 $.ajax({
                                     url: basePath + "/admin/promotion/updatePromotion",
                                     data: {
-                                    	'item': _self.promotion,
+                                        'item': _self.promotion,
                                     },
                                     success: function(result) {
                                         if (result.code == "00") {
@@ -106,32 +114,36 @@ var vm = new Vue({
             });
         },
         updatePromotionGoods: function() { // 编辑促销商品
-        	var promotionId = getSelectedRow();
-        	if (isBlank(promotionId)) {
-        		return;
-        	}
-        	this.resetPromotion();
-        	this.promotion.id = promotionId;
-        	this.goods_keyword = null;
-        	this.keyword_search_goods_list = [];
-        	this.select_goods_id_list = [];
-        	var _self = this;
-        	$.ajax({
+            var promotionId = getSelectedRow();
+            if (isBlank(promotionId)) {
+                return;
+            }
+            this.resetPromotion();
+            this.promotion.id = promotionId;
+            this.goods_keyword = null;
+            this.keyword_search_goods_list = [];
+            this.select_goods_id_list = [];
+            var _self = this;
+            $.ajax({
                 url: basePath + "/admin/promotion/queryByPromotionId",
                 data: { 'promotionId': _self.promotion.id },
                 success: function(result) {
                     if (result.code == "00") {
                         _self.promotion_goods_list_commit = result.promotionGoods;
                         _self.transferPromotionGoodsList1to2();
-                        layer.msg("查找到该促销活动有"+_self.promotion_goods_list_commit.length+"个促销商品");
+                        layer.msg("查找到该促销活动有" + _self.promotion_goods_list_commit.length + "个促销商品");
                     } else {
                         layer.alert("查询该促销活动商品列表失败：" + result.msg);
                         return;
                     }
                 }
             });
-        	layer.open({
-                type: 1, skin: 'layui-layer-lan', title: "编辑促销商品", area: '900px', shadeClose: false,
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-lan',
+                title: "编辑促销商品",
+                area: '900px',
+                shadeClose: false,
                 content: jQuery("#promotionGoodsListDiv"),
                 btn: ['确定'],
                 btn1: function(index) {
@@ -139,12 +151,11 @@ var vm = new Vue({
                     $.ajax({
                         url: basePath + "/admin/promotion/addPromotionGoodsDetail",
                         data: {
-                        	'promotionId': promotionId,
-                        	'promotionGoodsList': _self.promotion_goods_list_commit
+                            promotionGoodsList: _self.promotion_goods_list_commit
                         },
                         success: function(result) {
                             if (result.code == "00") {
-                            	layer.msg("编辑促销商品成功");
+                                layer.msg("编辑促销商品成功");
                             } else {
                                 layer.alert(result.msg);
                             }
@@ -160,7 +171,7 @@ var vm = new Vue({
             }
             var _self = this;
             $.ajax({
-                url: basePath + "/cashier/trade/searchGoodsInfo",
+                url: basePath + "/admin/trade/searchGoodsInfo",
                 data: { 'keyword': _self.goods_keyword },
                 success: function(result) {
                     if (result.code == "00") {
@@ -212,9 +223,9 @@ var vm = new Vue({
             this.promotion_goods_item.goodsId = goods.id;
             this.promotion_goods_item.barCode = goods.barCode;
             this.promotion_goods_item.categoryName = goods.categoryName;
-            this.promotion_goods_item.discount = discount.toFixed(2);
+            this.promotion_goods_item.discount = (1 * discount).toFixed(2);
             this.promotion_goods_item.goodsName = goods.goodsName;
-            this.promotion_goods_item.salesPrice = goods.salesPrice.amount.toFixed(2);
+            this.promotion_goods_item.salesPrice = (1 * goods.salesPrice.amount).toFixed(2);
             this.promotion_goods_item.priceWithDiscount = (1 * discount * goods.salesPrice.amount / 100).toFixed(2);
         },
         addItemToList: function() { // 将item加入list
@@ -225,12 +236,12 @@ var vm = new Vue({
                 }
             }
             // 商品不存在于列表中时，添加进列表
-            this.promotion_goods_list_show.push(cloneJsonObj(this.promotion_goods_item)); 
+            this.promotion_goods_list_show.push(cloneJsonObj(this.promotion_goods_item));
         },
         editItemDiscountById: function(goodsId, discount) { // 修改折扣
             for (var i = 0; i < this.promotion_goods_list_show.length; i++) {
                 if (this.promotion_goods_list_show[i].goodsId == goodsId) {
-                    this.promotion_goods_list_show[i].discount = discount.toFixed(2);
+                    this.promotion_goods_list_show[i].discount = (1 * discount).toFixed(2);
                     this.promotion_goods_list_show[i].priceWithDiscount = (this.promotion_goods_list_show[i].salesPrice * this.promotion_goods_list_show[i].discount / 100).toFixed(2);
                     return;
                 }
@@ -240,7 +251,7 @@ var vm = new Vue({
         editItemPriceById: function(goodsId, priceWithDiscount) { // 修改实际价格
             for (var i = 0; i < this.promotion_goods_list_show.length; i++) {
                 if (this.promotion_goods_list_show[i].goodsId == goodsId) {
-                    this.promotion_goods_list_show[i].priceWithDiscount = priceWithDiscount.toFixed(2);
+                    this.promotion_goods_list_show[i].priceWithDiscount = (1 * priceWithDiscount).toFixed(2);
                     this.promotion_goods_list_show[i].discount = (this.promotion_goods_list_show[i].priceWithDiscount / this.promotion_goods_list_show[i].salesPrice * 100).toFixed(2);
                     return;
                 }
@@ -250,28 +261,29 @@ var vm = new Vue({
         deleteItemById: function(goodsId) { // 删除item
             for (var i = 0; i < this.promotion_goods_list_show.length; i++) {
                 if (this.promotion_goods_list_show[i].goodsId == goodsId) {
-                	if(isBlank(this.promotion_goods_list_show[i].id)) {
-                		// 如果是临时添加，直接从列表中删除
-                		this.promotion_goods_list_show.splice(i, 1);
+                    if (isBlank(this.promotion_goods_list_show[i].id)) {
+                        // 如果是临时添加，直接从列表中删除
+                        this.promotion_goods_list_show.splice(i, 1);
                         return;
-                	} else {
-                		// 如果已经存在在数据库中，从数据库中删除
-                		confirm("该操作将删除已经保存的促销商品，确定要删除吗？", function() {
-                			$.ajax({
+                    } else {
+                        // 如果已经存在在数据库中，从数据库中删除
+                        var _self = this;
+                        confirm("该操作将删除已经保存的促销商品，确定要删除吗？", function() {
+                            $.ajax({
                                 url: basePath + "/admin/promotion/deletePromotionGoodsDetail",
                                 data: { 'promotionGoodsId': _self.promotion_goods_list_show[i].id },
                                 success: function(result) {
                                     if (result.code == "00") {
-                                    	layer.msg("删除成功");
-                                    	_self.promotion_goods_list_show.splice(i, 1); // 数据库删除成功后将其从列表中删除
+                                        layer.msg("删除成功");
+                                        _self.promotion_goods_list_show.splice(i, 1); // 数据库删除成功后将其从列表中删除
                                     } else {
                                         layer.alert(result.msg);
                                     }
                                 }
                             });
                         });
-                		return;
-                	}
+                        return;
+                    }
                 }
             }
             layer.alert("系统错误");
@@ -284,7 +296,7 @@ var vm = new Vue({
             }
             var _self = this;
             $.ajax({
-                url: basePath + "/cashier/trade/searchGoodsInfo",
+                url: basePath + "/admin/trade/searchGoodsInfo",
                 data: { 'keyword': _self.goods_keyword },
                 success: function(result) {
                     if (result.code == "00") {
@@ -296,57 +308,55 @@ var vm = new Vue({
             });
         },
         transferPromotionGoodsList1to2: function() { // 转换列表commit→show
-        	this.promotion_goods_list_show = [];
-        	for (var i = 0; i < this.promotion_goods_list_commit.length; i++) {
-        		var _pg = this.promotion_goods_list_commit[i];
-        		this.resetPromotionGoodsItem();
-        		this.promotion_goods_item.id = _pg.id;
-        		this.promotion_goods_item.promotionId = _pg.promotionId;
-        		this.promotion_goods_item.goodsId = _pg.goodsId;
-        		this.promotion_goods_item.barCode = _pg.barCode;
-        		this.promotion_goods_item.categoryName = _pg.categoryName;
-        		this.promotion_goods_item.discount = _pg.discount;
-        		this.promotion_goods_list_show.push(cloneJsonObj(_self.promotion_goods_item));
-        	}
-        	var _self = this;
-        	for (var i = 0; i < this.promotion_goods_list_show.length; i++) {
-        		$.ajax({
-        			url: basePath + "/admin/goods/queryGoodsInfoById",
-        			data: { 'goodsInfoId': _self.promotion_goods_list_show[i].goodsId },
-        			success: function(result) {
-        				if (result.code == "00") {
-        					_self.promotion_goods_list_show[i].goodsName = result.goodsInfo.goodsName;
-        					_self.promotion_goods_list_show[i].salesPrice = result.goodsInfo.salesPrice.amount;
-        					_self.promotion_goods_list_show[i].priceWithDiscount = (1 * _self.promotion_goods_item.salesPrice * _self.promotion_goods_item.discount / 100).toFixed(2);
-        				} else {
-        					layer.alert("获取商品信息失败:" + result.msg);
-        				}
-        			}
-        		});
-        	}
+            this.promotion_goods_list_show = [];
+            var _self = this;
+            for (var i = 0; i < this.promotion_goods_list_commit.length; i++) {
+                $.ajax({
+                    async: false,
+                    url: basePath + "/admin/goods/queryGoodsInfoById",
+                    data: { 'goodsInfoId': _self.promotion_goods_list_commit[i].goodsId },
+                    success: function(result) {
+                        if (result.code == "00") {
+                            _self.resetPromotionGoodsItem();
+                            _self.promotion_goods_item.id = _self.promotion_goods_list_commit[i].id;
+                            _self.promotion_goods_item.promotionId = _self.promotion_goods_list_commit[i].promotionId;
+                            _self.promotion_goods_item.goodsId = _self.promotion_goods_list_commit[i].goodsId;
+                            _self.promotion_goods_item.discount = _self.promotion_goods_list_commit[i].discount;
+                            _self.promotion_goods_item.barCode = result.goodsInfo.barCode;
+                            _self.promotion_goods_item.categoryName = result.goodsInfo.categoryName;
+                            _self.promotion_goods_item.goodsName = result.goodsInfo.goodsName;
+                            _self.promotion_goods_item.salesPrice = result.goodsInfo.salesPrice.amount;
+                            _self.promotion_goods_item.priceWithDiscount = (1 * _self.promotion_goods_item.salesPrice * _self.promotion_goods_item.discount / 100).toFixed(2);
+                            _self.promotion_goods_list_show.push(cloneJsonObj(_self.promotion_goods_item));
+                        } else {
+                            layer.alert("获取商品信息失败:" + result.msg);
+                        }
+                    }
+                });
+            }
         },
         transferPromotionGoodsList2to1: function() { // 转换列表show→commit
-        	this.promotion_goods_list_commit = [];
-        	for (var i = 0; i < this.promotion_goods_list_show.length; i++) {
-        		this.resetPromotionGoods();
-        		this.promotion_goods.id = this.promotion_goods_list_show[i].id;
-        		this.promotion_goods.promotionId = this.promotion_goods_list_show[i].promotionId;
-        		this.promotion_goods.goodsId = this.promotion_goods_list_show[i].goodsId;
-        		this.promotion_goods.barCode = this.promotion_goods_list_show[i].barCode;
-        		this.promotion_goods.categoryName = this.promotion_goods_list_show[i].categoryName;
-        		this.promotion_goods.discount = this.promotion_goods_list_show[i].discount;
-        		this.promotion_goods_list_commit.push(cloneJsonObj(this.promotion_goods));
+            this.promotion_goods_list_commit = [];
+            for (var i = 0; i < this.promotion_goods_list_show.length; i++) {
+                this.resetPromotionGoods();
+                this.promotion_goods.id = this.promotion_goods_list_show[i].id;
+                this.promotion_goods.promotionId = this.promotion_goods_list_show[i].promotionId;
+                this.promotion_goods.goodsId = this.promotion_goods_list_show[i].goodsId;
+                this.promotion_goods.barCode = this.promotion_goods_list_show[i].barCode;
+                this.promotion_goods.categoryName = this.promotion_goods_list_show[i].categoryName;
+                this.promotion_goods.discount = this.promotion_goods_list_show[i].discount;
+                this.promotion_goods_list_commit.push(cloneJsonObj(this.promotion_goods));
             }
         },
         resetPromotion: function() {
-        	this.promotion = cloneJsonObj(promotion_entity);
-        	this.promotion_goods_list = [];
+            this.promotion = cloneJsonObj(promotion_entity);
+            this.promotion_goods_list = [];
         },
         resetPromotionGoodsItem: function() {
-        	this.promotion_goods_item = cloneJsonObj(promotion_goods_item);
+            this.promotion_goods_item = cloneJsonObj(promotion_goods_item);
         },
         resetPromotionGoods: function() {
-        	this.promotion_goods = cloneJsonObj(promotion_goods_entity);
+            this.promotion_goods = cloneJsonObj(promotion_goods_entity);
         },
         search: function() {
             this.reloadPage();
