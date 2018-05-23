@@ -157,7 +157,7 @@ public class SystemConfigController {
      * @return
      */
     @ResponseBody
-    @PostMapping(value = "queryByCode")
+    @PostMapping(value = "/queryByCode")
     public ResultSet queryByCode(String paramCode) {
         AssertUtil.assertNotBlank(paramCode, "参数不能为空");
         SystemParameter byCode = systemParameterService.getByCode(paramCode);
