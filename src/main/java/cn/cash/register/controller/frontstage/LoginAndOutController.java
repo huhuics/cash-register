@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,7 +49,7 @@ public class LoginAndOutController {
     /**
      * 收银员登录页
      */
-    @GetMapping(value = "/toCashierLogin")
+    @RequestMapping(value = "/toCashierLogin")
     public String login() {
         return "frontstage/login";
     }

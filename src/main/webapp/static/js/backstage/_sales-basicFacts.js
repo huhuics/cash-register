@@ -2,8 +2,8 @@ var vm = new Vue({
     el: '#salesBasicFactsDiv',
     data: {
         q: {
-        	timeUp: null,
-        	timeDown: null,
+        	timeUp: dateFormater(getDayEnd()),
+        	timeDown: dateFormater(getDayStart()),
         },
         salesBasicFacts: [],
     },

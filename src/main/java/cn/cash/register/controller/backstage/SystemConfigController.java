@@ -35,6 +35,11 @@ public class SystemConfigController {
     @Resource
     private SystemParameterService systemParameterService;
 
+    @RequestMapping
+    public String configPage() {
+        return "backstage/_system-config";
+    }
+
     @ResponseBody
     @PostMapping(value = "/initSystem")
     public ResultSet initSystem(String newValue) {

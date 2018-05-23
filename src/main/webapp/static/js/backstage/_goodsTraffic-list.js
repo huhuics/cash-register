@@ -48,7 +48,8 @@ $(function() {
         sortname: "gmt_Update", sortorder: "desc",
         pager: "#jqGridPager",
         jsonReader: { root: "page.list", page: "page.pageNum", total: "page.pages", records: "page.total" },
-        prmNames: { page: "pageNum", rows: "pageSize", order: "order" }
+        prmNames: { page: "pageNum", rows: "pageSize", order: "order" },
+        postData: { createTimeUp: dateFormater(getDayEnd()), createTimeDown: dateFormater(getDayStart()) }
     });
 });
 
@@ -94,8 +95,8 @@ var vm = new Vue({
         q: {
         	trafficType: '',
         	trafficNo: null,
-        	createTimeUp: null,
-        	createTimeDown: null,
+        	createTimeUp: dateFormater(getDayEnd()),
+        	createTimeDown: dateFormater(getDayStart()),
         },
         inTraffic: cloneJsonObj(entity_inTrafficRequest),
         outTraffic: cloneJsonObj(entity_outTrafficRequest),
@@ -109,8 +110,8 @@ var vm = new Vue({
         resetSearch: function() {
             this.q.trafficType = '';
             this.q.trafficNo = null;
-            this.q.createTimeUp = null;
-            this.q.createTimeDown = null;
+            this.q.createTimeUp = dateFormater(getDayEnd());
+            this.q.createTimeDown = dateFormater(getDayStart());
             this.reloadPage();
         },
         addInTraffic: function() {

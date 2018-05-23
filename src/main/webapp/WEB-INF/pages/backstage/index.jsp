@@ -18,7 +18,7 @@
                 <div style="float: left; color: #fff; padding: 15px 10px;">小胡自行车行(huhui2018)</div>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        <li><a href="javascript:void(0);"><i class="fa fa-lock"></i> &nbsp;修改密码</a></li>
+                        <!-- <li><a href="javascript:void(0);"><i class="fa fa-lock"></i> &nbsp;修改密码</a></li> -->
                         <li><a href="javascript:void(0);" @click="logout"><i class="fa fa-sign-out"></i>&nbsp;退出系统</a></li>
                     </ul>
                 </div>
@@ -29,12 +29,9 @@
                 <!-- 菜单ul开始 -->
                 <ul class="sidebar-menu tree" data-widget="tree">
                     <li class="header">导航</li>
-                    <li class="active">
-                        <a href="#dashboard" @click="menuClick"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
-                    </li>
-                    <li class="treeview"><a href="#"><i class="fa fa-shopping-cart"></i><span>销售</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                    <li class="treeview active"><a href="#"><i class="fa fa-shopping-cart"></i><span>销售</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                         <ul class="treeview-menu">
-                            <li><a href="#sales/queryBasicFacts" @click="menuClick"><i class="fa fa-bar-chart"></i>营业概况</a></li>
+                            <li  class="active"><a href="#sales/queryBasicFacts" @click="menuClick"><i class="fa fa-bar-chart"></i>营业概况</a></li>
                             <li><a href="#sales/tradeDetail" @click="menuClick"><i class="fa fa-file-text"></i>销售单据</a></li>
                             <li><a href="#sales/goodsSaleStatistics" @click="menuClick"><i class="fa fa-file-text-o"></i>销售统计</a></li>
                             <li><a href="#sales/queryExchangeJobs" @click="menuClick"><i class="fa fa-exchange"></i>交接班记录</a></li>
@@ -66,10 +63,10 @@
                             <li><a href="#member/analysis" @click="menuClick"><i class="fa fa-pie-chart"></i>会员分析</a></li>
                         </ul>
                     </li>
-                    <li class="treeview"><a href="#"> <i class="fa fa-circle-o"></i><span>营销</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
+                    <li class="treeview"><a href="#"> <i class="fa fa-flag"></i><span>营销</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
                         <ul class="treeview-menu">
-                            <li><a href="#promotion" @click="menuClick"><i class="fa fa-circle-o"></i>促销活动设置</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>充值赠送活动设置</a></li>
+                            <li><a href="#promotion" @click="menuClick"><i class="fa fa-fire"></i>促销活动设置</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-gift"></i>充值赠送活动设置</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-users"></i><span>员工</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
@@ -86,14 +83,9 @@
                             <li><a href="#supplier" @click="menuClick"><i class="fa fa-drivers-license-o"></i>供货商</a></li>
                         </ul>
                     </li>
-                    <li class="treeview"><a href="#"> <i class="fa fa-circle-o"></i><span>设置</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
-                        <ul class="treeview-menu">
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>账户设置</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>系统设置</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>支付方式</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>操作日志</a></li>
-                        </ul>
-                    </li>
+                    <li>
+					    <a href="#systemConfig" @click="menuClick"><i class="fa fa-cogs"></i><span>系统设置</span></a>
+					</li>
                 </ul>
                 <!-- 菜单ul结束 -->
             </section>

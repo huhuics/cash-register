@@ -2,8 +2,8 @@ var vm = new Vue({
     el: '#salesExchangeJobsDiv',
     data: {
         q: {
-            gmtCreateUp: null,
-            gmtCreateDown: null,
+            gmtCreateUp: dateFormater(getDayEnd()),
+            gmtCreateDown: dateFormater(getDayStart()),
         },
         exchangeJobDetailList: [],
     },

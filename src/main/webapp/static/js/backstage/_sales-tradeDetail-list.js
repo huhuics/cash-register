@@ -23,7 +23,8 @@ $(function() {
         sortname: "gmt_Update", sortorder: "desc",
         pager: "#jqGridPager",
         jsonReader: { root: "page.list", page: "page.pageNum", total: "page.pages", records: "page.total" },
-        prmNames: { page: "pageNum", rows: "pageSize", order: "order" }
+        prmNames: { page: "pageNum", rows: "pageSize", order: "order" },
+        postData: { tradeTimeUp: dateFormater(getDayEnd()), tradeTimeDown: dateFormater(getDayStart()) }
     });
 });
 
@@ -34,8 +35,8 @@ var vm = new Vue({
         	sellerNo: '',
         	payChenal: '',
         	tradeType: '',
-        	tradeTimeUp: null,
-        	tradeTimeDown: null,
+        	tradeTimeUp: dateFormater(getDayEnd()),
+        	tradeTimeDown: dateFormater(getDayStart()),
         	tradeNo: null,
         },
         sellers: [], // 全部收银员
@@ -48,8 +49,8 @@ var vm = new Vue({
             this.q.sellerNo = '';
             this.q.payChenal = '';
             this.q.tradeType = '';
-            this.q.tradeTimeUp = null;
-            this.q.tradeTimeDown = null;
+            this.q.tradeTimeUp = dateFormater(getDayEnd());
+            this.q.tradeTimeDown = dateFormater(getDayStart());
             this.q.tradeNo = null;
             this.reloadPage();
         },

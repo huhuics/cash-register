@@ -10,8 +10,8 @@ $(window).on('resize', function() {
 var vm = new Vue({
     el: '#app',
     data: {
-        iframeSrc: "dashboard",
-        navTitle: "Dashboard"
+        iframeSrc: "sales/queryBasicFacts",
+        navTitle: "营业概况"
     },
     methods: {
         menuClick: function(url) {
@@ -29,6 +29,7 @@ var vm = new Vue({
         },
         logout: function() {
         	$.ajax({
+        		type: 'GET',
                 url: basePath + '/admin/logout',
                 success: function(result) {
                     if (result.code == "00") {

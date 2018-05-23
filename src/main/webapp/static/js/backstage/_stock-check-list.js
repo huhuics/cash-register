@@ -2,8 +2,8 @@ var vm = new Vue({
     el: '#stockCheckListDiv',
     data: {
         q: {
-        	checkDateUp: null,
-        	checkDateDown: null,
+        	checkDateUp: dateFormater(getDayEnd()),
+        	checkDateDown: dateFormater(getDayStart()),
         },
         goodsStockCheckList: [],
     },

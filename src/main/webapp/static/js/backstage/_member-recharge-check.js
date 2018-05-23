@@ -3,8 +3,8 @@ var vm = new Vue({
     data: {
         q: {
         	rankTitle: '',
-            gmtCreateUp: null,
-            gmtCreateDown: null,
+            gmtCreateUp: dateFormater(getDayEnd()),
+            gmtCreateDown: dateFormater(getDayStart()),
         },
         memberRanks: [],
         rechargeCheckList: []
