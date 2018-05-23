@@ -70,7 +70,11 @@
         </div>
         <h3>系统重新初始化</h3>
         <div>
-        	<button type="button" class="btn btn-danger btn-lg" @click="truncateAllTables">清空所有数据</button>
+        	<form class="form-horizontal layerForm">
+        		<div class="form-group col-xs-12">
+        			<button type="button" class="btn btn-danger btn-lg" @click="truncateAllTables">清空所有数据</button>
+        		</div>
+        	</form>
         </div>
     </div>
     <script src="${ctx}/static/js/backstage/_system-config.js"></script>
