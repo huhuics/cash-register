@@ -123,9 +123,9 @@ public class PromotionController {
      */
     @ResponseBody
     @PostMapping(value = "/addPromotionGoodsDetail")
-    public ResultSet addPromotionGoodsDetail(Long promotionId, ArrayList<PromotionGoodsDetail> promotionGoodsList) {
+    public ResultSet addOrUpdatePromotionGoodsDetail(ArrayList<PromotionGoodsDetail> promotionGoodsList) {
 
-        promotionGoodsDetailService.addOrUpdate(promotionId, promotionGoodsList);
+        promotionGoodsDetailService.addOrUpdate(promotionGoodsList);
 
         return ResultSet.success();
     }

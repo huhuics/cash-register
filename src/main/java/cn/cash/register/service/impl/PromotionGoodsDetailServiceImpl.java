@@ -39,7 +39,7 @@ public class PromotionGoodsDetailServiceImpl implements PromotionGoodsDetailServ
     private GoodsInfoMapper            goodsInfoMapper;
 
     @Override
-    public void addOrUpdate(Long promotionId, List<PromotionGoodsDetail> details) {
+    public void addOrUpdate(List<PromotionGoodsDetail> details) {
         AssertUtil.assertNotBlank(details, "促销商品不能为空");
         txTemplate.execute(new TransactionCallbackWithoutResult() {
             @Override
@@ -50,7 +50,7 @@ public class PromotionGoodsDetailServiceImpl implements PromotionGoodsDetailServ
                         promotionGoodsDetailMapper.insertSelective(detail);
 
                         GoodsInfo goodsInfo = goodsInfoMapper.selectByPrimaryKey(detail.getGoodsId());
-                        goodsInfo.setPromotionId(promotionId);
+                        goodsInfo.setPromotionId(detail.getPromotionId());
                         goodsInfoMapper.updateByPrimaryKeySelective(goodsInfo);
                     } else {
                         promotionGoodsDetailMapper.updateByPrimaryKey(detail);
