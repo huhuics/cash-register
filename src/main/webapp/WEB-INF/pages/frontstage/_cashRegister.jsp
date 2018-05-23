@@ -62,9 +62,7 @@
                                 <div class="col-xs-12">
                                     <div class="input-group">
                                         <input type="text" class="form-control toFocus" v-model="goods_keyword" @keyup.enter="searchGoods" placeholder="条码/拼音码/品名">
-                                        <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" @click="searchGoods">确定</button>
-                                </span>
+                                        <span class="input-group-btn"><button class="btn btn-default" type="button" @click="searchGoods">确定</button></span>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 div-height-5"></div>

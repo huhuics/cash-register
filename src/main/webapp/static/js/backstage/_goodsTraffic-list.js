@@ -4,7 +4,7 @@ $(function() {
         datatype: "json",
         colModel: [
         	{ label: '货流ID', name: 'id', hidden: true, key: true },
-            { label: '货流单号', name: 'trafficNo', index: 'traffic_No', width: 80 },
+            { label: '货流单号', name: 'trafficNo', index: 'traffic_No', width: 160 },
             { label: '货流类型', name: 'trafficType', index: 'traffic_Type', width: 80,
             	formatter: function(value, options, row) {
                     if (value == 'in') {
@@ -16,21 +16,24 @@ $(function() {
                     if (value == 'supplierOut') {
                     	return '退货给供货商';
                     }
+                    if (isBlank(value)) {
+                    	return '';
+                    }
                     return '未知类型:' + value;
                 }
             },
-            { label: '商品名称', name: 'goodsName', index: 'goods_Name', width: 80 },
-            { label: '商品条码', name: 'barCode', index: 'bar_Code', width: 80 },
-            { label: '商品颜色', name: 'goodsColor', index: 'goods_Color', width: 80 },
-            { label: '商品尺寸', name: 'goodsSize', index: 'goods_Size', width: 80 },
+            { label: '商品名称', name: 'goodsName', index: 'goods_Name', width: 150 },
+            { label: '商品条码', name: 'barCode', index: 'bar_Code', width: 180 },
+            { label: '商品颜色', name: 'goodsColor', index: 'goods_Color', width: 70 },
+            { label: '商品尺寸', name: 'goodsSize', index: 'goods_Size', width: 70 },
             { label: '供货商名称', name: 'supplierName', index: 'supplier_Name', width: 80 },
-            { label: '商品库存', name: 'goodsStock', index: 'goods_Stock', width: 80 },
-            { label: '进货量', name: 'inCount', index: 'in_Count', width: 80 },
-            { label: '进货价', name: 'inAmount.amount', index: 'in_Amount', width: 80 },
+            { label: '商品库存', name: 'goodsStock', index: 'goods_Stock', width: 70 },
+            { label: '进货量', name: 'inCount', index: 'in_Count', width: 60 },
+            { label: '进货价', name: 'inAmount.amount', index: 'in_Amount', width: 60 },
             { label: '进货赠送量', name: 'freeCount', index: 'free_Count', width: 80 },
-            { label: '预付款', name: 'advancePaymentAmount.amount', index: 'advance_Payment_Amount', width: 80 },
-            { label: '单位', name: 'quantityUnit', index: 'quantity_Unit', width: 80 },
-            { label: '出库价格类型', name: 'outPriceType', index: 'out_Price_Type', width: 80,
+            { label: '预付款', name: 'advancePaymentAmount.amount', index: 'advance_Payment_Amount', width: 60 },
+            { label: '单位', name: 'quantityUnit', index: 'quantity_Unit', width: 40 },
+            { label: '出库价格类型', name: 'outPriceType', index: 'out_Price_Type', width: 100,
             	formatter: function(value, options, row) {
                     if (value == 'last_import_price') {
                         return '以最近进货价出库';
@@ -44,20 +47,18 @@ $(function() {
                     if (value == 'trade_price') {
                     	return '以商品批发价出库';
                     }
+                    if (isBlank(value)) {
+                    	return '';
+                    }
                     return '未知类型:' + value;
                 }
             },
-            { label: '出库价', name: 'outAmount.amount', index: 'out_Amount', width: 80 },
-            { label: '出库量', name: 'outCount', index: 'out_Count', width: 80 },
-            { label: '小计', name: 'totalAmount.amount', index: 'total_Amount', width: 80 },
+            { label: '出库价', name: 'outAmount.amount', index: 'out_Amount', width: 60 },
+            { label: '出库量', name: 'outCount', index: 'out_Count', width: 60 },
+            { label: '小计', name: 'totalAmount.amount', index: 'total_Amount', width: 50 },
             { label: '操作员编号', name: 'operatorNo', index: 'operator_No', width: 80 },
             { label: '备注', name: 'remark', index: 'remark', width: 80 },
-            {
-                label: '状态',
-                name: 'status',
-                index: 'status',
-                sortable: false,
-                width: 80,
+            { label: '状态', name: 'status', index: 'status', sortable: false, width: 80,
                 formatter: function(value, options, row) {
                     if (value == '1') {
                         return '<span class="label label-success">已完成</span>';
