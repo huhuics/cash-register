@@ -16,10 +16,10 @@ import cn.cash.register.dao.domain.PromotionGoodsDetail;
 public interface PromotionGoodsDetailService {
 
     /**
-     * 批量增加
+     * 增加或修改
      * @param details
      */
-    void addOrUpdate(Long promotionId, List<PromotionGoodsDetail> details);
+    void addOrUpdate(List<PromotionGoodsDetail> details);
 
     /**
      * 删除促销商品
