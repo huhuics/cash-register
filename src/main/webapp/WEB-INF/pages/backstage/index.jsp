@@ -12,7 +12,7 @@
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper" id="app" v-cloak>
         <header class="main-header">
-            <a href="javascript:void(0);" class="logo"><span class="logo-mini"><b>CS</b></span> <span class="logo-lg">{{shopName}}</span></a>
+            <a href="javascript:void(0);" class="logo"><span class="logo-mini"><b>{{shopName}}</b></span> <span class="logo-lg">{{shopName}}</span></a>
             <nav class="navbar navbar-static-top" role="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button"> <span class="sr-only">Toggle navigation</span></a>
                 <div style="float: left; color: #fff; padding: 15px 10px;">欢迎您，${ sessionScope.admin.name }</div>
