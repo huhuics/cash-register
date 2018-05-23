@@ -17,7 +17,7 @@ public class BarcodeUtilTest {
 
     @Test
     public void testFile() {
-        BarcodeUtil.generate("20180510144017883-001 ", "F:\\20180510144017883-001.png");
+        BarcodeUtil.generate("20180510144017883-001 ", "F:\\20180510144017883-001.jpeg");
     }
 
 }
