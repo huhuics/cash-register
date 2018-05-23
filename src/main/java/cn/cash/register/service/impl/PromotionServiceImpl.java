@@ -141,10 +141,10 @@ public class PromotionServiceImpl implements PromotionService {
         detail.setIsMemberDiscountTwice(request.getIsMemberDiscountTwice());
         try {
             if (StringUtils.isNotBlank(request.getStartTime())) {
-                detail.setStartTime(DateUtil.parseDateNewFormat(request.getStartTime()));
+                detail.setStartTime(DateUtil.parseDateWebFormat(request.getStartTime()));
             }
             if (StringUtils.isNotBlank(request.getEndTime())) {
-                detail.setEndTime(DateUtil.parseDateNewFormat(request.getEndTime()));
+                detail.setEndTime(DateUtil.parseDateWebFormat(request.getEndTime()));
             }
         } catch (Exception e) {
             throw new RuntimeException("日期格式错误", e);

@@ -4,6 +4,7 @@
  */
 package cn.cash.register.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -38,34 +39,32 @@ public class PromotionGoodsDetailServiceImpl implements PromotionGoodsDetailServ
     private GoodsInfoMapper            goodsInfoMapper;
 
     @Override
-    public void add(Long promotionId, List<PromotionGoodsDetail> details) {
+    public void addOrUpdate(Long promotionId, List<PromotionGoodsDetail> details) {
         AssertUtil.assertNotBlank(details, "促销商品不能为空");
         txTemplate.execute(new TransactionCallbackWithoutResult() {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 for (PromotionGoodsDetail detail : details) {
-                    promotionGoodsDetailMapper.insertSelective(detail);
+                    if (detail.getId() == null) {
+                        detail.setGmtCreate(new Date());
+                        promotionGoodsDetailMapper.insertSelective(detail);
 
-                    GoodsInfo goodsInfo = goodsInfoMapper.selectByPrimaryKey(detail.getGoodsId());
-                    goodsInfo.setPromotionId(promotionId);
-                    goodsInfoMapper.updateByPrimaryKeySelective(goodsInfo);
+                        GoodsInfo goodsInfo = goodsInfoMapper.selectByPrimaryKey(detail.getGoodsId());
+                        goodsInfo.setPromotionId(promotionId);
+                        goodsInfoMapper.updateByPrimaryKeySelective(goodsInfo);
+                    } else {
+                        promotionGoodsDetailMapper.updateByPrimaryKey(detail);
+                    }
                 }
             }
         });
+
     }
 
     @Override
     public int delete(Long id) {
         AssertUtil.assertNotNull(id, "促销商品id不能为空");
         return promotionGoodsDetailMapper.deleteByPrimaryKey(id);
-    }
-
-    @Override
-    public void update(List<PromotionGoodsDetail> details) {
-        AssertUtil.assertNotBlank(details, "促销商品不能为空");
-        for (PromotionGoodsDetail detail : details) {
-            promotionGoodsDetailMapper.updateByPrimaryKeySelective(detail);
-        }
     }
 
     @Override
