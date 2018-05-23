@@ -66,7 +66,6 @@
                     <li class="treeview"><a href="#"> <i class="fa fa-flag"></i><span>营销</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
                         <ul class="treeview-menu">
                             <li><a href="#promotion" @click="menuClick"><i class="fa fa-fire"></i>促销活动设置</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-gift"></i>充值赠送活动设置</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-users"></i><span>员工</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
