@@ -12,10 +12,10 @@
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper" id="app" v-cloak>
         <header class="main-header">
-            <a href="javascript:void(0);" class="logo"><span class="logo-mini"><b>CS</b></span> <span class="logo-lg">CashRegister</span></a>
+            <a href="javascript:void(0);" class="logo"><span class="logo-mini"><b>{{shopName}}</b></span> <span class="logo-lg">{{shopName}}</span></a>
             <nav class="navbar navbar-static-top" role="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button"> <span class="sr-only">Toggle navigation</span></a>
-                <div style="float: left; color: #fff; padding: 15px 10px;">小胡自行车行(huhui2018)</div>
+                <div style="float: left; color: #fff; padding: 15px 10px;">欢迎您，${ sessionScope.admin.name }</div>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                         <!-- <li><a href="javascript:void(0);"><i class="fa fa-lock"></i> &nbsp;修改密码</a></li> -->
@@ -66,7 +66,6 @@
                     <li class="treeview"><a href="#"> <i class="fa fa-flag"></i><span>营销</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
                         <ul class="treeview-menu">
                             <li><a href="#promotion" @click="menuClick"><i class="fa fa-fire"></i>促销活动设置</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-gift"></i>充值赠送活动设置</a></li>
                         </ul>
                     </li>
                     <li class="treeview"><a href="#"> <i class="fa fa-users"></i><span>员工</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>

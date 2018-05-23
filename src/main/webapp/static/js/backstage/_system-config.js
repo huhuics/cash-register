@@ -104,9 +104,114 @@ var vm = new Vue({
                     }
                 }
             });
-        }
+        },
+        load_shopName: function() {
+        	var _self = this;
+        	$.ajax({
+        		url: basePath + "/admin/systemConfig/queryByCode",
+        		data: { paramCode: 'SHOP_NAME' },
+        		success: function(result) {
+        			if (result.code == "00") {
+        				_self.shopName = result.byCode.paramValue;
+        			} else {
+        				layer.alert(result.msg);
+        			}
+        		}
+        	});
+        },
+        load_registerTime: function() {
+        	var _self = this;
+        	$.ajax({
+        		url: basePath + "/admin/systemConfig/queryByCode",
+        		data: { paramCode: 'REGISTER_TIME' },
+        		success: function(result) {
+        			if (result.code == "00") {
+        				_self.registerTime = result.byCode.paramValue;
+        			} else {
+        				layer.alert(result.msg);
+        			}
+        		}
+        	});
+        },
+        load_invalidTime: function() {
+        	var _self = this;
+        	$.ajax({
+        		url: basePath + "/admin/systemConfig/queryByCode",
+        		data: { paramCode: 'INVALID_TIME' },
+        		success: function(result) {
+        			if (result.code == "00") {
+        				_self.invalidTime = result.byCode.paramValue;
+        			} else {
+        				layer.alert(result.msg);
+        			}
+        		}
+        	});
+        },
+        load_relatedEmail: function() {
+        	var _self = this;
+        	$.ajax({
+        		url: basePath + "/admin/systemConfig/queryByCode",
+        		data: { paramCode: 'RELATED_EMAIL' },
+        		success: function(result) {
+        			if (result.code == "00") {
+        				_self.relatedEmail = result.byCode.paramValue;
+        			} else {
+        				layer.alert(result.msg);
+        			}
+        		}
+        	});
+        },
+        load_phone: function() {
+        	var _self = this;
+        	$.ajax({
+        		url: basePath + "/admin/systemConfig/queryByCode",
+        		data: { paramCode: 'PHONE' },
+        		success: function(result) {
+        			if (result.code == "00") {
+        				_self.phone = result.byCode.paramValue;
+        			} else {
+        				layer.alert(result.msg);
+        			}
+        		}
+        	});
+        },
+        load_address: function() {
+        	var _self = this;
+        	$.ajax({
+        		url: basePath + "/admin/systemConfig/queryByCode",
+        		data: { paramCode: 'ADDRESS' },
+        		success: function(result) {
+        			if (result.code == "00") {
+        				_self.address = result.byCode.paramValue;
+        			} else {
+        				layer.alert(result.msg);
+        			}
+        		}
+        	});
+        },
+        load_pettyAmount: function() {
+        	var _self = this;
+        	$.ajax({
+        		url: basePath + "/admin/systemConfig/queryByCode",
+        		data: { paramCode: 'PETTY_AMOUNT' },
+        		success: function(result) {
+        			if (result.code == "00") {
+        				_self.pettyAmount = result.byCode.paramValue;
+        			} else {
+        				layer.alert(result.msg);
+        			}
+        		}
+        	});
+        },
     },
     mounted: function() {
     	this.loadAuthInfo();
+    	this.load_shopName();
+    	this.load_registerTime();
+    	this.load_invalidTime();
+    	this.load_relatedEmail();
+    	this.load_phone();
+    	this.load_address();
+    	this.load_pettyAmount();
     }
 });

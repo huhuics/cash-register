@@ -7,11 +7,12 @@ $(window).on('resize', function() {
     });
 }).resize();
 
-var vm = new Vue({
+var backstageIndexVM = new Vue({
     el: '#app',
     data: {
         iframeSrc: "sales/queryBasicFacts",
-        navTitle: "营业概况"
+        navTitle: "营业概况",
+        shopName: null,
     },
     methods: {
         menuClick: function(url) {
@@ -39,6 +40,23 @@ var vm = new Vue({
                     }
                 }
             });
-        }
+        },
+        load_shopName: function() {
+        	var _self = this;
+        	$.ajax({
+        		url: basePath + "/admin/systemConfig/queryByCode",
+        		data: { paramCode: 'SHOP_NAME' },
+        		success: function(result) {
+        			if (result.code == "00") {
+        				_self.shopName = result.byCode.paramValue;
+        			} else {
+        				layer.alert(result.msg);
+        			}
+        		}
+        	});
+        },
+    },
+    mounted: function() {
+    	this.load_shopName();
     }
 });

@@ -151,10 +151,11 @@ var vm = new Vue({
                         _self.seller.status = result.seller.status;
                         _self.seller.cashPermission = JSON.parse(result.seller.cashPermission);
                         _self.seller.backgroundPermission = JSON.parse(result.seller.backgroundPermission);
+                        var _title = _self.seller.role == 'admin'?'编辑管理员':'编辑收银员';
                         layer.open({
                             type: 1,
                             skin: 'layui-layer-lan',
-                            title: "编辑收银员",
+                            title: _title,
                             area: '500px',
                             shadeClose: false,
                             content: jQuery("#sellerDiv"),
@@ -198,8 +199,13 @@ var vm = new Vue({
             var sellerId = getSelectedRow();
             var sellerNo = getSelectedRowValue('sellerNo');
             var name = getSelectedRowValue('name');
+            var role = getSelectedRowValue('role');
             if (isBlank(sellerId)) {
                 return;
+            }
+            if (role == '管理员') {
+            	layer.alert('不允许删除管理员！');
+            	return;
             }
             var _self = this;
             confirm("确定删除[" + name + "(" + sellerNo + ")]这个收银员吗?", function() {

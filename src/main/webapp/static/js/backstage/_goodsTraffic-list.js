@@ -4,31 +4,61 @@ $(function() {
         datatype: "json",
         colModel: [
         	{ label: '货流ID', name: 'id', hidden: true, key: true },
-            { label: '货流单号', name: 'trafficNo', index: 'traffic_No', width: 80 },
-            { label: '货流类型', name: 'trafficType', index: 'traffic_Type', width: 80 },
-            { label: '商品名称', name: 'goodsName', index: 'goods_Name', width: 80 },
-            { label: '商品条码', name: 'barCode', index: 'bar_Code', width: 80 },
-            { label: '商品颜色', name: 'goodsColor', index: 'goods_Color', width: 80 },
-            { label: '商品尺寸', name: 'goodsSize', index: 'goods_Size', width: 80 },
+            { label: '货流单号', name: 'trafficNo', index: 'traffic_No', width: 160 },
+            { label: '货流类型', name: 'trafficType', index: 'traffic_Type', width: 80,
+            	formatter: function(value, options, row) {
+                    if (value == 'in') {
+                        return '进货';
+                    }
+                    if (value == 'ordinaryOut') {
+                        return '普通出库';
+                    }
+                    if (value == 'supplierOut') {
+                    	return '退货给供货商';
+                    }
+                    if (isBlank(value)) {
+                    	return '';
+                    }
+                    return '未知类型:' + value;
+                }
+            },
+            { label: '商品名称', name: 'goodsName', index: 'goods_Name', width: 150 },
+            { label: '商品条码', name: 'barCode', index: 'bar_Code', width: 180 },
+            { label: '商品颜色', name: 'goodsColor', index: 'goods_Color', width: 70 },
+            { label: '商品尺寸', name: 'goodsSize', index: 'goods_Size', width: 70 },
             { label: '供货商名称', name: 'supplierName', index: 'supplier_Name', width: 80 },
-            { label: '商品库存', name: 'goodsStock', index: 'goods_Stock', width: 80 },
-            { label: '进货量', name: 'inCount', index: 'in_Count', width: 80 },
-            { label: '进货价', name: 'inAmount.amount', index: 'in_Amount', width: 80 },
+            { label: '商品库存', name: 'goodsStock', index: 'goods_Stock', width: 70 },
+            { label: '进货量', name: 'inCount', index: 'in_Count', width: 60 },
+            { label: '进货价', name: 'inAmount.amount', index: 'in_Amount', width: 60 },
             { label: '进货赠送量', name: 'freeCount', index: 'free_Count', width: 80 },
-            { label: '预付款', name: 'advancePaymentAmount.amount', index: 'advance_Payment_Amount', width: 80 },
-            { label: '单位', name: 'quantityUnit', index: 'quantity_Unit', width: 80 },
-            { label: '出库价格类型', name: 'outPriceType', index: 'out_Price_Type', width: 80 },
-            { label: '出库价', name: 'outAmount.amount', index: 'out_Amount', width: 80 },
-            { label: '出库量', name: 'outCount', index: 'out_Count', width: 80 },
-            { label: '小计', name: 'totalAmount.amount', index: 'total_Amount', width: 80 },
+            { label: '预付款', name: 'advancePaymentAmount.amount', index: 'advance_Payment_Amount', width: 60 },
+            { label: '单位', name: 'quantityUnit', index: 'quantity_Unit', width: 40 },
+            { label: '出库价格类型', name: 'outPriceType', index: 'out_Price_Type', width: 100,
+            	formatter: function(value, options, row) {
+                    if (value == 'last_import_price') {
+                        return '以最近进货价出库';
+                    }
+                    if (value == 'average_import_price') {
+                        return '以平均进货价出库';
+                    }
+                    if (value == 'sales_price') {
+                    	return '以商品销售价出库';
+                    }
+                    if (value == 'trade_price') {
+                    	return '以商品批发价出库';
+                    }
+                    if (isBlank(value)) {
+                    	return '';
+                    }
+                    return '未知类型:' + value;
+                }
+            },
+            { label: '出库价', name: 'outAmount.amount', index: 'out_Amount', width: 60 },
+            { label: '出库量', name: 'outCount', index: 'out_Count', width: 60 },
+            { label: '小计', name: 'totalAmount.amount', index: 'total_Amount', width: 50 },
             { label: '操作员编号', name: 'operatorNo', index: 'operator_No', width: 80 },
             { label: '备注', name: 'remark', index: 'remark', width: 80 },
-            {
-                label: '状态',
-                name: 'status',
-                index: 'status',
-                sortable: false,
-                width: 80,
+            { label: '状态', name: 'status', index: 'status', sortable: false, width: 80,
                 formatter: function(value, options, row) {
                     if (value == '1') {
                         return '<span class="label label-success">已完成</span>';
@@ -101,9 +131,109 @@ var vm = new Vue({
         inTraffic: cloneJsonObj(entity_inTrafficRequest),
         outTraffic: cloneJsonObj(entity_outTrafficRequest),
         goods_suppliers: [],
-        select_supplier_name: null
+        select_supplier_name: null,
+        
+        goods_keyword: null,
+        keyword_search_goods_list: [], // 搜索商品清单
+        select_goods_id: null, // 选择要加入的商品id
     },
     methods: {
+    	searchGoods: function() { // 根据关键字查找商品加入清单
+            if (isBlank(this.goods_keyword)) {
+                layer.msg("请输入：条码/拼音码/品名");
+                return;
+            }
+            var _self = this;
+            $.ajax({
+                url: basePath + "/cashier/trade/searchGoodsInfo",
+                data: { 'keyword': _self.goods_keyword },
+                success: function(result) {
+                    if (result.code == "00") {
+                        if (result.size == 0) {
+                            layer.msg("没有找到相关商品");
+                            return;
+                        } else if (result.size == 1) { // 查到唯一商品，直接加入
+                            _self.transferGoodsToItem(result.goodsInfos[0]);
+                            return;
+                        } else if (result.size > 1) { // 查到多个商品，选择加入
+                            _self.keyword_search_goods_list = result.goodsInfos;
+                            _self.select_goods_id = null; // 打开窗口前清空选择列表
+                            layer.open({
+                                type: 1,
+                                skin: 'layui-layer-lan',
+                                title: "搜索并选择商品",
+                                area: '800px',
+                                shadeClose: false,
+                                content: jQuery("#goodsSelectDiv"),
+                                btn: ['选择', '取消'],
+                                btn1: function(index) {
+                                	if(isBlank(_self.select_goods_id)) {
+                                		layer.msg("尚未选择商品");
+                                		return;
+                                	}
+                                    var _goodsList = _self.keyword_search_goods_list;
+                                    for (var j = 0; j < _goodsList.length; j++) {
+                                        if (_goodsList[j].id == _self.select_goods_id) {
+                                            _self.transferGoodsToItem(_goodsList[j]);
+                                            break;
+                                        }
+                                    }
+                                    layer.close(index);
+                                }
+                            });
+                        }
+                    } else {
+                        layer.alert(result.msg);
+                    }
+                }
+            });
+        },
+        searchGoodsInBox: function() { // 根据关键字查找商品列表显示在待加入界面
+            this.select_goods_id_list = [];
+            if (isBlank(this.goods_keyword)) {
+                this.keyword_search_goods_list = [];
+                return;
+            }
+            var _self = this;
+            $.ajax({
+                url: basePath + "/cashier/trade/searchGoodsInfo",
+                data: { 'keyword': _self.goods_keyword },
+                success: function(result) {
+                    if (result.code == "00") {
+                        _self.keyword_search_goods_list = result.goodsInfos;
+                    } else {
+                        layer.alert(result.msg);
+                    }
+                }
+            });
+        },
+        transferGoodsToItem: function(goods) {
+        	this.inTraffic.goodsId = goods.id;
+        	this.inTraffic.goodsName = goods.goodsName;
+        	this.inTraffic.barCode = goods.barCode;
+        	this.inTraffic.goodsColor = goods.goodsColor;
+        	this.inTraffic.goodsSize = goods.goodsSize;
+        	this.inTraffic.goodsStock = goods.goodsStock;
+        	this.inTraffic.supplierName = goods.supplierName;
+        	this.inTraffic.inAmount = goods.lastImportPrice.amount;
+        	this.inTraffic.inCount = 0;
+        	this.inTraffic.freeCount = 0;
+        	this.inTraffic.totalAmount = 0;
+        	this.inTraffic.advancePaymentAmount = 0;
+        	this.inTraffic.quantityUnit = goods.quantityUnit;
+        	//---
+        	this.outTraffic.goodsId = goods.id;
+        	this.outTraffic.goodsName = goods.goodsName;
+        	this.outTraffic.barCode = goods.barCode;
+        	this.outTraffic.goodsColor = goods.goodsColor;
+        	this.outTraffic.goodsSize = goods.goodsSize;
+        	this.outTraffic.goodsStock = goods.goodsStock;
+        	this.outTraffic.supplierName = goods.supplierName;
+        	this.outTraffic.outAmount = goods.lastImportPrice.amount;
+        	this.outTraffic.outCount = 0;
+        	this.outTraffic.quantityUnit = goods.quantityUnit;
+        	this.outTraffic.totalAmount = 0;
+        },
         search: function() {
             this.reloadPage();
         },

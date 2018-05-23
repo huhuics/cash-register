@@ -82,16 +82,16 @@
 		                </div>
                     </div>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                 	<div class="col-xs-12">
 		            	<div class="input-group">
 		                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;角色</span>
 		                    <span class="input-group-addon">
-		                    	<input type="radio" v-model="seller.role" value="seller"> 收银员
+		                    	<input type="radio" v-model="seller.role" value="seller" readonly> 收银员
 		                    </span>
 		                </div>
 		            </div>
-                </div>
+                </div> -->
                 <div class="form-group">
                 	<div class="col-xs-12">
 		            	<div class="input-group">
@@ -99,7 +99,7 @@
 		                    <span class="input-group-addon">
 		                    	<input type="radio" v-model="seller.status" value="true">启用
 		                    </span>
-		                    <span class="input-group-addon">
+		                    <span class="input-group-addon" v-if="seller.role=='seller'">
 		                    	<input type="radio" v-model="seller.status" value="false">禁用
 		                    </span>
 		                </div>

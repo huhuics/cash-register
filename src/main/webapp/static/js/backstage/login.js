@@ -30,7 +30,7 @@ var vm = new Vue({
                                 		return;
                                 	}
                                     $.ajax({
-                                        url: basePath + "/admin/systemConfig/setShopName",
+                                        url: basePath + "/admin/systemConfig/initSystem",
                                         data: { newValue: _self.shopName },
                                         success: function(result) {
                                             if (result.code == "00") {
