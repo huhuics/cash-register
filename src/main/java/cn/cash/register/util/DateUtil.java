@@ -168,6 +168,25 @@ public class DateUtil {
     }
 
     /**
+     * 解析webFormat格式的日期字符串为日期对象。
+     * 
+     * @param sDate 日期对象。
+     * @return sDate 对象的日期对象。
+     */
+    public static Date parseDateWebFormat(String sDate) {
+        DateFormat dateFormat = new SimpleDateFormat(webFormat);
+        Date d = null;
+        if ((sDate != null) && (sDate.length() == webFormat.length())) {
+            try {
+                d = dateFormat.parse(sDate);
+            } catch (ParseException ex) {
+                return null;
+            }
+        }
+        return d;
+    }
+
+    /**
      * 计算当前时间几小时之后的时间
      *
      * @param date

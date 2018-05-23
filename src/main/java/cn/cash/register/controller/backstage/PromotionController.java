@@ -119,11 +119,14 @@ public class PromotionController {
 
     /**
      * 增加促销商品
+     * 增加时需要传promotionId, 修改时不需要
      */
     @ResponseBody
     @PostMapping(value = "/addPromotionGoodsDetail")
     public ResultSet addPromotionGoodsDetail(Long promotionId, ArrayList<PromotionGoodsDetail> promotionGoodsList) {
-        promotionGoodsDetailService.add(promotionId, promotionGoodsList);
+
+        promotionGoodsDetailService.addOrUpdate(promotionId, promotionGoodsList);
+
         return ResultSet.success();
     }
 
@@ -135,16 +138,6 @@ public class PromotionController {
     public ResultSet deletePromotionGoodsDetail(Long promotionGoodsId) {
         int ret = promotionGoodsDetailService.delete(promotionGoodsId);
         return ResultSet.success().put("ret", ret);
-    }
-
-    /**
-     * 增加促销商品
-     */
-    @ResponseBody
-    @PostMapping(value = "/updatePromotionGoodsDetail")
-    public ResultSet updatePromotionGoodsDetail(ArrayList<PromotionGoodsDetail> promotionGoodsList) {
-        promotionGoodsDetailService.update(promotionGoodsList);
-        return ResultSet.success();
     }
 
     /**
