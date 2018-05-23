@@ -41,15 +41,22 @@ public class SystemConfigController {
     }
 
     @ResponseBody
-    @PostMapping(value = "/setShopName")
-    public ResultSet setShopName(String newValue) {
+    @PostMapping(value = "/initSystem")
+    public ResultSet initSystem(String newValue) {
         AssertUtil.assertNotBlank(newValue, "值不能为空");
-        SystemParameter param = systemParameterService.getByCode(Constants.SHOP_NAME);
-        if (param == null) {
-            return ResultSet.error("无此参数");
-        }
+        SystemParameter shopNameParam = systemParameterService.getByCode(Constants.SHOP_NAME);
 
-        systemParameterService.updateById(param.getId(), newValue);
+        //修改shop_name
+        systemParameterService.updateById(shopNameParam.getId(), newValue);
+
+        //修改register_time
+        SystemParameter registerTimeParam = systemParameterService.getByCode(Constants.REGISTER_TIME);
+        systemParameterService.updateById(registerTimeParam.getId(), DateUtil.getNewFormatDateString(new Date()));
+
+        //设置试用到期时间
+        SystemParameter invalidTimeParam = systemParameterService.getByCode(Constants.INVALID_TIME);
+        Date invadeTime = DateUtils.addDays(new Date(), 15);
+        systemParameterService.updateById(invalidTimeParam.getId(), DateUtil.getNewFormatDateString(invadeTime));
 
         return ResultSet.success("设置成功");
     }
@@ -64,36 +71,6 @@ public class SystemConfigController {
         }
 
         systemParameterService.updateById(param.getId(), newValue);
-
-        return ResultSet.success("设置成功");
-    }
-
-    /**
-     * 默认设置当前时间为注册时间
-     * @return
-     */
-    @ResponseBody
-    @PostMapping(value = "/setRegisterTime")
-    public ResultSet setRegisterTime() {
-        SystemParameter param = systemParameterService.getByCode(Constants.REGISTER_TIME);
-        if (param == null) {
-            return ResultSet.error("无此参数");
-        }
-
-        systemParameterService.updateById(param.getId(), DateUtil.getNewFormatDateString(new Date()));
-
-        return ResultSet.success("设置成功");
-    }
-
-    @ResponseBody
-    @PostMapping(value = "/setInvalidTime")
-    public ResultSet setInvalidTime() {
-        SystemParameter param = systemParameterService.getByCode(Constants.INVALID_TIME);
-        if (param == null) {
-            return ResultSet.error("无此参数");
-        }
-        Date invadeTime = DateUtils.addDays(new Date(), 15);
-        systemParameterService.updateById(param.getId(), DateUtil.getNewFormatDateString(invadeTime));
 
         return ResultSet.success("设置成功");
     }
@@ -172,6 +149,19 @@ public class SystemConfigController {
         }
 
         return ResultSet.error("请购买正版");
+    }
+
+    /**
+     * 根据param_code查询参数值
+     * @param paramCode {@link Constants}
+     * @return
+     */
+    @ResponseBody
+    @PostMapping(value = "queryByCode")
+    public ResultSet queryByCode(String paramCode) {
+        AssertUtil.assertNotBlank(paramCode, "参数不能为空");
+        SystemParameter byCode = systemParameterService.getByCode(paramCode);
+        return ResultSet.success().put("byCode", byCode);
     }
 
     @ResponseBody

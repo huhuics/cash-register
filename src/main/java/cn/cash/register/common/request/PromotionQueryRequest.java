@@ -16,7 +16,7 @@ public class PromotionQueryRequest extends BasePageRequest {
 
     private String            promotionType;
 
-    private String            status;
+    private Boolean           status;
 
     private String            promotionName;
 
@@ -28,11 +28,11 @@ public class PromotionQueryRequest extends BasePageRequest {
         this.promotionType = promotionType;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
