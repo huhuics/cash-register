@@ -83,14 +83,9 @@
                             <li><a href="#supplier" @click="menuClick"><i class="fa fa-drivers-license-o"></i>供货商</a></li>
                         </ul>
                     </li>
-                    <li class="treeview"><a href="#"> <i class="fa fa-circle-o"></i><span>设置</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
-                        <ul class="treeview-menu">
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>账户设置</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>系统设置</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>支付方式</a></li>
-                            <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>操作日志</a></li>
-                        </ul>
-                    </li>
+                    <li>
+					    <a href="#systemConfig" @click="menuClick"><i class="fa fa-cogs"></i><span>系统设置</span></a>
+					</li>
                 </ul>
                 <!-- 菜单ul结束 -->
             </section>
