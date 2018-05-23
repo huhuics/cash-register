@@ -176,6 +176,7 @@ public class DateUtil {
     public static Date parseDateWebFormat(String sDate) {
         DateFormat dateFormat = new SimpleDateFormat(webFormat);
         Date d = null;
+        dateFormat.setLenient(false);
         if ((sDate != null) && (sDate.length() == webFormat.length())) {
             try {
                 d = dateFormat.parse(sDate);

@@ -10,6 +10,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -28,6 +30,7 @@ import cn.cash.register.dao.domain.PromotionGoodsDetail;
 import cn.cash.register.service.PromotionService;
 import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.DateUtil;
+import cn.cash.register.util.LogUtil;
 
 /**
  * 促销服务接口实现类
@@ -36,6 +39,8 @@ import cn.cash.register.util.DateUtil;
  */
 @Service
 public class PromotionServiceImpl implements PromotionService {
+
+    private static final Logger        logger = LoggerFactory.getLogger(PromotionServiceImpl.class);
 
     @Resource
     private PromotionDetailMapper      promotionMapper;
@@ -53,7 +58,9 @@ public class PromotionServiceImpl implements PromotionService {
     public Long add(PromotionAddRequest request) {
         AssertUtil.assertNotNull(request, "参数不能为空");
         request.validate();
+        LogUtil.info(logger, "request:{0}", request);
         PromotionDetail item = convert(request);
+        LogUtil.info(logger, "Detail:{0}", item);
         return promotionMapper.insertSelective(item);
     }
 
@@ -104,6 +111,15 @@ public class PromotionServiceImpl implements PromotionService {
         PageHelper.startPage(request.getPageNum(), request.getPageSize());
         PageHelper.orderBy(request.getSidx() + " " + request.getOrder());
         List<PromotionDetail> details = promotionMapper.list(request);
+
+        //如果过了促销日期则修改状态
+        for (PromotionDetail detail : details) {
+            if (isExpired(detail.getStartTime(), detail.getEndTime())) {
+                detail.setStatus(false);
+                promotionMapper.updateByPrimaryKeySelective(detail);
+            }
+        }
+
         return new PageInfo<PromotionDetail>(details);
     }
 
