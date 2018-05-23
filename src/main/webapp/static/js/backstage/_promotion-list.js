@@ -110,25 +110,28 @@ var vm = new Vue({
         	if (isBlank(promotionId)) {
         		return;
         	}
+        	this.resetPromotion();
+        	this.promotion.id = promotionId;
+        	this.goods_keyword = null;
+        	this.keyword_search_goods_list = [];
+        	this.select_goods_id_list = [];
         	var _self = this;
         	$.ajax({
                 url: basePath + "/admin/promotion/queryByPromotionId",
-                data: { 'promotionId': promotionId },
+                data: { 'promotionId': _self.promotion.id },
                 success: function(result) {
                     if (result.code == "00") {
                         _self.promotion_goods_list_commit = result.promotionGoods;
                         _self.transferPromotionGoodsList1to2();
+                        layer.msg("查找到该促销活动有"+_self.promotion_goods_list_commit.length+"个促销商品");
                     } else {
                         layer.alert("查询该促销活动商品列表失败：" + result.msg);
+                        return;
                     }
                 }
             });
         	layer.open({
-                type: 1,
-                skin: 'layui-layer-lan',
-                title: "编辑促销商品",
-                area: '800px',
-                shadeClose: false,
+                type: 1, skin: 'layui-layer-lan', title: "编辑促销商品", area: '900px', shadeClose: false,
                 content: jQuery("#promotionGoodsListDiv"),
                 btn: ['确定'],
                 btn1: function(index) {
@@ -165,7 +168,7 @@ var vm = new Vue({
                             layer.msg("没有找到相关商品");
                             return;
                         } else if (result.size == 1) { // 查到唯一商品，直接加入
-                            _self.transferGoodsToItem(result.goodsInfos[0]);
+                            _self.transferGoodsToItem(result.goodsInfos[0], _self.promotion.id, 100);
                             _self.addItemToList();
                             return;
                         } else if (result.size > 1) { // 查到多个商品，选择加入
@@ -185,7 +188,7 @@ var vm = new Vue({
                                         _id = _self.select_goods_id_list[i];
                                         for (var j = 0; j < _goodsList.length; j++) {
                                             if (_goodsList[j].id == _id) {
-                                                _self.transferGoodsToItem(_goodsList[j]);
+                                                _self.transferGoodsToItem(_goodsList[j], _self.promotion.id, 100);
                                                 _self.addItemToList();
                                                 break;
                                             }
@@ -209,10 +212,10 @@ var vm = new Vue({
             this.promotion_goods_item.goodsId = goods.id;
             this.promotion_goods_item.barCode = goods.barCode;
             this.promotion_goods_item.categoryName = goods.categoryName;
-            this.promotion_goods_item.discount = discount;
+            this.promotion_goods_item.discount = discount.toFixed(2);
             this.promotion_goods_item.goodsName = goods.goodsName;
-            this.promotion_goods_item.salesPrice = goods.salesPrice.amount;
-            this.promotion_goods_item.priceWithDiscount = 1 * discount * goods.salesPrice.amount;
+            this.promotion_goods_item.salesPrice = goods.salesPrice.amount.toFixed(2);
+            this.promotion_goods_item.priceWithDiscount = (1 * discount * goods.salesPrice.amount / 100).toFixed(2);
         },
         addItemToList: function() { // 将item加入list
             for (var i = 0; i < this.promotion_goods_list_show.length; i++) {
@@ -227,7 +230,7 @@ var vm = new Vue({
         editItemDiscountById: function(goodsId, discount) { // 修改折扣
             for (var i = 0; i < this.promotion_goods_list_show.length; i++) {
                 if (this.promotion_goods_list_show[i].goodsId == goodsId) {
-                    this.promotion_goods_list_show[i].discount = discount;
+                    this.promotion_goods_list_show[i].discount = discount.toFixed(2);
                     this.promotion_goods_list_show[i].priceWithDiscount = (this.promotion_goods_list_show[i].salesPrice * this.promotion_goods_list_show[i].discount / 100).toFixed(2);
                     return;
                 }
@@ -237,7 +240,7 @@ var vm = new Vue({
         editItemPriceById: function(goodsId, priceWithDiscount) { // 修改实际价格
             for (var i = 0; i < this.promotion_goods_list_show.length; i++) {
                 if (this.promotion_goods_list_show[i].goodsId == goodsId) {
-                    this.promotion_goods_list_show[i].priceWithDiscount = priceWithDiscount;
+                    this.promotion_goods_list_show[i].priceWithDiscount = priceWithDiscount.toFixed(2);
                     this.promotion_goods_list_show[i].discount = (this.promotion_goods_list_show[i].priceWithDiscount / this.promotion_goods_list_show[i].salesPrice * 100).toFixed(2);
                     return;
                 }
@@ -245,28 +248,30 @@ var vm = new Vue({
             layer.alert("系统错误");
         },
         deleteItemById: function(goodsId) { // 删除item
-            for (var i = 0; i < this.goods_list.length; i++) {
+            for (var i = 0; i < this.promotion_goods_list_show.length; i++) {
                 if (this.promotion_goods_list_show[i].goodsId == goodsId) {
                 	if(isBlank(this.promotion_goods_list_show[i].id)) {
                 		// 如果是临时添加，直接从列表中删除
                 		this.promotion_goods_list_show.splice(i, 1);
                         return;
                 	} else {
-                		// 如果已经存在在数据库中，从数据库中删除，并刷新页面
-                		$.ajax({
-                            url: basePath + "/admin/promotion/deletePromotionGoodsDetail",
-                            data: { 'promotionGoodsId': _self.promotion_goods_list_show[i].id },
-                            success: function(result) {
-                                if (result.code == "00") {
-                                	layer.msg("删除成功");
-                                	_self.promotion_goods_list_show.splice(i, 1); // 数据库删除成功后将其从列表中删除
-                                } else {
-                                    layer.alert(result.msg);
+                		// 如果已经存在在数据库中，从数据库中删除
+                		confirm("该操作将删除已经保存的促销商品，确定要删除吗？", function() {
+                			$.ajax({
+                                url: basePath + "/admin/promotion/deletePromotionGoodsDetail",
+                                data: { 'promotionGoodsId': _self.promotion_goods_list_show[i].id },
+                                success: function(result) {
+                                    if (result.code == "00") {
+                                    	layer.msg("删除成功");
+                                    	_self.promotion_goods_list_show.splice(i, 1); // 数据库删除成功后将其从列表中删除
+                                    } else {
+                                        layer.alert(result.msg);
+                                    }
                                 }
-                            }
+                            });
                         });
+                		return;
                 	}
-                    
                 }
             }
             layer.alert("系统错误");

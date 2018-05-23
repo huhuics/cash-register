@@ -47,6 +47,7 @@ pageEncoding="UTF-8"%>
         </div>
         <!-- /.分页表格 -->
         <%@ include file="./_promotion-list/_promotion-add.jsp" %>
+        <%@ include file="./_promotion-list/_goods-select.jsp"%>
         <%@ include file="./_promotion-list/_promotion-goods-list.jsp" %>
     </div>
     <script src="${ctx}/static/js/backstage/_promotion-list/var-jqGrid-option.js"></script>
