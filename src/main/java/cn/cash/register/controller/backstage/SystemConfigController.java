@@ -151,6 +151,19 @@ public class SystemConfigController {
         return ResultSet.error("请购买正版");
     }
 
+    /**
+     * 根据param_code查询参数值
+     * @param paramCode {@link Constants}
+     * @return
+     */
+    @ResponseBody
+    @PostMapping(value = "queryByCode")
+    public ResultSet queryByCode(String paramCode) {
+        AssertUtil.assertNotBlank(paramCode, "参数不能为空");
+        SystemParameter byCode = systemParameterService.getByCode(paramCode);
+        return ResultSet.success().put("byCode", byCode);
+    }
+
     @ResponseBody
     @GetMapping(value = "/truncateAllTables")
     public ResultSet truncateAllTables() {

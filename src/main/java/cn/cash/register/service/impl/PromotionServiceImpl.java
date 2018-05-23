@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -17,6 +18,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.request.PromotionAddRequest;
 import cn.cash.register.common.request.PromotionQueryRequest;
 import cn.cash.register.dao.GoodsInfoMapper;
 import cn.cash.register.dao.PromotionDetailMapper;
@@ -25,6 +27,7 @@ import cn.cash.register.dao.domain.PromotionDetail;
 import cn.cash.register.dao.domain.PromotionGoodsDetail;
 import cn.cash.register.service.PromotionService;
 import cn.cash.register.util.AssertUtil;
+import cn.cash.register.util.DateUtil;
 
 /**
  * 促销服务接口实现类
@@ -47,8 +50,10 @@ public class PromotionServiceImpl implements PromotionService {
     private TransactionTemplate        txTemplate;
 
     @Override
-    public Long add(PromotionDetail item) {
-        checkAndSet(item);
+    public Long add(PromotionAddRequest request) {
+        AssertUtil.assertNotNull(request, "参数不能为空");
+        request.validate();
+        PromotionDetail item = convert(request);
         return promotionMapper.insertSelective(item);
     }
 
@@ -128,15 +133,25 @@ public class PromotionServiceImpl implements PromotionService {
         return false;
     }
 
-    /**
-     * 参数校验并赋值
-     */
-    private void checkAndSet(PromotionDetail item) {
-        AssertUtil.assertNotNull(item, "参数不能为空");
-        AssertUtil.assertNotBlank(item.getPromotionName(), "促销名称不能为空");
-        AssertUtil.assertNotBlank(item.getPromotionType(), "促销类型不能为空");
-        item.setGmtCreate(new Date());
-        item.setStatus(true);
+    private PromotionDetail convert(PromotionAddRequest request) {
+        PromotionDetail detail = new PromotionDetail();
+        detail.setPromotionName(request.getPromotionName());
+        detail.setPromotionType(request.getPromotionType());
+        detail.setIsMemberOnly(request.getIsMemberOnly());
+        detail.setIsMemberDiscountTwice(request.getIsMemberDiscountTwice());
+        try {
+            if (StringUtils.isNotBlank(request.getStartTime())) {
+                detail.setStartTime(DateUtil.parseDateNewFormat(request.getStartTime()));
+            }
+            if (StringUtils.isNotBlank(request.getEndTime())) {
+                detail.setEndTime(DateUtil.parseDateNewFormat(request.getEndTime()));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("日期格式错误", e);
+        }
+        detail.setStatus(true);
+        detail.setGmtCreate(new Date());
+        return detail;
     }
 
 }

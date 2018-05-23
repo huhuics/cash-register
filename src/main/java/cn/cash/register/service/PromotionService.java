@@ -6,6 +6,7 @@ package cn.cash.register.service;
 
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.request.PromotionAddRequest;
 import cn.cash.register.common.request.PromotionQueryRequest;
 import cn.cash.register.dao.domain.PromotionDetail;
 import cn.cash.register.dao.domain.PromotionGoodsDetail;
@@ -20,7 +21,7 @@ public interface PromotionService {
     /**
      * 增加促销
      */
-    Long add(PromotionDetail item);
+    Long add(PromotionAddRequest request);
 
     /**
      * 删除促销

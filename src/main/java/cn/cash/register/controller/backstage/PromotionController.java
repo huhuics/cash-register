@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.request.PromotionAddRequest;
 import cn.cash.register.common.request.PromotionQueryRequest;
 import cn.cash.register.dao.domain.PromotionDetail;
 import cn.cash.register.dao.domain.PromotionGoodsDetail;
@@ -58,9 +59,9 @@ public class PromotionController {
      */
     @ResponseBody
     @PostMapping(value = "/addPromotionDetail")
-    public ResultSet addPromotionDetail(PromotionDetail item) {
-        LogUtil.info(logger, "收到增加促销请求,item={0}", item);
-        Long ret = promotionService.add(item);
+    public ResultSet addPromotionDetail(PromotionAddRequest request) {
+        LogUtil.info(logger, "收到增加促销请求,request={0}", request);
+        Long ret = promotionService.add(request);
         return ResultSet.success().put("ret", ret);
     }
 
