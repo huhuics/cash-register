@@ -7,20 +7,28 @@ package cn.cash.register.test.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.beanutils.ConvertUtils;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSON;
 
 import cn.cash.register.dao.domain.GoodsItem;
+import cn.cash.register.dao.domain.PromotionGoodsDetail;
 import cn.cash.register.dao.domain.RoyaltyType;
+import cn.cash.register.service.PromotionGoodsDetailService;
+import cn.cash.register.test.BaseTest;
 
 /**
  * 
  * @author HuHui
  * @version $Id: ConvertUtilTest.java, v 0.1 2018年4月27日 下午7:09:20 HuHui Exp $
  */
-public class ConvertUtilTest {
+public class ConvertUtilTest extends BaseTest {
+
+    @Resource
+    private PromotionGoodsDetailService service;
 
     @Test
     public void testConvert() {
@@ -66,6 +74,33 @@ public class ConvertUtilTest {
         for (GoodsItem item : parseRet) {
             System.out.println(item);
         }
+    }
+
+    @Test
+    public void testPromotionDetail() {
+        /*        PromotionGoodsDetail detail1 = new PromotionGoodsDetail();
+        detail1.setBarCode("20180510144017883-001");
+        detail1.setCategoryName("男士衬衫");
+        detail1.setDiscount(100.00);
+        detail1.setGoodsId(74L);
+        detail1.setPromotionId(1L);
+        ArrayList<PromotionGoodsDetail> details = new ArrayList<>();
+        details.add(detail1);
+        
+        String detailsStr = JSON.toJSONString(details);
+        System.out.println(detailsStr);
+        
+        ArrayList<PromotionGoodsDetail> convertDetails = JSON.parseObject(detailsStr, ArrayList.class);
+        
+        System.out.println(convertDetails);*/
+
+        String jsonStr = "[{\"id\":null,\"promotionId\":\"1\",\"goodsId\":74,\"barCode\":\"20180510144017883-001\",\"categoryName\":\"男士衬衫\",\"discount\":\"100.00\"}]";
+
+        ArrayList<PromotionGoodsDetail> convertDetails2 = JSON.parseObject(jsonStr, ArrayList.class);
+
+        System.out.println(convertDetails2);
+
+        service.addOrUpdate(jsonStr);
     }
 
 }

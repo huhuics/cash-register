@@ -4,7 +4,6 @@
  */
 package cn.cash.register.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -42,10 +41,10 @@ public class PromotionGoodsDetailServiceImpl implements PromotionGoodsDetailServ
     private GoodsInfoMapper            goodsInfoMapper;
 
     @Override
-    @SuppressWarnings("unchecked")
     public void addOrUpdate(String detailStrs) {
         AssertUtil.assertNotBlank(detailStrs, "促销商品不能为空");
-        ArrayList<PromotionGoodsDetail> details = JSON.parseObject(detailStrs, ArrayList.class);
+        List<PromotionGoodsDetail> details = JSON.parseArray(detailStrs, PromotionGoodsDetail.class);
+
         txTemplate.execute(new TransactionCallbackWithoutResult() {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus status) {
