@@ -1,16 +1,19 @@
 package cn.cash.register.common.intercepter;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import cn.cash.register.common.Constants;
-import cn.cash.register.controller.frontstage.ControllerExceptionHandler;
 import cn.cash.register.dao.domain.SellerInfo;
+import cn.cash.register.enums.SellerRoleEnum;
+import cn.cash.register.service.SellerInfoService;
 import cn.cash.register.util.LogUtil;
 
 /**
@@ -22,7 +25,10 @@ import cn.cash.register.util.LogUtil;
 @Component
 public class CheckCashierIntercepter extends HandlerInterceptorAdapter {
 
-    private static final Logger logger = LoggerFactory.getLogger(ControllerExceptionHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(CheckCashierIntercepter.class);
+
+    @Resource
+    private SellerInfoService   sellerInfoService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -32,9 +38,19 @@ public class CheckCashierIntercepter extends HandlerInterceptorAdapter {
         LogUtil.info(logger, "收银员角色拦截,当前登录收银员:{0},当前交接班ID:{1}", obj, exchangeId);
 
         if (obj == null || !(obj instanceof SellerInfo) || exchangeId == null) {// session中没有值，未登录
+            request.getSession().removeAttribute(Constants.LOGIN_FLAG_SELLER);
             request.getRequestDispatcher("/toCashierLogin").forward(request, response);
             return false;
         } else {// session中有值
+            SellerInfo sessionSeller = (SellerInfo) obj;
+            SellerInfo sellerInfo = sellerInfoService.queryById(sessionSeller.getId());
+            if (null == sellerInfo || !StringUtils.equals(sellerInfo.getRole(), SellerRoleEnum.seller.getCode()) || !sellerInfo.getStatus()) {
+                request.getSession().removeAttribute(Constants.LOGIN_FLAG_SELLER);
+                request.getRequestDispatcher("/toCashierLogin").forward(request, response);
+                return false;
+            }
+            request.getSession().removeAttribute(Constants.LOGIN_FLAG_SELLER);
+            request.getSession().setAttribute(Constants.LOGIN_FLAG_SELLER, sellerInfo);
             return true;
         }
 

@@ -1,6 +1,6 @@
 $(function() {
     $("#jqGrid").jqGrid({
-        url: basePath + '/admin/member/list',
+        url: basePath + '/cashier/member/list',
         datatype: "json",
         colModel: [
         	{ label: '会员ID', name: 'id', hidden: true, key: true },
@@ -108,7 +108,7 @@ var vm = new Vue({
                 btn: ['提交', '取消'],
                 btn1: function(index) {
                     $.ajax({
-                        url: basePath + "/admin/member/addOrUpdate",
+                        url: basePath + "/cashier/member/addOrUpdate",
                         data: _self.member,
                         success: function(result) {
                             if (result.code == "00") {
@@ -132,7 +132,7 @@ var vm = new Vue({
             var _self = this;
             $.ajax({
                 type: "GET",
-                url: basePath + "/admin/member/getById",
+                url: basePath + "/cashier/member/getById",
                 data: { 'id': memberId },
                 success: function(result) {
                     if (result.code == "00") {
@@ -145,7 +145,7 @@ var vm = new Vue({
                             	delete _self.member.gmtCreate;
                             	delete _self.member.gmtUpdate;
                                 $.ajax({
-                                    url: basePath + "/admin/member/addOrUpdate",
+                                    url: basePath + "/cashier/member/addOrUpdate",
                                     data: _self.member,
                                     success: function(result) {
                                         if (result.code == "00") {
@@ -166,26 +166,6 @@ var vm = new Vue({
             });
         },
         del: function() {
-        	// 注释掉批量删除，只能一次删除一条记录
-//        	var memberIds = getSelectedRows();
-//        	if (isBlank(memberIds) || memberIds.length < 1) {
-//                return;
-//            }
-//        	var _self = this;
-//        	confirm("确定删除这" + memberIds.length + "个会员吗?", function() {
-//                $.ajax({
-//                    url: basePath + "/admin/member/deleteMemberInfo",
-//                    data: { 'idStr': memberIds + '' },
-//                    success: function(result) {
-//                        if (result.code == "00") {
-//                            layer.msg('删除成功');
-//                            _self.reloadPage();
-//                        } else {
-//                            layer.alert(result.msg);
-//                        }
-//                    }
-//                });
-//            });
         	var memberId = getSelectedRow();
         	if (isBlank(memberId)) {
                 return;
@@ -194,7 +174,7 @@ var vm = new Vue({
         	var _self = this;
         	confirm("确定删除" + memberName + "这个会员吗?", function() {
                 $.ajax({
-                    url: basePath + "/admin/member/delById",
+                    url: basePath + "/cashier/member/delById",
                     data: { 'id': memberId },
                     success: function(result) {
                         if (result.code == "00") {
@@ -229,7 +209,7 @@ var vm = new Vue({
         	var _self = this;
         	$.ajax({
         		type: "GET",
-        		url: basePath + "/admin/member/rank/listAll",
+        		url: basePath + "/cashier/member/rank/listAll",
         		success: function(result) {
         			if (result.code == "00") {
         				_self.memberRanks = result.memberRanks;
@@ -242,7 +222,7 @@ var vm = new Vue({
         loadShoppers: function() { // 加载所有导购员列表
         	var _self = this;
         	$.ajax({
-        		url: basePath + "/admin/shopper/queryAll",
+        		url: basePath + "/cashier/shopper/queryAll",
         		data: {status: true},
         		success: function(result) {
         			if (result.code == "00") {
