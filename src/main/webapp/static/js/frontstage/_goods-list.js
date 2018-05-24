@@ -183,7 +183,7 @@ var vm = new Vue({
                     }
                     if (!_self.switches.colorSize) { // 未选择颜色尺码
                         $.ajax({
-                            url: basePath + "/admin/goods/addGoodsInfo",
+                            url: basePath + "/cashier/goods/addGoodsInfo",
                             data: _self.goods,
                             success: function(result) {
                                 if (result.code == "00") {
@@ -211,7 +211,7 @@ var vm = new Vue({
                             _self.goods.goodsStock = css[i].stock;
                             $.ajax({
                                 async: false,
-                                url: basePath + "/admin/goods/addGoodsInfo",
+                                url: basePath + "/cashier/goods/addGoodsInfo",
                                 data: _self.goods,
                                 success: function(result) {
                                     if (result.code == "00") {
@@ -240,7 +240,7 @@ var vm = new Vue({
             this.resetGoods();
             var _self = this;
             $.ajax({
-                url: basePath + "/admin/goods/queryGoodsInfoById",
+                url: basePath + "/cashier/goods/queryGoodsInfoById",
                 data: { 'goodsInfoId': goodsId },
                 success: function(result) {
                     if (result.code == "00") {
@@ -266,7 +266,7 @@ var vm = new Vue({
                                     return;
                                 }
                                 $.ajax({
-                                    url: basePath + "/admin/goods/updateGoodsInfo",
+                                    url: basePath + "/cashier/goods/updateGoodsInfo",
                                     data: _self.goods,
                                     success: function(result) {
                                         if (result.code == "00") {
@@ -305,7 +305,7 @@ var vm = new Vue({
                 btn: ['提交', '取消'],
                 btn1: function(index) {
                     $.ajax({
-                        url: basePath + "/admin/goods/batchUpdate",
+                        url: basePath + "/cashier/goods/batchUpdate",
                         data: _self.batchEditParam,
                         success: function(result) {
                             if (result.code == "00") {
@@ -328,7 +328,7 @@ var vm = new Vue({
             var _self = this;
             confirm("确定删除这" + goodsIds.length + "个商品吗?", function() {
                 $.ajax({
-                    url: basePath + "/admin/goods/deleteGoodsInfo",
+                    url: basePath + "/cashier/goods/deleteGoodsInfo",
                     data: { 'idStr': goodsIds + '' },
                     success: function(result) {
                         if (result.code == "00") {
@@ -347,7 +347,7 @@ var vm = new Vue({
             var _self = this;
             $.ajax({
                 type: "GET",
-                url: basePath + "/admin/goods/getBarCode",
+                url: basePath + "/cashier/goods/getBarCode",
                 success: function(result) {
                     if (result.code == "00") {
                         _self.goods.barCode = result.barCode;
@@ -360,7 +360,7 @@ var vm = new Vue({
         getPinyinCode: function() {
             var _self = this;
             $.ajax({
-                url: basePath + "/admin/goods/genePinyinShort",
+                url: basePath + "/cashier/goods/genePinyinShort",
                 data: { 'goodsName': _self.goods.goodsName },
                 success: function(result) {
                     if (result.code == "00") {
@@ -386,7 +386,7 @@ var vm = new Vue({
         addGoodsColor: function() { // 添加颜色
             var _self = this;
             $.ajax({
-                url: basePath + "/admin/goods/addGoodsColor",
+                url: basePath + "/cashier/goods/addGoodsColor",
                 data: { 'colorName': _self.goodsColor.color },
                 success: function(result) {
                     if (result.code == "00") {
@@ -401,7 +401,7 @@ var vm = new Vue({
         deleteGoodsColorById: function(id) { // 根据id删除颜色
             var _self = this;
             $.ajax({
-                url: basePath + "/admin/goods/deleteGoodsColor",
+                url: basePath + "/cashier/goods/deleteGoodsColor",
                 data: { 'id': id },
                 success: function(result) {
                     if (result.code == "00") {
@@ -416,7 +416,7 @@ var vm = new Vue({
         addGoodsSize: function() { // 添加尺码
             var _self = this;
             $.ajax({
-                url: basePath + "/admin/goods/addGoodsSize",
+                url: basePath + "/cashier/goods/addGoodsSize",
                 data: { 'sizeName': _self.goodsSize.sizeName },
                 success: function(result) {
                     if (result.code == "00") {
@@ -431,7 +431,7 @@ var vm = new Vue({
         deleteGoodsSizeById: function(id) { // 根据id删除尺码
             var _self = this;
             $.ajax({
-                url: basePath + "/admin/goods/deleteGoodsSize",
+                url: basePath + "/cashier/goods/deleteGoodsSize",
                 data: { 'id': id },
                 success: function(result) {
                     if (result.code == "00") {
@@ -446,7 +446,7 @@ var vm = new Vue({
         addGoodsUnit: function() { // 添加单位
             var _self = this;
             $.ajax({
-                url: basePath + "/admin/goods/addGoodsUnit",
+                url: basePath + "/cashier/goods/addGoodsUnit",
                 data: { 'unitName': _self.goodsUnit.unitName },
                 success: function(result) {
                     if (result.code == "00") {
@@ -461,7 +461,7 @@ var vm = new Vue({
         deleteGoodsUnitById: function(id) { // 根据id删除单位
             var _self = this;
             $.ajax({
-                url: basePath + "/admin/goods/deleteGoodsUnit",
+                url: basePath + "/cashier/goods/deleteGoodsUnit",
                 data: { 'id': id },
                 success: function(result) {
                     if (result.code == "00") {
@@ -476,7 +476,7 @@ var vm = new Vue({
         addGoodsBrand: function() { // 添加品牌
             var _self = this;
             $.ajax({
-                url: basePath + "/admin/goods/addGoodsBrand",
+                url: basePath + "/cashier/goods/addGoodsBrand",
                 data: { 'brandName': _self.goodsBrand.brandName },
                 success: function(result) {
                     if (result.code == "00") {
@@ -491,7 +491,7 @@ var vm = new Vue({
         deleteGoodsBrandById: function(id) { // 根据id删除品牌
             var _self = this;
             $.ajax({
-                url: basePath + "/admin/goods/deleteGoodsBrand",
+                url: basePath + "/cashier/goods/deleteGoodsBrand",
                 data: { 'id': id },
                 success: function(result) {
                     if (result.code == "00") {
@@ -506,7 +506,7 @@ var vm = new Vue({
         addGoodsTag: function() { // 添加标签
             var _self = this;
             $.ajax({
-                url: basePath + "/admin/goods/addGoodsTag",
+                url: basePath + "/cashier/goods/addGoodsTag",
                 data: { 'tagName': _self.goodsTag.tagName },
                 success: function(result) {
                     if (result.code == "00") {
@@ -521,7 +521,7 @@ var vm = new Vue({
         deleteGoodsTagById: function(id) { // 根据id删除标签
             var _self = this;
             $.ajax({
-                url: basePath + "/admin/goods/deleteGoodsTag",
+                url: basePath + "/cashier/goods/deleteGoodsTag",
                 data: { 'id': id },
                 success: function(result) {
                     if (result.code == "00") {
@@ -563,7 +563,7 @@ var vm = new Vue({
         loadGoodsCategorys: function() { // 加载所有商品分类列表
             var _self = this;
             $.ajax({
-                url: basePath + "/admin/goods/getGoodsCategoryList",
+                url: basePath + "/cashier/goods/getGoodsCategoryList",
                 data: { 'parentCategoryId': 0 },
                 success: function(result) {
                     if (result.code == "00") {
@@ -578,7 +578,7 @@ var vm = new Vue({
             var _self = this;
             $.ajax({
                 type: "GET",
-                url: basePath + "/admin/goods/queryAllGoodsBrand",
+                url: basePath + "/cashier/goods/queryAllGoodsBrand",
                 success: function(result) {
                     if (result.code == "00") {
                         _self.goods_brands = result.brands;
@@ -592,7 +592,7 @@ var vm = new Vue({
             var _self = this;
             $.ajax({
                 type: "GET",
-                url: basePath + "/admin/supplier/queryAllSupplierNames",
+                url: basePath + "/cashier/supplier/queryAllSupplierNames",
                 success: function(result) {
                     if (result.code == "00") {
                         _self.goods_suppliers = result.names;
@@ -606,7 +606,7 @@ var vm = new Vue({
             var _self = this;
             $.ajax({
                 type: "GET",
-                url: basePath + "/admin/goods/queryAllGoodsTag",
+                url: basePath + "/cashier/goods/queryAllGoodsTag",
                 success: function(result) {
                     if (result.code == "00") {
                         _self.goods_tags = result.tags;
@@ -620,7 +620,7 @@ var vm = new Vue({
             var _self = this;
             $.ajax({
                 type: "GET",
-                url: basePath + "/admin/goods/queryAllGoodsUnit",
+                url: basePath + "/cashier/goods/queryAllGoodsUnit",
                 success: function(result) {
                     if (result.code == "00") {
                         _self.goods_units = result.units;
@@ -634,7 +634,7 @@ var vm = new Vue({
             var _self = this;
             $.ajax({
                 type: "GET",
-                url: basePath + "/admin/goods/queryAllGoodsColor",
+                url: basePath + "/cashier/goods/queryAllGoodsColor",
                 success: function(result) {
                     if (result.code == "00") {
                         _self.goods_colors = result.colors;
@@ -648,7 +648,7 @@ var vm = new Vue({
             var _self = this;
             $.ajax({
                 type: "GET",
-                url: basePath + "/admin/goods/queryAllGoodsSize",
+                url: basePath + "/cashier/goods/queryAllGoodsSize",
                 success: function(result) {
                     if (result.code == "00") {
                         _self.goods_sizes = result.sizes;

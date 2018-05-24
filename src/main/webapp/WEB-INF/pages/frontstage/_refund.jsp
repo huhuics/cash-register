@@ -70,7 +70,7 @@
                                 <div class="col-xs-12 div-height-5"></div>
                                 <div class="col-xs-12">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" v-model="price_without_barcode" @keyup.enter="addNoBarcodeItem" placeholder="输入价格无码收银">
+                                        <input type="text" class="form-control" v-model="price_without_barcode" @keyup.enter="addNoBarcodeItem" placeholder="输入价格无码退货">
                                         <span class="input-group-btn">
                                     <button class="btn btn-default" type="button" @click="addNoBarcodeItem">确定</button>
                                 </span>
@@ -104,7 +104,7 @@
                         </td>
                         <td class="col-xs-4" style="vertical-align: middle;">
                             <div>
-                                <button type="button" class="btn btn-danger btn-lg btn-block" @click="toCheckout">退款&nbsp;&nbsp;￥{{summary_price}}</button>
+                                <button type="button" class="btn btn-warning btn-lg btn-block" @click="toCheckout">退款&nbsp;&nbsp;￥{{summary_price}}</button>
                             </div>
                         </td>
                     </tr>

@@ -9,8 +9,28 @@ var goods_item = { // 商品元素
     lastImportPrice: null, // 商品进货价
     salesPrice: null, // 商品售价
     supplierName: null, // 商品供货商
+    goodsStock: null,
     //--- 以上为商品表中对应数据
     goodsCount: null, // 进货量
+};
+
+var entity_inTrafficRequest = {
+	goodsId: null,
+	goodsName: null,
+	barCode: null,
+	goodsColor: null,
+	goodsSize: null,
+	goodsStock: null,
+	supplierName: null,
+	inAmount: null,
+	inCount: null,
+	freeCount: null,
+	quantityUnit: null,
+	totalAmount: null,
+	advancePaymentAmount: null,
+	operatorNo: null,
+	status: null,
+	remark: null
 };
 
 var vm = new Vue({
@@ -24,6 +44,7 @@ var vm = new Vue({
         summary_count: 0,
         summary_lastImportPrice: 0,
         summary_salesPrice: 0,
+        inTraffic: cloneJsonObj(entity_inTrafficRequest),
     },
     methods: {
         searchGoods: function() { // 根据关键字查找商品加入清单
@@ -109,7 +130,26 @@ var vm = new Vue({
             this.goods_item.lastImportPrice = goods.lastImportPrice.amount;
             this.goods_item.salesPrice = goods.salesPrice.amount;
             this.goods_item.supplierName = goods.supplierName;
+            this.goods_item.goodsStock = goods.goodsStock;
 
+        },
+        transferItemToInTraffic: function() { // 将item转换为inTraffic
+        	this.inTraffic.goodsId = this.goods_item.goodsId;
+        	this.inTraffic.goodsName = this.goods_item.goodsName;
+        	this.inTraffic.barCode = this.goods_item.barCode;
+        	this.inTraffic.goodsColor = this.goods_item.goodsColor;
+        	this.inTraffic.goodsSize = this.goods_item.goodsSize;
+        	this.inTraffic.goodsStock = this.goods_item.goodsStock;
+        	this.inTraffic.supplierName = this.goods_item.supplierName;
+        	this.inTraffic.inAmount = this.goods_item.lastImportPrice;
+        	this.inTraffic.inCount = this.goods_item.goodsCount;
+        	this.inTraffic.freeCount = 0;
+        	this.inTraffic.quantityUnit = null;
+        	this.inTraffic.totalAmount = 1 * this.inTraffic.inCount * this.inTraffic.inAmount;
+        	this.inTraffic.advancePaymentAmount = 0;
+        	this.inTraffic.operatorNo = null;
+        	this.inTraffic.status = true;
+        	this.inTraffic.remark = null;
         },
         addItemToGoodsList: function(count) { // 将指定数量的item加入list
             for (var i = 0; i < this.goods_list.length; i++) {
@@ -147,7 +187,25 @@ var vm = new Vue({
             layer.alert("系统错误");
         },
         submit: function() { // 提交
-            
+        	var _self = this;
+        	// 循环列表，转换为inTraffic请求，循环异步提交
+        	for (var i = 0; i < this.goods_list.length; i++) {
+                this.goods_item = this.goods_list[i];
+                this.transferItemToInTraffic();
+                $.ajax({
+                    url: basePath + "/cashier/traffic/addInTraffic",
+                    data: cloneJsonObj(_self.inTraffic),
+                    success: function(result) {
+                        if (result.code == "00") {
+                            layer.msg('进货成功');
+                        } else {
+                            layer.alert(result.msg);
+                        }
+                    }
+                });
+            }
+        	_self.reload();
+        	
         },
         reset_goods_item: function() {
             this.goods_item = cloneJsonObj(goods_item);

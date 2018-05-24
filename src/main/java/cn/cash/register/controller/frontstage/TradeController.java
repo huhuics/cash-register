@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.Constants;
 import cn.cash.register.common.request.CancelRequest;
 import cn.cash.register.common.request.TradeDetailQueryRequest;
 import cn.cash.register.common.request.TradeGoodsDetailQueryRequest;
 import cn.cash.register.common.request.TradeRequest;
 import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.dao.domain.MemberInfo;
+import cn.cash.register.dao.domain.SellerInfo;
 import cn.cash.register.dao.domain.TradeDetail;
 import cn.cash.register.dao.domain.TradeGoodsDetail;
 import cn.cash.register.service.GoodsInfoService;
@@ -103,13 +105,10 @@ public class TradeController {
     public ResultSet checkout(TradeRequest request, HttpSession session) {
         LogUtil.info(logger, "[Controller]接收到收银请求,request={0}", request);
 
-        //        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG);
-        //        Long exchangeJobId = (Long) session.getAttribute(Constants.CURRENT_JOB_ID);
-        //        request.setSellerNo(seller.getSellerNo());
-        //        request.setExchangeJobId(exchangeJobId);
-        // TODO 为便于测试，注释掉正常的从session中获取sellerNo与exchangeJobId
-        request.setSellerNo("1001");// TODO 51 使用测试sellerNo:1001
-        request.setExchangeJobId(1L);// TODO 51 使用测试exchangeJobId:1
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_SELLER);
+        Long exchangeJobId = (Long) session.getAttribute(Constants.CURRENT_JOB_ID);
+        request.setSellerNo(seller.getSellerNo());
+        request.setExchangeJobId(exchangeJobId);
 
         boolean ret = tradeService.checkout(request);
         return ResultSet.success().put("ret", ret);
@@ -120,7 +119,14 @@ public class TradeController {
      */
     @ResponseBody
     @RequestMapping(value = "/refund")
-    public ResultSet refund(TradeRequest request) {
+    public ResultSet refund(TradeRequest request, HttpSession session) {
+        LogUtil.info(logger, "[Controller]接收到退款请求,request={0}", request);
+
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_SELLER);
+        Long exchangeJobId = (Long) session.getAttribute(Constants.CURRENT_JOB_ID);
+        request.setSellerNo(seller.getSellerNo());
+        request.setExchangeJobId(exchangeJobId);
+
         boolean ret = tradeService.refund(request);
         return ResultSet.success().put("ret", ret);
     }
