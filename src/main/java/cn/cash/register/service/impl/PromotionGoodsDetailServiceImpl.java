@@ -4,6 +4,7 @@
  */
 package cn.cash.register.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
+
+import com.alibaba.fastjson.JSON;
 
 import cn.cash.register.dao.GoodsInfoMapper;
 import cn.cash.register.dao.PromotionGoodsDetailMapper;
@@ -39,8 +42,10 @@ public class PromotionGoodsDetailServiceImpl implements PromotionGoodsDetailServ
     private GoodsInfoMapper            goodsInfoMapper;
 
     @Override
-    public void addOrUpdate(List<PromotionGoodsDetail> details) {
-        AssertUtil.assertNotBlank(details, "促销商品不能为空");
+    @SuppressWarnings("unchecked")
+    public void addOrUpdate(String detailStrs) {
+        AssertUtil.assertNotBlank(detailStrs, "促销商品不能为空");
+        ArrayList<PromotionGoodsDetail> details = JSON.parseObject(detailStrs, ArrayList.class);
         txTemplate.execute(new TransactionCallbackWithoutResult() {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus status) {
