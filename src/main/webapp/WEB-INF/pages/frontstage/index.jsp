@@ -31,6 +31,7 @@ pageEncoding="UTF-8"%>
                             <li><a href="#memberPage" @click="menuClick"><i class="fa fa-user-circle"></i>&nbsp;会员管理</a></li>
                             <li><a href="#trade/queryTradeDetailListPage" @click="menuClick"><i class="fa fa-file-text"></i>&nbsp;销售单据</a></li>
                             <li><a href="#refundPage" @click="menuClick"><i class="fa fa-rotate-right"></i>&nbsp;退款</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-cny fa-rotate-180"></i>&nbsp;反结账</a></li>
                             <li><a href="#goodsStockAddPage" @click="menuClick"><i class="fa fa-truck"></i>&nbsp;进货</a></li>
                             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-bag"></i>&nbsp;商品<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
