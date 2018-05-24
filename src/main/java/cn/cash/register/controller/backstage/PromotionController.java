@@ -123,6 +123,7 @@ public class PromotionController {
     @ResponseBody
     @PostMapping(value = "/addPromotionGoodsDetail")
     public ResultSet addOrUpdatePromotionGoodsDetail(String detailStrs) {
+        LogUtil.info(logger, "收到增加促销商品请求,detailStrs={0}", detailStrs);
         promotionGoodsDetailService.addOrUpdate(detailStrs);
         return ResultSet.success();
     }

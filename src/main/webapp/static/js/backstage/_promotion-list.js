@@ -27,6 +27,9 @@ var vm = new Vue({
                 area: '650px',
                 shadeClose: false,
                 content: jQuery("#promotionDiv"),
+                success: function(Layero, index) {
+                	_self.datetimepickerLoad();
+                },
                 btn: ['提交', '取消'],
                 btn1: function(index) {
                     $.ajax({
@@ -151,11 +154,12 @@ var vm = new Vue({
                     $.ajax({
                         url: basePath + "/admin/promotion/addPromotionGoodsDetail",
                         data: {
-                            promotionGoodsList: _self.promotion_goods_list_commit
+                        	detailStrs: ''+JSON.stringify(_self.promotion_goods_list_commit)
                         },
                         success: function(result) {
                             if (result.code == "00") {
                                 layer.msg("编辑促销商品成功");
+                                layer.close(index);
                             } else {
                                 layer.alert(result.msg);
                             }
@@ -379,5 +383,32 @@ var vm = new Vue({
                 page: page
             }).trigger("reloadGrid");
         },
+        datetimepickerLoad: function() {
+        	var _self = this;
+			$('#datetimepickerAfter').datetimepicker({
+				language : 'zh-CN',
+				todayHighlight : 1,
+				format: 'yyyy-mm-dd',
+			    autoclose: true,
+			    minView: 2,
+			    minuteStep: 1
+			});
+			$('#datetimepickerAfter').datetimepicker().on('hide', function(ev) {
+				var value = $("#datetimepickerAfter").val();
+				_self.promotion.startTime = value;
+			});
+			$('#datetimepickerBefore').datetimepicker({
+				language : 'zh-CN',
+				todayHighlight : 1,
+				format: 'yyyy-mm-dd',
+			    autoclose: true,
+			    minView: 2,
+			    minuteStep: 1
+			});
+			$('#datetimepickerBefore').datetimepicker().on('hide', function(ev) {
+				var value = $("#datetimepickerBefore").val();
+				_self.promotion.endTime = value;
+			});
+		},
     }
 });

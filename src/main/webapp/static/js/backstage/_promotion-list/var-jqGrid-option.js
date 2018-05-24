@@ -50,10 +50,12 @@ var option = {
         },
         { label: '状态', name: 'status', index: 'status', width: 80,
         	formatter: function(value, options, row) {
-                if (value == 'true') {
+                if (value == 'true' || value) {
                     return '<span class="label label-success">有效</span>';
-                } else {
+                } else if (value == 'false' || !value){
                 	return '<span class="label label-info">已失效</span>';
+                } else {
+                	return '未知状态：' + value;
                 }
             }
         },
