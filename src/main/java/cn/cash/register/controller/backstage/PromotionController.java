@@ -4,7 +4,6 @@
  */
 package cn.cash.register.controller.backstage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -123,10 +122,8 @@ public class PromotionController {
      */
     @ResponseBody
     @PostMapping(value = "/addPromotionGoodsDetail")
-    public ResultSet addOrUpdatePromotionGoodsDetail(ArrayList<PromotionGoodsDetail> promotionGoodsList) {
-
-        promotionGoodsDetailService.addOrUpdate(promotionGoodsList);
-
+    public ResultSet addOrUpdatePromotionGoodsDetail(String detailStrs) {
+        promotionGoodsDetailService.addOrUpdate(detailStrs);
         return ResultSet.success();
     }
 

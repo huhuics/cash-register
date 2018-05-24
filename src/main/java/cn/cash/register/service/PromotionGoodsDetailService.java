@@ -19,7 +19,7 @@ public interface PromotionGoodsDetailService {
      * 增加或修改
      * @param details
      */
-    void addOrUpdate(List<PromotionGoodsDetail> details);
+    void addOrUpdate(String detailStrs);
 
     /**
      * 删除促销商品

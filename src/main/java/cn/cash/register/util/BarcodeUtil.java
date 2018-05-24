@@ -72,19 +72,20 @@ public class BarcodeUtil {
         Code39Bean bean = new Code39Bean();
 
         // 精细度
-        final int dpi = 120;
+        final int dpi = 150;
         // module宽度
         final double moduleWidth = UnitConv.in2mm(1.0f / dpi);
 
         // 配置对象
         bean.setModuleWidth(moduleWidth);
+        bean.setHeight(15);
         bean.setWideFactor(3);
         bean.doQuietZone(false);
 
-        String format = "image/png";
+        String format = "image/jpeg";
 
         // 输出到流
-        BitmapCanvasProvider canvas = new BitmapCanvasProvider(os, format, dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+        BitmapCanvasProvider canvas = new BitmapCanvasProvider(os, format, dpi, BufferedImage.TYPE_BYTE_BINARY, true, 0);
 
         // 生成条形码
         bean.generateBarcode(canvas, content);
