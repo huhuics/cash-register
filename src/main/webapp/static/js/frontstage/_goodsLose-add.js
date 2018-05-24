@@ -2,13 +2,14 @@ var goods_item = { // 商品元素
     goodsId: null,
     barCode: null,
     goodsName: null,
-    categoryName: null,
     goodsColor: null,
     goodsSize: null,
     averageImportPrice: null, // 商品进货价
     salesPrice: null, // 商品售价
     //--- 以上为商品表中对应数据
-    goodsCount: null, // 报损量
+    loseCount: null, // 报损量
+    loseAmount: null, // 报损价
+    loseReason: null, // 报损原因
 };
 
 var vm = new Vue({
@@ -100,7 +101,6 @@ var vm = new Vue({
             this.goods_item.goodsId = goods.id;
             this.goods_item.barCode = goods.barCode;
             this.goods_item.goodsName = goods.goodsName;
-            this.goods_item.categoryName = goods.categoryName;
             this.goods_item.goodsColor = goods.goodsColor;
             this.goods_item.goodsSize = goods.goodsSize;
             this.goods_item.averageImportPrice = goods.averageImportPrice.amount;
@@ -110,18 +110,18 @@ var vm = new Vue({
         addItemToGoodsList: function(count) { // 将指定数量的item加入list
             for (var i = 0; i < this.goods_list.length; i++) {
                 if (this.goods_list[i].goodsId == this.goods_item.goodsId) {
-                    this.goods_list[i].goodsCount = this.goods_list[i].goodsCount * 1 + count * 1; // 商品已经存在于列表中时
+                    this.goods_list[i].loseCount = this.goods_list[i].loseCount * 1 + count * 1; // 商品已经存在于列表中时
                     this.summary();
                     return;
                 }
             }
-            this.goods_item.goodsCount = 1;
+            this.goods_item.loseCount = 1;
             this.goods_list.push(cloneJsonObj(this.goods_item)); // 商品不存在于列表中时，添加进列表
             this.summary();
         },
         getItemById: function(id) {
             for (var i = 0; i < this.goods_list.length; i++) {
-                if (this.goods_list[i].goodsId == this.goods_item.goodsId) {
+                if (this.goods_list[i].goodsId == id) {
                     this.goods_item = this.goods_list[i];
                     return;
                 }
@@ -129,8 +129,27 @@ var vm = new Vue({
             layer.alert("系统错误");
         },
         editItemCountById: function(id, count) { // 修改数量
-            this.getItemById();
-            this.addItemToGoodsList(count * 1 - this.goods_item.goodsCount * 1);
+            this.getItemById(id);
+            this.addItemToGoodsList(count * 1 - this.goods_item.loseCount * 1);
+        },
+        editItemLoseAmountById: function(id, amount) { // 修改报损金额
+        	for (var i = 0; i < this.goods_list.length; i++) {
+                if (this.goods_list[i].goodsId == id) {
+                    this.goods_list[i].loseAmount = amount;
+                    this.summary();
+                    return;
+                }
+            }
+            layer.alert("系统错误");
+        },
+        editItemLoseReasonById: function(id, reason) { // 修改报损原因
+        	for (var i = 0; i < this.goods_list.length; i++) {
+        		if (this.goods_list[i].goodsId == id) {
+        			this.goods_list[i].loseReason = reason;
+        			return;
+        		}
+        	}
+        	layer.alert("系统错误");
         },
         deleteItemById: function(id) { // 删除item
             for (var i = 0; i < this.goods_list.length; i++) {
@@ -143,7 +162,28 @@ var vm = new Vue({
             layer.alert("系统错误");
         },
         addGoodsLose: function() { // 提交
-            
+        	var _self = this;
+        	$.ajax({
+                url: basePath + "/cashier/goodsLose/addLoseInfo",
+                data: { 'loseItems': JSON.stringify(_self.getRequestList()) },
+                success: function(result) {
+                    if (result.code == "00") {
+                        layer.msg("成功报损");
+                        _self.reload();
+                    } else {
+                        layer.alert(result.msg);
+                    }
+                }
+            });
+        },
+        getRequestList: function() {
+        	var requestList = cloneJsonObj(this.goods_list);
+        	for (var i = 0; i < requestList.length; i++) {
+        		delete requestList[i].goodsId;
+        		delete requestList[i].averageImportPrice;
+        		delete requestList[i].salesPrice;
+        	}
+        	return requestList;
         },
         reset_goods_item: function() {
             this.goods_item = cloneJsonObj(goods_item);
@@ -153,9 +193,10 @@ var vm = new Vue({
             var _totalAverageImportPrice = 0;
             var _totalSalesPrice = 0;
             for (var i = 0; i < this.goods_list.length; i++) {
-                _totalCount += this.goods_list[i].goodsCount;
-                _totalAverageImportPrice += this.goods_list[i].averageImportPrice * this.goods_list[i].goodsCount;
-                _totalSalesPrice += 1 * this.goods_list[i].salesPrice * this.goods_list[i].goodsCount;
+            	this.goods_list[i].loseAmount = 1 * this.goods_list[i].averageImportPrice * this.goods_list[i].loseCount;
+                _totalCount += this.goods_list[i].loseCount;
+                _totalAverageImportPrice += this.goods_list[i].averageImportPrice * this.goods_list[i].loseCount;
+                _totalSalesPrice += 1 * this.goods_list[i].salesPrice * this.goods_list[i].loseCount;
             }
             this.summary_count = _totalCount;
             this.summary_averageImportPrice = _totalAverageImportPrice;

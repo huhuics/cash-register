@@ -16,12 +16,13 @@
                     <tr>
                         <th>商品条码</th>
                         <th>商品名称</th>
-                        <th>分类</th>
                         <th>颜色</th>
                         <th>尺码</th>
                         <th>进货价</th>
                         <th>售价</th>
                         <th>报损量</th>
+                        <th>报损价</th>
+                        <th>报损原因</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -29,13 +30,19 @@
                     <tr v-for="item in goods_list" style="height: 30px; line-height: 30px;">
                         <td>{{item.barCode}}</td>
                         <td>{{item.goodsName}}</td>
-                        <td>{{item.categoryName}}</td>
                         <td>{{item.goodsColor}}</td>
                         <td>{{item.goodsSize}}</td>
                         <td>{{item.averageImportPrice}}</td>
                         <td>{{item.salesPrice}}</td>
                         <td>
-                            <input class="form-control" type="text" v-model="item.goodsCount" @blur="editItemCountById(item.goodsId,item.goodsCount)" @keyup.enter="editItemCountById(item.goodsId,item.goodsCount)">
+                            <input class="form-control" type="text" v-model="item.loseCount" @blur="editItemCountById(item.goodsId,item.loseCount)" @keyup.enter="editItemCountById(item.goodsId,item.loseCount)">
+                        </td>
+                        <td>
+                            <!-- <input class="form-control" type="text" v-model="item.loseAmount" @blur="editItemLoseAmountById(item.goodsId,item.loseAmount)" @keyup.enter="editItemLoseAmountById(item.goodsId,item.loseAmount)"> -->
+                            {{item.loseAmount}}
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" v-model="item.loseReason" @blur="editItemLoseReasonById(item.goodsId,item.loseReason)" @keyup.enter="editItemLoseReasonById(item.goodsId,item.loseReason)">
                         </td>
                         <td>
                             <button class="btn btn-danger" type="button" @click="deleteItemById(item.goodsId)">删除</button>
