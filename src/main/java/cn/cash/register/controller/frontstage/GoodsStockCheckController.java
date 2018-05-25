@@ -77,4 +77,14 @@ public class GoodsStockCheckController {
         return ResultSet.success().put("details", details);
     }
 
+    /**
+     * 查询商品总数
+     */
+    @ResponseBody
+    @GetMapping(value = "queryGoodsCount")
+    public ResultSet queryGoodsCount() {
+        int goodsCount = goodsInfoService.queryGoodsCount();
+        return ResultSet.success().put("goodsCount", goodsCount);
+    }
+
 }
