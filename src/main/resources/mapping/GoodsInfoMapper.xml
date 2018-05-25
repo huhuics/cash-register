@@ -651,4 +651,9 @@
 	WHERE promotion_id = #{promotionId,jdbcType=BIGINT}
   </update>
   
+  <select id="queryGoodsCount">
+  	SELECT COUNT(1) FROM goods_info
+	WHERE goods_status = 1
+  </select>
+  
 </mapper>
