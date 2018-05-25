@@ -4,7 +4,6 @@
  */
 package cn.cash.register.controller.frontstage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -53,8 +52,8 @@ public class GoodsStockCheckController {
      */
     @ResponseBody
     @PostMapping(value = "addCheck")
-    public ResultSet addCheck(String sellerNo, String remark, ArrayList<GoodsStockCheckDetail> details) {
-        Long ret = checkService.addCheck(sellerNo, remark, details);
+    public ResultSet addCheck(String sellerNo, String remark, String detailsStr) {
+        Long ret = checkService.addCheck(sellerNo, remark, detailsStr);
         return ResultSet.success().put("ret", ret);
     }
 

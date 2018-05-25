@@ -20,7 +20,7 @@ public interface GoodsStockCheckServie {
     /**
      * 增加盘点记录
      */
-    Long addCheck(String sellerNo, String remark, List<GoodsStockCheckDetail> details);
+    Long addCheck(String sellerNo, String remark, String detailsStr);
 
     /**
      * 盘点记录查询
