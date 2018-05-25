@@ -9,12 +9,13 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 
-import cn.cash.register.common.request.GoodsLoseInfoQueryRequest;
 import cn.cash.register.common.request.GoodsLoseInfoAddRequest;
+import cn.cash.register.common.request.GoodsLoseInfoQueryRequest;
 import cn.cash.register.dao.GoodsLoseInfoMapper;
 import cn.cash.register.dao.GoodsLoseReasonMapper;
 import cn.cash.register.dao.domain.GoodsLoseInfo;
@@ -60,7 +61,7 @@ public class GoodsLoseServiceImpl implements GoodsLoseService {
 
     @Override
     public Long addLoseInfo(GoodsLoseInfoAddRequest request) {
-        if (request == null || request.getLoseItems() == null) {
+        if (request == null || StringUtils.isBlank(request.getLoseItemsStr())) {
             throw new RuntimeException("报损商品不能为空");
         }
         GoodsLoseInfo loseInfo = convert(request);
@@ -75,10 +76,12 @@ public class GoodsLoseServiceImpl implements GoodsLoseService {
     private GoodsLoseInfo convert(GoodsLoseInfoAddRequest request) {
         GoodsLoseInfo loseInfo = new GoodsLoseInfo();
         loseInfo.setShopName(request.getShopName());
-        loseInfo.setGoodsDetail(JSON.toJSONString(request.getLoseItems()));
+        loseInfo.setGoodsDetail(request.getLoseItemsStr());
+
+        List<GoodsLoseItem> goodsLoseItems = JSON.parseArray(request.getLoseItemsStr(), GoodsLoseItem.class);
 
         Money totalLoseAmount = new Money();
-        for (GoodsLoseItem item : request.getLoseItems()) {
+        for (GoodsLoseItem item : goodsLoseItems) {
             totalLoseAmount.addTo(new Money(item.getLoseAmount()));
         }
 

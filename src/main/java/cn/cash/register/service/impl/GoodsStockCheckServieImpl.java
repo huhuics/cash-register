@@ -15,6 +15,8 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import com.alibaba.fastjson.JSON;
+
 import cn.cash.register.common.request.GoodsStockCheckQueryRequest;
 import cn.cash.register.dao.GoodsStockCheckDetailMapper;
 import cn.cash.register.dao.GoodsStockCheckMapper;
@@ -42,15 +44,17 @@ public class GoodsStockCheckServieImpl implements GoodsStockCheckServie {
     private TransactionTemplate         txTemplate;
 
     @Override
-    public Long addCheck(String sellerNo, String remark, List<GoodsStockCheckDetail> details) {
+    public Long addCheck(String sellerNo, String remark, String detailsStr) {
         AssertUtil.assertNotBlank(sellerNo, "sellerNo参数不能为空");
-        AssertUtil.assertNotBlank(details, "参数不能为空");
+        AssertUtil.assertNotBlank(detailsStr, "参数不能为空");
 
         GoodsStockCheck check = new GoodsStockCheck();
         check.setCheckDate(new Date());
         check.setSellerNo(sellerNo);
         check.setRemark(remark);
         check.setGmtCreate(new Date());
+
+        List<GoodsStockCheckDetail> details = JSON.parseArray(detailsStr, GoodsStockCheckDetail.class);
 
         return txTemplate.execute(new TransactionCallback<Long>() {
             @Override
