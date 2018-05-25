@@ -91,6 +91,11 @@ public interface GoodsInfoService {
     void batchUpdate(List<Long> goodsIds, String newValue, UpdateFieldEnum filedEnumCode);
 
     /**
+     * 查询所有有效商品种类数
+     */
+    int queryGoodsCount();
+
+    /**
      * 导出商品数据为Excel文件
      * @param request  查询请求
      * @return         Excel文件路径

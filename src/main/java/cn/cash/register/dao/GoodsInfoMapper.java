@@ -34,4 +34,6 @@ public interface GoodsInfoMapper {
     List<GoodsInfo> listAll();
 
     void clearPromotion(Long promotionId);
+
+    int queryGoodsCount();
 }

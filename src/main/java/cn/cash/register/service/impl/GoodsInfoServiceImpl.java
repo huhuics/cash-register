@@ -268,6 +268,11 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
+    public int queryGoodsCount() {
+        return goodsInfoMapper.queryGoodsCount();
+    }
+
+    @Override
     public String export(GoodsInfoQueryRequest request) {
         LogUtil.info(logger, "收到商品信息数据导出请求");
         List<GoodsInfo> list = goodsInfoMapper.list(request);
