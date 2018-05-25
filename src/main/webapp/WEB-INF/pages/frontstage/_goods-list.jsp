@@ -53,12 +53,7 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="pull-right">
-                    <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
                     <a class="btn btn-success" @click="update"><i class="fa fa-edit"></i>&nbsp;编辑</a>
-                    <a class="btn btn-warning" @click="batchUpdate"><i class="fa fa-edit"></i>&nbsp;批量编辑</a>
-                    <a class="btn btn-danger" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-					<a class="btn btn-info" @click="importGoods"><i class="fa fa-download"></i>&nbsp;导入</a>
-                    <a class="btn btn-info" @click="exportGoods"><i class="fa fa-upload"></i>&nbsp;导出</a>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -68,7 +63,6 @@
         <!-- /.分页表格 -->
         
         <%@ include file="./_goods-list/_goods-add.jsp"%>
-        <%@ include file="./_goods-list/_goods-batchEdit.jsp"%>
     </div>
     
     <script src="${ctx}/static/js/frontstage/_goods-list/var-jqGrid-option.js"></script>

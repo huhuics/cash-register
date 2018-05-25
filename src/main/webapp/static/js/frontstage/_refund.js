@@ -45,7 +45,7 @@ var payChenals = {
 }
 
 var vm = new Vue({
-    el: '#cashRegisterDiv',
+    el: '#refundDiv',
     data: {
         goods_list: [], // 购买商品清单，goods_item的数组
         goods_item: cloneJsonObj(goods_item),
@@ -342,8 +342,6 @@ var vm = new Vue({
                 }
             } else { // 会员信息被添加时
                 for (var i = 0; i < this.goods_list.length; i++) {
-                    __log('this.goods_list:', this.goods_list)
-                    __log('this.goods_list[i]', this.goods_list[i])
                     var _item = this.goods_list[i];
                     if (!_item.isVipDiscount) { // 商品不参与折扣，会员价
                         _item.actualAmount = this.goods_item.vipPrice.toFixed(2);
@@ -388,9 +386,9 @@ var vm = new Vue({
                     }
                     _self.payChenals.payChenal_cash.amount -= _self.change; // 所有找零都用现金，该值可能会为负
                     $.ajax({
-                        url: basePath + "/cashier/trade/checkout",
+                        url: basePath + "/cashier/trade/refund",
                         data: {
-                            goodsItemsJSONStr: JSON.stringify(_self.goods_list),
+                            goodsItemsJSONStr: JSON.stringify(_self.getRefundList(cloneJsonObj(_self.goods_list))),
                             payChenalsJSONStr: _self.payChenalsStr(),
                             memberId: _self.vip_info.id,
                             memberNo: _self.vip_info.memberNo
@@ -407,6 +405,14 @@ var vm = new Vue({
                     });
                 }
             });
+        },
+        getRefundList: function(goods_list) {
+        	for (var i = 0; i < goods_list.length; i++) {
+                goods_list[i].goodsCount = -1 * goods_list[i].goodsCount;
+                goods_list[i].totalAmount = -1 * goods_list[i].totalAmount;
+                goods_list[i].totalActualAmount = -1 * goods_list[i].totalActualAmount;
+            }
+        	return goods_list;
         },
         checkout_all_cash: function() {
         	this.reset_payChenals();
@@ -452,18 +458,18 @@ var vm = new Vue({
         },
         payChenalsStr: function() {
             var str = '[';
-            str += '{chenal: "cash",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
+            str += '{chenal: "cash",amount: "' + -1 * this.payChenals.payChenal_cash.amount + '"}';
             if (this.payChenals.payChenal_unionpay.amount > 0) {
-                str += ',{chenal: "unionpay",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
+                str += ',{chenal: "unionpay",amount: "' + -1 * this.payChenals.payChenal_cash.amount + '"}';
             }
             if (this.payChenals.payChenal_alipay.amount > 0) {
-                str += ',{chenal: "alipay",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
+                str += ',{chenal: "alipay",amount: "' + -1 * this.payChenals.payChenal_cash.amount + '"}';
             }
             if (this.payChenals.payChenal_wcpay.amount > 0) {
-                str += ',{chenal: "wcpay",amount: "' + this.payChenals.payChenal_cash.amount + '"}';
+                str += ',{chenal: "wcpay",amount: "' + -1 * this.payChenals.payChenal_cash.amount + '"}';
             }
             if (this.payChenals.payChenal_balance.amount > 0) {
-            	str += ',{chenal: "balance",amount: "' + this.payChenals.payChenal_balance.amount + '"}';
+            	str += ',{chenal: "balance",amount: "' + -1 * this.payChenals.payChenal_balance.amount + '"}';
             }
             str += ']'
             return str;

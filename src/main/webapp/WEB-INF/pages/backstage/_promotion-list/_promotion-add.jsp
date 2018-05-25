@@ -20,16 +20,16 @@ pageEncoding="UTF-8"%>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-xs-7">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;开始时间</span>
-                    <input type="text" class="form-control" v-model="promotion.startTime">
-                </div>
-            </div>
             <div class="col-xs-5">
                 <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;开始时间</span>
+                    <input type="text" class="form-control" v-model="promotion.startTime" id="datetimepickerAfter" placeholder="yyyy-MM-dd" readonly>
+                </div>
+            </div>
+            <div class="col-xs-5 col-xs-offset-2">
+                <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-exclamation" style="color:red;"></i>&nbsp;结束时间</span>
-                    <input type="text" class="form-control" v-model="promotion.endTime">
+                    <input type="text" class="form-control" v-model="promotion.endTime" id="datetimepickerBefore" placeholder="yyyy-MM-dd" readonly>
                 </div>
             </div>
         </div>

@@ -145,7 +145,7 @@ var vm = new Vue({
             }
             var _self = this;
             $.ajax({
-                url: basePath + "/cashier/trade/searchGoodsInfo",
+                url: basePath + "/admin/trade/searchGoodsInfo",
                 data: { 'keyword': _self.goods_keyword },
                 success: function(result) {
                     if (result.code == "00") {
@@ -196,7 +196,7 @@ var vm = new Vue({
             }
             var _self = this;
             $.ajax({
-                url: basePath + "/cashier/trade/searchGoodsInfo",
+                url: basePath + "/admin/trade/searchGoodsInfo",
                 data: { 'keyword': _self.goods_keyword },
                 success: function(result) {
                     if (result.code == "00") {

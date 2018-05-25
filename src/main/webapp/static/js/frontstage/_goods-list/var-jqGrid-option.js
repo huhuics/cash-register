@@ -2,7 +2,7 @@
  * 商品列表页jqgrid加载参数
  */
 var option = {
-    url: basePath + '/admin/goods/goodsInfoList',
+    url: basePath + '/cashier/goods/goodsInfoList',
     datatype: "json",
     mtype: "post",
     colModel: [{

@@ -44,8 +44,6 @@
                     <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
                     <a class="btn btn-success" @click="update"><i class="fa fa-edit"></i>&nbsp;编辑</a>
                     <a class="btn btn-danger" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-                    <a class="btn btn-info" @click="importMember"><i class="fa fa-download"></i>&nbsp;导入</a>
-                    <a class="btn btn-info" @click="exportMember"><i class="fa fa-upload"></i>&nbsp;导出</a>
                 </div>
                 <div class="clearfix"></div>
             </div>

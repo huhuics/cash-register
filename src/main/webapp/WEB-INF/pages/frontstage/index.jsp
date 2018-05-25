@@ -28,29 +28,28 @@ pageEncoding="UTF-8"%>
                     <div class="collapse navbar-collapse" id="navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="#cashRegister" @click="menuClick"><i class="fa fa-cny"></i>&nbsp;收银</a></li>
-                            <li><a href="#memberPage" @click="menuClick"><i class="fa fa-circle-o"></i>&nbsp;会员管理</a></li>
-                            <li><a href="#trade/queryTradeDetailListPage" @click="menuClick"><i class="fa fa-circle-o"></i>&nbsp;销售单据</a></li>
-                            <li><a href="#refund" @click="menuClick"><i class="fa fa-circle-o"></i>&nbsp;退货</a></li>
-                            <li><a href="#goodsStockAddPage" @click="menuClick"><i class="fa fa-circle-o"></i>&nbsp;进货</a></li>
-                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-circle-o"></i>&nbsp;商品<span class="caret"></span></a>
+                            <li><a href="#memberPage" @click="menuClick"><i class="fa fa-user-circle"></i>&nbsp;会员管理</a></li>
+                            <li><a href="#trade/queryTradeDetailListPage" @click="menuClick"><i class="fa fa-file-text"></i>&nbsp;销售单据</a></li>
+                            <li><a href="#refundPage" @click="menuClick"><i class="fa fa-rotate-right"></i>&nbsp;退款</a></li>
+                            <li><a href="#" @click="menuClick"><i class="fa fa-cny fa-rotate-180"></i>&nbsp;反结账</a></li>
+                            <li><a href="#goodsStockAddPage" @click="menuClick"><i class="fa fa-truck"></i>&nbsp;进货</a></li>
+                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-bag"></i>&nbsp;商品<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#goodsEditPage" @click="menuClick"><i class="fa fa-circle-o"></i>&nbsp;商品编辑</a></li>
+                                    <li><a href="#goodsEditPage" @click="menuClick"><i class="fa fa-edit"></i>&nbsp;商品编辑</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#goodsLosePage" @click="menuClick"><i class="fa fa-circle-o"></i>&nbsp;报损</a></li>
+                                    <li><a href="#goodsLosePage" @click="menuClick"><i class="fa fa-chain-broken"></i>&nbsp;报损</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>&nbsp;盘点</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>&nbsp;沽清</a></li>
+                                    <li><a href="#" @click="menuClick"><i class="fa fa-dot-circle-o"></i>&nbsp;盘点</a></li>
                                 </ul>
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="#" @click="exchangeJob"><i class="fa fa-sign-out"></i>&nbsp;交接班</a></li>
-                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-circle-o"></i>&nbsp;系统设置<span class="caret"></span></a>
+                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i>&nbsp;系统设置<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>&nbsp;通用设置</a></li>
-                                    <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>&nbsp;标签打印设置</a></li>
-                                    <li><a href="#" @click="menuClick"><i class="fa fa-circle-o"></i>&nbsp;小票打印设置</a></li>
+                                    <li><a href="#" @click="menuClick"><i class="fa fa-cog"></i>&nbsp;通用设置</a></li>
+                                    <li><a href="#" @click="menuClick"><i class="fa fa-cog"></i>&nbsp;标签打印设置</a></li>
+                                    <li><a href="#" @click="menuClick"><i class="fa fa-cog"></i>&nbsp;小票打印设置</a></li>
                                 </ul>
                             </li>
                         </ul>

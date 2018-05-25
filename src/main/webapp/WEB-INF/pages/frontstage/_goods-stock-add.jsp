@@ -20,10 +20,10 @@
                         <th>分类</th>
                         <th>颜色</th>
                         <th>尺码</th>
-                        <th>进货价</th>
+                        <th>进货量</th>
                         <th>售价</th>
                         <th>供货商</th>
-                        <th>进货量</th>
+                        <th>进货价</th>
                         <th>操作</th>
                     </tr>
                 </thead>
