@@ -15,7 +15,7 @@
 		<p>客服电话：{{phone}}</p>
 		<p>备用金：<span v-if="pettyAmount">启用</span><span v-else>不启用</span></p>
 	</div>
-	<script src="${ctx}/static/js/frontstage/_system-config.js"></script>
+	<script src="${ctx}/static/js/frontstage/_system-info.js"></script>
 </body>
 
 </html>
