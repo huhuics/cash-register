@@ -93,4 +93,24 @@ public class FrontstagePageController {
     public String settings() {
         return "frontstage/_system-info";
     }
+
+    /**
+     * 收银端标签打印设置页
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/tagPrintSetPage")
+    public String tagPrintSetPage() {
+        return "frontstage/_tagPrint-set";
+    }
+
+    /**
+     * 收银端小票打印设置页
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/receiptPrintSetPage")
+    public String receiptPrintSetPage() {
+        return "frontstage/_receiptPrint-set";
+    }
 }
