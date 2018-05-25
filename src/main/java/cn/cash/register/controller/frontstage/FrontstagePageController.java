@@ -91,6 +91,6 @@ public class FrontstagePageController {
      */
     @RequestMapping(value = "/settings")
     public String settings() {
-        return "frontstage/_settings";
+        return "frontstage/_system-config";
     }
 }

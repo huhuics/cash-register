@@ -47,7 +47,7 @@ pageEncoding="UTF-8"%>
                             <li><a href="#" @click="exchangeJob"><i class="fa fa-sign-out"></i>&nbsp;交接班</a></li>
                             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i>&nbsp;系统设置<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#" @click="menuClick"><i class="fa fa-cog"></i>&nbsp;通用设置</a></li>
+                                    <li><a href="#settings" @click="menuClick"><i class="fa fa-cog"></i>&nbsp;系统信息</a></li>
                                     <li><a href="#" @click="menuClick"><i class="fa fa-cog"></i>&nbsp;标签打印设置</a></li>
                                     <li><a href="#" @click="menuClick"><i class="fa fa-cog"></i>&nbsp;小票打印设置</a></li>
                                 </ul>
