@@ -156,7 +156,7 @@ public class TradeController {
     @RequestMapping(value = "/queryTradeDetailList")
     public ResultSet queryTradeDetailList(TradeDetailQueryRequest request) {
         PageInfo<TradeDetail> tradeDetail = tradeService.queryTradeDetailList(request);
-        return ResultSet.success().put("tradeDetail", tradeDetail);
+        return ResultSet.success().put("page", tradeDetail);
     }
 
     /**
@@ -166,7 +166,7 @@ public class TradeController {
     @RequestMapping(value = "/queryTradeGoodsDetailList")
     public ResultSet queryTradeGoodsDetailList(TradeGoodsDetailQueryRequest request) {
         PageInfo<TradeGoodsDetail> tradeGoodsDetail = tradeService.queryTradeGoodsDetailList(request);
-        return ResultSet.success().put("tradeGoodsDetail", tradeGoodsDetail);
+        return ResultSet.success().put("page", tradeGoodsDetail);
     }
 
 }
