@@ -651,7 +651,7 @@
 	WHERE promotion_id = #{promotionId,jdbcType=BIGINT}
   </update>
   
-  <select id="queryGoodsCount">
+  <select id="queryGoodsCount" resultType="java.lang.Integer">
   	SELECT COUNT(1) FROM goods_info
 	WHERE goods_status = 1
   </select>
