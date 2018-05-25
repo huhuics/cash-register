@@ -75,6 +75,26 @@ public class FrontstagePageController {
     }
 
     /**
+     * 收银端盘点页
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/stockCheckPage")
+    public String stockCheckPage() {
+        return "frontstage/_stock-check-list";
+    }
+
+    /**
+     * 收银端反结账页
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/tradeCancelPage")
+    public String tradeCancelPage() {
+        return "frontstage/_cancel";
+    }
+
+    /**
      * 收银端退货页
      * 
      * @return
@@ -85,7 +105,7 @@ public class FrontstagePageController {
     }
 
     /**
-     * 收银端设置页
+     * 收银端系统信息页
      * 
      * @return
      */
