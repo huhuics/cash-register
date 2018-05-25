@@ -4,10 +4,6 @@
  */
 package cn.cash.register.common.request;
 
-import java.util.ArrayList;
-
-import cn.cash.register.dao.domain.GoodsLoseItem;
-
 /**
  * 增加商品报损记录请求类
  * @author HuHui
@@ -16,19 +12,19 @@ import cn.cash.register.dao.domain.GoodsLoseItem;
 public class GoodsLoseInfoAddRequest extends BaseRequest {
 
     /**  */
-    private static final long        serialVersionUID = -675696658279069420L;
+    private static final long serialVersionUID = -675696658279069420L;
 
-    private Long                     id;
+    private Long              id;
 
-    private String                   shopName;
+    private String            shopName;
 
-    private ArrayList<GoodsLoseItem> loseItems;
+    private String            loseItemsStr;
 
-    private Double                   turnoverPercent;
+    private Double            turnoverPercent;
 
-    private String                   operatorNo;
+    private String            operatorNo;
 
-    private String                   remark;
+    private String            remark;
 
     @Override
     public void validate() {
@@ -75,12 +71,12 @@ public class GoodsLoseInfoAddRequest extends BaseRequest {
         this.remark = remark;
     }
 
-    public ArrayList<GoodsLoseItem> getLoseItems() {
-        return loseItems;
+    public String getLoseItemsStr() {
+        return loseItemsStr;
     }
 
-    public void setLoseItems(ArrayList<GoodsLoseItem> loseItems) {
-        this.loseItems = loseItems;
+    public void setLoseItemsStr(String loseItemsStr) {
+        this.loseItemsStr = loseItemsStr;
     }
 
 }

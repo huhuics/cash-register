@@ -116,7 +116,7 @@ public class GoodsLoseController {
         Long exchangeJobId = (Long) session.getAttribute(Constants.CURRENT_JOB_ID);
         request.setOperatorNo(seller.getSellerNo());
 
-        AssertUtil.assertNotBlank(request.getLoseItems(), "报损商品不能为空");
+        AssertUtil.assertNotBlank(request.getLoseItemsStr(), "报损商品不能为空");
         Long id = loseService.addLoseInfo(request);
         return ResultSet.success().put("id", id);
     }
