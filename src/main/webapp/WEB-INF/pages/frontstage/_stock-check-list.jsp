@@ -103,7 +103,7 @@ pageEncoding="UTF-8"%>
 	            <table class="table table-bordered" style="background-color: #EEE;">
 	                <tbody>
 	                    <tr>
-	                        <td class="col-xs-6">
+	                        <td class="col-xs-3">
 	                            <div>
 	                                <div class="col-xs-12">
 	                                    <div class="input-group">
@@ -115,7 +115,7 @@ pageEncoding="UTF-8"%>
 	                                </div>
 	                            </div>
 	                        </td>
-	                        <td class="col-xs-6">
+	                        <td class="col-xs-3">
 	                            <div>
 	                                <div class="col-xs-12">
 	                                    <button class="btn btn-info" type="button">
@@ -127,6 +127,15 @@ pageEncoding="UTF-8"%>
 	                                    <button class="btn btn-info" type="button">
 	                                        未盘点 <span class="badge">{{all_count-checked_count}}</span>
 	                                    </button>
+	                                </div>
+	                            </div>
+	                        </td>
+	                        <td class="col-xs-3">
+	                            <div>
+	                                <div class="col-xs-12">
+	                                    <textarea class="form-control" rows="3" placeholder="备注" v-model="remark"></textarea>
+	                                </span>
+	                                    </div>
 	                                </div>
 	                            </div>
 	                        </td>

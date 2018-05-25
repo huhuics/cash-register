@@ -7,19 +7,25 @@ package cn.cash.register.controller.frontstage;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.cash.register.common.Constants;
 import cn.cash.register.common.request.GoodsStockCheckQueryRequest;
 import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.dao.domain.GoodsStockCheck;
 import cn.cash.register.dao.domain.GoodsStockCheckDetail;
+import cn.cash.register.dao.domain.SellerInfo;
 import cn.cash.register.service.GoodsInfoService;
 import cn.cash.register.service.GoodsStockCheckServie;
+import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -30,6 +36,7 @@ import cn.cash.register.util.ResultSet;
 @Controller
 @RequestMapping(value = "/cashier/stockCheck")
 public class GoodsStockCheckController {
+    private static final Logger   logger = LoggerFactory.getLogger(GoodsStockCheckController.class);
 
     @Resource
     private GoodsInfoService      goodsInfoService;
@@ -52,8 +59,10 @@ public class GoodsStockCheckController {
      */
     @ResponseBody
     @PostMapping(value = "addCheck")
-    public ResultSet addCheck(String sellerNo, String remark, String detailsStr) {
-        Long ret = checkService.addCheck(sellerNo, remark, detailsStr);
+    public ResultSet addCheck(String remark, String detailsStr, HttpSession session) {
+        LogUtil.info(logger, "[Controller]收到#增加盘点记录#请求,detailsStr={0},remark={1}", detailsStr, remark);
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_SELLER);
+        Long ret = checkService.addCheck(seller.getSellerNo(), remark, detailsStr);
         return ResultSet.success().put("ret", ret);
     }
 

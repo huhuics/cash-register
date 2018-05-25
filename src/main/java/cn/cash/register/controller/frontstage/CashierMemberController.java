@@ -80,7 +80,7 @@ public class CashierMemberController {
     @RequestMapping(value = "/addOrUpdate")
     public ResultSet addOrUpdate(MemberInfo memberInfo, HttpSession session) {
         LogUtil.info(logger, "[Controller]收到#添加或更新会员#请求");
-        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_ADMIN);
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_SELLER);
         // 根据ID是否为空判断是新增还是编辑
         if (memberInfo.getId() == null) {
             LogUtil.info(logger, "[Controller]#添加会员#,memberInfo={0}", memberInfo);
@@ -115,7 +115,7 @@ public class CashierMemberController {
     @RequestMapping(value = "/delById", method = RequestMethod.POST)
     public ResultSet delById(Long id, HttpSession session) {
         LogUtil.info(logger, "[Controller]收到#根据ID删除会员信息#请求,id={0}", id);
-        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_ADMIN);
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_SELLER);
         memberService.deleteMember(id);
         logService.record(LogSourceEnum.backstage, SubSystemTypeEnum.employee, seller.getSellerNo(), "删除会员" + id);
         return ResultSet.success();

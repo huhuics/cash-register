@@ -30,6 +30,7 @@ var vm = new Vue({
         select_goods_id_list: [], // 选择要加入的商品列表
         all_count: null, // 所有商品总数
         checked_count: 0, // 已盘点商品数
+        remark: null, // 备注
     },
     methods: {
     	add: function() {
@@ -38,28 +39,39 @@ var vm = new Vue({
     		this.goods_keyword = null;
     		this.keyword_search_goods_list = [];
     		this.select_goods_id_list = [];
-    		// TODO 加载所有商品数
-    		this.all_count = 0;
     		this.checked_count = 0;
     		var _self = this;
+    		$.ajax({
+    			type: 'GET',
+                url: basePath + "/cashier/stockCheck/queryGoodsCount",
+                success: function(result) {
+                    if (result.code == "00") {
+                    	_self.all_count = result.goodsCount;
+                    } else {
+                        layer.alert('加载所有商品数量出错'+result.msg);
+                    }
+                }
+            });
     		layer.open({
-                type: 1, skin: 'layui-layer-lan', title: "添加盘点", area: '800px', shadeClose: false,
+                type: 1, skin: 'layui-layer-lan', title: "添加盘点", area: '1000px', shadeClose: false,
                 content: jQuery("#stockCheckAddDiv"),
                 btn: ['提交', '取消'],
                 btn1: function(index) {
-//                	$.ajax({
-//                        url: basePath + "/cashier/stockCheck/addCheck",
-//                        data: { 'loseItems': JSON.stringify(_self.getRequestList()) },
-//                        success: function(result) {
-//                            if (result.code == "00") {
-//                                layer.msg("成功盘点");
-//                                layer.close(index);
-//                            } else {
-//                                layer.alert(result.msg);
-//                            }
-//                        }
-//                    });
-                    __log('JSON.stringify(_self.getRequestList())',JSON.stringify(_self.getRequestList()))
+                	$.ajax({
+                        url: basePath + "/cashier/stockCheck/addCheck",
+                        data: {
+                        	'detailsStr': JSON.stringify(_self.getRequestList()),
+                        	'remark': _self.remark
+                        },
+                        success: function(result) {
+                            if (result.code == "00") {
+                                layer.msg("成功盘点");
+                                layer.close(index);
+                            } else {
+                                layer.alert(result.msg);
+                            }
+                        }
+                    });
                 }
             });
         },
