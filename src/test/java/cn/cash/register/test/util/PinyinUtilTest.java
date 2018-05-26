@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import cn.cash.register.enums.PayChenalEnum;
+import cn.cash.register.util.Money;
 import cn.cash.register.util.PinyinUtil;
 
 /**
@@ -31,6 +32,12 @@ public class PinyinUtilTest {
     @Test
     public void test() {
         System.out.println(PayChenalEnum.valueOf("cash") == PayChenalEnum.cash);
+    }
+
+    @Test
+    public void test2() {
+        Money money = new Money("32.43");
+        System.out.println(money.toString());
     }
 
 }

@@ -2,9 +2,13 @@
  * Cash-Register
  * Copyright (c) 1995-2018 All Rights Reserved.
  */
-package cn.cash.register.dao.domain;
+package cn.cash.register.printer;
 
 import java.util.List;
+
+import cn.cash.register.dao.domain.BaseDomain;
+import cn.cash.register.dao.domain.GoodsItem;
+import cn.cash.register.dao.domain.PayChenal;
 
 /**
  * 购物小票
@@ -14,27 +18,31 @@ import java.util.List;
 public class ShoppingReceipt extends BaseDomain {
 
     /**  */
-    private static final long      serialVersionUID = -2580794795916480271L;
+    private static final long serialVersionUID = -2580794795916480271L;
 
-    private String                 tradeNo;
+    private String            shopName;
 
-    private String                 tradeTime;
+    private String            tradeNo;
 
-    private String                 memberNo;
+    private String            tradeTime;
 
-    private String                 goodsCount;
+    private String            memberNo;
 
-    private String                 totalAmount;
+    private String            goodsCount;
 
-    private String                 goodsDiscount;
+    private String            totalAmount;
 
-    private String                 totalActualAmount;
+    private String            goodsDiscount;
 
-    private String                 sellerNo;
+    private String            totalActualAmount;
 
-    private String                 change;                                  //找零
+    private String            sellerNo;
 
-    private List<TradeGoodsDetail> goodsInfo;
+    private String            change;                                  //找零
+
+    private List<GoodsItem>   goodsItems;
+
+    private List<PayChenal>   payChenals;
 
     public String getTradeNo() {
         return tradeNo;
@@ -100,12 +108,12 @@ public class ShoppingReceipt extends BaseDomain {
         this.sellerNo = sellerNo;
     }
 
-    public List<TradeGoodsDetail> getGoodsInfo() {
-        return goodsInfo;
+    public List<GoodsItem> getGoodsItems() {
+        return goodsItems;
     }
 
-    public void setGoodsInfo(List<TradeGoodsDetail> goodsInfo) {
-        this.goodsInfo = goodsInfo;
+    public void setGoodsItems(List<GoodsItem> goodsItems) {
+        this.goodsItems = goodsItems;
     }
 
     public String getChange() {
@@ -114,6 +122,22 @@ public class ShoppingReceipt extends BaseDomain {
 
     public void setChange(String change) {
         this.change = change;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public List<PayChenal> getPayChenals() {
+        return payChenals;
+    }
+
+    public void setPayChenals(List<PayChenal> payChenals) {
+        this.payChenals = payChenals;
     }
 
 }

@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v12.09 (64 bit)
-MySQL - 5.6.37 : Database - cash-register
+MySQL - 5.5.28 : Database - cash-register
 *********************************************************************
 */
 
@@ -624,11 +624,11 @@ CREATE TABLE `system_parameter` (
   `gmt_create` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UQ_PARAM_CODE` (`param_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `system_parameter` */
 
-insert  into `system_parameter`(`id`,`param_code`,`param_value`,`description`,`gmt_update`,`gmt_create`) values (1,'SHOP_NAME','我的超市','商店名称','2018-05-23 17:14:00','2018-04-23 21:44:25'),(3,'PETTY_AMOUNT','false','备用金开关，true为启用,false为不启用','2018-05-23 10:32:08','2018-05-02 17:31:34'),(5,'REGISTER_TIME','2018-05-23 17:12:43','注册时间','2018-05-23 17:14:00','2018-05-18 14:39:26'),(6,'INVALID_TIME','2018-06-07 17:12:43','有效期截止时间','2018-05-23 17:14:00','2018-05-18 14:44:08'),(7,'RELATED_EMAIL','test','绑定邮箱','2018-05-23 17:31:57','2018-05-18 14:45:42'),(8,'PHONE','test','联系电话','2018-05-23 17:31:58','2018-05-18 14:48:47'),(9,'ADDRESS','..222','联系地址','2018-05-23 17:31:59','2018-05-18 14:49:33'),(10,'IS_AUTHORIZED','false','系统是否已授权，true为已授权，false为未授权','2018-05-22 10:45:34','2018-05-18 14:59:16'),(11,'IS_INIT','true','系统是否初始化，true为已初始化，false为未初始化','2018-05-23 17:21:19','2018-05-22 10:44:49');
+insert  into `system_parameter`(`id`,`param_code`,`param_value`,`description`,`gmt_update`,`gmt_create`) values (1,'SHOP_NAME','我的超市','商店名称','2018-05-23 17:14:00','2018-04-23 21:44:25'),(3,'PETTY_AMOUNT','false','备用金开关，true为启用,false为不启用','2018-05-23 10:32:08','2018-05-02 17:31:34'),(5,'REGISTER_TIME','2018-05-23 17:12:43','注册时间','2018-05-23 17:14:00','2018-05-18 14:39:26'),(6,'INVALID_TIME','2018-06-07 17:12:43','有效期截止时间','2018-05-23 17:14:00','2018-05-18 14:44:08'),(7,'RELATED_EMAIL','test','绑定邮箱','2018-05-23 17:31:57','2018-05-18 14:45:42'),(8,'PHONE','test','联系电话','2018-05-23 17:31:58','2018-05-18 14:48:47'),(9,'ADDRESS','..222','联系地址','2018-05-23 17:31:59','2018-05-18 14:49:33'),(10,'IS_AUTHORIZED','false','系统是否已授权，true为已授权，false为未授权','2018-05-22 10:45:34','2018-05-18 14:59:16'),(11,'IS_INIT','true','系统是否初始化，true为已初始化，false为未初始化','2018-05-23 17:21:19','2018-05-22 10:44:49'),(12,'RECEIPT_WIDTH','580','收银小票宽度，分为580和800两种','2018-05-26 15:11:21','0000-00-00 00:00:00');
 
 /*Table structure for table `trade_detail` */
 

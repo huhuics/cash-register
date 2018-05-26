@@ -43,6 +43,8 @@ public class TradeRequest extends BaseRequest {
 
     private String            shopperNo;
 
+    private String            change;
+
     private Long              exchangeJobId;
 
     @Override
@@ -147,6 +149,14 @@ public class TradeRequest extends BaseRequest {
 
     public void setMemberNo(String memberNo) {
         this.memberNo = memberNo;
+    }
+
+    public String getChange() {
+        return change;
+    }
+
+    public void setChange(String change) {
+        this.change = change;
     }
 
 }

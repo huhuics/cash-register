@@ -42,6 +42,8 @@ public class Constants {
 
     public static final String FALSE                       = "false";
 
+    public static final int    RECEIPT_WIDTH_580           = 580;
+
     /************************系统参数表param_code字段************************/
 
     /** 商店名 */
@@ -70,6 +72,9 @@ public class Constants {
 
     /** 系统是否已初始化 */
     public static final String IS_INIT                     = "IS_INIT";
+
+    /** 收银小票宽度，分为580mm和800mm两种 */
+    public static final String RECEIPT_WIDTH               = "RECEIPT_WIDTH";
 
     /*********************************end***********************************/
 }
