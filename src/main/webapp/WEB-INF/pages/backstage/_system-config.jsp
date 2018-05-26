@@ -64,8 +64,6 @@
 	                    <span class="input-group-btn"><button class="btn btn-primary" type="button" @click="updatePettyAmount">确定</button></span>
 	                </div>
                 </div>
-                <div class="form-group">
-            		</div>
             </form>
         </div>
         <h3>系统重新初始化</h3>

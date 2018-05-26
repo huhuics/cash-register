@@ -75,6 +75,26 @@ public class FrontstagePageController {
     }
 
     /**
+     * 收银端盘点页
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/stockCheckPage")
+    public String stockCheckPage() {
+        return "frontstage/_stock-check-list";
+    }
+
+    /**
+     * 收银端反结账页
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/tradeCancelPage")
+    public String tradeCancelPage() {
+        return "frontstage/_cancel";
+    }
+
+    /**
      * 收银端退货页
      * 
      * @return
@@ -85,12 +105,32 @@ public class FrontstagePageController {
     }
 
     /**
-     * 收银端设置页
+     * 收银端系统信息页
      * 
      * @return
      */
     @RequestMapping(value = "/settings")
     public String settings() {
-        return "frontstage/_settings";
+        return "frontstage/_system-info";
+    }
+
+    /**
+     * 收银端标签打印设置页
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/tagPrintSetPage")
+    public String tagPrintSetPage() {
+        return "frontstage/_tagPrint-set";
+    }
+
+    /**
+     * 收银端小票打印设置页
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/receiptPrintSetPage")
+    public String receiptPrintSetPage() {
+        return "frontstage/_receiptPrint-set";
     }
 }
