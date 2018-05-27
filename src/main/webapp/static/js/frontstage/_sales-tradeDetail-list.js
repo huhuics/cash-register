@@ -68,6 +68,11 @@ var vm = new Vue({
         	if (isBlank(tradeNo)) {
                 return;
             }
+        	var tradeType = getSelectedRowValue('tradeType');
+        	if (isBlank(tradeType) || tradeType != '销售') {
+        		layer.alert('反结账只支持【销售】订单');
+                return;
+            }
         	var _self = this;
         	confirm("确定对这笔订单执行反结账吗？", function() {
         		$.ajax({
