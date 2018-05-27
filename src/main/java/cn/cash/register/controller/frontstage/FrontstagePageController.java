@@ -85,16 +85,6 @@ public class FrontstagePageController {
     }
 
     /**
-     * 收银端反结账页
-     * 
-     * @return
-     */
-    @RequestMapping(value = "/tradeCancelPage")
-    public String tradeCancelPage() {
-        return "frontstage/_cancel";
-    }
-
-    /**
      * 收银端退货页
      * 
      * @return
