@@ -1,14 +1,14 @@
 var vm = new Vue({
     el: '#receiptPrintSetDiv',
     data: {
-        phone: null,
+    	receipt_width: 580,
     },
     methods: {
-        updatePhone: function() {
+        update_receipt_width: function() {
         	var _self = this;
         	$.ajax({
-        		url: basePath + "/cashier/systemConfig/setPhone",
-        		data: { newValue: _self.phone },
+        		url: basePath + "/cashier/systemConfig/setReceiptWidth",
+        		data: { newValue: _self.receipt_width },
         		success: function(result) {
         			if (result.code == "00") {
         				layer.msg('更新成功');
@@ -18,14 +18,14 @@ var vm = new Vue({
         		}
         	});
         },
-        load_phone: function() {
+        load_receipt_width: function() {
         	var _self = this;
         	$.ajax({
         		url: basePath + "/cashier/systemConfig/queryByCode",
-        		data: { paramCode: 'PHONE' },
+        		data: { paramCode: 'RECEIPT_WIDTH' },
         		success: function(result) {
         			if (result.code == "00") {
-        				_self.phone = result.byCode.paramValue;
+        				_self.receipt_width = result.byCode.paramValue;
         			} else {
         				layer.alert(result.msg);
         			}
@@ -34,6 +34,6 @@ var vm = new Vue({
         },
     },
     mounted: function() {
-    	this.load_phone();
+    	this.load_receipt_width();
     }
 });

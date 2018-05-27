@@ -42,4 +42,18 @@ public class CashierConfigController {
         return ResultSet.success().put("byCode", byCode);
     }
 
+    @ResponseBody
+    @PostMapping(value = "/setReceiptWidth")
+    public ResultSet setReceiptWidth(String newValue) {
+        AssertUtil.assertNotBlank(newValue, "值不能为空");
+        SystemParameter param = systemParameterService.getByCode(Constants.RECEIPT_WIDTH);
+        if (param == null) {
+            return ResultSet.error("无此参数");
+        }
+
+        systemParameterService.updateById(param.getId(), newValue);
+
+        return ResultSet.success("设置成功");
+    }
+
 }
