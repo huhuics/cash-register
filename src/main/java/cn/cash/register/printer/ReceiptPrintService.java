@@ -7,6 +7,7 @@ package cn.cash.register.printer;
 import java.awt.print.Book;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
+import java.awt.print.PrinterJob;
 
 import javax.annotation.Resource;
 
@@ -56,6 +57,12 @@ public class ReceiptPrintService {
 
             ShoppingReceipt receipt = conert(request, tradeDetail);
             book.append(new ReceiptPrintable(receipt, receiptWidth == Constants.RECEIPT_WIDTH_580 ? false : true), pf);
+
+            //获取打印服务对象
+            PrinterJob job = PrinterJob.getPrinterJob();
+            //设置打印类
+            job.setPageable(book);
+            job.print();
 
         } catch (Exception e) {
             LogUtil.error(e, logger, "收银小票打印失败");

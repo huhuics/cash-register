@@ -34,6 +34,7 @@ import cn.cash.register.dao.domain.SellerInfo;
 import cn.cash.register.enums.LogSourceEnum;
 import cn.cash.register.enums.SubSystemTypeEnum;
 import cn.cash.register.enums.UpdateFieldEnum;
+import cn.cash.register.printer.LabelPrintService;
 import cn.cash.register.service.GoodsInfoService;
 import cn.cash.register.service.LogService;
 import cn.cash.register.util.AssertUtil;
@@ -58,6 +59,9 @@ public class GoodsInfoController {
 
     @Resource
     private LogService          logService;
+
+    @Resource
+    private LabelPrintService   labelPrintService;
 
     private static final String SEP    = ",";
 
@@ -313,6 +317,17 @@ public class GoodsInfoController {
     @RequestMapping(value = "/inport")
     public ResultSet inport(GoodsInfoInportRequest request) {
         goodsInfoService.inport(request);
+        return ResultSet.success();
+    }
+
+    /**
+     * 打印商品标签
+     */
+    @ResponseBody
+    @RequestMapping(value = "/printLabel")
+    public ResultSet printLabel(Long goodsInfoId) {
+        GoodsInfo goodsInfo = goodsInfoService.queryById(goodsInfoId);
+        labelPrintService.print(goodsInfo);
         return ResultSet.success();
     }
 

@@ -16,6 +16,8 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 import cn.cash.register.dao.domain.GoodsItem;
 import cn.cash.register.util.DateUtil;
 import cn.cash.register.util.Money;
@@ -46,7 +48,7 @@ public class ReceiptPrintable implements Printable {
     @Override
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
         Component c = null;
-        double pageWidth = pageFormat.getWidth();
+        double pageWidth = pageFormat.getPaper().getWidth();
         //拿到画笔
         Graphics2D g2d = (Graphics2D) graphics;
         //设置打印颜色
@@ -68,7 +70,8 @@ public class ReceiptPrintable implements Printable {
         //居中画标题
         FontMetrics fontMetrics = g2d.getFontMetrics(font);
         int textWidth = fontMetrics.stringWidth(receipt.getShopName());
-        g2d.drawString(receipt.getShopName(), (float) (pageWidth - textWidth) / 2, (float) y + height);
+        //        g2d.drawString(receipt.getShopName(), (float) ((pageWidth - textWidth) / 8.6), (float) y + height);
+        g2d.drawString(receipt.getShopName(), (float) x, (float) y + height);
 
         font = new Font(fontName, Font.PLAIN, 8);
         g2d.setFont(font);
@@ -86,7 +89,7 @@ public class ReceiptPrintable implements Printable {
         g2d.drawString("名称", (float) x + 15, (float) y + line);
         g2d.drawString("单价", (float) x + getOffset(50), (float) y + line);
         g2d.drawString("数量", (float) x + getOffset(85), (float) y + line);
-        g2d.drawString("总额", (float) x + getOffset(115), (float) y + line);
+        g2d.drawString("总额", (float) x + getOffset(135), (float) y + line);//115
         line += height;
 
         //画虚线
@@ -98,7 +101,7 @@ public class ReceiptPrintable implements Printable {
             g2d.drawString(item.getGoodsName(), (float) x, (float) y + line);
             line += height;
 
-            g2d.drawString(item.getBarCode(), (float) x, (float) y + line);
+            //            g2d.drawString(item.getBarCode(), (float) x, (float) y + line);
             g2d.drawString(new Money(item.getTotalActualAmount()).divide(item.getGoodsCount()).toString(), (float) x + getOffset(50), (float) y + line);
             g2d.drawString(item.getGoodsCount().toString(), (float) x + getOffset(85), (float) y + line);
             g2d.drawString(item.getTotalActualAmount(), (float) x + getOffset(115), (float) y + line);
@@ -114,7 +117,7 @@ public class ReceiptPrintable implements Printable {
         g2d.drawString("合计:" + receipt.getTotalAmount() + "元", (float) x + getOffset(70), (float) y + line);
         line += height;
         g2d.drawString("实收:" + receipt.getTotalActualAmount() + "元", (float) x, (float) y + line);
-        g2d.drawString("找零:" + receipt.getChange() + "元", (float) x + getOffset(70), (float) y + line);
+        g2d.drawString("找零:" + (StringUtils.isBlank(receipt.getChange()) ? "0" : receipt.getChange()) + "元", (float) x + getOffset(70), (float) y + line);
         line += height;
         g2d.drawString("时间:" + DateUtil.getNewFormatDateString(new Date()), (float) x, (float) y + line);
 
