@@ -304,6 +304,12 @@
 	AND exchange_job_id = #{exchangeJobId,jdbcType=BIGINT}
 	AND seller_no = #{sellerNo,jdbcType=VARCHAR}
   </select>
+  <select id="selectByTradeNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from trade_detail
+    where trade_no = #{tradeNo,jdbcType=VARCHAR}
+  </select>
   
   <select id="queryByTradeTime" resultMap="BaseResultMap" parameterType="cn.cash.register.common.request.SalesBasicFactsQueryRequest">
   	select 

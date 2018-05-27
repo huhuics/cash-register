@@ -136,7 +136,12 @@ public class TradeController {
      */
     @ResponseBody
     @RequestMapping(value = "/cancel")
-    public ResultSet cancel(CancelRequest request) {
+    public ResultSet cancel(CancelRequest request, HttpSession session) {
+        LogUtil.info(logger, "[Controller]接收到反结账请求,request={0}", request);
+
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_SELLER);
+        request.setSellerNo(seller.getSellerNo());
+
         boolean ret = tradeService.cancel(request);
         return ResultSet.success().put("ret", ret);
     }

@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,6 +81,15 @@ public class MemberServiceImpl implements MemberService {
     public MemberInfo queryMember(Long id) {
         LogUtil.info(logger, "收到查询会员信息请求,id={0}", id);
         return infoMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public MemberInfo queryMemberByMemberNo(String memberNo) {
+        LogUtil.info(logger, "收到查询会员信息请求,memberNo={0}", memberNo);
+        if (StringUtils.isBlank(memberNo)) {
+            return null;
+        }
+        return infoMapper.selectByNo(memberNo);
     }
 
     @Override
