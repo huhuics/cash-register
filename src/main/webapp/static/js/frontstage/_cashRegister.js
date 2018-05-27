@@ -393,7 +393,8 @@ var vm = new Vue({
                             goodsItemsJSONStr: JSON.stringify(_self.goods_list),
                             payChenalsJSONStr: _self.payChenalsStr(),
                             memberId: _self.vip_info.id,
-                            memberNo: _self.vip_info.memberNo
+                            memberNo: _self.vip_info.memberNo,
+                            change: _self.change
                         },
                         success: function(result) {
                             if (result.code == "00") {
