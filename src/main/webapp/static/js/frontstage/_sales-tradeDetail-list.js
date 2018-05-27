@@ -6,7 +6,17 @@ $(function() {
         	{ label: '销售单据ID', name: 'id', hidden: true, key: true },
             { label: '流水号', name: 'tradeNo', index: 'trade_No', width: 80 },
             { label: '日期', name: 'tradeTime', index: 'trade_Time', width: 80 },
-            { label: '类型', name: 'tradeType', index: 'trade_Type', width: 80 },
+            { label: '类型', name: 'tradeType', index: 'trade_Type', width: 80,
+            	formatter: function(value, options, row) {
+                	if (value == 'refund') {
+                        return '退款';
+                    } else if (value == 'sales') {
+                        return '销售';
+                    } else {
+                    	return '未知类型：'+value;
+                    }
+                }
+            },
             { label: '收银员', name: 'sellerNo', index: 'seller_No', width: 80 },
             { label: '会员', name: 'memberName', index: 'member_Name', width: 80 },
             { label: '商品数量', name: 'goodsCount', index: 'goods_Count', width: 80 },
@@ -53,7 +63,27 @@ var vm = new Vue({
             this.q.tradeNo = null;
             this.reloadPage();
         },
-        exportSalesTradeDetail: function() {},
+        cancel: function() { // 反结账
+        	var tradeNo = getSelectedRowValue('tradeNo');
+        	if (isBlank(tradeNo)) {
+                return;
+            }
+        	var _self = this;
+        	confirm("确定对这笔订单执行反结账吗？", function() {
+        		$.ajax({
+                    url: basePath + "/cashier/trade/cancel",
+                    data: { 'tradeNo': tradeNo },
+                    success: function(result) {
+                        if (result.code == "00") {
+                            layer.msg('反结账成功');
+                            _self.reloadPage();
+                        } else {
+                            layer.alert(result.msg);
+                        }
+                    }
+                });
+            });
+        },
         reloadPage: function() {
             var page = $("#jqGrid").jqGrid('getGridParam', 'page');
             var _self = this;

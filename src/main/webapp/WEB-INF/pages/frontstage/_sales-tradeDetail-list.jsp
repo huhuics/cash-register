@@ -68,6 +68,10 @@
                     <a class="btn btn-default" @click="resetSearch"><i class="fa fa-undo"></i>&nbsp;刷新</a>
                 </div>
                 <div class="clearfix"></div>
+                <div class="pull-right">
+                    <a class="btn btn-info" @click="cancel"><i class="fa fa-trash-o"></i>&nbsp;反结账</a>
+                </div>
+                <div class="clearfix"></div>
             </div>
             <div class="jqGrid_wrapper">
                 <table id="jqGrid"></table>

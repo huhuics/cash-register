@@ -47,6 +47,11 @@ public interface MemberService {
     MemberInfo queryMember(Long id);
 
     /**
+     * 根据memberNo查询会员信息
+     */
+    MemberInfo queryMemberByMemberNo(String memberNo);
+
+    /**
      * 根据关键字搜索会员
      * @param keyword 会员号/姓名/手机号
      * @return  结果不翻页

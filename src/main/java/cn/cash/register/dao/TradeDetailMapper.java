@@ -19,6 +19,8 @@ public interface TradeDetailMapper {
 
     TradeDetail selectByPrimaryKey(Long id);
 
+    TradeDetail selectByTradeNo(String tradeNo);
+
     int updateByPrimaryKeySelective(TradeDetail record);
 
     int updateByPrimaryKey(TradeDetail record);

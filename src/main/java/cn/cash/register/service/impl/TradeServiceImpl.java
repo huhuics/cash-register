@@ -28,6 +28,7 @@ import cn.cash.register.dao.TradeDetailMapper;
 import cn.cash.register.dao.TradeGoodsDetailMapper;
 import cn.cash.register.dao.domain.GoodsInfo;
 import cn.cash.register.dao.domain.GoodsItem;
+import cn.cash.register.dao.domain.MemberInfo;
 import cn.cash.register.dao.domain.TradeDetail;
 import cn.cash.register.dao.domain.TradeGoodsDetail;
 import cn.cash.register.enums.LogSourceEnum;
@@ -38,6 +39,7 @@ import cn.cash.register.service.GoodsInfoService;
 import cn.cash.register.service.LogService;
 import cn.cash.register.service.MemberService;
 import cn.cash.register.service.TradeService;
+import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.Money;
 import cn.cash.register.util.NumUtil;
@@ -126,6 +128,20 @@ public class TradeServiceImpl implements TradeService {
     @Override
     public boolean cancel(CancelRequest request) {
         LogUtil.info(logger, "收到反结账请求");
+
+        // 根据tradeNo查询TradeDetail
+        TradeDetail tradeDetail = tradeDetailMapper.selectByTradeNo(request.getTradeNo());
+        AssertUtil.assertNotNull(tradeDetail, "没有找到相关订单");
+
+        request.setGoodsItemsJSONStr(tradeDetail.getGoodsDetail());
+        request.setTotalActualAmount(tradeDetail.getTotalActualAmount().getAmount().longValue());
+
+        // 根据memberNo查找memberId
+        MemberInfo member = memberService.queryMemberByMemberNo(tradeDetail.getMemberNo());
+        if (null != member) {
+            request.setMemberId(member.getId());
+        }
+
         request.validate();
 
         return txTemplate.execute(new TransactionCallback<Boolean>() {
