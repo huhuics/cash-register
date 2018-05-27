@@ -33,6 +33,7 @@ import cn.cash.register.dao.domain.TradeGoodsDetail;
 import cn.cash.register.enums.LogSourceEnum;
 import cn.cash.register.enums.SubSystemTypeEnum;
 import cn.cash.register.enums.TradeTypeEnum;
+import cn.cash.register.printer.ReceiptPrintService;
 import cn.cash.register.service.GoodsInfoService;
 import cn.cash.register.service.LogService;
 import cn.cash.register.service.MemberService;
@@ -69,14 +70,17 @@ public class TradeServiceImpl implements TradeService {
     @Resource
     private LogService             logService;
 
+    @Resource
+    private ReceiptPrintService    printService;
+
     @Override
     public boolean checkout(TradeRequest request) {
         LogUtil.info(logger, "收到收银请求");
         request.validate();
 
-        return txTemplate.execute(new TransactionCallback<Boolean>() {
+        TradeDetail tradeDetailRet = txTemplate.execute(new TransactionCallback<TradeDetail>() {
             @Override
-            public Boolean doInTransaction(TransactionStatus status) {
+            public TradeDetail doInTransaction(TransactionStatus status) {
 
                 //订单流水号
                 String tradeNo = NumUtil.getTradeNo();
@@ -87,9 +91,13 @@ public class TradeServiceImpl implements TradeService {
 
                 logService.record(LogSourceEnum.front, SubSystemTypeEnum.account, request.getSellerNo(), "收银" + tradeDetail.getTotalActualAmount().getAmount() + "元");
 
-                return true;
+                return tradeDetail;
             }
         });
+
+        printService.print(request, tradeDetailRet);
+
+        return true;
     }
 
     @Override
