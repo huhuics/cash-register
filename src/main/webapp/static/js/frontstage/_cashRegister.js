@@ -5,7 +5,13 @@ var goods_item = { // 商品元素
     salesPrice: null, // 商品原价
     isVipDiscount: null,
     vipPrice: null,
+    promotionId: null, // 商品促销信息id
     //--- 以上为商品表中对应数据
+    promotionStatus: null,
+    promotionIsMemberOnly: null,
+    promotionIsMemberDiscountTwice: null,
+    promotionDiscount: null,    
+    //--- 以上为商品促销信息
     goodsDiscount: null, // 实际折扣
     actualAmount: null, // 实际单价
     goodsCount: null, // 数量
@@ -190,16 +196,108 @@ var vm = new Vue({
             this.goods_item.salesPrice = goods.salesPrice.amount;
             this.goods_item.isVipDiscount = goods.isVipDiscount;
             this.goods_item.vipPrice = goods.vipPrice;
-
-            if (isBlank(this.vip_info.discount)) { // 没有录入会员信息，原价
-                this.goods_item.actualAmount = this.goods_item.salesPrice;
-                this.goods_item.goodsDiscount = 100;
-            } else if (!goods.isVipDiscount) { // 已经录入会员信息，但商品不参与折扣，会员价
-                this.goods_item.actualAmount = this.goods_item.vipPrice.toFixed(2);
-                this.goods_item.goodsDiscount = (this.goods_item.actualAmount / this.goods_item.salesPrice * 100).toFixed(2);
+            this.goods_item.promotionId = goods.promotionId;
+            
+            if(!isBlank(this.goods_item.promotionId)){ // 该商品为促销商品
+            	__log('商品促销id不为空，开始查找促销信息',this.goods_item.promotionId)
+            	var _self = this;
+	            $.ajax({
+	                url: basePath + "/cashier/promotion/queryPromotionById",
+	                async: false,
+	                data: {
+	                    id: _self.goods_item.promotionId
+	                },
+	                success: function(result1) {
+	                    if (result1.code == "00") {
+	                    	__log('查找到促销信息promotionDetail',result1.ret)
+	                    	var _promotionDetail = result1.ret;
+	                    	if(_promotionDetail.status) {
+	                        	// 促销信息未过期
+	                    		__log('促销信息未过期，开始查找促销商品信息')
+	                    		$.ajax({
+	            	                url: basePath + "/cashier/promotion/getPromotion",
+	            	                async: false,
+	            	                data: {
+	            	                    goodsId: _self.goods_item.goodsId,
+	            	                    promotionId: _promotionDetail.id,
+	            	                },
+	            	                success: function(result2) {
+	            	                    if (result2.code == "00") {
+	            	                    	__log('查找到促销商品信息', result2.ret)
+	            	                    	layer.msg('查询到商品促销信息');
+	            	                    	_self.goods_item.promotionStatus = true;
+	            	                    	_self.goods_item.promotionIsMemberOnly = result1.ret.isMemberOnly;
+	            	                    	_self.goods_item.promotionIsMemberDiscountTwice = result1.ret.isMemberDiscountTwice;
+	            	                    	_self.goods_item.promotionDiscount = result2.ret.discount;
+	            	                    } else {
+	            	                        layer.alert("查询商品促销信息失败" + result2.msg);
+	            	                    }
+	            	                }
+	            	            });
+	                    	} else {
+	                    		__log('促销信息过期')
+	                    		_self.goods_item.promotionStatus = false;
+	                    	}
+	                    } else {
+	                        layer.alert("查询促销信息失败:" + result1.msg);
+	                    }
+	                }
+	            });
+            }
+            
+            if(this.goods_item.promotionStatus) {
+            	// 促销商品
+            	if(this.goods_item.promotionIsMemberOnly == 'true') {
+            		// 会员专享促销
+                	if (isBlank(this.vip_info.discount)) { // 没有录入会员信息，原价
+                        this.goods_item.actualAmount = this.goods_item.salesPrice;
+                        this.goods_item.goodsDiscount = 100;
+                    } else { // 已经录入会员信息
+                    	if (!goods.isVipDiscount) { // 享受会员价
+	                        this.goods_item.actualAmount = this.goods_item.vipPrice.toFixed(2);
+	                        this.goods_item.goodsDiscount = (this.goods_item.actualAmount / this.goods_item.salesPrice * 100).toFixed(2);
+	                    } else { // 享受会员折扣
+	                        this.goods_item.actualAmount = (this.goods_item.salesPrice * this.vip_info.discount / 100).toFixed(2);
+	                        this.goods_item.goodsDiscount = this.vip_info.discount;
+	                    }
+                    	if(this.goods_item.promotionIsMemberDiscountTwice) {
+                    		// 会员折上折
+                    		this.goods_item.actualAmount = 1 * this.goods_item.actualAmount * this.goods_item.promotionDiscount / 100;
+                    		this.goods_item.goodsDiscount = (this.goods_item.actualAmount / this.goods_item.salesPrice * 100).toFixed(2);
+                    	}
+                    }
+            	} else {
+            		// 非会员专享促销
+            		if (isBlank(this.vip_info.discount)) { // 没有录入会员信息，促销折扣
+                        this.goods_item.actualAmount = 1 * this.goods_item.salesPrice * this.goods_item.promotionDiscount / 100;
+                		this.goods_item.goodsDiscount = (this.goods_item.actualAmount / this.goods_item.salesPrice * 100).toFixed(2);
+                    } else { // 已经录入会员信息
+                    	if (!goods.isVipDiscount) { // 享受会员价
+	                        this.goods_item.actualAmount = this.goods_item.vipPrice.toFixed(2);
+	                        this.goods_item.goodsDiscount = (this.goods_item.actualAmount / this.goods_item.salesPrice * 100).toFixed(2);
+	                    } else { // 享受会员折扣
+	                        this.goods_item.actualAmount = (this.goods_item.salesPrice * this.vip_info.discount / 100).toFixed(2);
+	                        this.goods_item.goodsDiscount = this.vip_info.discount;
+	                    }
+                    	if(this.goods_item.promotionIsMemberDiscountTwice) {
+                    		// 会员折上折
+                    		this.goods_item.actualAmount = 1 * this.goods_item.actualAmount * this.goods_item.promotionDiscount / 100;
+                    		this.goods_item.goodsDiscount = (this.goods_item.actualAmount / this.goods_item.salesPrice * 100).toFixed(2);
+                    	}
+                    }
+            	}
             } else {
-                this.goods_item.actualAmount = (this.goods_item.salesPrice * this.vip_info.discount / 100).toFixed(2);
-                this.goods_item.goodsDiscount = this.vip_info.discount;
+            	// 非促销商品
+            	if (isBlank(this.vip_info.discount)) { // 没有录入会员信息，原价
+                    this.goods_item.actualAmount = this.goods_item.salesPrice;
+                    this.goods_item.goodsDiscount = 100;
+                } else if (!goods.isVipDiscount) { // 已经录入会员信息，享受会员价
+                    this.goods_item.actualAmount = this.goods_item.vipPrice.toFixed(2);
+                    this.goods_item.goodsDiscount = (this.goods_item.actualAmount / this.goods_item.salesPrice * 100).toFixed(2);
+                } else { // 已经录入会员信息，享受会员折扣
+                    this.goods_item.actualAmount = (this.goods_item.salesPrice * this.vip_info.discount / 100).toFixed(2);
+                    this.goods_item.goodsDiscount = this.vip_info.discount;
+                }
             }
         },
         addItemToGoodsList: function(count) { // 将指定数量的item加入list
@@ -335,22 +433,75 @@ var vm = new Vue({
         },
         _afterVipInfoChange: function() { // 会员信息变化后的处理
             if (isBlank(this.vip_info.discount)) { // 会员信息被清空时
+            	__log('清空会员信息')
                 for (var i = 0; i < this.goods_list.length; i++) {
                     var _item = this.goods_list[i];
-                    _item.goodsDiscount = 100;
-                    _item.actualAmount = _item.salesPrice;
-                }
-            } else { // 会员信息被添加时
-                for (var i = 0; i < this.goods_list.length; i++) {
-                    __log('this.goods_list:', this.goods_list)
-                    __log('this.goods_list[i]', this.goods_list[i])
-                    var _item = this.goods_list[i];
-                    if (!_item.isVipDiscount) { // 商品不参与折扣，会员价
-                        _item.actualAmount = this.goods_item.vipPrice.toFixed(2);
+                    if (_item.promotionStatus && !_item.promotionIsMemberOnly) {
+                        // 促销商品且非会员专享促销，商品恢复促销价
+                    	__log('促销商品且非会员专享促销，商品恢复促销价')
+                        _item.actualAmount = 1 * _item.salesPrice * _item.promotionDiscount / 100;
                         _item.goodsDiscount = (_item.actualAmount / _item.salesPrice * 100).toFixed(2);
                     } else {
-                        _item.actualAmount = (_item.salesPrice * this.vip_info.discount / 100).toFixed(2);
-                        _item.goodsDiscount = this.vip_info.discount;
+                        // 商品恢复原价
+                    	__log('商品恢复原价')
+                        _item.actualAmount = _item.salesPrice;
+                        _item.goodsDiscount = 100;
+                    }
+                }
+            } else { // 会员信息被添加时
+            	__log('添加会员信息')
+                for (var i = 0; i < this.goods_list.length; i++) {
+                    var _item = this.goods_list[i];
+                    if (_item.promotionStatus) {
+                        // 促销商品
+                    	__log('该商品为促销商品')
+                        if (_item.promotionIsMemberOnly) {
+                            // 会员专享促销
+                        	__log('该商品为会员专享促销商品')
+                            if (!goods.isVipDiscount) { // 享受会员价
+                            	__log('享受会员价')
+                                _item.actualAmount = _item.vipPrice.toFixed(2);
+                                _item.goodsDiscount = (_item.actualAmount / _item.salesPrice * 100).toFixed(2);
+                            } else { // 享受会员折扣
+                            	__log('享受会员折扣')
+                                _item.actualAmount = (_item.salesPrice * this.vip_info.discount / 100).toFixed(2);
+                                _item.goodsDiscount = this.vip_info.discount;
+                            }
+                            if (_item.promotionIsMemberDiscountTwice) {
+                                // 会员折上折
+                            	__log('会员折上折！')
+                                _item.actualAmount = 1 * _item.actualAmount * _item.promotionDiscount / 100;
+                                _item.goodsDiscount = (_item.actualAmount / _item.salesPrice * 100).toFixed(2);
+                            }
+                        } else {
+                            // 非会员专享促销
+                        	__log('该商品不是会员专享促销商品')
+                            if (!_item.isVipDiscount) { // 享受会员价
+                            	__log('享受会员价')
+                                _item.actualAmount = _item.vipPrice.toFixed(2);
+                                _item.goodsDiscount = (_item.actualAmount / _item.salesPrice * 100).toFixed(2);
+                            } else { // 享受会员折扣
+                            	__log('享受会员折扣')
+                                _item.actualAmount = (_item.salesPrice * this.vip_info.discount / 100).toFixed(2);
+                                _item.goodsDiscount = this.vip_info.discount;
+                            }
+                            if (_item.promotionIsMemberDiscountTwice) {
+                                // 会员折上折
+                            	__log('会员折上折！')
+                                _item.actualAmount = 1 * _item.actualAmount * _item.promotionDiscount / 100;
+                                _item.goodsDiscount = (_item.actualAmount / _item.salesPrice * 100).toFixed(2);
+                            }
+                        }
+                    } else {
+                        // 非促销商品
+                    	__log('该商品不是促销商品')
+                        if (!_item.isVipDiscount) { // 已经录入会员信息，享受会员价
+                            _item.actualAmount = _item.vipPrice.toFixed(2);
+                            _item.goodsDiscount = (_item.actualAmount / _item.salesPrice * 100).toFixed(2);
+                        } else { // 已经录入会员信息，享受会员折扣
+                            _item.actualAmount = (_item.salesPrice * this.vip_info.discount / 100).toFixed(2);
+                            _item.goodsDiscount = this.vip_info.discount;
+                        }
                     }
                 }
             }
