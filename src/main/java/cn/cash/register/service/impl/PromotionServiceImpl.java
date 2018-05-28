@@ -85,7 +85,12 @@ public class PromotionServiceImpl implements PromotionService {
 
     @Override
     public PromotionDetail queryById(Long id) {
-        return promotionMapper.selectByPrimaryKey(id);
+        PromotionDetail promotionDetail = promotionMapper.selectByPrimaryKey(id);
+        if (isExpired(promotionDetail.getStartTime(), promotionDetail.getEndTime())) {
+            promotionDetail.setStatus(false);
+            promotionMapper.updateByPrimaryKeySelective(promotionDetail);
+        }
+        return promotionDetail;
     }
 
     @Override

@@ -16,11 +16,15 @@
 			<form class="form-horizontal layerForm">
 				<div class="form-group col-xs-12">
 					<div class="input-group">
-						<span class="input-group-addon">联系电话</span> <input type="text"
-							class="form-control" v-model="phone"> <span
-							class="input-group-btn"><button class="btn btn-primary"
-								type="button" @click="updatePhone">确定</button></span>
-					</div>
+                    <span class="input-group-addon">收银小票宽度</span>
+                    <span class="input-group-addon">
+                    	<input type="radio" v-model="receipt_width" value="580">580
+                    </span>
+                    <span class="input-group-addon">
+                    	<input type="radio" v-model="receipt_width" value="800">800
+                    </span>
+                    <span class="input-group-btn"><button class="btn btn-primary" type="button" @click="update_receipt_width">确定</button></span>
+                </div>
 				</div>
 			</form>
 		</div>
