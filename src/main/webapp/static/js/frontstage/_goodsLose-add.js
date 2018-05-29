@@ -167,7 +167,7 @@ var vm = new Vue({
         	var _self = this;
         	$.ajax({
                 url: basePath + "/cashier/goodsLose/addLoseInfo",
-                data: { 'loseItems': JSON.stringify(_self.getRequestList()) },
+                data: { 'loseItemsStr': JSON.stringify(_self.getRequestList()) },
                 success: function(result) {
                     if (result.code == "00") {
                         layer.msg("成功报损");
