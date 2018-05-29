@@ -42,6 +42,7 @@ var vm = new Vue({
                         } else if (result.size == 1) { // 查到唯一商品，直接加入
                             _self.transferGoodsToItem(result.goodsInfos[0]);
                             _self.addItemToGoodsList(1);
+                            _self.goods_keyword = null; // 加入商品后清空搜索值
                             return;
                         } else if (result.size > 1) { // 查到多个商品，选择加入
                             _self.keyword_search_goods_list = result.goodsInfos;
@@ -62,6 +63,7 @@ var vm = new Vue({
                                             if (_goodsList[j].id == _id) {
                                                 _self.transferGoodsToItem(_goodsList[j]);
                                                 _self.addItemToGoodsList(1);
+                                                _self.goods_keyword = null; // 加入商品后清空搜索值
                                                 break;
                                             }
                                         }
@@ -201,6 +203,7 @@ var vm = new Vue({
             this.summary_count = _totalCount;
             this.summary_averageImportPrice = _totalAverageImportPrice;
             this.summary_salesPrice = _totalSalesPrice;
+            this.focus();
         },
         reload: function() {
             this.goods_list = [];
