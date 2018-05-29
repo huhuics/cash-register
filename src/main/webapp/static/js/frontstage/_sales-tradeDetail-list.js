@@ -23,7 +23,7 @@ $(function() {
             { label: '商品原价', name: 'totalAmount.amount', index: 'total_Amount', width: 80 },
             { label: '实收金额', name: 'totalActualAmount.amount', index: 'total_Actual_Amount', width: 80 },
             { label: '利润', name: 'profitAmount.amount', index: 'profit_Amount', width: 80 },
-            { label: '导购员', name: 'shopperNo', index: 'shopperNo', width: 80 },
+            { label: '导购员', name: 'shopperNo', index: 'shopper_No', width: 80 },
         ],
         viewrecords: true, height: "auto", width: "100%",
         rowNum: 10, rowList: [10, 30, 50], 

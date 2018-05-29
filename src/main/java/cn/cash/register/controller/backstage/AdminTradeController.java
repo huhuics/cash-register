@@ -65,7 +65,7 @@ public class AdminTradeController {
     @RequestMapping(value = "/queryTradeDetailList")
     public ResultSet queryTradeDetailList(TradeDetailQueryRequest request) {
         PageInfo<TradeDetail> tradeDetail = tradeService.queryTradeDetailList(request);
-        return ResultSet.success().put("tradeDetail", tradeDetail);
+        return ResultSet.success().put("page", tradeDetail);
     }
 
     /**
