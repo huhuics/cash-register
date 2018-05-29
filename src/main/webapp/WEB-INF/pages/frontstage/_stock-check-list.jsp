@@ -115,7 +115,7 @@ pageEncoding="UTF-8"%>
 	                                </div>
 	                            </div>
 	                        </td>
-	                        <td class="col-xs-3">
+	                        <td class="col-xs-6">
 	                            <div>
 	                                <div class="col-xs-12">
 	                                    <button class="btn btn-info" type="button">

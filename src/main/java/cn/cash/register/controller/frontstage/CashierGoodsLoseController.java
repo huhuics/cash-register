@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import cn.cash.register.common.request.GoodsLoseInfoAddRequest;
 import cn.cash.register.dao.domain.GoodsLoseReason;
 import cn.cash.register.service.GoodsLoseService;
 import cn.cash.register.util.AssertUtil;
+import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -28,8 +31,10 @@ import cn.cash.register.util.ResultSet;
 @RequestMapping("/cashier/goodsLose")
 public class CashierGoodsLoseController {
 
+    private static final Logger logger = LoggerFactory.getLogger(CashierGoodsLoseController.class);
+
     @Resource
-    private GoodsLoseService loseService;
+    private GoodsLoseService    loseService;
 
     /**
      * 增加报损原因
@@ -82,7 +87,10 @@ public class CashierGoodsLoseController {
     @ResponseBody
     @RequestMapping("/addLoseInfo")
     public ResultSet addLoseInfo(GoodsLoseInfoAddRequest request) {
+        LogUtil.info(logger, "收到增加商品报损记录请求,request={0}", request);
+
         AssertUtil.assertNotBlank(request.getLoseItemsStr(), "报损商品不能为空");
+
         Long id = loseService.addLoseInfo(request);
         return ResultSet.success().put("id", id);
     }

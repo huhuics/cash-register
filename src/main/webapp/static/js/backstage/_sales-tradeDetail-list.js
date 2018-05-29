@@ -6,14 +6,24 @@ $(function() {
         	{ label: '销售单据ID', name: 'id', hidden: true, key: true },
             { label: '流水号', name: 'tradeNo', index: 'trade_No', width: 80 },
             { label: '日期', name: 'tradeTime', index: 'trade_Time', width: 80 },
-            { label: '类型', name: 'tradeType', index: 'trade_Type', width: 80 },
+            { label: '类型', name: 'tradeType', index: 'trade_Type', width: 80,
+            	formatter: function(value, options, row) {
+                	if (value == 'refund') {
+                        return '退款';
+                    } else if (value == 'sales') {
+                        return '销售';
+                    } else {
+                    	return '未知类型：'+value;
+                    }
+                }
+            },
             { label: '收银员', name: 'sellerNo', index: 'seller_No', width: 80 },
             { label: '会员', name: 'memberName', index: 'member_Name', width: 80 },
             { label: '商品数量', name: 'goodsCount', index: 'goods_Count', width: 80 },
             { label: '商品原价', name: 'totalAmount.amount', index: 'total_Amount', width: 80 },
             { label: '实收金额', name: 'totalActualAmount.amount', index: 'total_Actual_Amount', width: 80 },
             { label: '利润', name: 'profitAmount.amount', index: 'profit_Amount', width: 80 },
-            { label: '导购员', name: 'shopperNo', index: 'shopperNo', width: 80 },
+            { label: '导购员', name: 'shopperNo', index: 'shopper_No', width: 80 },
         ],
         viewrecords: true, height: "auto", width: "100%",
         rowNum: 10, rowList: [10, 30, 50], 

@@ -53,7 +53,7 @@ var vm = new Vue({
                 }
             });
     		layer.open({
-                type: 1, skin: 'layui-layer-lan', title: "添加盘点", area: '1000px', shadeClose: false,
+                type: 1, skin: 'layui-layer-lan', title: "添加盘点", area: ['1000px', '600px'], shadeClose: false,
                 content: jQuery("#stockCheckAddDiv"),
                 btn: ['提交', '取消'],
                 btn1: function(index) {
@@ -74,6 +74,7 @@ var vm = new Vue({
                     });
                 }
             });
+    		this.focus();
         },
     	searchGoods: function() { // 根据关键字查找商品加入清单
             if (isBlank(this.goods_keyword)) {
@@ -92,6 +93,7 @@ var vm = new Vue({
                         } else if (result.size == 1) { // 查到唯一商品，直接加入
                             _self.transferGoodsToItem(result.goodsInfos[0]);
                             _self.addItemToGoodsList(1);
+                            _self.goods_keyword = null; // 加入商品后清空搜索值
                             return;
                         } else if (result.size > 1) { // 查到多个商品，选择加入
                             _self.keyword_search_goods_list = result.goodsInfos;
@@ -108,6 +110,7 @@ var vm = new Vue({
                                             if (_goodsList[j].id == _id) {
                                                 _self.transferGoodsToItem(_goodsList[j]);
                                                 _self.addItemToGoodsList(1);
+                                                _self.goods_keyword = null; // 加入商品后清空搜索值
                                                 break;
                                             }
                                         }
@@ -203,6 +206,7 @@ var vm = new Vue({
             	this.check_list[i].profitLossAmountStr = 1 * this.check_list[i].stockDiff * this.check_list[i].averageImportPrice;
             }
             this.checked_count = this.check_list.length;
+            this.focus();
         },
         search: function() {
             var _self = this;
@@ -288,6 +292,9 @@ var vm = new Vue({
 			this.q.checkDateDown = dateFormater(getMonthStart(getLastMonthEnd(_now)));
 			this.q.checkDateUp = dateFormater(getLastMonthEnd(_now));
 		},
+        focus: function() { // 设置页面焦点
+        	$(".toFocus").focus();
+        }
     },
     mounted: function() {
 	    this.datetimepickerLoad();
