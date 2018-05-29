@@ -37,7 +37,7 @@ var vm = new Vue({
                 success: function(result) {
                     if (result.code == "00") {
                     	if(isBlank(result.memberIntegral)) {
-                    		layer.alert('还没有设置会员积分规则，请设置');
+                    		layer.msg('还没有设置会员积分规则，请设置');
                     	} else {
                     		_self.memberIntegral = result.memberIntegral;
                     		delete _self.memberIntegral.gmtCreate;
