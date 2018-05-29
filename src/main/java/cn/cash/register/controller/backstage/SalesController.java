@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +30,7 @@ import cn.cash.register.dao.domain.SalesBasicFacts;
 import cn.cash.register.service.ExchangeJobService;
 import cn.cash.register.service.SalesService;
 import cn.cash.register.util.AssertUtil;
+import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -39,11 +42,13 @@ import cn.cash.register.util.ResultSet;
 @RequestMapping(value = "/admin/sales")
 public class SalesController {
 
-    @Resource
-    private ExchangeJobService exchangeJobService;
+    private static final Logger logger = LoggerFactory.getLogger(SalesController.class);
 
     @Resource
-    private SalesService       salesService;
+    private ExchangeJobService  exchangeJobService;
+
+    @Resource
+    private SalesService        salesService;
 
     /**
      * 查询交接班记录
@@ -82,7 +87,9 @@ public class SalesController {
     @ResponseBody
     @RequestMapping(value = "/querySalesAmountByTime")
     public ResultSet querySalesAmountByTime(SalesAmountQueryRequest request) {
+        LogUtil.info(logger, "收到查询营业报表请求,request={0}", request);
         JSONArray ret = salesService.querySalesAmountByTime(request);
+        LogUtil.info(logger, "查询营业报表请求结果,ret={0}", ret);
         return ResultSet.success().put("ret", ret);
     }
 
