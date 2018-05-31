@@ -43,7 +43,6 @@
 	            <table class="table table-bordered tableStyle">
 	            	<thead>
 	            		<th>序号</th>
-	            		<th>操作</th>
 	            		<th>报损时间</th>
 	            		<th>报损门店</th>
 	            		<th>报损金额</th>
@@ -53,11 +52,10 @@
 	            	</thead>
 	            	<tbody>
 	            		<tr v-for="(goodsLose, index) in goodsLoseList">
-	            			<td>{{index}}</td>
-	            			<td><a class="btn btn-link" href="javascript: void(0);">操作</a></td>
+	            			<td>{{index+1}}</td>
 	            			<td>{{goodsLose.gmtCreate}}</td>
 	            			<td>{{goodsLose.shopName}}</td>
-	            			<td>{{goodsLose.totalLoseAmount}}</td>
+	            			<td>{{goodsLose.totalLoseAmount.amount}}</td>
 	            			<td>{{goodsLose.turnoverPercent}}</td>
 	            			<td>{{goodsLose.operatorNo}}</td>
 	            			<td>{{goodsLose.remark}}</td>
