@@ -228,7 +228,15 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public int updateMemIntegral(MemberIntegral integral) {
         LogUtil.info(logger, "收到修改会员积分方式请求");
-        return integralMapper.updateByPrimaryKeySelective(integral);
+        int result = integralMapper.updateByPrimaryKeySelective(integral);
+        if (result == 0) {//没有id为1的记录
+            integral.setId(1L);//只有一条记录
+            integral.setStatus(true);
+            integral.setExchangeType(false);
+            integral.setIntegralType(true);
+            return integralMapper.insert(integral);
+        }
+        return result;
     }
 
 }
