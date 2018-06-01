@@ -12,6 +12,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -37,6 +39,7 @@ import cn.cash.register.enums.SalesBasicFactsEnum;
 import cn.cash.register.enums.TimePeriodEnum;
 import cn.cash.register.service.SalesService;
 import cn.cash.register.util.AssertUtil;
+import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.Money;
 
 /**
@@ -46,6 +49,8 @@ import cn.cash.register.util.Money;
  */
 @Service
 public class SalesServiceImpl implements SalesService {
+
+    private static final Logger        logger = LoggerFactory.getLogger(SalesServiceImpl.class);
 
     @Resource
     private TradeDetailMapper          tradeDetailMapper;
@@ -180,6 +185,8 @@ public class SalesServiceImpl implements SalesService {
             charts = tradeDetailMapper.querySalesAmountByMonth(request);
         }
 
+        LogUtil.info(logger, "[service]查询营业报表结果charts={0}", charts);
+
         JSONArray jsonArray = new JSONArray();
         for (SalesAmountChart chart : charts) {
             JSONObject jsonObj = new JSONObject();
@@ -188,6 +195,7 @@ public class SalesServiceImpl implements SalesService {
             jsonObj.put("profitAmount", chart.getProfitAmount());
             jsonObj.put("goodsCount", chart.getGoodsCount());
             jsonObj.put("profitRate", chart.getProfitRate());
+            jsonArray.add(jsonObj);
         }
 
         return jsonArray;

@@ -18,6 +18,6 @@ public interface GoodsLoseInfoMapper {
 
     int updateByPrimaryKey(GoodsLoseInfo record);
 
-    List<GoodsLoseInfo> query(GoodsLoseInfoQueryRequest request);
+    List<GoodsLoseInfo> queryAll(GoodsLoseInfoQueryRequest request);
 
 }

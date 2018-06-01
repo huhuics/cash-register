@@ -70,7 +70,7 @@ public class GoodsLoseServiceImpl implements GoodsLoseService {
 
     @Override
     public List<GoodsLoseInfo> queryAllLoseInfo(GoodsLoseInfoQueryRequest request) {
-        return infoMapper.query(request);
+        return infoMapper.queryAll(request);
     }
 
     private GoodsLoseInfo convert(GoodsLoseInfoAddRequest request) {

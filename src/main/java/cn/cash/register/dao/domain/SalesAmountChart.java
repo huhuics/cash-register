@@ -25,7 +25,7 @@ public class SalesAmountChart extends BaseDomain {
 
     private Money             profitAmount;
 
-    private Money             goodsCount;
+    private Integer           goodsCount;
 
     /**
      * 毛利率
@@ -56,11 +56,11 @@ public class SalesAmountChart extends BaseDomain {
         this.profitAmount = profitAmount;
     }
 
-    public Money getGoodsCount() {
+    public Integer getGoodsCount() {
         return goodsCount;
     }
 
-    public void setGoodsCount(Money goodsCount) {
+    public void setGoodsCount(Integer goodsCount) {
         this.goodsCount = goodsCount;
     }
 

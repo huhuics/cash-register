@@ -55,6 +55,8 @@ public class GoodsLoseController {
     @ResponseBody
     @RequestMapping("/queryAllLoseInfo")
     public ResultSet queryAllLoseInfo(GoodsLoseInfoQueryRequest request) {
+        LogUtil.info(logger, "收到查询商品报损请求,request={0}", request);
+
         List<GoodsLoseInfo> loseInfos = loseService.queryAllLoseInfo(request);
         return ResultSet.success().put("loseInfos", loseInfos);
     }

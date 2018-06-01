@@ -49,7 +49,6 @@ pageEncoding="UTF-8"%>
             <div style="width: 100%">
                 <table class="table table-bordered tableStyle">
                     <thead>
-                        <th></th>
                         <th>时间</th>
                         <th>实收总金额</th>
                         <th>利润</th>
@@ -62,7 +61,7 @@ pageEncoding="UTF-8"%>
                             <td><span v-if="item.totalActualAmount != null">{{item.totalActualAmount.amount}}</span></td>
                             <td><span v-if="item.profitAmount != null">{{item.profitAmount.amount}}</span></td>
                             <td>{{item.goodsCount}}</td>
-                            <td>{{item.profitRate}}</td>
+                            <td>{{item.profitRate}}&nbsp;%</td>
                         </tr>
                     </tbody>
                 </table>
