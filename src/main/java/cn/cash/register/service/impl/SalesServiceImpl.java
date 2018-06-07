@@ -153,6 +153,7 @@ public class SalesServiceImpl implements SalesService {
         balanceSalesFact.setUnionpay(balanceUnionpayAmount);
         balanceSalesFact.setAlipay(balanceAlipayAmount);
         balanceSalesFact.setWcpay(balanceWcpayAmount);
+        balanceSalesFact.setBalance(new Money()); // TODO 51于2018-6-7 15:12:35添加该行:避免该值为空导致可能的空指针
 
         factsMap.put(SalesBasicFactsEnum.balance.name(), balanceSalesFact);
 

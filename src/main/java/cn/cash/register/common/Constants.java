@@ -77,4 +77,14 @@ public class Constants {
     public static final String RECEIPT_WIDTH               = "RECEIPT_WIDTH";
 
     /*********************************end***********************************/
+
+    /**
+     * 导出数据时文件存储相对路径
+     */
+    public static final String EXPORT_FILE_RELATIVE_PATH   = "export-file-temp";
+
+    /**
+     * 导入数据时文件存储相对路径
+     */
+    public static final String IMPORT_FILE_RELATIVE_PATH   = "import-file-temp";
 }

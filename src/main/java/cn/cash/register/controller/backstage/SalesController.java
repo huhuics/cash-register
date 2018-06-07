@@ -4,10 +4,23 @@
  */
 package cn.cash.register.controller.backstage;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.Constants;
 import cn.cash.register.common.request.ExchangeJobQueryRequest;
 import cn.cash.register.common.request.SalesAmountQueryRequest;
 import cn.cash.register.common.request.SalesBasicFactsQueryRequest;
@@ -30,6 +44,8 @@ import cn.cash.register.dao.domain.SalesBasicFacts;
 import cn.cash.register.service.ExchangeJobService;
 import cn.cash.register.service.SalesService;
 import cn.cash.register.util.AssertUtil;
+import cn.cash.register.util.DateUtil;
+import cn.cash.register.util.ExcelUtil;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
@@ -69,6 +85,60 @@ public class SalesController {
         AssertUtil.assertNotNull(request, "查询参数不能为空");
         Map<String, SalesBasicFacts> basicFacts = salesService.queryBasicFacts(request);
         return ResultSet.success().put("basicFacts", basicFacts);
+    }
+
+    /**
+     * 导出营业概况
+     * @throws IOException 
+     */
+    @RequestMapping(value = "/exportBasicFacts")
+    public void exportBasicFacts(SalesBasicFactsQueryRequest request, HttpSession session, HttpServletResponse response) throws IOException {
+        AssertUtil.assertNotNull(request, "查询参数不能为空");
+        Map<String, SalesBasicFacts> basicFacts = salesService.queryBasicFacts(request);
+
+        // 根据查询结果在服务端生成excel文件
+        String filePath = session.getServletContext().getRealPath(Constants.EXPORT_FILE_RELATIVE_PATH) + File.separator;
+        String fileName = "营业概况导出_" + DateUtil.format(new Date(), DateUtil.msecFormat) + ".xlsx";
+        String sheetName = "营业概况";
+
+        List<List<String>> data = new ArrayList<List<String>>();
+        String[] filterRow = { "统计起始时间", request.getTimeDown(), "", "统计结束时间", request.getTimeUp() };
+        data.add(Arrays.asList(filterRow));
+        String[] theadRow = { "", "概况", "现金支付", "银联支付", "储值卡支付", "支付宝支付", "微信支付" };
+        data.add(Arrays.asList(theadRow));
+
+        Iterator<String> iterator = basicFacts.keySet().iterator();
+        while (iterator.hasNext()) {
+            List<String> _row = new ArrayList<String>();
+            String _key = iterator.next();
+            _row.add(_key);
+            SalesBasicFacts _obj = basicFacts.get(_key);
+            _row.add(_obj.getBasicFacts());
+            _row.add(_obj.getCash().toString());
+            _row.add(_obj.getUnionpay().toString());
+            _row.add(_obj.getBalance().toString());
+            _row.add(_obj.getAlipay().toString());
+            _row.add(_obj.getWcpay().toString());
+            data.add(_row);
+        }
+        try {
+            ExcelUtil.createExcel(filePath, fileName, sheetName, data); // 文件成功生成在服务端
+        } catch (IOException e) {
+            LogUtil.error(e, logger, "文件生成失败");
+        }
+
+        // 返回生成文件
+        InputStream bis = new BufferedInputStream(new FileInputStream(new File(filePath, fileName))); // 获取输入流
+        fileName = URLEncoder.encode(fileName, "UTF-8"); // 转码，免得文件名中文乱码
+        response.addHeader("Content-Disposition", "attachment;filename=" + fileName); // 设置文件下载头
+        response.setContentType("multipart/form-data"); // 设置文件ContentType类型
+        BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+        int len = 0;
+        while ((len = bis.read()) != -1) {
+            out.write(len);
+            out.flush();
+        }
+        out.close();
     }
 
     /**

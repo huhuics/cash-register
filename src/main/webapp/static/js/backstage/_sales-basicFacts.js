@@ -23,7 +23,12 @@ var vm = new Vue({
                 }
             });
         },
-        exportSalesBasicFacts: function() {},
+        exportSalesBasicFacts: function() {
+        	var url = basePath + '/admin/sales/exportBasicFacts';
+        	url += '?timeUp=' + this.q.timeUp;
+        	url += '&timeDown=' + this.q.timeDown;
+        	window.location.href = url;
+        },
         datetimepickerLoad: function() {
         	var _self = this;
 			$('#datetimepickerAfter').datetimepicker({
