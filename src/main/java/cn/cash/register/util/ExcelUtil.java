@@ -32,7 +32,7 @@ public class ExcelUtil {
      * @throws IOException
      */
     public static void createExcel(String filePath, String fileName, String sheetName, List<List<String>> data) throws IOException {
-        LogUtil.info(logger, "开始创建excel文件{0}，所在目录filePath={1}", fileName, filePath);
+        LogUtil.info(logger, "开始创建excel文件[{0}]，所在目录filePath={1}", fileName, filePath);
 
         File dir = new File(filePath);
         dir.mkdirs();
@@ -58,7 +58,7 @@ public class ExcelUtil {
         out.close();
         workbook.close();
 
-        LogUtil.info(logger, "文件{0}创建成功.所在目录filePath={1}", fileName, filePath);
+        LogUtil.info(logger, "文件[{0}]创建成功.所在目录filePath={1}", fileName, filePath);
     }
 
 }
