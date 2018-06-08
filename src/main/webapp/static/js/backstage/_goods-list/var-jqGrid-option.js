@@ -131,7 +131,23 @@ var option = {
             srcformat: 'Y-m-d H:i:s',
             newformat: 'Y-m-d H:i:s'
         }
-    }],
+    },
+    {
+        label: '状态',
+        name: 'goodsStatus',
+        index: 'goods_Status',
+        width: 80,
+        formatter: function(value, options, row) {
+            if (value == '1') {
+                return '<span class="label label-success">启用</span>';
+            }
+            if (value == '0') {
+                return '<span class="label label-danger">禁用</span>';
+            }
+            return '未知状态:' + value;
+        }
+    }
+    ],
     viewrecords: true,
     height: "auto",
     width: "100%",
@@ -142,8 +158,8 @@ var option = {
     shrinkToFit: false,
     autowidth: true,
     multiselect: true,
-    sortname: "gmt_Update",
-    sortorder: "desc",
+    sortname: "id",
+    sortorder: "asc",
     pager: "#jqGridPager",
     jsonReader: {
         root: "page.list",

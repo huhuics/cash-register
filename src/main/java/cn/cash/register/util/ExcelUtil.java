@@ -3,6 +3,7 @@ package cn.cash.register.util;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -59,6 +60,23 @@ public class ExcelUtil {
         workbook.close();
 
         LogUtil.info(logger, "文件[{0}]创建成功.所在目录filePath={1}", fileName, filePath);
+    }
+
+    /**
+     * 处理Excel时单元格数据对象
+     * 
+     * @param obj
+     * @return
+     */
+    public static String obj2String(Object obj) {
+        if (null == obj) {
+            return "";
+        }
+        if (obj instanceof Date) {
+            return DateUtil.format((Date) obj, DateUtil.completeFormat);
+        }
+        return obj.toString();
+
     }
 
 }

@@ -4,9 +4,20 @@
  */
 package cn.cash.register.controller.backstage;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -37,6 +48,8 @@ import cn.cash.register.enums.SubSystemTypeEnum;
 import cn.cash.register.service.LogService;
 import cn.cash.register.service.MemberRechargeService;
 import cn.cash.register.service.MemberService;
+import cn.cash.register.util.DateUtil;
+import cn.cash.register.util.ExcelUtil;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
@@ -79,6 +92,68 @@ public class MemberController {
 
         LogUtil.info(logger, "[Controller]#会员列表查询#请求处理,pageInfo={0}", pageInfo);
         return ResultSet.success().put("page", pageInfo);
+    }
+
+    /**
+     * 会员资料导出
+     */
+    @RequestMapping(value = "/exportList")
+    public void exportList(MemberInfoQueryRequest request, HttpSession session, HttpServletResponse response) throws IOException {
+        LogUtil.info(logger, "[Controller]收到#导出会员资料列表#请求,request={0}", request);
+
+        PageInfo<MemberInfo> pageInfo = memberService.queryList(request);
+
+        // 根据查询结果在服务端生成excel文件
+        String filePath = session.getServletContext().getRealPath(Constants.EXPORT_FILE_RELATIVE_PATH) + File.separator;
+        String fileName = "会员资料导出_" + DateUtil.format(new Date(), DateUtil.msecFormat) + ".xlsx";
+        String sheetName = "会员资料";
+
+        List<List<String>> data = new ArrayList<List<String>>();
+        String[] filterRow = { "等级", request.getMemberRank(), "", "导购员", request.getShopperName(), "", "状态(true:启用;false:禁用)", request.isStatus() + "", "", "卡号/姓名/电话", request.getKeyword() };
+        data.add(Arrays.asList(filterRow));
+        String[] pageRow = { "当前页", pageInfo.getPageNum() + "/" + pageInfo.getPages(), "每页数量", pageInfo.getPageSize() + "", "总数", pageInfo.getTotal() + "" };
+        data.add(Arrays.asList(pageRow));
+        String[] theadRow = { "编号", "姓名", "等级", "折扣", "积分", "电话", "密码", "生日", "允许赊账(true:允许;false:不允许)", "QQ", "邮箱", "地址", "导购员", "备注", "状态(true:启用;false:禁用)" };
+        data.add(Arrays.asList(theadRow));
+
+        List<MemberInfo> list = pageInfo.getList();
+        for (MemberInfo _obj : list) {
+            List<String> _row = new ArrayList<String>();
+            _row.add(_obj.getMemberNo());
+            _row.add(_obj.getMemberName());
+            _row.add(_obj.getMemberRank());
+            _row.add(ExcelUtil.obj2String(_obj.getMemberDiscount()));
+            _row.add(ExcelUtil.obj2String(_obj.getMemberIntegral()));
+            _row.add(_obj.getPhone());
+            _row.add(_obj.getPassword());
+            _row.add(_obj.getBirthday());
+            _row.add(ExcelUtil.obj2String(_obj.getIsOnCredit()));
+            _row.add(_obj.getQqNo());
+            _row.add(_obj.getEmail());
+            _row.add(_obj.getAddress());
+            _row.add(_obj.getShopperName());
+            _row.add(_obj.getRemark());
+            _row.add(ExcelUtil.obj2String(_obj.getStatus()));
+            data.add(_row);
+        }
+        try {
+            ExcelUtil.createExcel(filePath, fileName, sheetName, data); // 文件成功生成在服务端
+        } catch (IOException e) {
+            LogUtil.error(e, logger, "文件生成失败");
+        }
+
+        // 返回生成文件
+        InputStream bis = new BufferedInputStream(new FileInputStream(new File(filePath, fileName))); // 获取输入流
+        fileName = URLEncoder.encode(fileName, "UTF-8"); // 转码，免得文件名中文乱码
+        response.addHeader("Content-Disposition", "attachment;filename=" + fileName); // 设置文件下载头
+        response.setContentType("multipart/form-data"); // 设置文件ContentType类型
+        BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+        int len = 0;
+        while ((len = bis.read()) != -1) {
+            out.write(len);
+            out.flush();
+        }
+        out.close();
     }
 
     /**

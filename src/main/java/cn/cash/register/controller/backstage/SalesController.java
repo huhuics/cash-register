@@ -114,11 +114,11 @@ public class SalesController {
             _row.add(_key);
             SalesBasicFacts _obj = basicFacts.get(_key);
             _row.add(_obj.getBasicFacts());
-            _row.add(_obj.getCash().toString());
-            _row.add(_obj.getUnionpay().toString());
-            _row.add(_obj.getBalance().toString());
-            _row.add(_obj.getAlipay().toString());
-            _row.add(_obj.getWcpay().toString());
+            _row.add(ExcelUtil.obj2String(_obj.getCash()));
+            _row.add(ExcelUtil.obj2String(_obj.getUnionpay()));
+            _row.add(ExcelUtil.obj2String(_obj.getBalance()));
+            _row.add(ExcelUtil.obj2String(_obj.getAlipay()));
+            _row.add(ExcelUtil.obj2String(_obj.getWcpay()));
             data.add(_row);
         }
         try {

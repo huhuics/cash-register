@@ -47,7 +47,7 @@ $(function() {
         rownumbers: true, rownumWidth: 45,
         shrinkToFit: true, autowidth: true,
         multiselect: true,
-        sortname: "gmt_Update", sortorder: "desc",
+        sortname: "id", sortorder: "asc",
         pager: "#jqGridPager",
         jsonReader: { root: "page.list", page: "page.pageNum", total: "page.pages", records: "page.total" },
         prmNames: { page: "pageNum", rows: "pageSize", order: "order" }
@@ -166,26 +166,6 @@ var vm = new Vue({
             });
         },
         del: function() {
-        	// 注释掉批量删除，只能一次删除一条记录
-//        	var memberIds = getSelectedRows();
-//        	if (isBlank(memberIds) || memberIds.length < 1) {
-//                return;
-//            }
-//        	var _self = this;
-//        	confirm("确定删除这" + memberIds.length + "个会员吗?", function() {
-//                $.ajax({
-//                    url: basePath + "/admin/member/deleteMemberInfo",
-//                    data: { 'idStr': memberIds + '' },
-//                    success: function(result) {
-//                        if (result.code == "00") {
-//                            layer.msg('删除成功');
-//                            _self.reloadPage();
-//                        } else {
-//                            layer.alert(result.msg);
-//                        }
-//                    }
-//                });
-//            });
         	var memberId = getSelectedRow();
         	if (isBlank(memberId)) {
                 return;
@@ -209,7 +189,19 @@ var vm = new Vue({
 
         },
         importMember: function() {},
-        exportMember: function() {},
+        exportMember: function() {
+        	var url = basePath + '/admin/member/exportList';
+        	url += '?pageNum=' + $('#jqGrid').getGridParam('page');
+        	url += '&pageSize=' + $('#jqGrid').getGridParam('rowNum');
+        	url += '&order=' + $('#jqGrid').getGridParam('sortorder');
+        	url += '&sidx=' + $('#jqGrid').getGridParam('sortname');
+        	if(!isBlank(this.q.memberRank)) url += '&memberRank=' + this.q.memberRank;
+        	if(!isBlank(this.q.shopperName)) url += '&shopperName=' + this.q.shopperName;
+        	if(!isBlank(this.q.status)) url += '&status=' + this.q.status;
+        	if(!isBlank(this.q.keyword)) url += '&keyword=' + this.q.keyword;
+        	
+        	window.location.href = url;
+        },
         resetMember: function() {
             this.member = cloneJsonObj(entity_member_info);
         },

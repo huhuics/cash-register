@@ -101,14 +101,14 @@ public class AdminTradeController {
         for (TradeDetail _obj : list) {
             List<String> _row = new ArrayList<String>();
             _row.add(_obj.getTradeNo());
-            _row.add(DateUtil.format(_obj.getTradeTime(), DateUtil.newFormat));
+            _row.add(ExcelUtil.obj2String(_obj.getTradeTime()));
             _row.add(_obj.getTradeType());
             _row.add(_obj.getSellerNo());
             _row.add(_obj.getMemberName());
-            _row.add(_obj.getGoodsCount().toString());
-            _row.add(_obj.getTotalAmount().toString());
-            _row.add(_obj.getTotalActualAmount().toString());
-            _row.add(_obj.getProfitAmount().toString());
+            _row.add(ExcelUtil.obj2String(_obj.getGoodsCount()));
+            _row.add(ExcelUtil.obj2String(_obj.getTotalAmount()));
+            _row.add(ExcelUtil.obj2String(_obj.getTotalActualAmount()));
+            _row.add(ExcelUtil.obj2String(_obj.getProfitAmount()));
             _row.add(_obj.getShopperNo());
             data.add(_row);
         }

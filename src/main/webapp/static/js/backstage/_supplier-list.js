@@ -194,7 +194,17 @@ var vm = new Vue({
         	});
         },
         importSupplier: function() {},
-        exportSupplier: function() {},
+        exportSupplier: function() {
+        	var url = basePath + '/admin/supplier/exportPage';
+        	url += '?pageNum=' + $('#jqGrid').getGridParam('page');
+        	url += '&pageSize=' + $('#jqGrid').getGridParam('rowNum');
+        	url += '&order=' + $('#jqGrid').getGridParam('sortorder');
+        	url += '&sidx=' + $('#jqGrid').getGridParam('sortname');
+        	if(!isBlank(this.q.status)) url += '&status=' + this.q.status;
+        	if(!isBlank(this.q.supplierName)) url += '&supplierName=' + this.q.supplierName;
+        	
+        	window.location.href = url;
+        },
         resetSupplier: function() {
             this.supplier = cloneJsonObj(entity_supplier_info);
         },

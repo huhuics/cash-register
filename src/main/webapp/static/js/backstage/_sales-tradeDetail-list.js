@@ -66,16 +66,16 @@ var vm = new Vue({
         },
         exportSalesTradeDetail: function() {
         	var url = basePath + '/admin/trade/exportTradeDetailList';
-        	url += '?sellerNo=' + this.q.sellerNo;
-        	url += '&payChenal=' + this.q.payChenal;
-        	url += '&tradeType=' + this.q.tradeType;
-        	url += '&tradeTimeUp=' + this.q.tradeTimeUp;
-        	url += '&tradeTimeDown=' + this.q.tradeTimeDown;
-        	if(!isBlank(this.q.tradeNo)) url += '&tradeNo=' + this.q.tradeNo;
-        	url += '&pageNum=' + $('#jqGrid').getGridParam('page');
+        	url += '?pageNum=' + $('#jqGrid').getGridParam('page');
         	url += '&pageSize=' + $('#jqGrid').getGridParam('rowNum');
         	url += '&order=' + $('#jqGrid').getGridParam('sortorder');
         	url += '&sidx=' + $('#jqGrid').getGridParam('sortname');
+        	if(!isBlank(this.q.sellerNo)) url += '&sellerNo=' + this.q.sellerNo;
+        	if(!isBlank(this.q.payChenal)) url += '&payChenal=' + this.q.payChenal;
+        	if(!isBlank(this.q.tradeType)) url += '&tradeType=' + this.q.tradeType;
+        	if(!isBlank(this.q.tradeTimeUp)) url += '&tradeTimeUp=' + this.q.tradeTimeUp;
+        	if(!isBlank(this.q.tradeTimeDown)) url += '&tradeTimeDown=' + this.q.tradeTimeDown;
+        	if(!isBlank(this.q.tradeNo)) url += '&tradeNo=' + this.q.tradeNo;
         	
         	window.location.href = url;
         },

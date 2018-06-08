@@ -342,7 +342,21 @@ var vm = new Vue({
             });
         },
         importGoods: function() {},
-        exportGoods: function() {},
+        exportGoods: function() {
+        	var url = basePath + '/admin/goods/exportGoodsInfo';
+        	url += '?pageNum=' + $('#jqGrid').getGridParam('page');
+        	url += '&pageSize=' + $('#jqGrid').getGridParam('rowNum');
+        	url += '&order=' + $('#jqGrid').getGridParam('sortorder');
+        	url += '&sidx=' + $('#jqGrid').getGridParam('sortname');
+        	if(!isBlank(this.q.goodsStatus)) url += '&goodsStatus=' + this.q.goodsStatus;
+        	if(!isBlank(this.q.goodsBrand)) url += '&goodsBrand=' + this.q.goodsBrand;
+        	if(!isBlank(this.q.categoryName)) url += '&categoryName=' + this.q.categoryName;
+        	if(!isBlank(this.q.supplierName)) url += '&supplierName=' + this.q.supplierName;
+        	if(!isBlank(this.q.goodsTag)) url += '&goodsTag=' + this.q.goodsTag;
+        	if(!isBlank(this.q.keyword)) url += '&keyword=' + this.q.keyword;
+        	
+        	window.location.href = url;
+        },
         getBarCode: function() {
             var _self = this;
             $.ajax({
