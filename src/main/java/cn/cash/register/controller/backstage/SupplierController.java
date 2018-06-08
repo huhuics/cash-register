@@ -20,12 +20,15 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageInfo;
 
@@ -33,6 +36,7 @@ import cn.cash.register.common.Constants;
 import cn.cash.register.common.request.SupplierQueryRequest;
 import cn.cash.register.dao.domain.SupplierInfo;
 import cn.cash.register.service.SupplierService;
+import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.DateUtil;
 import cn.cash.register.util.ExcelUtil;
 import cn.cash.register.util.LogUtil;
@@ -124,6 +128,72 @@ public class SupplierController {
             out.flush();
         }
         out.close();
+    }
+
+    /**
+     * 导入供货商
+     *
+     * @param file
+     * @return
+     * @throws IOException 
+     */
+    @ResponseBody
+    @PostMapping(value = "/importList")
+    public ResultSet importList(MultipartFile file, HttpSession session) {
+        LogUtil.info(logger, "收到供货商资料导入请求");
+        AssertUtil.assertNotNull(file, "系统异常:上传文件对象为空");
+
+        // 1.接收文件
+        String path = session.getServletContext().getRealPath(Constants.IMPORT_FILE_RELATIVE_PATH);
+        String fileName = file.getOriginalFilename();
+        LogUtil.info(logger, "文件上传请求:fileName={0}", fileName);
+
+        File destinationFile = new File(path, fileName);
+        if (!destinationFile.exists()) {
+            destinationFile.mkdirs();
+        }
+
+        try {
+            //MultipartFile自带的解析方法
+            file.transferTo(destinationFile);
+            LogUtil.info(logger, "文件上传成功,保存路径:path={0}", path);
+        } catch (IllegalStateException | IOException e) {
+            LogUtil.error(e, logger, "文件上传异常");
+            return ResultSet.error("文件上传异常");
+        }
+
+        // 2.读取数据
+        List<SupplierInfo> suppliers = null;
+        try {
+            List<List<String>> excelData = ExcelUtil.readExcel(destinationFile, 11); // 供货商信息共有11列
+            AssertUtil.assertTrue(CollectionUtils.isNotEmpty(excelData), "未读取到任何信息");
+            suppliers = supplierService.transfer2SupplierInfo(excelData);
+        } catch (IOException e) {
+            LogUtil.error(e, logger, "文件读取异常");
+            return ResultSet.error("文件读取异常");
+        }
+
+        // 3.存储数据
+        int successCount = 0;
+        int failCount = 0;
+        String failInfo = "";
+        for (SupplierInfo _supplier : suppliers) {
+            LogUtil.info(logger, "[Controller]#导入供货商#,supplierInfo={0}", _supplier);
+            try {
+                supplierService.add(_supplier);
+                successCount++;
+            } catch (Exception e) {
+                failCount++;
+                failInfo = failInfo + "【" + _supplier.toString() + "】";
+            }
+        }
+
+        String resultInfo = "成功导入" + successCount + "条供货商信息";
+        if (failCount > 0) {
+            resultInfo += (",以下" + failCount + "条导入失败:" + failInfo);
+        }
+
+        return ResultSet.success(resultInfo);
     }
 
     /**

@@ -193,7 +193,34 @@ var vm = new Vue({
         		}
         	});
         },
-        importSupplier: function() {},
+        importSupplier: function() {
+        	document.getElementById("fileInput").value = '';
+        	var _self = this;
+        	layer.open({
+                type: 1, skin: 'layui-layer-lan', shadeClose: false, title: "导入供货商", area: '600px',
+                content: jQuery("#fileUploadDiv"),
+                btn: ['导入', '取消'],
+                btn1: function(index) {
+                	var formData = new FormData();
+                    formData.append("file", document.getElementById("fileInput").files[0]);
+                    $.ajax({
+                        url: basePath + '/admin/supplier/importList',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(result) {
+                            if (result.code == "00") {
+                                layer.alert(result.msg);
+                                layer.close(index);
+                            } else {
+                                layer.alert(result.msg);
+                            }
+                            _self.reloadPage();
+                        }
+                    });
+                }
+            });
+        },
         exportSupplier: function() {
         	var url = basePath + '/admin/supplier/exportPage';
         	url += '?pageNum=' + $('#jqGrid').getGridParam('page');

@@ -134,6 +134,8 @@
             </form>
         </div>
         <!-- /添加或更新供货商 -->
+        
+        <%@ include file="./common/_file-upload.jsp" %>
     </div>
     <script src="${ctx}/static/js/backstage/_supplier-list.js"></script>
 </body>

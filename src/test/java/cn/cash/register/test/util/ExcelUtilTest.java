@@ -4,6 +4,7 @@
  */
 package cn.cash.register.test.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cash.register.util.ExcelUtil;
+import cn.cash.register.util.LogUtil;
 
 /**
  * ExcelUtilTest
@@ -26,7 +28,7 @@ public class ExcelUtilTest {
     private static final Logger logger = LoggerFactory.getLogger(ExcelUtilTest.class);
 
     @Test
-    public void testCreateFile() throws IOException {
+    public void testCreateExcel() throws IOException {
         String filePath = "E:\\testPath";
         String fileName = "test2.xlsx";
         String sheetName = "工作簿1";
@@ -39,6 +41,14 @@ public class ExcelUtilTest {
         data.add(row2);
 
         ExcelUtil.createExcel(filePath, fileName, sheetName, data);
+    }
+
+    @Test
+    public void testReadExcel() throws IOException {
+        String filePath = "E:\\testPath";
+        String fileName = "供货商信息导入.xlsx";
+
+        LogUtil.info(logger, "读取结果:{0}", ExcelUtil.readExcel(new File(filePath, fileName), 11));
     }
 
 }

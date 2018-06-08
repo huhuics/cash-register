@@ -124,4 +124,13 @@ public interface MemberService {
      */
     int updateMemIntegral(MemberIntegral integral);
 
+    /****************************会员导入相关接口****************************/
+    /**
+     * 将从Excel读取的会员转换为会员信息
+     * 
+     * @param excelData
+     * @return
+     */
+    List<MemberInfo> transfer2MemberInfo(List<List<String>> excelData);
+
 }

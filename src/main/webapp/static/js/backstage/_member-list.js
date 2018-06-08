@@ -188,7 +188,34 @@ var vm = new Vue({
             });
 
         },
-        importMember: function() {},
+        importMember: function() {
+        	document.getElementById("fileInput").value = '';
+        	var _self = this;
+        	layer.open({
+                type: 1, skin: 'layui-layer-lan', shadeClose: false, title: "导入会员", area: '600px',
+                content: jQuery("#fileUploadDiv"),
+                btn: ['导入', '取消'],
+                btn1: function(index) {
+                	var formData = new FormData();
+                    formData.append("file", document.getElementById("fileInput").files[0]);
+                    $.ajax({
+                        url: basePath + '/admin/member/importList',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(result) {
+                            if (result.code == "00") {
+                                layer.alert(result.msg);
+                                layer.close(index);
+                            } else {
+                                layer.alert(result.msg);
+                            }
+                            _self.reloadPage();
+                        }
+                    });
+                }
+            });
+        },
         exportMember: function() {
         	var url = basePath + '/admin/member/exportList';
         	url += '?pageNum=' + $('#jqGrid').getGridParam('page');
