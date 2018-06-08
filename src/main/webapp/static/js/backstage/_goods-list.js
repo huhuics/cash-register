@@ -341,7 +341,34 @@ var vm = new Vue({
                 });
             });
         },
-        importGoods: function() {},
+        importGoods: function() {
+        	document.getElementById("fileInput").value = '';
+        	var _self = this;
+        	layer.open({
+                type: 1, skin: 'layui-layer-lan', shadeClose: false, title: "导入商品", area: '600px',
+                content: jQuery("#fileUploadDiv"),
+                btn: ['导入', '取消'],
+                btn1: function(index) {
+                	var formData = new FormData();
+                    formData.append("file", document.getElementById("fileInput").files[0]);
+                    $.ajax({
+                        url: basePath + '/admin/goods/importGoodsInfo',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(result) {
+                            if (result.code == "00") {
+                                layer.alert(result.msg);
+                                layer.close(index);
+                            } else {
+                                layer.alert(result.msg);
+                            }
+                            _self.reloadPage();
+                        }
+                    });
+                }
+            });
+        },
         exportGoods: function() {
         	var url = basePath + '/admin/goods/exportGoodsInfo';
         	url += '?pageNum=' + $('#jqGrid').getGridParam('page');

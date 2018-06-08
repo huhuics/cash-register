@@ -26,8 +26,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
@@ -156,6 +158,49 @@ public class GoodsInfoController {
             out.flush();
         }
         out.close();
+    }
+
+    /**
+     * 商品资料导入
+     *
+     * @param file
+     * @return
+     * @throws IOException 
+     */
+    @ResponseBody
+    @PostMapping(value = "/importGoodsInfo")
+    public ResultSet importGoodsInfo(MultipartFile file, HttpSession session) {
+        LogUtil.info(logger, "收到商品资料导入请求");
+        AssertUtil.assertNotNull(file, "系统异常:上传文件对象为空");
+
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_ADMIN);
+
+        // 1.接收文件
+        String path = session.getServletContext().getRealPath(Constants.IMPORT_FILE_RELATIVE_PATH);
+        String fileName = file.getOriginalFilename();
+        LogUtil.info(logger, "文件上传请求:fileName={0}", fileName);
+
+        File destinationFile = new File(path, fileName);
+        if (!destinationFile.exists()) {
+            destinationFile.mkdirs();
+        }
+
+        try {
+            //MultipartFile自带的解析方法
+            file.transferTo(destinationFile);
+            LogUtil.info(logger, "文件上传成功,保存路径:path={0}", path);
+        } catch (IllegalStateException | IOException e) {
+            LogUtil.error(e, logger, "文件上传异常");
+            return ResultSet.error("文件上传异常");
+        }
+
+        // 2.读取数据
+        // TODO 读取商品数据
+
+        // 3.存储数据
+        // TODO 存储商品数据
+
+        return ResultSet.error("文件上传成功，导入数据功能待开发");
     }
 
     /**
