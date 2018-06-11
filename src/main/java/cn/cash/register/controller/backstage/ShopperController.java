@@ -22,6 +22,7 @@ import cn.cash.register.common.request.ShopperInfoQueryRequest;
 import cn.cash.register.dao.domain.ShopperInfo;
 import cn.cash.register.dao.domain.TradeGoodsDetail;
 import cn.cash.register.service.ShopperInfoService;
+import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -78,6 +79,7 @@ public class ShopperController {
     @ResponseBody
     @RequestMapping(value = "deleteById", method = RequestMethod.POST)
     public ResultSet deleteById(Long id) {
+        LogUtil.info(logger, "删除导购员,id={0}", id);
         int ret = shopperInfoService.delete(id);
         return ResultSet.success().put("ret", ret);
     }

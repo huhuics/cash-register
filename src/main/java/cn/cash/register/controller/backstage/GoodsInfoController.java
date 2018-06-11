@@ -100,6 +100,7 @@ public class GoodsInfoController {
     /**
      * 导出商品资料列表
      */
+    @SuppressWarnings("resource")
     @RequestMapping(value = "/exportGoodsInfo")
     public void exportGoodsInfo(GoodsInfoQueryRequest request, HttpSession session, HttpServletResponse response) throws IOException {
         PageInfo<GoodsInfo> queryList = goodsInfoService.queryList(request);
@@ -173,8 +174,6 @@ public class GoodsInfoController {
         LogUtil.info(logger, "收到商品资料导入请求");
         AssertUtil.assertNotNull(file, "系统异常:上传文件对象为空");
 
-        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_ADMIN);
-
         // 1.接收文件
         String path = session.getServletContext().getRealPath(Constants.IMPORT_FILE_RELATIVE_PATH);
         String fileName = file.getOriginalFilename();
@@ -195,12 +194,20 @@ public class GoodsInfoController {
         }
 
         // 2.读取数据
-        // TODO 读取商品数据
+        // 商品的导入直接复用辉哥的service接口: cn.cash.register.service.GoodsInfoService.inport(GoodsInfoInportRequest)，故不需要在这里进行转化
 
         // 3.存储数据
-        // TODO 存储商品数据
+        GoodsInfoInportRequest importRequest = new GoodsInfoInportRequest();
+        importRequest.setFileFullPath(destinationFile.getAbsolutePath()); // 上传的文件
+        // TODO 51 请求值的设置是否需要提供前端的输入？
+        importRequest.setIsAutoCreateBrand(true);
+        importRequest.setIsAutoCreateCategory(true);
+        importRequest.setIsAutoCreateUnit(true);
+        importRequest.setIsExistUpdate(true);
 
-        return ResultSet.error("文件上传成功，导入数据功能待开发");
+        goodsInfoService.inport(importRequest);
+
+        return ResultSet.success("数据导入成功");
     }
 
     /**

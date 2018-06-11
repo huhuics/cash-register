@@ -77,6 +77,7 @@ public class SupplierController {
     /**
      * 分页导出供货商
      */
+    @SuppressWarnings("resource")
     @RequestMapping(value = "/exportPage")
     public void exportSupplierByList(SupplierQueryRequest request, HttpSession session, HttpServletResponse response) throws IOException {
         PageInfo<SupplierInfo> supplierList = supplierService.queryList(request);

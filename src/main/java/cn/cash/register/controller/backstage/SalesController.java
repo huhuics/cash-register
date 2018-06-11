@@ -91,6 +91,7 @@ public class SalesController {
      * 导出营业概况
      * @throws IOException 
      */
+    @SuppressWarnings("resource")
     @RequestMapping(value = "/exportBasicFacts")
     public void exportBasicFacts(SalesBasicFactsQueryRequest request, HttpSession session, HttpServletResponse response) throws IOException {
         AssertUtil.assertNotNull(request, "查询参数不能为空");

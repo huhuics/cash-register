@@ -79,6 +79,7 @@ public class AdminTradeController {
     /**
      * 销售单据分页导出
      */
+    @SuppressWarnings("resource")
     @RequestMapping(value = "/exportTradeDetailList")
     public void exportTradeDetailList(TradeDetailQueryRequest request, HttpSession session, HttpServletResponse response) throws IOException {
         PageInfo<TradeDetail> tradeDetail = tradeService.queryTradeDetailList(request);

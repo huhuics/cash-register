@@ -100,6 +100,7 @@ public class MemberController {
     /**
      * 会员资料导出
      */
+    @SuppressWarnings("resource")
     @RequestMapping(value = "/exportList")
     public void exportList(MemberInfoQueryRequest request, HttpSession session, HttpServletResponse response) throws IOException {
         LogUtil.info(logger, "[Controller]收到#导出会员资料列表#请求,request={0}", request);

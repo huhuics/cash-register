@@ -108,6 +108,7 @@ public class GoodsTrafficController {
     /**
      * 货流导出
      */
+    @SuppressWarnings("resource")
     @RequestMapping(value = "/exportPage")
     public void exportPage(GoodsTrafficQueryRequest request, HttpSession session, HttpServletResponse response) throws IOException {
         PageInfo<GoodsTraffic> traffics = trafficService.queryList(request);
