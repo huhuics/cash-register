@@ -137,3 +137,11 @@ form.layerForm {
 	font-size: 12px;
 	font-family: "Microsoft YaHei";
 }
+
+.exchangeJobRow {
+	height: 50px;
+	line-height: 50px;
+	padding: 0;
+	margin-bottom: 12px;
+	border: 1px solid #009933;
+}

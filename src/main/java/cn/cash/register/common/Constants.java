@@ -14,6 +14,11 @@ public class Constants {
     public static final String LOGIN_FLAG_SELLER           = "seller";
 
     /**
+     * 收银员登录后存入session中的登录时间字段
+     */
+    public static final String SELLER_LOGIN_TIME           = "seller_login_time";
+
+    /**
      * 管理员登录后存入session中的用户字段
      */
     public static final String LOGIN_FLAG_ADMIN            = "admin";

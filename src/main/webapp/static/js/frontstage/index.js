@@ -11,6 +11,8 @@ var vm = new Vue({
     el:'#app',
     data:{
     	iframeSrc : "cashRegister",
+    	loginTime: null, // 登陆时间
+    	exchangeJobTime: null, // 交接班时间
     },
     methods: {
     	menuClick : function(url) {
@@ -27,14 +29,31 @@ var vm = new Vue({
 			vm.navTitle = $currentA.text();
 		},
         exchangeJob: function() {
-            $.ajax({
-                url: basePath + '/cashier/logout',
+        	this.exchangeJobTime = dateFormater(new Date());
+        	var _self = this;
+        	// 加载交接班信息
+        	$.ajax({
+                url: basePath + '/cashier/exchangeJobInfo',
                 success: function(result) {
-                    if (result.code == "00") {
-                        window.location.href = basePath + '/toCashierLogin';
-                    } else {
-                        layer.alert('系统错误：' + result.msg);
-                    }
+                	_self.loginTime = result.loginTime;
+                	// TODO 其它交接班信息
+                }
+            });
+        	layer.open({
+                type: 1, skin: 'layui-layer-lan', shadeClose: false, title: "交接班", area: '600px',
+                content: jQuery("#exchangeJobDiv"),
+                btn: ['交接班并登出', '返回'],
+                btn1: function(index) {
+                	$.ajax({
+                        url: basePath + '/cashier/logout',
+                        success: function(result) {
+                            if (result.code == "00") {
+                                window.location.href = basePath + '/toCashierLogin';
+                            } else {
+                                layer.alert('系统错误：' + result.msg);
+                            }
+                        }
+                    });
                 }
             });
         }

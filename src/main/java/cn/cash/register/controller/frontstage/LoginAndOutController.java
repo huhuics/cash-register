@@ -4,6 +4,8 @@
  */
 package cn.cash.register.controller.frontstage;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -23,6 +25,7 @@ import cn.cash.register.service.ExchangeJobService;
 import cn.cash.register.service.LogService;
 import cn.cash.register.service.SellerInfoService;
 import cn.cash.register.util.AssertUtil;
+import cn.cash.register.util.DateUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -72,6 +75,7 @@ public class LoginAndOutController {
         // 删除可能存在session中的记录
         session.removeAttribute(Constants.LOGIN_FLAG_SELLER);
         session.removeAttribute(Constants.CURRENT_JOB_ID);
+        session.removeAttribute(Constants.SELLER_LOGIN_TIME);
 
         // 校验登录用户名密码
         SellerInfo seller = sellerInfoService.login(sellerNo, password);
@@ -82,9 +86,22 @@ public class LoginAndOutController {
         // 放入session
         session.setAttribute(Constants.LOGIN_FLAG_SELLER, seller);
         session.setAttribute(Constants.CURRENT_JOB_ID, exchangeJobId);
+        session.setAttribute(Constants.SELLER_LOGIN_TIME, DateUtil.format(new Date(), DateUtil.newFormat));
 
         logService.record(LogSourceEnum.front, SubSystemTypeEnum.employee, sellerNo, "登录收银台");
         return ResultSet.success().put("seller", seller).put("exchangeJobId", exchangeJobId);
+    }
+
+    /**
+     * 收银员登出前查询交接班信息
+     */
+    @ResponseBody
+    @RequestMapping(value = "/cashier/exchangeJobInfo")
+    public ResultSet exchangeJobInfo(HttpSession session) {
+        // 查询交接班时的统计信息
+        String loginTime = (String) session.getAttribute(Constants.SELLER_LOGIN_TIME); // 登录时间
+        // TODO 其它需要在交接班时显示的信息
+        return ResultSet.success().put("loginTime", loginTime).put("info1", "").put("info2", "");
     }
 
     /**
