@@ -4,10 +4,20 @@
  */
 package cn.cash.register.controller.backstage;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.ConvertUtils;
@@ -16,8 +26,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
@@ -38,6 +50,8 @@ import cn.cash.register.printer.LabelPrintService;
 import cn.cash.register.service.GoodsInfoService;
 import cn.cash.register.service.LogService;
 import cn.cash.register.util.AssertUtil;
+import cn.cash.register.util.DateUtil;
+import cn.cash.register.util.ExcelUtil;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.NumUtil;
 import cn.cash.register.util.PinyinUtil;
@@ -81,6 +95,119 @@ public class GoodsInfoController {
     public ResultSet queryGoodsInfoList(GoodsInfoQueryRequest request) {
         PageInfo<GoodsInfo> queryList = goodsInfoService.queryList(request);
         return ResultSet.success().put("page", queryList);
+    }
+
+    /**
+     * 导出商品资料列表
+     */
+    @SuppressWarnings("resource")
+    @RequestMapping(value = "/exportGoodsInfo")
+    public void exportGoodsInfo(GoodsInfoQueryRequest request, HttpSession session, HttpServletResponse response) throws IOException {
+        PageInfo<GoodsInfo> queryList = goodsInfoService.queryList(request);
+
+        // 根据查询结果在服务端生成excel文件
+        String filePath = session.getServletContext().getRealPath(Constants.EXPORT_FILE_RELATIVE_PATH) + File.separator;
+        String fileName = "商品信息导出_" + DateUtil.format(new Date(), DateUtil.msecFormat) + ".xlsx";
+        String sheetName = "商品资料";
+
+        List<List<String>> data = new ArrayList<List<String>>();
+        String[] filterRow = { "状态(true:启用;false:禁用)", ExcelUtil.obj2String(request.getGoodsStatus()), "", "品牌", request.getGoodsBrand(), "", "分类", request.getCategoryName(), "", "标签",
+                               request.getGoodsTag(), "", "供货商", request.getSupplierName(), "", "条码/拼音码/商品名称", request.getKeyword() };
+        data.add(Arrays.asList(filterRow));
+        String[] pageRow = { "当前页", queryList.getPageNum() + "/" + queryList.getPages(), "每页数量", queryList.getPageSize() + "", "总数", queryList.getTotal() + "" };
+        data.add(Arrays.asList(pageRow));
+        String[] theadRow = { "商品名称", "条码", "货号", "拼音码", "分类", "库存", "主单位", "进货价", "销售价", "批发价", "会员价", "会员折扣(true:是;false:否)", "供货商", "生产日期", "保质期", "创建日期", "状态(true:启用;false:禁用)" };
+        data.add(Arrays.asList(theadRow));
+
+        List<GoodsInfo> list = queryList.getList();
+        for (GoodsInfo _obj : list) {
+            List<String> _row = new ArrayList<String>();
+            _row.add(_obj.getGoodsName());
+            _row.add(_obj.getBarCode());
+            _row.add(_obj.getProductNumber());
+            _row.add(_obj.getPinyinCode());
+            _row.add(_obj.getCategoryName());
+            _row.add(ExcelUtil.obj2String(_obj.getGoodsStock()));
+            _row.add(_obj.getQuantityUnit());
+            _row.add(ExcelUtil.obj2String(_obj.getAverageImportPrice()));
+            _row.add(ExcelUtil.obj2String(_obj.getSalesPrice()));
+            _row.add(ExcelUtil.obj2String(_obj.getTradePrice()));
+            _row.add(ExcelUtil.obj2String(_obj.getVipPrice()));
+            _row.add(ExcelUtil.obj2String(_obj.getIsVipDiscount()));
+            _row.add(_obj.getSupplierName());
+            _row.add(_obj.getProductionDate());
+            _row.add(ExcelUtil.obj2String(_obj.getQualityGuaranteePeriod()));
+            _row.add(ExcelUtil.obj2String(_obj.getGmtCreate()));
+            _row.add(ExcelUtil.obj2String(_obj.getGoodsStatus()));
+            data.add(_row);
+        }
+        try {
+            ExcelUtil.createExcel(filePath, fileName, sheetName, data); // 文件成功生成在服务端
+        } catch (IOException e) {
+            LogUtil.error(e, logger, "文件生成失败");
+        }
+
+        // 返回生成文件
+        InputStream bis = new BufferedInputStream(new FileInputStream(new File(filePath, fileName))); // 获取输入流
+        fileName = URLEncoder.encode(fileName, "UTF-8"); // 转码，免得文件名中文乱码
+        response.addHeader("Content-Disposition", "attachment;filename=" + fileName); // 设置文件下载头
+        response.setContentType("multipart/form-data"); // 设置文件ContentType类型
+        BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+        int len = 0;
+        while ((len = bis.read()) != -1) {
+            out.write(len);
+            out.flush();
+        }
+        out.close();
+    }
+
+    /**
+     * 商品资料导入
+     *
+     * @param file
+     * @return
+     * @throws IOException 
+     */
+    @ResponseBody
+    @PostMapping(value = "/importGoodsInfo")
+    public ResultSet importGoodsInfo(MultipartFile file, HttpSession session) {
+        LogUtil.info(logger, "收到商品资料导入请求");
+        AssertUtil.assertNotNull(file, "系统异常:上传文件对象为空");
+
+        // 1.接收文件
+        String path = session.getServletContext().getRealPath(Constants.IMPORT_FILE_RELATIVE_PATH);
+        String fileName = file.getOriginalFilename();
+        LogUtil.info(logger, "文件上传请求:fileName={0}", fileName);
+
+        File destinationFile = new File(path, fileName);
+        if (!destinationFile.exists()) {
+            destinationFile.mkdirs();
+        }
+
+        try {
+            //MultipartFile自带的解析方法
+            file.transferTo(destinationFile);
+            LogUtil.info(logger, "文件上传成功,保存路径:path={0}", path);
+        } catch (IllegalStateException | IOException e) {
+            LogUtil.error(e, logger, "文件上传异常");
+            return ResultSet.error("文件上传异常");
+        }
+
+        // 2.读取数据
+        // 商品的导入直接复用辉哥的service接口: cn.cash.register.service.GoodsInfoService.inport(GoodsInfoInportRequest)，故不需要在这里进行转化
+
+        // 3.存储数据
+        GoodsInfoInportRequest importRequest = new GoodsInfoInportRequest();
+        importRequest.setFileFullPath(destinationFile.getAbsolutePath()); // 上传的文件
+        // TODO 51 请求值的设置是否需要提供前端的输入？
+        importRequest.setIsAutoCreateBrand(true);
+        importRequest.setIsAutoCreateCategory(true);
+        importRequest.setIsAutoCreateUnit(true);
+        importRequest.setIsExistUpdate(true);
+
+        goodsInfoService.inport(importRequest);
+
+        return ResultSet.success("数据导入成功");
     }
 
     /**

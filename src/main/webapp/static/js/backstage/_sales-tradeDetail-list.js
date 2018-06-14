@@ -30,7 +30,7 @@ $(function() {
         rownumbers: true, rownumWidth: 45,
         shrinkToFit: true, autowidth: true,
         multiselect: true,
-        sortname: "gmt_Update", sortorder: "desc",
+        sortname: "id", sortorder: "asc",
         pager: "#jqGridPager",
         jsonReader: { root: "page.list", page: "page.pageNum", total: "page.pages", records: "page.total" },
         prmNames: { page: "pageNum", rows: "pageSize", order: "order" },
@@ -64,7 +64,21 @@ var vm = new Vue({
             this.q.tradeNo = null;
             this.reloadPage();
         },
-        exportSalesTradeDetail: function() {},
+        exportSalesTradeDetail: function() {
+        	var url = basePath + '/admin/trade/exportTradeDetailList';
+        	url += '?pageNum=' + $('#jqGrid').getGridParam('page');
+        	url += '&pageSize=' + $('#jqGrid').getGridParam('rowNum');
+        	url += '&order=' + $('#jqGrid').getGridParam('sortorder');
+        	url += '&sidx=' + $('#jqGrid').getGridParam('sortname');
+        	if(!isBlank(this.q.sellerNo)) url += '&sellerNo=' + this.q.sellerNo;
+        	if(!isBlank(this.q.payChenal)) url += '&payChenal=' + this.q.payChenal;
+        	if(!isBlank(this.q.tradeType)) url += '&tradeType=' + this.q.tradeType;
+        	if(!isBlank(this.q.tradeTimeUp)) url += '&tradeTimeUp=' + this.q.tradeTimeUp;
+        	if(!isBlank(this.q.tradeTimeDown)) url += '&tradeTimeDown=' + this.q.tradeTimeDown;
+        	if(!isBlank(this.q.tradeNo)) url += '&tradeNo=' + this.q.tradeNo;
+        	
+        	window.location.href = url;
+        },
         reloadPage: function() {
             var page = $("#jqGrid").jqGrid('getGridParam', 'page');
             var _self = this;

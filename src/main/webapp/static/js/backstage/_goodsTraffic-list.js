@@ -321,7 +321,19 @@ var vm = new Vue({
         		}
         	});
         },
-        exportGoodsTraffic: function() {},
+        exportGoodsTraffic: function() {
+        	var url = basePath + '/admin/traffic/exportPage';
+        	url += '?pageNum=' + $('#jqGrid').getGridParam('page');
+        	url += '&pageSize=' + $('#jqGrid').getGridParam('rowNum');
+        	url += '&order=' + $('#jqGrid').getGridParam('sortorder');
+        	url += '&sidx=' + $('#jqGrid').getGridParam('sortname');
+        	if(!isBlank(this.q.trafficType)) url += '&trafficType=' + this.q.trafficType;
+        	if(!isBlank(this.q.createTimeUp)) url += '&createTimeUp=' + this.q.createTimeUp;
+        	if(!isBlank(this.q.createTimeDown)) url += '&createTimeDown=' + this.q.createTimeDown;
+        	if(!isBlank(this.q.trafficNo)) url += '&trafficNo=' + this.q.trafficNo;
+        	
+        	window.location.href = url;
+        },
         resetInTraffic: function() {
             this.inTraffic = cloneJsonObj(entity_inTrafficRequest);
         },

@@ -69,6 +69,7 @@
         
         <%@ include file="./_goods-list/_goods-add.jsp"%>
         <%@ include file="./_goods-list/_goods-batchEdit.jsp"%>
+        <%@ include file="./common/_file-upload.jsp"%>
     </div>
     
     <script src="${ctx}/static/js/backstage/_goods-list/var-jqGrid-option.js"></script>

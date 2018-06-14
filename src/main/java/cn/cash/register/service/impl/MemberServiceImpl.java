@@ -4,6 +4,7 @@
  */
 package cn.cash.register.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -235,6 +236,37 @@ public class MemberServiceImpl implements MemberService {
             integral.setExchangeType(false);
             integral.setIntegralType(true);
             return integralMapper.insert(integral);
+        }
+        return result;
+    }
+
+    /****************************会员导入相关接口****************************/
+    @Override
+    public List<MemberInfo> transfer2MemberInfo(List<List<String>> excelData) {
+        List<MemberInfo> result = new ArrayList<MemberInfo>();
+        try {
+            for (List<String> _rowData : excelData) {
+                MemberInfo memberInfo = new MemberInfo();
+                memberInfo.setMemberNo(StringUtils.isBlank(_rowData.get(0)) ? null : _rowData.get(0));
+                memberInfo.setMemberName(StringUtils.isBlank(_rowData.get(1)) ? null : _rowData.get(1));
+                memberInfo.setMemberRank(StringUtils.isBlank(_rowData.get(2)) ? null : _rowData.get(2));
+                memberInfo.setMemberDiscount(StringUtils.isBlank(_rowData.get(3)) ? null : Integer.valueOf(_rowData.get(3)));
+                memberInfo.setMemberIntegral(StringUtils.isBlank(_rowData.get(4)) ? null : Double.valueOf(_rowData.get(4)));
+                memberInfo.setPhone(StringUtils.isBlank(_rowData.get(5)) ? null : _rowData.get(5));
+                memberInfo.setPassword(StringUtils.isBlank(_rowData.get(6)) ? null : _rowData.get(6));
+                memberInfo.setBirthday(StringUtils.isBlank(_rowData.get(7)) ? null : _rowData.get(7));
+                memberInfo.setIsOnCredit(StringUtils.isBlank(_rowData.get(8)) ? null : Boolean.valueOf(_rowData.get(8)));
+                memberInfo.setQqNo(StringUtils.isBlank(_rowData.get(9)) ? null : _rowData.get(9));
+                memberInfo.setEmail(StringUtils.isBlank(_rowData.get(10)) ? null : _rowData.get(10));
+                memberInfo.setAddress(StringUtils.isBlank(_rowData.get(11)) ? null : _rowData.get(11));
+                memberInfo.setShopperName(StringUtils.isBlank(_rowData.get(12)) ? null : _rowData.get(12));
+                memberInfo.setRemark(StringUtils.isBlank(_rowData.get(13)) ? null : _rowData.get(13));
+                memberInfo.setStatus(StringUtils.isBlank(_rowData.get(14)) ? null : Boolean.valueOf(_rowData.get(14)));
+                result.add(memberInfo);
+            }
+        } catch (Exception e) {
+            LogUtil.error(e, logger, "导入会员信息格式有误");
+            throw new RuntimeException("导入会员信息格式有误", e);
         }
         return result;
     }

@@ -37,7 +37,7 @@ pageEncoding="UTF-8"%>
                             <li><a href="#stockCheckPage" @click="menuClick"><i class="fa fa-dot-circle-o"></i>&nbsp;盘点</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#" @click="exchangeJob"><i class="fa fa-sign-out"></i>&nbsp;交接班</a></li>
+                            <li><a href="javascript:void(0);" @click="exchangeJob"><i class="fa fa-sign-out"></i>&nbsp;交接班</a></li>
                             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i>&nbsp;系统设置<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="#settings" @click="menuClick"><i class="fa fa-cog"></i>&nbsp;系统信息</a></li>
@@ -51,6 +51,32 @@ pageEncoding="UTF-8"%>
             </nav>
         </header>
         <!-- ./header -->
+        <div id="exchangeJobDiv" class="container-fluid" style="display: none;">
+        	<div class="div-height-15"></div>
+        	<p>交班地址：(TODO 门店地址)</p>
+        	<div class="div-height-15"></div>
+        	<div class="row exchangeJobRow">
+        		<div class="col-xs-8">收银员</div>
+        		<div class="col-xs-4">${ sessionScope.seller.name }(工号：${ sessionScope.seller.sellerNo })</div>
+        	</div>
+        	<div class="row exchangeJobRow">
+        		<div class="col-xs-8">总销售额</div>
+        		<div class="col-xs-4">￥6579.00</div>
+        	</div>
+        	<div class="row exchangeJobRow">
+        		<div class="col-xs-8">总单据数</div>
+        		<div class="col-xs-4">52</div>
+        	</div>
+        	<div class="row exchangeJobRow">
+        		<div class="col-xs-8">会员充值</div>
+        		<div class="col-xs-4">￥300.00</div>
+        	</div>
+        	<div class="row exchangeJobRow">
+        		<div class="col-xs-8">促销统计</div>
+        		<div class="col-xs-4">￥979.00</div>
+        	</div>
+        	<p class="pull-right" style="font-size: 1.2em;color: red;">{{loginTime}}&nbsp;~&nbsp;{{exchangeJobTime}}</p>
+        </div>
         <div class="content-wrapper">
             <!-- Main content -->
             <section class="content">

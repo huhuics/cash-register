@@ -180,6 +180,8 @@
             </form>
         </div>
         <!-- /添加或更新会员 -->
+        
+        <%@ include file="./common/_file-upload.jsp" %>
     </div>
     <script src="${ctx}/static/js/backstage/_member-list.js"></script>
 </body>

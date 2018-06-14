@@ -4,11 +4,23 @@
  */
 package cn.cash.register.controller.backstage;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,6 +29,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
@@ -37,6 +50,9 @@ import cn.cash.register.enums.SubSystemTypeEnum;
 import cn.cash.register.service.LogService;
 import cn.cash.register.service.MemberRechargeService;
 import cn.cash.register.service.MemberService;
+import cn.cash.register.util.AssertUtil;
+import cn.cash.register.util.DateUtil;
+import cn.cash.register.util.ExcelUtil;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
@@ -79,6 +95,138 @@ public class MemberController {
 
         LogUtil.info(logger, "[Controller]#会员列表查询#请求处理,pageInfo={0}", pageInfo);
         return ResultSet.success().put("page", pageInfo);
+    }
+
+    /**
+     * 会员资料导出
+     */
+    @SuppressWarnings("resource")
+    @RequestMapping(value = "/exportList")
+    public void exportList(MemberInfoQueryRequest request, HttpSession session, HttpServletResponse response) throws IOException {
+        LogUtil.info(logger, "[Controller]收到#导出会员资料列表#请求,request={0}", request);
+
+        PageInfo<MemberInfo> pageInfo = memberService.queryList(request);
+
+        // 根据查询结果在服务端生成excel文件
+        String filePath = session.getServletContext().getRealPath(Constants.EXPORT_FILE_RELATIVE_PATH) + File.separator;
+        String fileName = "会员资料导出_" + DateUtil.format(new Date(), DateUtil.msecFormat) + ".xlsx";
+        String sheetName = "会员资料";
+
+        List<List<String>> data = new ArrayList<List<String>>();
+        String[] filterRow = { "等级", request.getMemberRank(), "", "导购员", request.getShopperName(), "", "状态(true:启用;false:禁用)", request.isStatus() + "", "", "卡号/姓名/电话", request.getKeyword() };
+        data.add(Arrays.asList(filterRow));
+        String[] pageRow = { "当前页", pageInfo.getPageNum() + "/" + pageInfo.getPages(), "每页数量", pageInfo.getPageSize() + "", "总数", pageInfo.getTotal() + "" };
+        data.add(Arrays.asList(pageRow));
+        String[] theadRow = { "编号", "姓名", "等级", "折扣", "积分", "电话", "密码", "生日", "允许赊账(true:允许;false:不允许)", "QQ", "邮箱", "地址", "导购员", "备注", "状态(true:启用;false:禁用)" };
+        data.add(Arrays.asList(theadRow));
+
+        List<MemberInfo> list = pageInfo.getList();
+        for (MemberInfo _obj : list) {
+            List<String> _row = new ArrayList<String>();
+            _row.add(_obj.getMemberNo());
+            _row.add(_obj.getMemberName());
+            _row.add(_obj.getMemberRank());
+            _row.add(ExcelUtil.obj2String(_obj.getMemberDiscount()));
+            _row.add(ExcelUtil.obj2String(_obj.getMemberIntegral()));
+            _row.add(_obj.getPhone());
+            _row.add(_obj.getPassword());
+            _row.add(_obj.getBirthday());
+            _row.add(ExcelUtil.obj2String(_obj.getIsOnCredit()));
+            _row.add(_obj.getQqNo());
+            _row.add(_obj.getEmail());
+            _row.add(_obj.getAddress());
+            _row.add(_obj.getShopperName());
+            _row.add(_obj.getRemark());
+            _row.add(ExcelUtil.obj2String(_obj.getStatus()));
+            data.add(_row);
+        }
+        try {
+            ExcelUtil.createExcel(filePath, fileName, sheetName, data); // 文件成功生成在服务端
+        } catch (IOException e) {
+            LogUtil.error(e, logger, "文件生成失败");
+        }
+
+        // 返回生成文件
+        InputStream bis = new BufferedInputStream(new FileInputStream(new File(filePath, fileName))); // 获取输入流
+        fileName = URLEncoder.encode(fileName, "UTF-8"); // 转码，免得文件名中文乱码
+        response.addHeader("Content-Disposition", "attachment;filename=" + fileName); // 设置文件下载头
+        response.setContentType("multipart/form-data"); // 设置文件ContentType类型
+        BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+        int len = 0;
+        while ((len = bis.read()) != -1) {
+            out.write(len);
+            out.flush();
+        }
+        out.close();
+    }
+
+    /**
+     * 会员资料导入
+     *
+     * @param file
+     * @return
+     * @throws IOException 
+     */
+    @ResponseBody
+    @PostMapping(value = "/importList")
+    public ResultSet importList(MultipartFile file, HttpSession session) {
+        LogUtil.info(logger, "收到会员资料导入请求");
+        AssertUtil.assertNotNull(file, "系统异常:上传文件对象为空");
+
+        SellerInfo seller = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_ADMIN);
+
+        // 1.接收文件
+        String path = session.getServletContext().getRealPath(Constants.IMPORT_FILE_RELATIVE_PATH);
+        String fileName = file.getOriginalFilename();
+        LogUtil.info(logger, "文件上传请求:fileName={0}", fileName);
+
+        File destinationFile = new File(path, fileName);
+        if (!destinationFile.exists()) {
+            destinationFile.mkdirs();
+        }
+
+        try {
+            //MultipartFile自带的解析方法
+            file.transferTo(destinationFile);
+            LogUtil.info(logger, "文件上传成功,保存路径:path={0}", path);
+        } catch (IllegalStateException | IOException e) {
+            LogUtil.error(e, logger, "文件上传异常");
+            return ResultSet.error("文件上传异常");
+        }
+
+        // 2.读取数据
+        List<MemberInfo> members = null;
+        try {
+            List<List<String>> excelData = ExcelUtil.readExcel(destinationFile, 15); // 会员信息共有15列
+            AssertUtil.assertTrue(CollectionUtils.isNotEmpty(excelData), "未读取到任何信息");
+            members = memberService.transfer2MemberInfo(excelData);
+        } catch (IOException e) {
+            LogUtil.error(e, logger, "文件读取异常");
+            return ResultSet.error("文件读取异常");
+        }
+
+        // 3.存储数据
+        int successCount = 0;
+        int failCount = 0;
+        String failInfo = "";
+        for (MemberInfo _member : members) {
+            LogUtil.info(logger, "[Controller]#导入会员#,memberInfo={0}", _member);
+            try {
+                memberService.addMember(_member);
+                successCount++;
+            } catch (Exception e) {
+                failCount++;
+                failInfo = failInfo + "【" + _member.toString() + "】";
+            }
+            logService.record(LogSourceEnum.backstage, SubSystemTypeEnum.employee, seller.getSellerNo(), "导入会员" + _member.getMemberNo());
+        }
+
+        String resultInfo = "成功导入" + successCount + "条会员信息";
+        if (failCount > 0) {
+            resultInfo += (",以下" + failCount + "条导入失败:" + failInfo);
+        }
+
+        return ResultSet.success(resultInfo);
     }
 
     /**

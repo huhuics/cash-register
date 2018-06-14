@@ -50,4 +50,12 @@ public interface SupplierService {
      */
     PageInfo<SupplierInfo> queryList(SupplierQueryRequest request);
 
+    /**
+     * 将从Excel读取的供货商转换为供货商信息
+     * 
+     * @param excelData
+     * @return
+     */
+    List<SupplierInfo> transfer2SupplierInfo(List<List<String>> excelData);
+
 }

@@ -341,8 +341,49 @@ var vm = new Vue({
                 });
             });
         },
-        importGoods: function() {},
-        exportGoods: function() {},
+        importGoods: function() {
+        	document.getElementById("fileInput").value = '';
+        	var _self = this;
+        	layer.open({
+                type: 1, skin: 'layui-layer-lan', shadeClose: false, title: "导入商品", area: '600px',
+                content: jQuery("#fileUploadDiv"),
+                btn: ['导入', '取消'],
+                btn1: function(index) {
+                	var formData = new FormData();
+                    formData.append("file", document.getElementById("fileInput").files[0]);
+                    $.ajax({
+                        url: basePath + '/admin/goods/importGoodsInfo',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(result) {
+                            if (result.code == "00") {
+                                layer.alert(result.msg);
+                                layer.close(index);
+                            } else {
+                                layer.alert(result.msg);
+                            }
+                            _self.reloadPage();
+                        }
+                    });
+                }
+            });
+        },
+        exportGoods: function() {
+        	var url = basePath + '/admin/goods/exportGoodsInfo';
+        	url += '?pageNum=' + $('#jqGrid').getGridParam('page');
+        	url += '&pageSize=' + $('#jqGrid').getGridParam('rowNum');
+        	url += '&order=' + $('#jqGrid').getGridParam('sortorder');
+        	url += '&sidx=' + $('#jqGrid').getGridParam('sortname');
+        	if(!isBlank(this.q.goodsStatus)) url += '&goodsStatus=' + this.q.goodsStatus;
+        	if(!isBlank(this.q.goodsBrand)) url += '&goodsBrand=' + this.q.goodsBrand;
+        	if(!isBlank(this.q.categoryName)) url += '&categoryName=' + this.q.categoryName;
+        	if(!isBlank(this.q.supplierName)) url += '&supplierName=' + this.q.supplierName;
+        	if(!isBlank(this.q.goodsTag)) url += '&goodsTag=' + this.q.goodsTag;
+        	if(!isBlank(this.q.keyword)) url += '&keyword=' + this.q.keyword;
+        	
+        	window.location.href = url;
+        },
         getBarCode: function() {
             var _self = this;
             $.ajax({
