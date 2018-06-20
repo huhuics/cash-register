@@ -126,4 +126,11 @@ public class SellerInfoServiceImpl implements SellerInfoService {
         return new PageInfo<TradeGoodsDetail>(list);
     }
 
+    @Override
+    public void updateShopName(Long adminId, String shopName) {
+        SellerInfo adminItem = sellerInfoMapper.selectByPrimaryKey(adminId);
+        adminItem.setPartOfShop(shopName);
+        sellerInfoMapper.updateByPrimaryKeySelective(adminItem);
+    }
+
 }

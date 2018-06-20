@@ -66,4 +66,11 @@ public interface SellerInfoService {
      */
     PageInfo<TradeGoodsDetail> queryAchievement(AchievementQueryRequest request);
 
+    /**
+     * 修改seller_info表中admin的店名
+     * @param adminId   admin用户的主键id
+     * @param shopName  店名
+     */
+    void updateShopName(Long adminId, String shopName);
+
 }

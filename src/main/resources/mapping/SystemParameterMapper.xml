@@ -151,5 +151,4 @@
 	UPDATE system_parameter SET param_value= 'false' WHERE param_code='IS_INIT';
 	UPDATE system_parameter SET param_value= '580' WHERE param_code='RECEIPT_WIDTH';
   </select>
-  
 </mapper>

@@ -18,4 +18,5 @@ public interface SystemParameterMapper {
     SystemParameter selectByCode(String paramCode);
 
     void truncateAllTables();
+
 }
