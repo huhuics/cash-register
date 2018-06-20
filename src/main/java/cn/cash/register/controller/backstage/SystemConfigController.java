@@ -7,6 +7,7 @@ package cn.cash.register.controller.backstage;
 import java.util.Date;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.cash.register.common.Constants;
+import cn.cash.register.dao.domain.SellerInfo;
 import cn.cash.register.dao.domain.SystemParameter;
+import cn.cash.register.service.SellerInfoService;
 import cn.cash.register.service.SystemParameterService;
 import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.DateUtil;
@@ -35,19 +38,33 @@ public class SystemConfigController {
     @Resource
     private SystemParameterService systemParameterService;
 
+    @Resource
+    private SellerInfoService      sellerInfoService;
+
     @RequestMapping
     public String configPage() {
         return "backstage/_system-config";
     }
 
+    /**
+     * 初始化系统
+     * 
+     * @param newValue 即shopName
+     * @param session
+     * @return
+     */
     @ResponseBody
     @PostMapping(value = "/initSystem")
-    public ResultSet initSystem(String newValue) {
+    public ResultSet initSystem(String newValue, HttpSession session) {
         AssertUtil.assertNotBlank(newValue, "值不能为空");
+
+        SellerInfo admin = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_ADMIN);
+
         SystemParameter shopNameParam = systemParameterService.getByCode(Constants.SHOP_NAME);
 
         //修改shop_name
         systemParameterService.updateById(shopNameParam.getId(), newValue);
+        sellerInfoService.updateShopName(admin.getId(), newValue);
 
         //修改register_time
         SystemParameter registerTimeParam = systemParameterService.getByCode(Constants.REGISTER_TIME);
