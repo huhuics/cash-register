@@ -66,6 +66,16 @@
                 </div>
             </form>
         </div>
+        <h3>系统备份与还原</h3>
+        <div>
+        	<form class="form-horizontal layerForm">
+        		<div class="form-group col-xs-12">
+        			<button type="button" class="btn btn-success btn-lg" @click="dbBackup">系统备份</button>
+        			&nbsp;&nbsp;&nbsp;&nbsp;
+        			<button type="button" class="btn btn-warning btn-lg" @click="dbRestore">系统还原</button>
+        		</div>
+        	</form>
+        </div>
         <h3>系统重新初始化</h3>
         <div>
         	<form class="form-horizontal layerForm">
@@ -74,6 +84,7 @@
         		</div>
         	</form>
         </div>
+        <%@ include file="./common/_file-upload.jsp" %>
     </div>
     <script src="${ctx}/static/js/backstage/_system-config.js"></script>
 </body>
