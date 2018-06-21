@@ -4,23 +4,33 @@
  */
 package cn.cash.register.controller.backstage;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import cn.cash.register.common.Constants;
+import cn.cash.register.dao.domain.SellerInfo;
 import cn.cash.register.dao.domain.SystemParameter;
+import cn.cash.register.service.SellerInfoService;
 import cn.cash.register.service.SystemParameterService;
 import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.DateUtil;
+import cn.cash.register.util.DbUtil;
+import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
 /**
@@ -32,22 +42,38 @@ import cn.cash.register.util.ResultSet;
 @RequestMapping(value = "/admin/systemConfig")
 public class SystemConfigController {
 
+    private static final Logger    logger = LoggerFactory.getLogger(SystemConfigController.class);
+
     @Resource
     private SystemParameterService systemParameterService;
+
+    @Resource
+    private SellerInfoService      sellerInfoService;
 
     @RequestMapping
     public String configPage() {
         return "backstage/_system-config";
     }
 
+    /**
+     * 初始化系统
+     * 
+     * @param newValue 即shopName
+     * @param session
+     * @return
+     */
     @ResponseBody
     @PostMapping(value = "/initSystem")
-    public ResultSet initSystem(String newValue) {
+    public ResultSet initSystem(String newValue, HttpSession session) {
         AssertUtil.assertNotBlank(newValue, "值不能为空");
+
+        SellerInfo admin = (SellerInfo) session.getAttribute(Constants.LOGIN_FLAG_ADMIN);
+
         SystemParameter shopNameParam = systemParameterService.getByCode(Constants.SHOP_NAME);
 
         //修改shop_name
         systemParameterService.updateById(shopNameParam.getId(), newValue);
+        sellerInfoService.updateShopName(admin.getId(), newValue);
 
         //修改register_time
         SystemParameter registerTimeParam = systemParameterService.getByCode(Constants.REGISTER_TIME);
@@ -162,6 +188,59 @@ public class SystemConfigController {
         AssertUtil.assertNotBlank(paramCode, "参数不能为空");
         SystemParameter byCode = systemParameterService.getByCode(paramCode);
         return ResultSet.success().put("byCode", byCode);
+    }
+
+    /**
+     * 系统备份
+     * 
+     * @return
+     */
+    @ResponseBody
+    @GetMapping(value = "/dbBackup")
+    public ResultSet dbBackup() {
+        if (DbUtil.backup()) {
+            return ResultSet.success();
+        }
+        return ResultSet.error();
+    }
+
+    /**
+     * 系统还原
+     * 
+     * @param file
+     * @param session
+     * @return
+     */
+    @ResponseBody
+    @PostMapping(value = "/dbRestore")
+    public ResultSet dbRestore(MultipartFile file, HttpSession session) {
+        LogUtil.info(logger, "收到系统还原请求");
+        AssertUtil.assertNotNull(file, "系统异常:上传sql文件对象为空");
+
+        // 1.接收文件
+        String path = session.getServletContext().getRealPath(Constants.IMPORT_FILE_RELATIVE_PATH);
+        String fileName = file.getOriginalFilename();
+        LogUtil.info(logger, "文件上传请求:fileName={0}", fileName);
+
+        File destinationFile = new File(path, fileName);
+        if (!destinationFile.exists()) {
+            destinationFile.mkdirs();
+        }
+
+        try {
+            //MultipartFile自带的解析方法
+            file.transferTo(destinationFile);
+            LogUtil.info(logger, "文件上传成功,保存路径:path={0}", path);
+        } catch (IllegalStateException | IOException e) {
+            LogUtil.error(e, logger, "文件上传异常");
+            return ResultSet.error("文件上传异常");
+        }
+
+        // 2.系统还原
+        if (DbUtil.restore(destinationFile.getAbsolutePath())) {
+            return ResultSet.success();
+        }
+        return ResultSet.error();
     }
 
     @ResponseBody

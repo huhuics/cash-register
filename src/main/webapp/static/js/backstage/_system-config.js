@@ -67,6 +67,48 @@ var vm = new Vue({
         		}
         	});
         },
+        dbBackup: function() { // 系统备份
+        	var _self = this;
+            $.ajax({
+            	type: 'GET',
+                url: basePath + "/admin/systemConfig/dbBackup",
+                success: function(result) {
+                    if (result.code == "00") {
+                        layer.alert('系统已成功备份');
+                    } else {
+                        layer.alert('系统备份失败');
+                    }
+                }
+            });
+        },
+        dbRestore: function() { // 系统还原
+        	document.getElementById("fileInput").value = '';
+        	var _self = this;
+        	layer.open({
+                type: 1, skin: 'layui-layer-lan', shadeClose: false, title: "系统还原", area: '600px',
+                content: jQuery("#fileUploadDiv"),
+                btn: ['确定还原', '取消'],
+                btn1: function(index) {
+                	var formData = new FormData();
+                    formData.append("file", document.getElementById("fileInput").files[0]);
+                    $.ajax({
+                        url: basePath + '/admin/systemConfig/dbRestore',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(result) {
+                            if (result.code == "00") {
+                                layer.alert(result.msg);
+                                layer.close(index);
+                            } else {
+                                layer.alert(result.msg);
+                            }
+                            _self.reloadPage();
+                        }
+                    });
+                }
+            });
+        },
         truncateAllTables: function() { // 清空所有数据
         	var _self = this;
         	confirm("这个操作将清空您所有的数据，您确定要继续吗", function() {
