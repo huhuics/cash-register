@@ -4,7 +4,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -12,7 +11,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import cn.cash.register.common.Constants;
 import cn.cash.register.dao.domain.SellerInfo;
-import cn.cash.register.enums.SellerRoleEnum;
 import cn.cash.register.service.SellerInfoService;
 import cn.cash.register.util.LogUtil;
 
@@ -44,7 +42,7 @@ public class CheckCashierIntercepter extends HandlerInterceptorAdapter {
         } else {// session中有值
             SellerInfo sessionSeller = (SellerInfo) obj;
             SellerInfo sellerInfo = sellerInfoService.queryById(sessionSeller.getId());
-            if (null == sellerInfo || !StringUtils.equals(sellerInfo.getRole(), SellerRoleEnum.seller.getCode()) || !sellerInfo.getStatus()) {
+            if (null == sellerInfo || !sellerInfo.getStatus()) {
                 request.getSession().removeAttribute(Constants.LOGIN_FLAG_SELLER);
                 request.getRequestDispatcher("/toCashierLogin").forward(request, response);
                 return false;
