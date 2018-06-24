@@ -33,7 +33,6 @@ public class SellerInfo extends BaseDomain {
     private Date              gmtCreate;
 
     public void validate() {
-        AssertUtil.assertNotBlank(partOfShop, "门店名不能为空");
         AssertUtil.assertNotBlank(sellerNo, "收银员编号不能为空");
         AssertUtil.assertNotBlank(name, "收银员姓名不能为空");
     }

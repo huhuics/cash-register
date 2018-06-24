@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 
+import cn.cash.register.common.Constants;
 import cn.cash.register.common.request.AchievementQueryRequest;
 import cn.cash.register.common.request.SellerInfoQueryRequest;
 import cn.cash.register.dao.domain.SellerInfo;
+import cn.cash.register.dao.domain.SystemParameter;
 import cn.cash.register.dao.domain.TradeGoodsDetail;
 import cn.cash.register.service.SellerInfoService;
+import cn.cash.register.service.SystemParameterService;
 import cn.cash.register.util.LogUtil;
 import cn.cash.register.util.ResultSet;
 
@@ -32,10 +35,13 @@ import cn.cash.register.util.ResultSet;
 @RequestMapping("/admin/seller")
 public class SellerController {
 
-    private static final Logger logger = LoggerFactory.getLogger(SellerController.class);
+    private static final Logger    logger = LoggerFactory.getLogger(SellerController.class);
 
     @Resource
-    private SellerInfoService   sellerInfoService;
+    private SellerInfoService      sellerInfoService;
+
+    @Resource
+    private SystemParameterService systemParameterService;
 
     /**
      * 收银员列表页面
@@ -101,6 +107,8 @@ public class SellerController {
         // 根据ID是否为空判断是新增还是编辑
         if (sellerInfo.getId() == null) {
             LogUtil.info(logger, "[Controller]#添加收银员#,sellerInfo={0}", sellerInfo);
+            SystemParameter shopNameParam = systemParameterService.getByCode(Constants.SHOP_NAME);
+            sellerInfo.setPartOfShop(shopNameParam.getParamValue());
             sellerInfo.validate();
             sellerInfoService.addSeller(sellerInfo);
         } else {
