@@ -98,7 +98,7 @@ var vm = new Vue({
                         processData: false,
                         success: function(result) {
                             if (result.code == "00") {
-                                layer.alert(result.msg);
+                                layer.alert('还原成功');
                                 layer.close(index);
                             } else {
                                 layer.alert(result.msg);
