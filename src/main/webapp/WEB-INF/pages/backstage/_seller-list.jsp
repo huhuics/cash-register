@@ -105,7 +105,7 @@
 		                </div>
 		            </div>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                 	<div class="col-xs-12">
 		            	<div class="input-group">
 		                    <span class="input-group-addon">收银端权限</span>
@@ -142,7 +142,7 @@
 		                    </span>
 		                </div>
 		            </div>
-                </div>
+                </div> -->
             </form>
         </div>
         <!-- /添加或更新收银员 -->
