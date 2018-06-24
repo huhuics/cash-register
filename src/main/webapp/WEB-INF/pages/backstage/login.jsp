@@ -25,7 +25,7 @@ pageEncoding="UTF-8"%>
                     <span class="input-group-addon"><i class="icon_key_alt"></i></span>
                     <input type="password" class="form-control" placeholder="密码" v-model="loginPassword" @keyup.enter="login">
                 </div>
-                <button class="btn btn-primary btn-lg btn-block" type="button" @click="login">登录</button>
+                <button class="btn btn-primary btn-lg btn-block" type="button" @click="login">管理员登录</button>
             </div>
         </form>
         <div id="systemInitDiv" style="display: none;">
