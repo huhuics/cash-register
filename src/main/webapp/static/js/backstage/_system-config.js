@@ -136,7 +136,7 @@ var vm = new Vue({
                     		_self.authInfo = "系统已授权";
                     		return;
                     	} else {
-                    		_self.authInfo = "系统剩余有效期：" + parseInt( 1 * result.diff / (1000 * 60 * 60 * 24)) + "天";
+                    		_self.authInfo = "系统剩余有效期：" + parseInt( 1 * result.diff ) + "天";
                     	}
                     } else if (result.code == "99") {
                     	_self.authInfo = "系统未授权，请购买正版";
