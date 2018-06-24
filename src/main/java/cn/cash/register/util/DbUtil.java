@@ -28,7 +28,7 @@ public class DbUtil {
 
     private static final String DB_NAME        = "cash-register";
 
-    private static final String MYSQL_INS_PATH = "D:\\Program Files\\MySQL\\MySQL Server 5.5\\";
+    private static final String MYSQL_INS_PATH = "C:\\Program Files (x86)\\MySQL\\MySQL Server 5.0\\";
 
     public static boolean backup() {
         InputStream in = null;
