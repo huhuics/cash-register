@@ -84,6 +84,14 @@ public class SystemConfigController {
         Date invadeTime = DateUtils.addDays(new Date(), 15);
         systemParameterService.updateById(invalidTimeParam.getId(), DateUtil.getNewFormatDateString(invadeTime));
 
+        //设置系统为已初始化
+        SystemParameter isInitParam = systemParameterService.getByCode(Constants.IS_INIT);
+        systemParameterService.updateById(isInitParam.getId(), Constants.TRUE);
+
+        //TODO
+        SystemParameter isAuthParam = systemParameterService.getByCode(Constants.IS_AUTHORIZED);
+        systemParameterService.updateById(isAuthParam.getId(), Constants.TRUE);
+
         return ResultSet.success("设置成功");
     }
 
@@ -169,6 +177,8 @@ public class SystemConfigController {
         Date invalidTime = DateUtil.parseDateNewFormat(invalidTimeParam.getParamValue());
 
         long diff = DateUtil.getDiffDays(invalidTime, new Date());
+
+        LogUtil.info(logger, "invalidTime={0},diff={1}", invalidTime, diff);
 
         if (diff >= 0) {
             return ResultSet.success().put("diff", diff);
