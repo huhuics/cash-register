@@ -32,10 +32,14 @@ public class GoodsInfoServiceTest extends BaseTest {
 
     @Test
     public void testInport() {
-        String filePath = "F:\\WorkSpace\\eclipse-oxygen2\\cash-register\\商品资料.xls";
+        String filePath = "D:\\git-repositories\\cash-register\\商品资料.xls";
 
         GoodsInfoInportRequest request = new GoodsInfoInportRequest();
         request.setFileFullPath(filePath);
+        request.setIsAutoCreateBrand(true);
+        request.setIsAutoCreateCategory(true);
+        request.setIsAutoCreateUnit(true);
+        request.setIsExistUpdate(true);
 
         goodsInfoService.inport(request);
     }

@@ -161,6 +161,14 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
+    public List<GoodsInfo> queryListForExport(GoodsInfoQueryRequest request) {
+        LogUtil.info(logger, "收到商品分页查询导出请求");
+        request.validate();
+
+        return goodsInfoMapper.list(request);
+    }
+
+    @Override
     public List<GoodsInfo> queryAll() {
         LogUtil.info(logger, "收到查询所有商品请求");
         return goodsInfoMapper.listAll();
@@ -272,6 +280,7 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
         return goodsInfoMapper.queryGoodsCount();
     }
 
+    @Deprecated
     @Override
     public String export(GoodsInfoQueryRequest request) {
         LogUtil.info(logger, "收到商品信息数据导出请求");

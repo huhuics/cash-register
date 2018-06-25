@@ -346,10 +346,10 @@ var vm = new Vue({
         	var _self = this;
         	layer.open({
                 type: 1, skin: 'layui-layer-lan', shadeClose: false, title: "导入商品", area: '600px',
-                content: jQuery("#fileUploadDiv"),
+                content: jQuery("#goodsFileUploadDiv"),
                 btn: ['导入', '取消'],
                 btn1: function(index) {
-                	var formData = new FormData();
+                	var formData = new FormData(document.getElementById("goodsFileUploadForm"));
                     formData.append("file", document.getElementById("fileInput").files[0]);
                     $.ajax({
                         url: basePath + '/admin/goods/importGoodsInfo',
