@@ -54,16 +54,16 @@ pageEncoding="UTF-8"%>
         <div id="exchangeJobDiv" class="container-fluid" style="display: none;">
         	<div class="div-height-15"></div>
         	<div class="row exchangeJobRow">
-        		<div class="col-xs-4">收银员</div>
-        		<div class="col-xs-8">${ sessionScope.seller.name }(工号：${ sessionScope.seller.sellerNo })</div>
+        		<div class="col-xs-2">收银员</div>
+        		<div class="col-xs-10">${ sessionScope.seller.name }(工号：${ sessionScope.seller.sellerNo })</div>
         	</div>
         	<div class="row exchangeJobRow">
-        		<div class="col-xs-4">商品销售</div>
-        		<div class="col-xs-8">{{ goodsSalesFacts }}</div>
+        		<div class="col-xs-2">商品销售</div>
+        		<div class="col-xs-10">{{ goodsSalesFacts }}</div>
         	</div>
         	<div class="row exchangeJobRow">
-        		<div class="col-xs-4">会员充值</div>
-        		<div class="col-xs-8">{{ balanceFacts }}</div>
+        		<div class="col-xs-2">会员充值</div>
+        		<div class="col-xs-10">{{ balanceFacts }}</div>
         	</div>
         	<p class="pull-right" style="font-size: 1.2em;color: red;">{{loginTime}}&nbsp;~&nbsp;{{exchangeJobTime}}</p>
         </div>
