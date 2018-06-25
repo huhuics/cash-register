@@ -96,10 +96,11 @@ public interface GoodsInfoService {
     int queryGoodsCount();
 
     /**
-     * 导出商品数据为Excel文件
+     * 导出商品数据为Excel文件(实际的商品导出未使用该接口)
      * @param request  查询请求
      * @return         Excel文件路径
      */
+    @Deprecated
     String export(GoodsInfoQueryRequest request);
 
     /**
@@ -107,5 +108,13 @@ public interface GoodsInfoService {
      * @param request  导入请求类
      */
     void inport(GoodsInfoInportRequest request);
+
+    /**
+     * 查询某页商品信息用于导出
+     * 
+     * @param request
+     * @return
+     */
+    List<GoodsInfo> queryListForExport(GoodsInfoQueryRequest request);
 
 }

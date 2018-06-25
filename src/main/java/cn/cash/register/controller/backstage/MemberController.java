@@ -65,7 +65,12 @@ import cn.cash.register.util.ResultSet;
 @RequestMapping("/admin/member")
 public class MemberController {
 
-    private static final Logger   logger = LoggerFactory.getLogger(MemberController.class);
+    private static final Logger   logger    = LoggerFactory.getLogger(MemberController.class);
+
+    /**
+     * 导出会员信息时表头信息
+     */
+    private static final String[] THEAD_ROW = { "编号", "姓名", "等级", "折扣", "积分", "电话", "密码", "生日", "允许赊账(true:允许;false:不允许)", "QQ", "邮箱", "地址", "导购员", "备注", "状态(true:启用;false:禁用)" };
 
     @Resource
     private MemberService         memberService;
@@ -113,12 +118,12 @@ public class MemberController {
         String sheetName = "会员资料";
 
         List<List<String>> data = new ArrayList<List<String>>();
-        String[] filterRow = { "等级", request.getMemberRank(), "", "导购员", request.getShopperName(), "", "状态(true:启用;false:禁用)", request.isStatus() + "", "", "卡号/姓名/电话", request.getKeyword() };
-        data.add(Arrays.asList(filterRow));
-        String[] pageRow = { "当前页", pageInfo.getPageNum() + "/" + pageInfo.getPages(), "每页数量", pageInfo.getPageSize() + "", "总数", pageInfo.getTotal() + "" };
-        data.add(Arrays.asList(pageRow));
-        String[] theadRow = { "编号", "姓名", "等级", "折扣", "积分", "电话", "密码", "生日", "允许赊账(true:允许;false:不允许)", "QQ", "邮箱", "地址", "导购员", "备注", "状态(true:启用;false:禁用)" };
-        data.add(Arrays.asList(theadRow));
+        // 2018-6-25 需求变更：导出信息时不需要附带查询条件
+        //        String[] filterRow = { "等级", request.getMemberRank(), "", "导购员", request.getShopperName(), "", "状态(true:启用;false:禁用)", request.isStatus() + "", "", "卡号/姓名/电话", request.getKeyword() };
+        //        data.add(Arrays.asList(filterRow));
+        //        String[] pageRow = { "当前页", pageInfo.getPageNum() + "/" + pageInfo.getPages(), "每页数量", pageInfo.getPageSize() + "", "总数", pageInfo.getTotal() + "" };
+        //        data.add(Arrays.asList(pageRow));
+        data.add(Arrays.asList(THEAD_ROW));
 
         List<MemberInfo> list = pageInfo.getList();
         for (MemberInfo _obj : list) {
@@ -197,8 +202,9 @@ public class MemberController {
         // 2.读取数据
         List<MemberInfo> members = null;
         try {
-            List<List<String>> excelData = ExcelUtil.readExcel(destinationFile, 15); // 会员信息共有15列
-            AssertUtil.assertTrue(CollectionUtils.isNotEmpty(excelData), "未读取到任何信息");
+            List<List<String>> excelData = ExcelUtil.readExcel(destinationFile, THEAD_ROW.length);
+            AssertUtil.assertTrue(CollectionUtils.isNotEmpty(excelData) && excelData.size() > 1, "未读取到任何信息");
+            excelData.remove(0); // 移除表头行
             members = memberService.transfer2MemberInfo(excelData);
         } catch (IOException e) {
             LogUtil.error(e, logger, "文件读取异常");

@@ -13,6 +13,8 @@ var vm = new Vue({
     	iframeSrc : "cashRegister",
     	loginTime: null, // 登陆时间
     	exchangeJobTime: null, // 交接班时间
+    	goodsSalesFacts: null, // 营业概况
+    	balanceFacts: null, // 充值概况
     },
     methods: {
     	menuClick : function(url) {
@@ -34,13 +36,17 @@ var vm = new Vue({
         	// 加载交接班信息
         	$.ajax({
                 url: basePath + '/cashier/exchangeJobInfo',
+                data: {
+                	'exchangeJobTime': _self.exchangeJobTime
+                },
                 success: function(result) {
                 	_self.loginTime = result.loginTime;
-                	// TODO 其它交接班信息
+                	_self.goodsSalesFacts = result.goodsSalesFacts;
+                	_self.balanceFacts = result.balanceFacts;
                 }
             });
         	layer.open({
-                type: 1, skin: 'layui-layer-lan', shadeClose: false, title: "交接班", area: '600px',
+                type: 1, skin: 'layui-layer-lan', shadeClose: false, title: "交接班", area: '800px',
                 content: jQuery("#exchangeJobDiv"),
                 btn: ['交接班并登出', '返回'],
                 btn1: function(index) {

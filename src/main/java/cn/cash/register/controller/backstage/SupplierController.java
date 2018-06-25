@@ -51,10 +51,15 @@ import cn.cash.register.util.ResultSet;
 @RequestMapping("/admin/supplier")
 public class SupplierController {
 
-    private static final Logger logger = LoggerFactory.getLogger(SupplierController.class);
+    private static final Logger   logger    = LoggerFactory.getLogger(SupplierController.class);
+
+    /**
+     * 导出供货商时表头信息
+     */
+    private static final String[] THEAD_ROW = { "编号", "名称", "拼音码", "联系人", "联系电话", "联系邮箱", "配送费返点", "固定返利点", "地址", "备注", "状态(true:启用;false:禁用)" };
 
     @Resource
-    private SupplierService     supplierService;
+    private SupplierService       supplierService;
 
     /**
      * 跳转到供应商信息页
@@ -88,12 +93,12 @@ public class SupplierController {
         String sheetName = "供货商";
 
         List<List<String>> data = new ArrayList<List<String>>();
-        String[] filterRow = { "状态(true:启用;false:禁用)", ExcelUtil.obj2String(request.isStatus()), "", "姓名", request.getSupplierName() };
-        data.add(Arrays.asList(filterRow));
-        String[] pageRow = { "当前页", supplierList.getPageNum() + "/" + supplierList.getPages(), "每页数量", supplierList.getPageSize() + "", "总数", supplierList.getTotal() + "" };
-        data.add(Arrays.asList(pageRow));
-        String[] theadRow = { "编号", "名称", "拼音码", "联系人", "联系电话", "联系邮箱", "配送费返点", "固定返利点", "地址", "备注", "状态(true:启用;false:禁用)" };
-        data.add(Arrays.asList(theadRow));
+        // 2018-6-25 需求变更：导出信息时不需要附带查询条件
+        //        String[] filterRow = { "状态(true:启用;false:禁用)", ExcelUtil.obj2String(request.isStatus()), "", "姓名", request.getSupplierName() };
+        //        data.add(Arrays.asList(filterRow));
+        //        String[] pageRow = { "当前页", supplierList.getPageNum() + "/" + supplierList.getPages(), "每页数量", supplierList.getPageSize() + "", "总数", supplierList.getTotal() + "" };
+        //        data.add(Arrays.asList(pageRow));
+        data.add(Arrays.asList(THEAD_ROW));
 
         List<SupplierInfo> list = supplierList.getList();
         for (SupplierInfo _obj : list) {
@@ -166,8 +171,9 @@ public class SupplierController {
         // 2.读取数据
         List<SupplierInfo> suppliers = null;
         try {
-            List<List<String>> excelData = ExcelUtil.readExcel(destinationFile, 11); // 供货商信息共有11列
-            AssertUtil.assertTrue(CollectionUtils.isNotEmpty(excelData), "未读取到任何信息");
+            List<List<String>> excelData = ExcelUtil.readExcel(destinationFile, THEAD_ROW.length); // 供货商信息共有11列
+            AssertUtil.assertTrue(CollectionUtils.isNotEmpty(excelData) && excelData.size() > 1, "未读取到任何信息");
+            excelData.remove(0); // 移除表头行
             suppliers = supplierService.transfer2SupplierInfo(excelData);
         } catch (IOException e) {
             LogUtil.error(e, logger, "文件读取异常");
