@@ -5,6 +5,7 @@
 package cn.cash.register.controller.frontstage;
 
 import java.util.Date;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -16,13 +17,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.cash.register.common.Constants;
+import cn.cash.register.common.request.SalesBasicFactsQueryRequest;
 import cn.cash.register.dao.SystemParameterMapper;
+import cn.cash.register.dao.domain.SalesBasicFacts;
 import cn.cash.register.dao.domain.SellerInfo;
 import cn.cash.register.dao.domain.SystemParameter;
 import cn.cash.register.enums.LogSourceEnum;
+import cn.cash.register.enums.SalesBasicFactsEnum;
 import cn.cash.register.enums.SubSystemTypeEnum;
 import cn.cash.register.service.ExchangeJobService;
 import cn.cash.register.service.LogService;
+import cn.cash.register.service.SalesService;
 import cn.cash.register.service.SellerInfoService;
 import cn.cash.register.util.AssertUtil;
 import cn.cash.register.util.DateUtil;
@@ -45,6 +50,9 @@ public class LoginAndOutController {
 
     @Resource
     private LogService            logService;
+
+    @Resource
+    private SalesService          salesService;
 
     @Resource
     private SystemParameterMapper systemParameterMapper;
@@ -97,11 +105,19 @@ public class LoginAndOutController {
      */
     @ResponseBody
     @RequestMapping(value = "/cashier/exchangeJobInfo")
-    public ResultSet exchangeJobInfo(HttpSession session) {
+    public ResultSet exchangeJobInfo(String exchangeJobTime, HttpSession session) {
         // 查询交接班时的统计信息
         String loginTime = (String) session.getAttribute(Constants.SELLER_LOGIN_TIME); // 登录时间
-        // TODO 其它需要在交接班时显示的信息
-        return ResultSet.success().put("loginTime", loginTime).put("info1", "").put("info2", "");
+
+        // 查询这段时间内的营业概况
+        SalesBasicFactsQueryRequest request = new SalesBasicFactsQueryRequest();
+        request.setTimeDown(loginTime);
+        request.setTimeUp(exchangeJobTime);
+        Map<String, SalesBasicFacts> basicFacts = salesService.queryBasicFacts(request);
+        String goodsSalesFacts = basicFacts.get(SalesBasicFactsEnum.goods_sales.toString()).getBasicFacts();
+        String balanceFacts = basicFacts.get(SalesBasicFactsEnum.balance.toString()).getBasicFacts();
+
+        return ResultSet.success().put("loginTime", loginTime).put("goodsSalesFacts", goodsSalesFacts).put("balanceFacts", balanceFacts);
     }
 
     /**
