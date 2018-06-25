@@ -107,7 +107,23 @@ public class ExcelUtil {
             XSSFRow row = (XSSFRow) rowIterator.next();
             for (int i = 0; i < colLength; i++) {
                 Cell cell = row.getCell(i, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                _rowList.add(cell.getStringCellValue());
+                String _cellValue;
+                switch (cell.getCellTypeEnum()) {
+                    case STRING:
+                        _cellValue = cell.getStringCellValue();
+                        break;
+                    case NUMERIC:
+                        double _value = cell.getNumericCellValue();
+                        if ((int) _value == _value) { // 是整数
+                            _cellValue = String.valueOf((int) _value);
+                        } else { // 不是整数
+                            _cellValue = String.valueOf(_value);
+                        }
+                        break;
+                    default:
+                        _cellValue = "";
+                }
+                _rowList.add(_cellValue);
             }
             result.add(_rowList);
         }
