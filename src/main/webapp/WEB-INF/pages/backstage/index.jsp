@@ -12,13 +12,12 @@
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper" id="app" v-cloak>
         <header class="main-header">
-            <a href="javascript:void(0);" class="logo"><span class="logo-mini"><b>{{shopName}}</b></span> <span class="logo-lg">{{shopName}}</span></a>
+            <a href="javascript:void(0);" style="padding-left: 20px;" class="logo"><img class="logo-mini" src="${ctx}/static/img/logo-mini.png" style="height: 40px; margin-top: 5px;" alt="logo"> <img class="logo-lg" src="${ctx}/static/img/logo.png" style="height: 40px; margin-top: 5px;" alt="logo"></a>
             <nav class="navbar navbar-static-top" role="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button"> <span class="sr-only">Toggle navigation</span></a>
                 <div style="float: left; color: #fff; padding: 15px 10px;">欢迎您，${ sessionScope.admin.name }</div>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        <!-- <li><a href="javascript:void(0);"><i class="fa fa-lock"></i> &nbsp;修改密码</a></li> -->
                         <li><a href="javascript:void(0);" @click="logout"><i class="fa fa-sign-out"></i>&nbsp;退出系统</a></li>
                     </ul>
                 </div>
