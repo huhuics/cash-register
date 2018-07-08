@@ -20,7 +20,7 @@ pageEncoding="UTF-8"%>
             <nav class="navbar navbar-static-top">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a href="javascript:void(0);" class="navbar-brand">收银系统</a>
+                        <a href="javascript:void(0);" class="navbar-brand"><img src="${ctx}/static/img/logo.png" style="height: 40px; margin-top: -10px;" alt="logo"></a>
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
                             <i class="fa fa-bars"></i>
                         </button>
