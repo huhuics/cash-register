@@ -508,7 +508,7 @@
  	select 
     <include refid="Base_Column_List" />
     from goods_info where 
-    bar_code = #{keyword,jdbcType=VARCHAR}
+    bar_code like concat('%',#{keyword,jdbcType=VARCHAR},'%')
     or goods_name like concat('%',#{keyword,jdbcType=VARCHAR},'%')
     or pinyin_code like concat('%',#{keyword,jdbcType=VARCHAR},'%')
   </select>
